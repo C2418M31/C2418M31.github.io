@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globe Platinum | Digital Passport</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0c10;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        .heat-ring-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        .platinum-glow {
+            box-shadow: 0 0 30px rgba(148, 163, 184, 0.2);
+        }
+
+        .glass-card {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="no-scrollbar">
+
+    <!-- Top Header -->
+    <header class="p-6 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent sticky top-0 z-30 glass-card">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center font-bold text-black text-xs">G</div>
+            <div class="flex flex-col">
+                <span class="font-black tracking-[0.2em] text-[10px] text-slate-400 leading-none">GLOBE</span>
+                <span class="font-bold tracking-widest text-sm text-white italic">PLATINUM</span>
+            </div>
+        </div>
+        <div class="flex gap-3">
+            <button class="p-2.5 rounded-full bg-slate-800/40 border border-slate-700/50">
+                <i data-lucide="bell" class="w-5 h-5 text-slate-300"></i>
+            </button>
+            <button class="p-2.5 rounded-full bg-slate-800/40 border border-slate-700/50">
+                <i data-lucide="settings" class="w-5 h-5 text-slate-300"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="px-6 pb-32 max-w-md mx-auto">
+        <!-- Profile Section -->
+        <section class="flex flex-col items-center mt-6 text-center">
+            <div class="relative group">
+                <!-- Heat Ring -->
+                <div id="heat-ring" class="w-36 h-36 rounded-full border-[3px] border-slate-400 flex items-center justify-center transition-all duration-700 heat-ring-pulse shadow-2xl">
+                    <div class="w-[130px] h-[130px] rounded-full bg-slate-900 p-1.5 border border-slate-800">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="Avatar" class="w-full h-full rounded-full object-cover">
+                    </div>
+                </div>
+                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-[10px] font-black tracking-widest bg-white text-black shadow-2xl border border-white">
+                    PLATINUM ELITE
+                </div>
+            </div>
+            
+            <h1 class="mt-8 text-2xl font-black tracking-tighter uppercase italic text-white">Felix Maranan</h1>
+            <p class="text-slate-500 text-xs font-bold mt-1 tracking-widest uppercase">Member since 2018</p>
+        </section>
+
+        <!-- The Platinum Digital Passport -->
+        <section class="mt-12">
+            <div id="passport-card" class="relative overflow-hidden rounded-[2rem] border border-slate-700/50 p-7 min-h-[240px] shadow-2xl transition-all duration-500 bg-gradient-to-br from-slate-900 via-slate-950 to-black platinum-glow">
+                <!-- Shimmer Effect -->
+                <div class="absolute inset-0 shimmer pointer-events-none"></div>
+                
+                <div class="flex justify-between items-start relative z-10">
+                    <div class="flex flex-col gap-1">
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400 font-black">Digital Passport</p>
+                        <h2 class="text-2xl font-black tracking-tight flex items-center gap-2 italic text-white">
+                            PLATINUM <span class="text-slate-500 text-sm font-light">ADVANTAGE</span>
+                        </h2>
+                    </div>
+                    <!-- The Signal Indicator replacing screenshots -->
+                    <div class="flex flex-col items-end gap-1">
+                        <div class="flex gap-0.5 items-end h-4">
+                            <div class="w-1 h-1.5 bg-slate-200 rounded-sm"></div>
+                            <div class="w-1 h-2.5 bg-slate-200 rounded-sm"></div>
+                            <div class="w-1 h-3.5 bg-slate-200 rounded-sm"></div>
+                            <div class="w-1 h-4.5 bg-white rounded-sm"></div>
+                        </div>
+                        <span class="text-[9px] font-black tracking-tighter text-white">PLATINUM</span>
+                    </div>
+                </div>
+
+                <div class="mt-14 flex items-end justify-between relative z-10">
+                    <div>
+                        <p class="text-[10px] uppercase text-slate-500 font-black tracking-widest mb-1">Holder Account</p>
+                        <p class="font-mono text-sm tracking-[0.2em] text-slate-200">0917 • 823 • 9988</p>
+                        <div class="flex items-center gap-2 mt-3">
+                            <div class="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                            <span class="text-[10px] text-emerald-400 font-black tracking-widest uppercase">Identity Verified</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="toggleQR(true)" class="group flex flex-col items-center gap-2">
+                        <div class="p-4 rounded-2xl bg-white/5 glass-card border border-white/10 group-hover:scale-105 transition-all shadow-xl">
+                            <i data-lucide="qr-code" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <span class="text-[8px] font-black uppercase tracking-[0.2em] text-white/50">Redeem</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- QR Modal -->
+        <div id="qr-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl p-6 hidden flex-col items-center justify-center animate-in fade-in duration-300">
+            <div class="bg-white p-6 rounded-[2.5rem] mb-6 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
+                <div class="w-48 h-48 bg-slate-100 flex items-center justify-center">
+                    <i data-lucide="qr-code" class="w-40 h-40 text-black"></i>
+                </div>
+            </div>
+            <p class="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-8">Show this to a Platinum Representative</p>
+            <button onclick="toggleQR(false)" class="px-10 py-4 rounded-full border border-slate-700 text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-all text-white">
+                Back to Passport
+            </button>
+        </div>
+
+        <!-- Benefits Section -->
+        <section class="mt-12">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-[11px] font-black tracking-[0.2em] uppercase text-slate-500">Exclusive Benefits</h3>
+                <span class="text-[10px] font-black text-slate-300 uppercase tracking-tighter cursor-pointer border-b border-slate-700 pb-0.5">Explore All</span>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Benefit 1 -->
+                <div class="flex items-center justify-between p-5 rounded-3xl bg-slate-900/40 border border-slate-800/50 hover:border-slate-600 transition-all group">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center group-hover:bg-slate-700 transition-colors">
+                            <i data-lucide="sofa" class="w-6 h-6 text-slate-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-tight text-white">Platinum Lane & Lounge</p>
+                            <p class="text-[10px] text-slate-500 font-bold mt-0.5">Complimentary refreshments</p>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-700"></i>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="flex items-center justify-between p-5 rounded-3xl bg-slate-900/40 border border-slate-800/50 hover:border-slate-600 transition-all group">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center group-hover:bg-slate-700 transition-colors">
+                            <i data-lucide="ticket" class="w-6 h-6 text-slate-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-tight text-white">Art Fair PH Access</p>
+                            <p class="text-[10px] text-slate-500 font-bold mt-0.5">Priority entrance for members</p>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-700"></i>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="flex items-center justify-between p-5 rounded-3xl bg-slate-900/40 border border-slate-800/50 hover:border-slate-600 transition-all group">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center group-hover:bg-slate-700 transition-colors">
+                            <i data-lucide="star" class="w-6 h-6 text-slate-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-tight text-white">Priority Concierge</p>
+                            <p class="text-[10px] text-slate-500 font-bold mt-0.5">24/7 Lifestyle assistant</p>
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-700"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotion Banner -->
+        <section class="mt-8 p-6 rounded-[2rem] bg-gradient-to-r from-slate-200 to-slate-400 flex items-center justify-between">
+            <div class="flex flex-col">
+                <p class="text-[10px] font-black text-black uppercase tracking-widest">Upcoming Event</p>
+                <p class="text-sm font-black text-black italic">Art Fair PH 2026</p>
+            </div>
+            <button class="bg-black text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Register</button>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 p-5 bg-black/90 glass-card border-t border-slate-800/50 flex justify-around items-center z-40">
+        <button class="flex flex-col items-center gap-1.5 text-slate-500">
+            <i data-lucide="layout-grid" class="w-5 h-5"></i>
+            <span class="text-[9px] font-black uppercase tracking-tighter">Home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1.5 text-white">
+            <i data-lucide="credit-card" class="w-5 h-5"></i>
+            <span class="text-[9px] font-black uppercase tracking-tighter">Passport</span>
+        </button>
+        <div class="relative -top-8">
+            <button onclick="toggleQR(true)" class="w-16 h-16 rounded-full bg-white shadow-[0_0_30px_rgba(255,255,255,0.2)] border-[6px] border-[#0a0c10] flex items-center justify-center text-black">
+                <i data-lucide="qr-code" class="w-7 h-7"></i>
+            </button>
+        </div>
+        <button class="flex flex-col items-center gap-1.5 text-slate-500">
+            <i data-lucide="gift" class="w-5 h-5"></i>
+            <span class="text-[9px] font-black uppercase tracking-tighter">Perks</span>
+        </button>
+        <button class="flex flex-col items-center gap-1.5 text-slate-500">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span class="text-[9px] font-black uppercase tracking-tighter">Profile</span>
+        </button>
+    </nav>
+
+    <script>
+        function toggleQR(show) {
+            const modal = document.getElementById('qr-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize Icons
+        window.onload = () => {
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>

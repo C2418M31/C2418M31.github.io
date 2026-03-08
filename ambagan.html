@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMBAGAN | The Barkada Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;800&family=Syncopate:wght@700&display=swap');
+        
+        :root {
+            --brand-orange: #FF6600;
+            --brand-black: #000000;
+            --brand-white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #f0f0f0;
+            color: var(--brand-black);
+            overflow: hidden;
+        }
+
+        .header-font { font-family: 'Syncopate', sans-serif; }
+        
+        .bg-orange { background-color: var(--brand-orange); }
+        .text-orange { color: var(--brand-orange); }
+        .border-orange { border-color: var(--brand-orange); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { display: none; }
+
+        .card-brutal {
+            border: 3px solid var(--brand-black);
+            box-shadow: 6px 6px 0px var(--brand-orange);
+            background-color: var(--brand-white);
+            transition: all 0.2s ease;
+        }
+
+        .card-brutal:active {
+            box-shadow: 2px 2px 0px var(--brand-orange);
+            transform: translate(4px, 4px);
+        }
+
+        .btn-black {
+            background-color: var(--brand-black);
+            color: var(--brand-white);
+            border: 3px solid var(--brand-black);
+            box-shadow: 4px 4px 0px var(--brand-orange);
+        }
+
+        .btn-black:active {
+            box-shadow: 0px 0px 0px var(--brand-orange);
+            transform: translate(2px, 2px);
+        }
+
+        .nav-item.active {
+            color: var(--brand-orange);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.2);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Animation for Roulette */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-animate { animation: spin 0.5s linear infinite; }
+
+        .sound-btn:active {
+            background-color: var(--brand-orange);
+            color: white;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-4">
+
+    <!-- Mobile Wrapper -->
+    <div id="app-container" class="w-[375px] h-[812px] bg-white rounded-[50px] shadow-2xl border-[10px] border-zinc-900 relative overflow-hidden flex flex-col">
+        
+        <!-- Header (Fixed) -->
+        <div class="pt-12 px-8 pb-4 bg-white border-b-4 border-black z-30">
+            <div class="flex justify-between items-center">
+                <h1 class="header-font text-xl tracking-tighter italic font-black">AMBAGAN<span class="text-orange">.</span></h1>
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col items-end">
+                        <span class="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Reliability</span>
+                        <span class="text-[10px] font-black text-green-600">A+ RANK</span>
+                    </div>
+                    <div class="w-9 h-9 rounded-full bg-black border-2 border-orange flex items-center justify-center text-white text-[12px] font-bold">JD</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Viewport -->
+        <div id="viewport" class="flex-1 overflow-y-auto px-6 pt-6 pb-32 bg-white">
+            
+            <!-- VIEW: LOBBY -->
+            <div id="view-lobby" class="space-y-8">
+                <!-- 3. The "Drawing" Insurance (Anti-Ghosting) -->
+                <section class="space-y-4">
+                    <div class="flex justify-between items-end">
+                        <h2 class="header-font text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Active Lakad</h2>
+                        <span class="text-orange text-[10px] font-black italic">⚡ G? BGC CRAWL</span>
+                    </div>
+
+                    <div class="card-brutal p-5 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-black text-xl leading-none">Friday E-numan</h3>
+                                <p class="text-[11px] font-bold text-zinc-500 mt-2 uppercase tracking-tighter">
+                                    <i class="fas fa-location-dot mr-1"></i> Tipsy Pig, Forbestown
+                                </p>
+                            </div>
+                            <div class="bg-black text-white px-3 py-1 rounded-lg text-center leading-tight">
+                                <span class="text-[10px] block font-bold">TONIGHT</span>
+                                <span class="text-lg font-black italic">8P</span>
+                            </div>
+                        </div>
+
+                        <!-- Commitment Pot -->
+                        <div class="bg-zinc-50 p-4 rounded-xl border-2 border-black flex justify-between items-center">
+                            <div>
+                                <p class="text-[9px] font-black text-zinc-500 uppercase">Commitment Pot</p>
+                                <p class="text-2xl font-black italic">₱1,400<span class="text-orange">.00</span></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[9px] font-black text-zinc-400 uppercase">Refundable on Arrival</p>
+                                <div class="flex -space-x-2 mt-1">
+                                    <div class="w-7 h-7 rounded-full border-2 border-black bg-white flex items-center justify-center text-[8px] font-bold">M</div>
+                                    <div class="w-7 h-7 rounded-full border-2 border-black bg-white flex items-center justify-center text-[8px] font-bold">C</div>
+                                    <div class="w-7 h-7 rounded-full border-2 border-black bg-orange flex items-center justify-center text-[8px] font-bold text-black">+12</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="verifyCheckIn()" id="checkin-btn" class="w-full btn-black py-4 rounded-xl font-black text-xs tracking-[0.2em] flex items-center justify-center gap-3">
+                            <i class="fas fa-location-crosshairs"></i> VERIFY ARRIVAL
+                        </button>
+                    </div>
+                </section>
+
+                <!-- 1. The Ambagan Ledger (Owed Summary) -->
+                <section class="grid grid-cols-2 gap-3">
+                    <div class="card-brutal p-4 rounded-2xl bg-zinc-50">
+                        <p class="text-[10px] font-black text-zinc-400 uppercase mb-1">Ambagan Bal.</p>
+                        <p class="text-xl font-black text-green-600 italic">+₱1,820</p>
+                    </div>
+                    <div class="card-brutal p-4 rounded-2xl bg-zinc-50">
+                        <p class="text-[10px] font-black text-zinc-400 uppercase mb-1">Unsettled</p>
+                        <p class="text-xl font-black text-orange italic">-₱350</p>
+                    </div>
+                </section>
+
+                <!-- 2. Libre Roulette & Tools Grid -->
+                <section class="space-y-4 pb-4">
+                    <h2 class="header-font text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Barkada Tools</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Roulette Tool -->
+                        <button onclick="openTool('roulette')" class="card-brutal h-28 rounded-2xl flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-dice text-2xl text-orange"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest">Libre Roulette</span>
+                        </button>
+                        <!-- 4. Barkada Vault -->
+                        <button onclick="openTool('vault')" class="card-brutal h-28 rounded-2xl flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-vault text-2xl"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest">Shared Vault</span>
+                        </button>
+                        <!-- 5. G? Polls -->
+                        <button onclick="openTool('polls')" class="card-brutal h-28 rounded-2xl flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-square-poll-vertical text-2xl"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest">G? Polls</span>
+                        </button>
+                        <!-- 6. Soundboard -->
+                        <button onclick="openTool('soundboard')" class="card-brutal h-28 rounded-2xl flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-volume-high text-2xl"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest">Inside Jokes</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- 8. Merchant Barkada Deals -->
+                <section class="space-y-4">
+                    <h2 class="header-font text-[10px] uppercase tracking-widest text-zinc-400 font-bold">Exclusive Perks</h2>
+                    <div class="card-brutal p-4 rounded-2xl bg-black text-white flex items-center gap-4">
+                        <div class="w-12 h-12 bg-orange rounded-xl flex items-center justify-center text-black font-black">20%</div>
+                        <div class="flex-1">
+                            <p class="text-xs font-black">Group of 5 Promo</p>
+                            <p class="text-[9px] font-bold text-zinc-500 uppercase">Available at Buffalo's Wings n' Things</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-zinc-700"></i>
+                    </div>
+                </section>
+            </div>
+
+            <!-- VIEW: LEDGER (SPLIT BILL) -->
+            <div id="view-ledger" class="hidden space-y-6">
+                <header class="flex justify-between items-center">
+                    <h2 class="header-font text-sm font-black italic uppercase">Abuno Tracker</h2>
+                    <span class="text-[10px] font-bold bg-orange text-black px-2 py-1 border-2 border-black rounded">₱1,820 OWED</span>
+                </header>
+
+                <div class="space-y-3">
+                    <div class="card-brutal p-4 rounded-2xl flex justify-between items-center bg-white border-orange">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white font-black italic">M</div>
+                            <div>
+                                <p class="text-sm font-black">Marga S. <span class="text-[10px] text-zinc-400 font-bold ml-1">OWES YOU</span></p>
+                                <p class="text-[10px] font-bold text-zinc-400 uppercase">Starbucks Run • 2h ago</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-black italic">₱1,250.00</p>
+                            <button class="text-[8px] font-black bg-orange text-black px-2 py-1 rounded mt-1 uppercase">Remind</button>
+                        </div>
+                    </div>
+
+                    <div class="card-brutal p-4 rounded-2xl flex justify-between items-center bg-white">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-zinc-200 rounded-xl flex items-center justify-center text-black font-black italic">C</div>
+                            <div>
+                                <p class="text-sm font-black text-orange">You Owe Cholo</p>
+                                <p class="text-[10px] font-bold text-zinc-400 uppercase">GrabCar Ambag • Feb 12</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-black italic">₱350.00</p>
+                            <button class="text-[8px] font-black bg-black text-white px-2 py-1 rounded mt-1 uppercase">Settle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button class="w-full card-brutal py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3">
+                        <i class="fas fa-plus"></i> NEW AMBAGAN BILL
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW: RANK (RELIABILITY) -->
+            <div id="view-rank" class="hidden space-y-6 text-center">
+                <div class="space-y-1">
+                    <h2 class="header-font text-lg font-black uppercase italic">Barkada MVP</h2>
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Anti-Drawing Leaderboard</p>
+                </div>
+
+                <div class="space-y-3 text-left">
+                    <!-- Rank 1 -->
+                    <div class="card-brutal p-5 rounded-3xl flex items-center justify-between border-orange">
+                        <div class="flex items-center gap-4">
+                            <span class="header-font text-xl italic font-black text-orange">01</span>
+                            <div class="w-11 h-11 bg-black rounded-full border-2 border-white flex items-center justify-center text-white font-black">MS</div>
+                            <div>
+                                <p class="text-sm font-black">Marga (MVP)</p>
+                                <p class="text-[9px] font-bold text-zinc-400 uppercase">12/12 Attendance • 0 Drawings</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-crown text-orange text-lg"></i>
+                    </div>
+
+                    <!-- Rank 2 -->
+                    <div class="card-brutal p-5 rounded-3xl flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <span class="header-font text-xl italic font-black text-zinc-300">02</span>
+                            <div class="w-11 h-11 bg-zinc-100 rounded-full border-2 border-black flex items-center justify-center font-black">JD</div>
+                            <div>
+                                <p class="text-sm font-black">You</p>
+                                <p class="text-[9px] font-bold text-zinc-400 uppercase">11/12 Attendance • 1 Drawing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Architect (Ghost) -->
+                    <div class="card-brutal p-5 rounded-3xl flex items-center justify-between opacity-50 grayscale border-dashed">
+                        <div class="flex items-center gap-4">
+                            <span class="header-font text-xl italic font-black text-zinc-300">08</span>
+                            <div class="w-11 h-11 bg-zinc-400 rounded-full"></div>
+                            <div>
+                                <p class="text-sm font-black">Ken "The Drawing"</p>
+                                <p class="text-[9px] font-bold text-zinc-400 uppercase">2/12 Attendance • 10 Drawings</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: BARKADA (7. Business Card) -->
+            <div id="view-barkada" class="hidden space-y-6">
+                <div class="card-brutal p-8 rounded-[40px] text-center space-y-4 bg-black text-white relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background: repeating-linear-gradient(45deg, #FF6600, #FF6600 5px, transparent 5px, transparent 25px);"></div>
+                    <div class="w-20 h-20 bg-orange rounded-[30px] mx-auto flex items-center justify-center rotate-6 border-4 border-white shadow-xl relative z-10">
+                        <i class="fas fa-bolt text-black text-4xl -rotate-6"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="header-font text-xl font-black italic">SOUTH SQUAD</h2>
+                        <p class="text-[10px] font-bold text-orange uppercase tracking-[0.3em] mb-4">Official Barkada Profile</p>
+                        <p class="text-[9px] text-zinc-400 uppercase leading-relaxed font-bold">
+                            EST. 2018 • PARANAQUE CITY<br>
+                            Specialty: Late Night Pares & BGC Walks
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="card-brutal p-5 rounded-3xl text-center">
+                        <p class="text-[9px] font-black text-zinc-400 uppercase mb-2">Ghost Fines</p>
+                        <p class="text-2xl font-black italic text-orange">₱4.2k</p>
+                    </div>
+                    <div class="card-brutal p-5 rounded-3xl text-center">
+                        <p class="text-[9px] font-black text-zinc-400 uppercase mb-2">Hangouts</p>
+                        <p class="text-2xl font-black italic">86</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="header-font text-[9px] uppercase tracking-widest text-zinc-400 font-bold">Shared Memories</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="aspect-square bg-zinc-200 rounded-xl border-2 border-black"></div>
+                        <div class="aspect-square bg-zinc-200 rounded-xl border-2 border-black"></div>
+                        <div class="aspect-square bg-orange rounded-xl border-2 border-black flex items-center justify-center"><i class="fas fa-camera"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOOL MODALS -->
+        <div id="tool-modal" class="absolute inset-0 z-50 modal-overlay flex flex-col justify-end hidden">
+            <div class="bg-white rounded-t-[40px] p-8 border-t-8 border-orange space-y-6 transform translate-y-full transition-transform duration-300 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]" id="tool-content">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 id="tool-title" class="header-font text-lg font-black italic">TOOL TITLE</h3>
+                    <button onclick="closeTool()" class="text-zinc-400"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                
+                <!-- Dynamic Tool Content -->
+                <div id="tool-body" class="min-h-[250px]">
+                    <!-- Roulette Body -->
+                    <div id="body-roulette" class="hidden flex flex-col items-center gap-6 py-4">
+                        <div id="roulette-wheel" class="w-32 h-32 border-4 border-black rounded-full flex items-center justify-center relative bg-orange">
+                            <i class="fas fa-arrow-up absolute -top-4 text-black text-xl"></i>
+                            <div class="font-black text-[10px] text-center uppercase leading-tight">Who Pays<br>Today?</div>
+                        </div>
+                        <button onclick="spinRoulette()" class="btn-black w-full py-4 rounded-xl font-black text-sm tracking-widest">SPIN THE WHEEL</button>
+                    </div>
+
+                    <!-- Vault Body -->
+                    <div id="body-vault" class="hidden space-y-4">
+                        <div class="card-brutal p-6 bg-zinc-50 text-center">
+                            <p class="text-[10px] font-black text-zinc-400 uppercase">La Union Goal</p>
+                            <p class="text-3xl font-black italic">₱18,500<span class="text-orange">/25k</span></p>
+                            <div class="w-full h-3 bg-zinc-200 rounded-full mt-4 border-2 border-black overflow-hidden">
+                                <div class="h-full bg-orange" style="width: 74%"></div>
+                            </div>
+                        </div>
+                        <button class="btn-black w-full py-4 rounded-xl font-black text-sm tracking-widest uppercase">Add Funds</button>
+                    </div>
+
+                    <!-- Polls Body -->
+                    <div id="body-polls" class="hidden space-y-4">
+                        <div class="card-brutal p-4 rounded-xl space-y-3">
+                            <p class="font-black text-sm">G? Dinner tonight?</p>
+                            <div class="space-y-2">
+                                <button class="w-full p-3 border-2 border-black rounded-lg text-left text-xs font-black hover:bg-orange">BGC (8 VOTES)</button>
+                                <button class="w-full p-3 border-2 border-black rounded-lg text-left text-xs font-black">MOA (2 VOTES)</button>
+                            </div>
+                        </div>
+                        <button class="btn-black w-full py-4 rounded-xl font-black text-sm tracking-widest uppercase">Start New Poll</button>
+                    </div>
+
+                    <!-- Soundboard Body -->
+                    <div id="body-soundboard" class="hidden grid grid-cols-2 gap-3">
+                        <button class="card-brutal p-4 rounded-xl text-[10px] font-black uppercase sound-btn italic">"OTW na ako!"</button>
+                        <button class="card-brutal p-4 rounded-xl text-[10px] font-black uppercase sound-btn italic">"Libre ni Cholo"</button>
+                        <button class="card-brutal p-4 rounded-xl text-[10px] font-black uppercase sound-btn italic">"Isang bucket pa"</button>
+                        <button class="card-brutal p-4 rounded-xl text-[10px] font-black uppercase sound-btn italic">"Drawing na yan"</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar (Fixed) -->
+        <div class="absolute bottom-0 w-full h-24 bg-white/95 backdrop-blur-md border-t-4 border-black flex justify-around items-center px-8 pb-6 z-40">
+            <button id="nav-lobby" onclick="switchView('lobby')" class="nav-item active flex flex-col items-center gap-1 group">
+                <i class="fas fa-house-chimney text-xl transition-all"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Lobby</span>
+            </button>
+            <button id="nav-ledger" onclick="switchView('ledger')" class="nav-item flex flex-col items-center gap-1 group text-zinc-400">
+                <i class="fas fa-receipt text-xl transition-all"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Ledger</span>
+            </button>
+            
+            <div class="relative -top-6">
+                <button onclick="togglePlusMenu()" class="w-16 h-16 bg-orange rounded-[20px] flex items-center justify-center text-black text-2xl shadow-[6px_6px_0px_rgba(0,0,0,1)] border-4 border-black transition-all active:translate-y-1 active:shadow-none">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <button id="nav-rank" onclick="switchView('rank')" class="nav-item flex flex-col items-center gap-1 group text-zinc-400">
+                <i class="fas fa-ranking-star text-xl transition-all"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Rank</span>
+            </button>
+            <button id="nav-barkada" onclick="switchView('barkada')" class="nav-item flex flex-col items-center gap-1 group text-zinc-400">
+                <i class="fas fa-users-viewfinder text-xl transition-all"></i>
+                <span class="text-[8px] font-black uppercase tracking-tighter">Barkada</span>
+            </button>
+        </div>
+
+        <!-- FAB Menu -->
+        <div id="plus-modal" class="absolute inset-0 z-50 modal-overlay flex flex-col justify-end hidden">
+            <div class="bg-white rounded-t-[40px] p-8 border-t-8 border-orange space-y-6 transform translate-y-full transition-transform duration-300" id="plus-content">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="header-font text-lg font-black italic uppercase">New Action</h3>
+                    <button onclick="togglePlusMenu()" class="text-zinc-400"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <button class="w-full card-brutal p-6 rounded-3xl flex items-center gap-6 text-left group">
+                    <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-map-location-dot"></i>
+                    </div>
+                    <div>
+                        <p class="font-black text-lg">PROPOSE LAKAD</p>
+                        <p class="text-[10px] font-bold text-zinc-500 uppercase">Set Commitment Pot</p>
+                    </div>
+                </button>
+                <button class="w-full card-brutal p-6 rounded-3xl flex items-center gap-6 text-left group">
+                    <div class="w-12 h-12 bg-orange rounded-2xl flex items-center justify-center text-black text-xl">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div>
+                        <p class="font-black text-lg">ADD AMBAGAN</p>
+                        <p class="text-[10px] font-bold text-zinc-500 uppercase">Split a new bill</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="absolute top-16 left-1/2 -translate-x-1/2 w-[90%] bg-black text-white p-5 border-4 border-orange rounded-3xl shadow-2xl z-[60] font-black text-xs flex items-center gap-4 translate-y-[-200%] transition-all duration-500">
+            <div class="w-8 h-8 bg-orange rounded-full flex items-center justify-center text-black">
+                <i class="fas fa-check"></i>
+            </div>
+            <span id="toast-msg">CHECKED IN! ₱100 RETURNED.</span>
+        </div>
+
+    </div>
+
+    <!-- UI Logic -->
+    <script>
+        function switchView(viewId) {
+            const views = ['lobby', 'ledger', 'rank', 'barkada'];
+            views.forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden');
+                document.getElementById(`nav-${v}`).classList.remove('active', 'text-orange');
+                document.getElementById(`nav-${v}`).classList.add('text-zinc-400');
+            });
+            
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${viewId}`);
+            activeNav.classList.add('active', 'text-orange');
+            activeNav.classList.remove('text-zinc-400');
+            document.getElementById('viewport').scrollTop = 0;
+        }
+
+        function togglePlusMenu() {
+            const modal = document.getElementById('plus-modal');
+            const content = document.getElementById('plus-content');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => content.style.transform = 'translateY(0)', 10);
+            } else {
+                content.style.transform = 'translateY(100%)';
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
+        function openTool(toolId) {
+            const modal = document.getElementById('tool-modal');
+            const content = document.getElementById('tool-content');
+            const title = document.getElementById('tool-title');
+            const bodies = ['roulette', 'vault', 'polls', 'soundboard'];
+            
+            bodies.forEach(b => document.getElementById(`body-${b}`).classList.add('hidden'));
+            document.getElementById(`body-${toolId}`).classList.remove('hidden');
+            
+            title.innerText = toolId.replace(/^\w/, c => c.toUpperCase()) + (toolId === 'roulette' ? ' Picker' : toolId === 'polls' ? ' Scheduling' : '');
+            if(toolId === 'soundboard') title.innerText = "Inside Jokes";
+
+            modal.classList.remove('hidden');
+            setTimeout(() => content.style.transform = 'translateY(0)', 10);
+        }
+
+        function closeTool() {
+            const content = document.getElementById('tool-content');
+            content.style.transform = 'translateY(100%)';
+            setTimeout(() => document.getElementById('tool-modal').classList.add('hidden'), 300);
+        }
+
+        function spinRoulette() {
+            const wheel = document.getElementById('roulette-wheel');
+            wheel.classList.add('spin-animate');
+            setTimeout(() => {
+                wheel.classList.remove('spin-animate');
+                showToast("ROULETTE: JUSTIN PAYS!");
+                closeTool();
+            }, 2000);
+        }
+
+        function verifyCheckIn() {
+            const btn = document.getElementById('checkin-btn');
+            showToast("LOCATION VERIFIED @ BGC! ₱100 REFUNDED.");
+            btn.innerHTML = '<i class="fas fa-check-circle text-orange"></i> COMMITMENT RETURNED';
+            btn.classList.replace('btn-black', 'card-brutal');
+            btn.classList.add('bg-zinc-50', 'text-black');
+            btn.disabled = true;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            setTimeout(() => toast.style.transform = 'translateX(-50%) translateY(-200%)', 3500);
+        }
+    </script>
+</body>
+</html>

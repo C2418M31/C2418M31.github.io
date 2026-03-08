@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO Sachet Upsell: The Ignition Key</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate-950 */
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .gomo-purple { color: #8a2be2; }
+        .gomo-pink { color: #ff1493; }
+        
+        .text-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .bg-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- SIMULATOR STYLES --- */
+        .phone-mockup {
+            width: 320px;
+            height: 680px;
+            border: 12px solid #1e293b;
+            border-radius: 40px;
+            position: relative;
+            background: #0f172a;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 25px;
+            background-color: #1e293b;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+        }
+
+        .ping-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .ping-bad { background-color: #ef4444; box-shadow: 0 0 10px #ef4444; animation: pulse-red 1s infinite; }
+        .ping-good { background-color: #22c55e; box-shadow: 0 0 10px #22c55e; }
+
+        @keyframes pulse-red {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .sachet-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .sachet-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(138, 43, 226, 0.5);
+            transform: translateY(-2px);
+        }
+        .sachet-btn.active {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(255, 20, 147, 0.2));
+            border-color: #8a2be2;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.2);
+        }
+
+        .system-feedback {
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .system-feedback.show {
+            transform: translateY(0);
+        }
+
+        .speedometer-needle {
+            transform-origin: bottom center;
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* --- ANIMATIONS --- */
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-xl border-b border-white/5">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gomo-gradient rounded-xl flex items-center justify-center text-white font-black text-xl">G</div>
+            <span class="font-bold text-xl uppercase tracking-tighter">Sachet <span class="gomo-purple">Upsell</span></span>
+        </div>
+        <div class="hidden md:flex gap-10 text-xs font-black uppercase tracking-[0.2em] text-slate-500">
+            <a href="#concept" class="hover:text-white transition">The Logic</a>
+            <a href="#simulator" class="hover:text-white transition text-gomo-gradient">Live Demo</a>
+            <a href="#impact" class="hover:text-white transition">System Impact</a>
+        </div>
+        <button class="bg-white text-black px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest hover:bg-gomo-purple hover:text-white transition">Get Started</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="concept" class="relative pt-40 pb-24 px-6 overflow-hidden text-center">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-600/10 blur-[120px] rounded-full -z-10"></div>
+        <div class="container mx-auto max-w-5xl">
+            <span class="inline-block py-2 px-4 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-blue-400">The Ignition Key</span>
+            <h1 class="text-5xl md:text-8xl font-black mb-8 leading-none tracking-tighter uppercase">
+                Sell <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-gomo-purple">Solutions.</span><br>
+                Not Just Volume.
+            </h1>
+            <p class="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+                Shift from "Commodity Buying" to "Task-Based Solutions." <br class="hidden md:block">
+                Whether it's lag, slow downloads, or rush hour congestion—solve it for ₱15.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500">
+                    <h3 class="font-bold text-white mb-2">Impulse, not Investment</h3>
+                    <p class="text-xs text-slate-400">₱20 doesn't require a decision. ₱400 does. Reduce cognitive load to zero.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-500">
+                    <h3 class="font-bold text-white mb-2">Identify Intent</h3>
+                    <p class="text-xs text-slate-400">Buying "Game Boost" tags them as a Gamer. Buying "Turbo Download" tags a Power User.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-pink-500">
+                    <h3 class="font-bold text-white mb-2">Habit Frequency</h3>
+                    <p class="text-xs text-slate-400">Daily micro-needs create daily app opens, fueling the Streak Economy.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Simulator Section -->
+    <section id="simulator" class="py-24 px-6 bg-slate-900/50 border-y border-white/5">
+        <div class="container mx-auto max-w-7xl">
+            <div class="flex flex-col lg:flex-row gap-24 items-center justify-center">
+                
+                <!-- The Pitch (Left) -->
+                <div class="lg:w-1/2 space-y-10">
+                    <h2 class="text-4xl font-black uppercase tracking-tighter mb-4">The "Pain Point" <br><span class="text-gomo-gradient">Trigger</span></h2>
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        Users don't buy data because they want "Gigabytes." They buy it because they have a <strong>specific task</strong> or a <strong>problem</strong>.
+                        <br><br>
+                        The Sachet Upsell offers instant, one-tap solutions for moments like:
+                        <ul class="list-disc list-inside mt-4 text-sm text-slate-500 space-y-2">
+                            <li>Downloading a 20GB Game Update ("Puyat" mode no more)</li>
+                            <li>Ranking up in Mobile Legends (Lag is the enemy)</li>
+                            <li>Uploading Vlogs during congestion (Rush Hour)</li>
+                        </ul>
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 font-bold">1</div>
+                            <p class="text-sm font-bold text-slate-300">The Problem: "This download is taking forever!"</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 font-bold">2</div>
+                            <p class="text-sm font-bold text-slate-300">The Solution: "Turbo Download (Uncapped 5G) - ₱20"</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 font-bold">3</div>
+                            <p class="text-sm font-bold text-slate-300">The Yield: <span class="text-gomo-pink">+Karma, +Streak, +Passport XP</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Mobile Device (Right) -->
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        
+                        <!-- Screen Content -->
+                        <div class="h-full flex flex-col bg-slate-900 relative">
+                            
+                            <!-- Game View (Simulated Lag) -->
+                            <div id="game-screen" class="h-2/5 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-white/5">
+                                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-40"></div>
+                                <div class="relative z-10 text-center">
+                                    <div id="ping-badge" class="inline-flex items-center gap-2 bg-red-500/20 border border-red-500/50 px-3 py-1 rounded-full backdrop-blur-md mb-2">
+                                        <div class="ping-indicator ping-bad"></div>
+                                        <span id="ping-text" class="text-xs font-black text-red-400 uppercase">High Latency / Slow DL</span>
+                                    </div>
+                                    <h3 id="status-text" class="text-white font-black text-xl italic uppercase">Connection Unstable</h3>
+                                </div>
+                            </div>
+
+                            <!-- Upsell Drawer -->
+                            <div class="flex-1 p-6 bg-slate-950 flex flex-col">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h4 class="text-sm font-black text-white uppercase tracking-widest">Power-Ups</h4>
+                                    <span class="text-[9px] font-bold text-slate-500 bg-slate-900 px-2 py-1 rounded border border-slate-800">BAL: ₱145.00</span>
+                                </div>
+
+                                <!-- Sachet Options -->
+                                <div class="space-y-3 mb-auto overflow-y-auto pr-1 custom-scrollbar" style="max-height: 320px;">
+                                    
+                                    <!-- Gaming -->
+                                    <button onclick="activateBoost(this, 'game')" class="sachet-btn w-full p-3 rounded-2xl flex items-center justify-between group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                                <i class="fas fa-gamepad"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <p class="text-xs font-bold text-white">Gaming Priority</p>
+                                                <p class="text-[9px] text-slate-400">Low Latency • 1 Hour</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm font-black text-white">₱15</p>
+                                        </div>
+                                    </button>
+
+                                    <!-- Turbo Download (New) -->
+                                    <button onclick="activateBoost(this, 'download')" class="sachet-btn w-full p-3 rounded-2xl flex items-center justify-between group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-green-400">
+                                                <i class="fas fa-bolt"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <p class="text-xs font-bold text-white">Turbo Download</p>
+                                                <p class="text-[9px] text-slate-400">Uncapped 5G • 30 Mins</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm font-black text-white">₱20</p>
+                                            <p class="text-[8px] text-gomo-pink font-bold group-hover:opacity-100 opacity-0 transition-opacity">🔥 Popular</p>
+                                        </div>
+                                    </button>
+
+                                    <!-- Social VIP (New) -->
+                                    <button onclick="activateBoost(this, 'social')" class="sachet-btn w-full p-3 rounded-2xl flex items-center justify-between group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <p class="text-xs font-bold text-white">Social VIP</p>
+                                                <p class="text-[9px] text-slate-400">Skip Congestion • 1 Hr</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm font-black text-white">₱10</p>
+                                        </div>
+                                    </button>
+
+                                    <!-- Streaming -->
+                                    <button onclick="activateBoost(this, 'video')" class="sachet-btn w-full p-3 rounded-2xl flex items-center justify-between group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-xl bg-pink-500/20 flex items-center justify-center text-pink-400">
+                                                <i class="fas fa-video"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <p class="text-xs font-bold text-white">4K Streaming</p>
+                                                <p class="text-[9px] text-slate-400">Video QoS • 2 Hours</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm font-black text-white">₱25</p>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <!-- System Feedback Panel (Hidden initially) -->
+                                <div id="feedback-panel" class="system-feedback bg-gomo-gradient p-4 rounded-2xl shadow-2xl relative overflow-hidden mt-4">
+                                    <div class="absolute inset-0 bg-white/10 opacity-50 mix-blend-overlay"></div>
+                                    <div class="relative z-10">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h5 id="feedback-title" class="text-xs font-black text-white uppercase">Boost Active!</h5>
+                                            <i class="fas fa-check-circle text-white"></i>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <span class="bg-black/20 px-2 py-1 rounded text-[8px] font-bold text-white flex items-center gap-1"><i class="fas fa-fire"></i> Streak Saved</span>
+                                            <span class="bg-black/20 px-2 py-1 rounded text-[8px] font-bold text-white flex items-center gap-1"><i class="fas fa-shield"></i> +15 Karma</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- System Impact Map -->
+    <section id="impact" class="py-32 px-6">
+        <div class="container mx-auto max-w-6xl text-center">
+            <h2 class="text-3xl font-black mb-16 uppercase tracking-tighter">Why it feeds the whole system</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Node 1 -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:border-purple-500/50 transition duration-500">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-purple-400 shadow-xl">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3 class="mt-4 font-bold text-white mb-2">Nomad Passport</h3>
+                    <p class="text-sm text-slate-400">Buying a "Roaming Sachet" tags the user as a Traveler, adding stamps to their passport and unlocking travel perks.</p>
+                </div>
+
+                <!-- Node 2 -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:border-pink-500/50 transition duration-500">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-pink-400 shadow-xl">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="mt-4 font-bold text-white mb-2">Streak Economy</h3>
+                    <p class="text-sm text-slate-400">Buying a sachet counts as "Activity." It keeps the daily streak alive even if the user didn't have a large promo active.</p>
+                </div>
+
+                <!-- Node 3 -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:border-blue-500/50 transition duration-500">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-blue-400 shadow-xl">
+                        <i class="fas fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3 class="mt-4 font-bold text-white mb-2">Partner Co-Pilot</h3>
+                    <p class="text-sm text-slate-400">Contextual purchases (e.g. Gaming Boost) allow us to segment users and sell high-value ad slots to relevant partners.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center border-t border-white/5">
+        <div class="flex items-center justify-center gap-2 mb-6">
+            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-white font-black text-sm">G</div>
+            <span class="font-bold text-sm uppercase tracking-widest text-slate-500">GOMO <span class="gomo-purple">Enablement Unit</span></span>
+        </div>
+        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.4em]">© 2025 Growth Protocol • Sachet Logic Module</p>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        function activateBoost(btn, type) {
+            // Disable buttons
+            const buttons = document.querySelectorAll('.sachet-btn');
+            buttons.forEach(b => {
+                b.classList.remove('active');
+                b.classList.add('opacity-50', 'pointer-events-none');
+            });
+            btn.classList.add('active');
+            btn.classList.remove('opacity-50');
+
+            // Simulate Network Change
+            const pingBadge = document.getElementById('ping-badge');
+            const pingText = document.getElementById('ping-text');
+            const statusText = document.getElementById('status-text');
+            const indicator = document.querySelector('.ping-indicator');
+            const feedback = document.getElementById('feedback-panel');
+            const feedbackTitle = document.getElementById('feedback-title');
+
+            // Processing state
+            pingText.innerText = "Allocating Bandwidth...";
+            
+            setTimeout(() => {
+                // Success State
+                pingBadge.className = "inline-flex items-center gap-2 bg-green-500/20 border border-green-500/50 px-3 py-1 rounded-full backdrop-blur-md mb-2 transition-all duration-500";
+                indicator.className = "ping-indicator ping-good";
+                pingText.className = "text-xs font-black text-green-400 uppercase";
+                
+                if(type === 'download') {
+                    pingText.innerText = "5G Uncapped: Active";
+                    statusText.innerText = "Downloading...";
+                    feedbackTitle.innerText = "Turbo Speed Active!";
+                } else if (type === 'social') {
+                    pingText.innerText = "Priority Lane: Active";
+                    statusText.innerText = "Connected";
+                    feedbackTitle.innerText = "Congestion Skipped!";
+                } else {
+                    pingText.innerText = "Stable: 12ms";
+                    statusText.innerText = "Optimized";
+                    feedbackTitle.innerText = "Boost Active!";
+                }
+                
+                // Show Feedback
+                feedback.classList.add('show');
+
+                // Reset after 5 seconds for demo
+                setTimeout(() => {
+                    feedback.classList.remove('show');
+                    buttons.forEach(b => {
+                        b.classList.remove('active', 'opacity-50', 'pointer-events-none');
+                    });
+                    pingBadge.className = "inline-flex items-center gap-2 bg-red-500/20 border border-red-500/50 px-3 py-1 rounded-full backdrop-blur-md mb-2";
+                    indicator.className = "ping-indicator ping-bad";
+                    pingText.className = "text-xs font-black text-red-400 uppercase";
+                    pingText.innerText = "High Latency / Slow DL";
+                    statusText.innerText = "Connection Unstable";
+                }, 5000);
+
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
