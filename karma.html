@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO | Digital Karma Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .gomo-pink { color: #D20E56; }
+        .bg-gomo-pink { background-color: #D20E56; }
+        .bg-gomo-gradient {
+            background: linear-gradient(135deg, #D20E56 0%, #6665FE 100%);
+        }
+        
+        /* Tier Animations */
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+            animation: pulse-purple 2s infinite;
+        }
+        
+        .glow-gold {
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-purple {
+            0%, 100% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); border-color: #a855f7; }
+            50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.7); border-color: #d946ef; }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); border-color: #fbbf24; transform: scale(1); }
+            50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.8); border-color: #f59e0b; transform: scale(1.02); }
+        }
+
+        .og-iridescent {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b, #fbbf24);
+            background-size: 200% 200%;
+            animation: iridescent 3s ease infinite;
+        }
+
+        @keyframes iridescent {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-4">
+
+    <!-- Mobile Wrapper -->
+    <div class="w-[375px] h-[812px] bg-slate-950 rounded-[50px] shadow-2xl border-[10px] border-slate-900 relative overflow-hidden flex flex-col text-white">
+        
+        <!-- App Header (Fixed) -->
+        <div class="pt-12 px-8 pb-4 z-20 bg-slate-950/80 backdrop-blur-md flex justify-between items-center">
+            <div>
+                <h1 class="text-xs font-black tracking-widest text-slate-500 uppercase">Reputation Status</h1>
+                <p id="current-tier-top" class="text-sm font-bold text-white">THE SCOUT</p>
+            </div>
+            <div class="relative">
+                <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" />
+                </div>
+                <div id="verified-badge" class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full border-2 border-slate-950 flex items-center justify-center hidden">
+                    <i class="fas fa-check text-[8px]"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto px-6 pb-24">
+            
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="space-y-6 pt-4">
+                
+                <!-- Trust Shield Component -->
+                <div class="relative flex flex-col items-center justify-center py-6">
+                    <div id="shield-container" class="w-56 h-56 rounded-full border-4 border-slate-800 flex flex-col items-center justify-center relative transition-all duration-700">
+                        <div class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-1">Karma Score</div>
+                        <div id="karma-score" class="text-6xl font-black tracking-tighter">245</div>
+                        <div id="score-delta" class="absolute -bottom-4 bg-green-500 text-white px-2 py-0.5 rounded-full text-[10px] font-black opacity-0 transition-opacity">+15</div>
+                        
+                        <!-- Pulse Rings -->
+                        <div id="shield-pulse" class="absolute inset-0 rounded-full opacity-0"></div>
+                    </div>
+                    
+                    <div class="mt-8 text-center space-y-1">
+                        <h2 id="tier-name" class="text-2xl font-black text-white italic">THE SCOUT</h2>
+                        <p id="tier-desc" class="text-xs text-slate-400 max-w-[200px] mx-auto">You're just passing through. Build trust to unlock the ecosystem.</p>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full mt-6 space-y-2">
+                        <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase">
+                            <span>Progress to Mover</span>
+                            <span id="progress-percent">24.5%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="h-full bg-gomo-gradient w-[24.5%] transition-all duration-1000"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Hub: Earn Karma -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Reputation Quests</h3>
+                        <span class="text-[10px] text-gomo-pink font-bold">Updated Daily</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="addKarma(35, 'Consistency Streak')" class="glass p-4 rounded-2xl text-left hover:bg-white/5 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-fire text-orange-500"></i>
+                            </div>
+                            <p class="text-xs font-bold text-white">Daily Streak</p>
+                            <p class="text-[10px] text-slate-400">+35 Karma</p>
+                        </button>
+                        
+                        <button onclick="addKarma(45, 'Data Trash Recycle')" class="glass p-4 rounded-2xl text-left hover:bg-white/5 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-recycle text-green-500"></i>
+                            </div>
+                            <p class="text-xs font-bold text-white">Data Trash</p>
+                            <p class="text-[10px] text-slate-400">+45 Karma</p>
+                        </button>
+
+                        <button onclick="addKarma(60, 'Referral Verified')" class="glass p-4 rounded-2xl text-left hover:bg-white/5 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-user-plus text-blue-500"></i>
+                            </div>
+                            <p class="text-xs font-bold text-white">Refer Friend</p>
+                            <p class="text-[10px] text-slate-400">+60 Karma</p>
+                        </button>
+
+                        <button onclick="addKarma(50, 'Signal Scout Report')" class="glass p-4 rounded-2xl text-left hover:bg-white/5 transition-colors group">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-satellite-dish text-purple-500"></i>
+                            </div>
+                            <p class="text-xs font-bold text-white">Signal Scout</p>
+                            <p class="text-[10px] text-slate-400">+50 Karma</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feature Gating (The Velvet Rope) -->
+                <div class="space-y-4 pb-8">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Unstoppable Perks</h3>
+                    <div class="space-y-3">
+                        
+                        <!-- Perk 1 -->
+                        <div id="perk-typhoon" class="glass p-4 rounded-3xl flex items-center justify-between opacity-40 transition-all duration-500">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-cloud-bolt text-xl text-slate-400 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-white perk-title">Typhoon Guard</p>
+                                    <p class="text-[10px] text-slate-500 perk-status">Locked: Requires 650 Karma</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-600 perk-lock-icon"></i>
+                        </div>
+
+                        <!-- Perk 2 -->
+                        <div id="perk-insider" class="glass p-4 rounded-3xl flex items-center justify-between opacity-40 transition-all duration-500">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-ticket text-xl text-slate-400 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-white perk-title">Globe Insider</p>
+                                    <p class="text-[10px] text-slate-500 perk-status">Locked: Requires 650 Karma</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-600 perk-lock-icon"></i>
+                        </div>
+
+                        <!-- Perk 3 -->
+                        <div id="perk-og" class="glass p-4 rounded-3xl flex items-center justify-between opacity-40 transition-all duration-500">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-crown text-xl text-slate-400 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-white perk-title">Legacy Perks</p>
+                                    <p class="text-[10px] text-slate-500 perk-status">Locked: Requires 900 Karma</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-600 perk-lock-icon"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ledger View (Hidden Initially) -->
+            <div id="ledger-view" class="hidden pt-4 space-y-6">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-black italic">Trust Ledger</h2>
+                    <p class="text-xs text-slate-400">A permanent record of your ecosystem contribution.</p>
+                </div>
+
+                <div id="ledger-container" class="space-y-3">
+                    <!-- History entries injected here -->
+                    <div class="glass p-4 rounded-2xl flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center"><i class="fas fa-plus text-xs text-blue-500"></i></div>
+                            <div>
+                                <p class="text-xs font-bold">Initial Activation</p>
+                                <p class="text-[10px] text-slate-500">Welcome to GOMO</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-black">+245</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tab Navigation (Fixed) -->
+        <div class="absolute bottom-0 w-full h-24 glass flex justify-around items-center px-6 pb-4 z-30">
+            <button onclick="switchView('dashboard')" class="flex flex-col items-center gap-1 group">
+                <div id="nav-dash" class="w-10 h-10 rounded-xl bg-gomo-gradient flex items-center justify-center transition-all">
+                    <i class="fas fa-house text-sm text-white"></i>
+                </div>
+                <span class="text-[9px] font-bold text-white uppercase tracking-tighter">Dashboard</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 opacity-40">
+                <div class="w-10 h-10 flex items-center justify-center"><i class="fas fa-shop text-sm"></i></div>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Shop</span>
+            </button>
+            <button onclick="switchView('ledger')" class="flex flex-col items-center gap-1 group">
+                <div id="nav-ledger" class="w-10 h-10 flex items-center justify-center transition-all">
+                    <i class="fas fa-scroll text-sm text-slate-400"></i>
+                </div>
+                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Ledger</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 opacity-40">
+                <div class="w-10 h-10 flex items-center justify-center"><i class="fas fa-user-gear text-sm"></i></div>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Profile</span>
+            </button>
+        </div>
+
+        <!-- Notch Overlay -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-2xl z-50"></div>
+    </div>
+
+    <!-- UI Logic -->
+    <script>
+        let karma = 245;
+        const TIERS = {
+            SCOUT: { min: 0, max: 350, name: "THE SCOUT", desc: "You're exploring. Keep moving.", color: "slate", icon: "user" },
+            MOVER: { min: 351, max: 650, name: "THE MOVER", desc: "You're making moves. We see you.", color: "blue", icon: "bolt" },
+            INSIDER: { min: 651, max: 899, name: "THE INSIDER", desc: "Part of the inner circle. Doors open for you.", color: "purple", icon: "shield-halved" },
+            OG: { min: 900, max: 1000, name: "THE OG", desc: "You run this town. Unstoppable.", color: "gold", icon: "crown" }
+        };
+
+        function switchView(view) {
+            const dash = document.getElementById('dashboard-view');
+            const ledger = document.getElementById('ledger-view');
+            const navDash = document.getElementById('nav-dash');
+            const navLedger = document.getElementById('nav-ledger');
+
+            if (view === 'dashboard') {
+                dash.classList.remove('hidden');
+                ledger.classList.add('hidden');
+                navDash.classList.add('bg-gomo-gradient');
+                navDash.querySelector('i').classList.replace('text-slate-400', 'text-white');
+                navLedger.classList.remove('bg-gomo-gradient');
+                navLedger.querySelector('i').classList.replace('text-white', 'text-slate-400');
+            } else {
+                dash.classList.add('hidden');
+                ledger.classList.remove('hidden');
+                navLedger.classList.add('bg-gomo-gradient');
+                navLedger.querySelector('i').classList.replace('text-slate-400', 'text-white');
+                navDash.classList.remove('bg-gomo-gradient');
+                navDash.querySelector('i').classList.replace('text-white', 'text-slate-400');
+            }
+        }
+
+        function addKarma(amount, reason) {
+            karma = Math.min(1000, karma + amount);
+            
+            // Visual feedback
+            const delta = document.getElementById('score-delta');
+            delta.innerText = `+${amount}`;
+            delta.classList.remove('opacity-0');
+            setTimeout(() => delta.classList.add('opacity-0'), 1500);
+
+            // Add to Ledger
+            const container = document.getElementById('ledger-container');
+            const entry = document.createElement('div');
+            entry.className = "glass p-4 rounded-2xl flex justify-between items-center animate-pulse";
+            entry.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center"><i class="fas fa-plus text-xs text-green-500"></i></div>
+                    <div>
+                        <p class="text-xs font-bold">${reason}</p>
+                        <p class="text-[10px] text-slate-500">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                    </div>
+                </div>
+                <span class="text-xs font-black">+${amount}</span>
+            `;
+            container.prepend(entry);
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            const scoreEl = document.getElementById('karma-score');
+            const container = document.getElementById('shield-container');
+            const tierTop = document.getElementById('current-tier-top');
+            const tierName = document.getElementById('tier-name');
+            const tierDesc = document.getElementById('tier-desc');
+            const bar = document.getElementById('progress-bar');
+            const percent = document.getElementById('progress-percent');
+            const verified = document.getElementById('verified-badge');
+
+            scoreEl.innerText = karma;
+            
+            // Tier Logic
+            let tier;
+            if (karma < 351) tier = TIERS.SCOUT;
+            else if (karma < 651) tier = TIERS.MOVER;
+            else if (karma < 900) tier = TIERS.INSIDER;
+            else tier = TIERS.OG;
+
+            tierTop.innerText = tier.name;
+            tierName.innerText = tier.name;
+            tierDesc.innerText = tier.desc;
+            
+            // Progress Calculation
+            const currentPercent = (karma / 10).toFixed(1);
+            bar.style.width = `${currentPercent}%`;
+            percent.innerText = `${currentPercent}%`;
+
+            // Style Transitions
+            container.className = "w-56 h-56 rounded-full border-4 flex flex-col items-center justify-center relative transition-all duration-700 " + 
+                (tier === TIERS.INSIDER ? 'glow-purple' : tier === TIERS.OG ? 'glow-gold' : 'border-slate-800');
+            
+            if (tier === TIERS.OG) {
+                container.classList.add('og-iridescent');
+                verified.classList.remove('hidden');
+                tierName.classList.add('text-yellow-400');
+            } else {
+                container.classList.remove('og-iridescent');
+                tierName.classList.remove('text-yellow-400');
+                if (tier === TIERS.INSIDER) tierName.classList.add('text-purple-400');
+                else tierName.classList.remove('text-purple-400');
+            }
+
+            // Gating Logic (The most important part for Stakeholders)
+            const typhoon = document.getElementById('perk-typhoon');
+            const insider = document.getElementById('perk-insider');
+            const ogPerk = document.getElementById('perk-og');
+
+            if (karma >= 650) {
+                unlockPerk(typhoon, 'fa-bolt-lightning', 'text-blue-400');
+                unlockPerk(insider, 'fa-ticket-simple', 'text-purple-400');
+            }
+            if (karma >= 900) {
+                unlockPerk(ogPerk, 'fa-crown', 'text-yellow-400');
+            }
+        }
+
+        function unlockPerk(el, iconClass, textClass) {
+            el.classList.remove('opacity-40');
+            el.classList.add('border-blue-500/30', 'bg-blue-500/5');
+            const icon = el.querySelector('.perk-icon');
+            icon.className = `fas ${iconClass} text-xl ${textClass}`;
+            el.querySelector('.perk-status').innerText = "Status: UNLOCKED";
+            el.querySelector('.perk-status').classList.replace('text-slate-500', 'text-green-400');
+            el.querySelector('.perk-lock-icon').className = "fas fa-check-circle text-green-500";
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO: Digital Drops - Discovery as a Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate-950 */
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .gomo-purple { color: #8a2be2; }
+        .gomo-pink { color: #ff1493; }
+        
+        .text-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .bg-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Map & Drop Visuals */
+        .discovery-grid {
+            background-image: radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .drop-beacon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .beacon-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            animation: beacon-ping 2s infinite;
+        }
+
+        @keyframes beacon-ping {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .drop-capsule {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 12px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.5);
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            border: 10px solid #1f2937;
+            border-radius: 40px;
+            position: relative;
+            background: #0f172a;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.7);
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 20px;
+            background: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-xl border-b border-white/5">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gomo-gradient rounded-xl flex items-center justify-center text-white font-black text-xl">G</div>
+            <span class="font-black text-xl uppercase tracking-tighter">Digital <span class="gomo-purple">Drops</span></span>
+        </div>
+        <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
+            <a href="#concept" class="hover:text-white transition">Discovery</a>
+            <a href="#map" class="hover:text-white transition text-gomo-gradient">Live Map</a>
+            <a href="#tiers" class="hover:text-white transition">Karma Gating</a>
+        </div>
+        <button class="bg-gomo-gradient text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-purple-500/20">Explore Nearby</button>
+    </nav>
+
+    <!-- Hero: Discovery as a Service -->
+    <header id="concept" class="relative pt-40 pb-24 px-6 overflow-hidden discovery-grid">
+        <div class="container mx-auto max-w-6xl text-center">
+            <span class="inline-block py-2 px-4 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-gomo-purple">Location Discovery v1.0</span>
+            <h1 class="text-6xl md:text-9xl font-black mb-8 leading-none tracking-tighter uppercase">
+                Loot Boxes <br><span class="text-gomo-gradient">In Real Life.</span>
+            </h1>
+            <p class="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed mb-12">
+                We've turned the world into a game board. Exclusive data, merchant perks, and status symbols are "dropped" in your city—but only those with high <strong>Digital Karma</strong> can see the best loot.
+            </p>
+        </div>
+    </header>
+
+    <!-- The Map Simulator -->
+    <section id="map" class="py-24 bg-slate-950">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                
+                <!-- Left: App Mockup -->
+                <div class="lg:w-1/2 flex justify-center order-2 lg:order-1">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="h-full flex flex-col">
+                            <!-- In-App Map -->
+                            <div class="relative flex-grow bg-slate-800 discovery-grid overflow-hidden">
+                                <!-- User Location Indicator -->
+                                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full border-2 border-white animate-pulse shadow-[0_0_20px_rgba(59,130,246,1)]"></div>
+                                </div>
+
+                                <!-- Drop Beacons -->
+                                <div class="absolute top-1/4 left-1/3">
+                                    <div class="drop-beacon">
+                                        <div class="beacon-pulse" style="background: rgba(255, 20, 147, 0.4);"></div>
+                                        <div class="drop-capsule border-2 border-gomo-pink">
+                                            <span class="text-lg">🎁</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="absolute bottom-1/4 right-1/4">
+                                    <div class="drop-beacon">
+                                        <div class="beacon-pulse"></div>
+                                        <div class="drop-capsule border-2 border-gomo-purple">
+                                            <span class="text-lg">📶</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Search Overlay -->
+                                <div class="absolute top-12 left-0 w-full px-4">
+                                    <div class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center justify-between">
+                                        <div>
+                                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Current Zone</p>
+                                            <p class="text-xs font-bold text-white uppercase">BGC High Street</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-[8px] font-black gomo-purple uppercase tracking-widest">2 Drops Nearby</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Drop Detail Panel -->
+                            <div class="bg-slate-900 p-6 border-t border-white/5">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-xl shadow-lg shadow-pink-500/20">🥤</div>
+                                    <div>
+                                        <p class="text-[10px] font-black gomo-pink uppercase tracking-widest leading-none mb-1">Merchant Drop</p>
+                                        <h4 class="text-sm font-black text-white uppercase">Cha Time - Free Topping</h4>
+                                    </div>
+                                </div>
+                                <div class="bg-white/5 rounded-xl p-3 mb-4 flex justify-between items-center border border-white/5">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Requirement</span>
+                                    <span class="text-[9px] font-black text-white uppercase bg-purple-600 px-2 py-0.5 rounded">MOVER (350+ Karma)</span>
+                                </div>
+                                <button class="w-full bg-gomo-gradient text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest">Claim Drop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Discovery Narrative -->
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <span class="gomo-pink font-black text-sm tracking-[0.3em] uppercase mb-4 block">The Mechanism</span>
+                    <h2 class="text-5xl font-black mb-8 leading-tight tracking-tighter uppercase">Discovery as <br>a <span class="gomo-purple">Service.</span></h2>
+                    
+                    <div class="space-y-12">
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-xl border border-white/10">📍</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Hyper-Local Relevance</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">Drops aren't static. They appear and disappear based on real-world events, foot traffic, and merchant availability.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-xl border border-white/10">👁️</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Invisible Economics</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">Standard drops (5GB, basic vouchers) are visible to "Scouts." Legendary drops (concert VIP tickets, unique digital property) are invisible until you reach "OG" status.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-xl border border-white/10">🏪</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Partner Co-Pilot Integration</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">Merchants pay in GB to initiate a "Flash Drop." This sends a beacon to every GOMO user within 500m, driving immediate store traffic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Drop Tiers: The Karma Filter -->
+    <section id="tiers" class="py-24 px-6 border-t border-white/5">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 uppercase tracking-tighter">The Rarity Hierarchy</h2>
+                <p class="text-slate-500">Your Karma Score determines the value of the drops you discover.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Common -->
+                <div class="glass-card p-8 rounded-[2rem] border-slate-700/50">
+                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-4">Tier 01: Common</p>
+                    <h3 class="text-xl font-bold mb-4">The Scout</h3>
+                    <ul class="text-[11px] text-slate-500 space-y-3">
+                        <li class="flex items-center gap-2">✓ Basic GB Drops (1GB)</li>
+                        <li class="flex items-center gap-2">✓ Generic Shop Coupons</li>
+                    </ul>
+                </div>
+
+                <!-- Rare -->
+                <div class="glass-card p-8 rounded-[2rem] border-blue-500/20 bg-blue-500/5">
+                    <p class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-4">Tier 02: Rare</p>
+                    <h3 class="text-xl font-bold mb-4">The Mover</h3>
+                    <ul class="text-[11px] text-blue-200/60 space-y-3">
+                        <li class="flex items-center gap-2">✓ Signal Scout Bounties</li>
+                        <li class="flex items-center gap-2">✓ BOGO Merchant Perks</li>
+                        <li class="flex items-center gap-2">✓ Data Trash Drops</li>
+                    </ul>
+                </div>
+
+                <!-- Epic -->
+                <div class="glass-card p-8 rounded-[2rem] border-purple-500/40 bg-purple-500/5 scale-105 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gomo-gradient text-white text-[8px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">Recommended</div>
+                    <p class="text-[9px] font-black gomo-purple uppercase tracking-widest mb-4">Tier 03: Epic</p>
+                    <h3 class="text-xl font-bold mb-4">The Insider</h3>
+                    <ul class="text-[11px] text-purple-200/60 space-y-3">
+                        <li class="flex items-center gap-2">✓ Typhoon Guard Access</li>
+                        <li class="flex items-center gap-2">✓ Priority Event Queues</li>
+                        <li class="flex items-center gap-2">✓ High-Yield Data Stakes</li>
+                    </ul>
+                </div>
+
+                <!-- Legendary -->
+                <div class="glass-card p-8 rounded-[2rem] border-yellow-500/40 bg-yellow-500/5">
+                    <p class="text-[9px] font-black text-yellow-500 uppercase tracking-widest mb-4">Tier 04: Legendary</p>
+                    <h3 class="text-xl font-bold mb-4">The OG</h3>
+                    <ul class="text-[11px] text-yellow-200/60 space-y-3">
+                        <li class="flex items-center gap-2">✓ Vanity Number Drops</li>
+                        <li class="flex items-center gap-2">✓ DAO Voting Governance</li>
+                        <li class="flex items-center gap-2">✓ Legacy Permanent VIP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic CTA -->
+    <section class="py-32 px-6 bg-gradient-to-t from-black to-slate-950">
+        <div class="container mx-auto max-w-4xl text-center glass-card p-16 rounded-[4rem] border-white/10">
+            <h2 class="text-5xl font-black mb-8 leading-tight tracking-tighter uppercase">Ready to <span class="text-gomo-gradient">Drop?</span></h2>
+            <p class="text-slate-400 text-lg mb-12">Digital Drops bridge the gap between merchants who want traffic and users who want rewards. It's the ultimate location-based growth hack.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <button class="bg-white text-black px-12 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-gomo-purple hover:text-white transition-all shadow-2xl">Integrate as Partner</button>
+                <button class="bg-white/5 border border-white/10 text-white px-12 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-white/10 transition-all">Download App</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center border-t border-white/5">
+        <div class="flex items-center justify-center gap-2 mb-6">
+            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-white font-black text-sm">G</div>
+            <span class="font-bold text-sm uppercase tracking-widest text-slate-500">GOMO <span class="gomo-purple">Discovery</span></span>
+        </div>
+        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.4em]">© 2025 Product Strategy Team • Digital Karma Enabled</p>
+    </footer>
+
+</body>
+</html>

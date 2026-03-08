@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO: Digital Drops - AR Social Discovery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Slate-950 */
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .gomo-purple { color: #8a2be2; }
+        .gomo-pink { color: #ff1493; }
+        
+        .text-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .bg-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* AR Simulator Styles */
+        .ar-viewfinder {
+            position: relative;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&q=80&w=1000'); /* Cyberpunk city street */
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .ar-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(2, 6, 23, 0.4) 100%);
+            pointer-events: none;
+        }
+
+        .ar-scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #8a2be2, transparent);
+            top: 0;
+            animation: scan 4s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .floating-drop {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.5));
+        }
+
+        .floating-drop:hover {
+            transform: scale(1.1);
+        }
+
+        .drop-icon-container {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            border: 10px solid #1f2937;
+            border-radius: 40px;
+            position: relative;
+            background: #0f172a;
+            overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.7);
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 20px;
+            background: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 20;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom: 2px solid #8a2be2;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-xl border-b border-white/5">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gomo-gradient rounded-xl flex items-center justify-center text-white font-black text-xl">G</div>
+            <span class="font-black text-xl uppercase tracking-tighter">Digital <span class="gomo-purple">Drops</span></span>
+        </div>
+        <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
+            <a href="#concept" class="hover:text-white transition">The Vision</a>
+            <a href="#simulator" class="hover:text-white transition text-gomo-gradient">AR Viewfinder</a>
+            <a href="#tiers" class="hover:text-white transition">Trust Yields</a>
+        </div>
+        <button class="bg-gomo-gradient text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">Scan Now</button>
+    </nav>
+
+    <!-- Hero -->
+    <header id="concept" class="relative pt-40 pb-24 px-6 overflow-hidden">
+        <div class="container mx-auto max-w-6xl text-center">
+            <span class="inline-block py-2 px-4 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] font-black uppercase tracking-[0.4em] mb-8 text-gomo-purple">Augmented Social Discovery</span>
+            <h1 class="text-6xl md:text-9xl font-black mb-8 leading-none tracking-tighter uppercase">
+                The World is <br><span class="text-gomo-gradient">Your UI.</span>
+            </h1>
+            <p class="text-slate-400 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed mb-12">
+                Uncover hidden traces left by the community. Claim <strong>Gifts</strong>, read <strong>Local Notes</strong>, and find merchant <strong>BOGOs</strong> (Buy One, Get One) vouchers floating in the air.
+            </p>
+        </div>
+    </header>
+
+    <!-- AR Simulator -->
+    <section id="simulator" class="py-24 bg-slate-950">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                
+                <!-- Left: AR Viewfinder Mockup -->
+                <div class="lg:w-1/2 flex justify-center order-2 lg:order-1">
+                    <div class="phone-mockup border-slate-800">
+                        <div class="phone-notch"></div>
+                        <div class="h-full flex flex-col" id="appContent">
+                            
+                            <!-- AR Layer -->
+                            <div class="relative flex-grow ar-viewfinder">
+                                <div class="ar-overlay"></div>
+                                <div class="ar-scanner-line"></div>
+
+                                <!-- Floating AR Elements -->
+                                <div class="floating-drop top-[20%] left-[10%]" onclick="showDetail('gomo')">
+                                    <div class="drop-icon-container border-2 border-gomo-purple">
+                                        <span class="text-xl">🎁</span>
+                                        <div class="absolute -bottom-8 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[8px] font-black text-white uppercase">GOMO Gift</div>
+                                    </div>
+                                </div>
+
+                                <div class="floating-drop top-[40%] right-[15%]" onclick="showDetail('social')">
+                                    <div class="drop-icon-container border-2 border-gomo-pink" style="animation-delay: 1s;">
+                                        <span class="text-xl">✉️</span>
+                                        <div class="absolute -bottom-8 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[8px] font-black text-white uppercase">Marco's Trace</div>
+                                    </div>
+                                </div>
+
+                                <div class="floating-drop bottom-[20%] left-[40%]" onclick="showDetail('bogo')">
+                                    <div class="drop-icon-container border-2 border-blue-500" style="animation-delay: 2s;">
+                                        <span class="text-xl">🥤</span>
+                                        <div class="absolute -bottom-8 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[8px] font-black text-white uppercase">Cha Time BOGO</div>
+                                    </div>
+                                </div>
+
+                                <!-- AR HUD -->
+                                <div class="absolute top-12 left-0 w-full px-4 flex justify-between items-start pointer-events-none">
+                                    <div class="bg-black/40 backdrop-blur-md border border-white/10 p-3 rounded-2xl">
+                                        <p class="text-[7px] font-black text-slate-400 uppercase tracking-widest mb-1">Scanning Range</p>
+                                        <p class="text-xs font-bold text-white uppercase">500m Radius</p>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-full border-2 border-white/20 flex items-center justify-center">
+                                        <div class="w-1 h-1 bg-red-500 rounded-full"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Detail Drawer -->
+                                <div id="detailDrawer" class="absolute bottom-0 left-0 w-full p-4 transform translate-y-full transition-transform duration-500 z-30">
+                                    <div class="bg-slate-900 rounded-[2rem] p-6 border border-white/10 shadow-2xl">
+                                        <div id="detailContent">
+                                            <!-- Injected via JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="bg-slate-900 p-6 border-t border-white/5 flex justify-between items-center">
+                                <button onclick="switchView('create')" class="bg-white/10 hover:bg-white/20 p-4 rounded-full transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                </button>
+                                <div class="text-center">
+                                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Digital Karma</p>
+                                    <p class="text-lg font-black gomo-purple">842</p>
+                                </div>
+                                <button class="w-14 h-14 bg-gomo-gradient rounded-full border-4 border-slate-800 shadow-xl flex items-center justify-center">
+                                    <div class="w-4 h-4 border-2 border-white rounded-full"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Content -->
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <span class="gomo-pink font-black text-sm tracking-[0.3em] uppercase mb-4 block">The Experience</span>
+                    <h2 class="text-5xl font-black mb-8 leading-tight tracking-tighter uppercase">Drop Your <br><span class="gomo-purple">Trace.</span></h2>
+                    
+                    <div class="space-y-12">
+                        <div class="flex gap-6 group">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-2xl border border-white/10 group-hover:border-purple-500/50 transition">📱</div>
+                            <div>
+                                <h4 class="text-xl font-black uppercase tracking-tight mb-2">Augmented Interaction</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">No more staring at 2D pins. Tilt your phone to see <strong>Digital Loot</strong> floating in the physical world. Walk towards them to reveal their contents.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-2xl border border-white/10 group-hover:border-pink-500/50 transition">✨</div>
+                            <div>
+                                <h4 class="text-xl font-black uppercase tracking-tight mb-2">Social Echoes</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">Leave a trace for others. A <strong>Social Drop</strong> can be a text note, a photo, or even 1GB of data for a lucky stranger to find.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center flex-shrink-0 text-2xl border border-white/10 group-hover:border-blue-500/50 transition">🎟️</div>
+                            <div>
+                                <h4 class="text-xl font-black uppercase tracking-tight mb-2">Merchant BOGOs</h4>
+                                <p class="text-slate-500 leading-relaxed text-sm">Businesses use <strong>BOGOs (Buy One, Get One)</strong> to reward explorers. Find a Cha Time drop, claim the AR voucher, and get your second milk tea free.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Refined Rarity Hierarchy -->
+    <section id="tiers" class="py-24 px-6 border-t border-white/5 bg-slate-900/30">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4 uppercase tracking-tighter">Incentivized Yield</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Everyone can see the world, but your <strong>Karma Score</strong> increases your luck and the value of what you find. We don't limit access—we reward loyalty.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Standard -->
+                <div class="glass-card p-10 rounded-[2.5rem] border-white/10 hover:border-white/20 transition group">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Access Level: Open</p>
+                    <h3 class="text-2xl font-black mb-4 uppercase group-hover:text-white">Community Tier</h3>
+                    <ul class="text-xs text-slate-500 space-y-4 font-medium">
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-white/5 flex items-center justify-center text-[10px]">✓</span>
+                            See all Social Notes & Traces
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-white/5 flex items-center justify-center text-[10px]">✓</span>
+                            Claim Standard 1GB Drops
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-white/5 flex items-center justify-center text-[10px]">✓</span>
+                            Redeem Basic Merchant BOGOs
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Insider -->
+                <div class="glass-card p-10 rounded-[2.5rem] border-purple-500/30 bg-purple-500/5 relative shadow-2xl scale-105">
+                    <div class="absolute top-6 right-6">
+                        <span class="bg-gomo-gradient text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Bonus Yield</span>
+                    </div>
+                    <p class="text-[10px] font-black gomo-purple uppercase tracking-widest mb-6">Access Level: Boosted</p>
+                    <h3 class="text-2xl font-black mb-4 uppercase text-white">Trust Tier</h3>
+                    <ul class="text-xs text-purple-200/60 space-y-4 font-medium">
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px]">✓</span>
+                            2x Higher Luck for Rare Drops
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px]">✓</span>
+                            Unlock GOMO-only Brand Loot
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px]">✓</span>
+                            Early access to Event Drops
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- OG -->
+                <div class="glass-card p-10 rounded-[2.5rem] border-pink-500/30 bg-pink-500/5 hover:border-pink-500/50 transition">
+                    <p class="text-[10px] font-black gomo-pink uppercase tracking-widest mb-6">Access Level: Elite</p>
+                    <h3 class="text-2xl font-black mb-4 uppercase text-white">Legend Tier</h3>
+                    <ul class="text-xs text-pink-200/60 space-y-4 font-medium">
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-pink-500/20 text-pink-400 flex items-center justify-center text-[10px]">✓</span>
+                            5x Higher Luck for Mythic Loot
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-pink-500/20 text-pink-400 flex items-center justify-center text-[10px]">✓</span>
+                            Drop Traces that never decay
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-5 h-5 rounded bg-pink-500/20 text-pink-400 flex items-center justify-center text-[10px]">✓</span>
+                            Host your own Community Drops
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic CTA -->
+    <section class="py-40 px-6 bg-gradient-to-t from-black to-slate-950">
+        <div class="container mx-auto max-w-4xl text-center glass-card p-16 rounded-[4rem] border-white/10 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gomo-gradient"></div>
+            <h2 class="text-6xl font-black mb-8 leading-tight tracking-tighter uppercase">Drop Your <span class="text-gomo-gradient">Trace.</span></h2>
+            <p class="text-slate-400 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">Whether you're rewarding a friend or promoting a business, Augmented Discovery is how you leave your mark on the real world.</p>
+            <button class="bg-white text-black px-16 py-6 rounded-full font-black uppercase text-sm tracking-widest hover:bg-gomo-purple hover:text-white transition-all shadow-2xl shadow-white/10">Initialize Scanner</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center border-t border-white/5">
+        <div class="flex items-center justify-center gap-2 mb-6">
+            <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-white font-black text-sm">G</div>
+            <span class="font-bold text-sm uppercase tracking-widest text-slate-500">GOMO <span class="gomo-purple">Discovery</span></span>
+        </div>
+        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.4em]">© 2025 Product Strategy Team • AR Trust Protocol Enabled</p>
+    </footer>
+
+    <script>
+        function showDetail(type) {
+            const drawer = document.getElementById('detailDrawer');
+            const content = document.getElementById('detailContent');
+
+            if(type === 'gomo') {
+                content.innerHTML = `
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-purple-500/20">🎁</div>
+                        <div>
+                            <p class="text-[10px] font-black gomo-purple uppercase tracking-widest mb-1">GOMO Gift</p>
+                            <h4 class="text-lg font-black text-white uppercase leading-none">10GB Data Blast</h4>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-6 leading-relaxed">A high-yield data gift for nearby explorers. Claim it to boost your month.</p>
+                    <button class="w-full bg-gomo-gradient text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg" onclick="closeDrawer()">Claim Gift</button>
+                `;
+            } else if (type === 'social') {
+                content.innerHTML = `
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-pink-500/20">✉️</div>
+                        <div>
+                            <p class="text-[10px] font-black gomo-pink uppercase tracking-widest mb-1">Social Trace: Marco</p>
+                            <h4 class="text-lg font-black text-white uppercase leading-none">Hidden Note</h4>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-6 leading-relaxed italic">"The view is better from the roof! Hope whoever finds this has a great day in BGC."</p>
+                    <button class="w-full bg-slate-800 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest" onclick="closeDrawer()">Boost Marco's Karma</button>
+                `;
+            } else if (type === 'bogo') {
+                content.innerHTML = `
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-blue-500/20">🥤</div>
+                        <div>
+                            <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Merchant BOGO</p>
+                            <h4 class="text-lg font-black text-white uppercase leading-none">Cha Time Special</h4>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-6 leading-relaxed"><strong>Buy One, Get One Free!</strong> Use this AR voucher at the counter for any signature milk tea.</p>
+                    <button class="w-full bg-blue-600 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg" onclick="closeDrawer()">Redeem BOGO</button>
+                `;
+            }
+
+            drawer.classList.remove('translate-y-full');
+        }
+
+        function closeDrawer() {
+            document.getElementById('detailDrawer').classList.add('translate-y-full');
+        }
+
+        function switchView(view) {
+            // Simplified for mockup - would typically transition to a "Create Drop" interface
+            alert("Switching to Create Mode: Point your camera at a surface to leave a trace.");
+        }
+    </script>
+</body>
+</html>

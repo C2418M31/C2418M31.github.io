@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Growth Engine v2.0A - Strategy Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts for Partner UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Custom Scrollbar & Partner Styles -->
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 20px; }
+      
+      .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .gomo-purple { color: #8a2be2; }
+      .gomo-pink { color: #ff1493; }
+      
+      .text-gomo-gradient {
+          background-image: linear-gradient(to right, #8a2be2, #ff1493);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+      }
+      .bg-gomo-gradient { background-image: linear-gradient(to right, #8a2be2, #ff1493); }
+    </style>
+  </head>
+  <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500/30">
+    <div id="root"></div>
+
+    <!-- React Application -->
+    <script type="text/babel" data-type="module">
+      import React, { useState, useMemo } from "https://esm.sh/react@18.2.0";
+      import { createRoot } from "https://esm.sh/react-dom@18.2.0/client";
+      import {
+        Users, Zap, Shield, Trophy, Heart, Smartphone, Globe, Lock, Cloud, TrendingUp, 
+        Activity, UserPlus, ArrowRight, Trash2, Gift, Network, ChevronsRight, Layout, 
+        Anchor, Database, ShoppingBag, Share2, Umbrella, Repeat, Plane, Hash, Dices, 
+        Utensils, Wifi, Crosshair, MapPin, Ticket, BadgeCheck, Flame, CloudRain, Scale, 
+        Compass, Map, Calendar, Award, MessageCircle, Briefcase, QrCode, Image, Bell,
+        Box, Hammer, ExternalLink
+      } from "https://esm.sh/lucide-react@0.263.1";
+
+      /** --- SYSTEMS THINKING DATA MODEL (FULL RESTORED & AUDITED LIST) --- */
+      const growthSystems = [
+        // --- PILLAR 1: ANCHOR (Trust) ---
+        {
+          id: "digital-karma",
+          title: "Digital Karma",
+          category: "ANCHOR - Trust",
+          icon: Scale,
+          color: "text-slate-200",
+          bgColor: "bg-slate-800/50",
+          borderColor: "border-slate-500",
+          summary: "The ecosystem's 'Trust Score'. It aggregates all positive behavior to gatekeep scarce resources.",
+          loop: { trigger: "User maintains a streak, helps a peer, or reports signal issues.", action: "Earns Karma Points (Reliability Score).", reward: "Unlocks future emergency benefits & VIP access.", investment: "Reputation Lock: High cost to abandon a good score." },
+          connections: { 
+            inputs: ["streak-economy", "micro-tribe", "social-drops", "signal-scout", "data-trash"], // Aggregates all "Good Behavior"
+            outputs: ["globe-insider", "legacy-perks", "digital-real-estate", "typhoon-guard"] // Unlocks high-value assets
+          },
+        },
+        {
+          id: "typhoon-guard",
+          title: "Typhoon Guard",
+          category: "ANCHOR - Trust",
+          icon: Umbrella,
+          color: "text-slate-200",
+          bgColor: "bg-slate-800/50",
+          borderColor: "border-slate-500",
+          summary: "Crisis-response protocol leveraging location data to automate retention safety nets.",
+          loop: { trigger: "Signal #2 detected in user location.", action: "System auto-pauses expiry clocks.", reward: "Connectivity preserved for emergency use.", investment: 'Trust Capital: Extreme loyalty due to "human" treatment.' },
+          connections: { 
+            inputs: ["micro-tribe", "signal-scout", "digital-karma"], // Triggered by verified location/tribe or high trust
+            outputs: ["cloud-lock", "data-staking"] // Trust enables deeper asset storage
+          },
+        },
+        {
+          id: "legacy-perks",
+          title: "Legacy Perks",
+          category: "ANCHOR - Trust",
+          icon: Trophy,
+          color: "text-slate-200",
+          bgColor: "bg-slate-800/50",
+          borderColor: "border-slate-500",
+          summary: "Tenure-based status locking mechanism rewarding long-term network loyalty.",
+          loop: { trigger: "User hits 3-year anniversary.", action: 'Unlocks "Veteran" status.', reward: "Permanent VIP Support access.", investment: 'Identity: Refusal to restart as a "nobody" elsewhere.' },
+          connections: { 
+            inputs: ["skill-tree", "globe-passport", "travel-badges", "digital-karma", "cloud-lock"], // Long term progression
+            outputs: ["digital-real-estate", "fandom-dao", "partner-copilot"] // Unlocks elite inventory
+          },
+        },
+
+        // --- PILLAR 2: KEEPER (Retention) ---
+        {
+          id: "globe-insider",
+          title: "Globe Insider",
+          category: "KEEPER - Retention",
+          icon: Ticket,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Scarcity-based access gate using reputation scores to filter for high-value users.",
+          loop: { trigger: "High-demand concert (Blackpink/Coldplay) announced.", action: "User enters 'Waiting Room' via app.", reward: "Priority queue based on Reliability Score.", investment: "Status Maintenance: User avoids churn to keep score high." },
+          connections: { 
+            inputs: ["digital-karma", "legacy-perks"], // Score required
+            outputs: ["fandom-dao", "prediction-market"] // Insider info fuels betting
+          },
+        },
+        {
+          id: "globe-passport",
+          title: "Globe Passport",
+          category: "KEEPER - Retention",
+          icon: BadgeCheck,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Identity-based progression system anchoring long-term behavior to permanent privileges.",
+          loop: { trigger: "Consistent monthly usage.", action: "Passport Level increases (Life/Community/Utility).", reward: "Permanent privilege unlocks.", investment: "Fear of Missing Identity: Losing the Passport means losing status." },
+          connections: { 
+            inputs: ["nomad-passport", "quest-chain", "booking-bridge", "streak-economy"], // Habits feed identity
+            outputs: ["legacy-perks", "partner-copilot"] // Identity fuels B2B value
+          },
+        },
+        {
+          id: "skill-tree",
+          title: "The Skill Tree",
+          category: "KEEPER - Retention",
+          icon: Activity,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Visual progression system rewarding behavioral diversity with utility perks.",
+          loop: { trigger: "User completes monthly tasks.", action: "Checks profile progress bar.", reward: 'Unlocks "Data Buffer" (48hr non-expiry).', investment: "Sunk Cost: Losing Level 20 status upon churn." },
+          connections: { 
+            inputs: ["quest-chain", "streak-economy", "signal-scout"], // Actions grant XP
+            outputs: ["legacy-perks", "mystery-box"] // Rewards
+          },
+        },
+        {
+          id: "cloud-lock",
+          title: "Cloud Lock-in",
+          category: "KEEPER - Retention",
+          icon: Cloud,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "High-friction exit barrier leveraging personal digital assets (photos/files).",
+          loop: { trigger: "Phone storage full notification.", action: "Activates free Cloud Storage.", reward: "Unlimited photo backup.", investment: "High Friction: Migrating 10k photos to leave." },
+          connections: { 
+            inputs: ["typhoon-guard", "data-trash", "mystery-box"], // Safety, Credits, or Won storage
+            outputs: ["legacy-perks"] 
+          },
+        },
+        {
+          id: "nomad-passport",
+          title: "Nomad Passport",
+          category: "KEEPER - Retention",
+          icon: Plane,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Context-specific status tier for high-value roaming and travel segments.",
+          loop: { trigger: "User buys roaming data.", action: 'Unlocks "Passport Tier".', reward: "Airport lounge access.", investment: "Maintenance: Keeping roaming load active." },
+          connections: { 
+            inputs: ["sachet-upsell", "the-detour", "booking-bridge", "travel-squad"], 
+            outputs: ["globe-passport", "ar-geocache", "travel-badges"] 
+          },
+        },
+        {
+          id: "digital-real-estate",
+          title: "Digital Real Estate",
+          category: "KEEPER - Retention",
+          icon: Hash,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Asset ownership economy centered on digital identity and number scarcity.",
+          loop: { trigger: "User desires a status number (e.g. 888).", action: "Bids on or trades numbers in-app.", reward: "Ownership of a high-value digital asset.", investment: "Identity Lock-in: You never churn your 'Golden Number'." },
+          connections: { 
+            inputs: ["legacy-perks", "digital-karma"], // Only high trust users can own prime assets
+            outputs: ["fandom-dao", "prediction-market", "micro-tribe"] // Assets used for status
+          },
+        },
+        {
+          id: "data-staking",
+          title: "Data Staking",
+          category: "KEEPER - Retention",
+          icon: Database,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "DeFi-inspired holding mechanism reducing circulating supply and creating lock-in.",
+          loop: { trigger: "User has surplus data.", action: "Locks 10GB for 30 days.", reward: "Gets 12GB back (20% interest).", investment: "Time Lock: Cannot churn while assets are staked." },
+          connections: { 
+            inputs: ["typhoon-guard", "booking-bridge", "load-roulette"], // Sources of surplus
+            outputs: ["data-market", "prediction-market"] // Where to use interest
+          },
+        },
+
+        // --- PILLAR 3: CATALYST (Engagement) ---
+        {
+          id: "data-market",
+          title: "Data Market",
+          category: "CATALYST - Engagement",
+          icon: Flame,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Dynamic burn mechanism clearing surplus user assets via gamified auctions.",
+          loop: { trigger: "Flash Auction alert at 8:00 PM.", action: "User bids GBs for concert tickets/sneakers.", reward: "Winning user burns data for high-value item.", investment: "Burn Rate: Empty data tanks require new top-ups." },
+          connections: { 
+            inputs: ["data-staking", "data-trash"], 
+            outputs: ["streak-economy", "partner-copilot"] 
+          },
+        },
+        {
+          id: "streak-economy",
+          title: "Streak",
+          category: "CATALYST - Engagement",
+          icon: Repeat,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Consistency engine incentivizing Daily Active Usage (DAU) beyond transactions.",
+          loop: { trigger: "Daily Push or Squad Nudge.", action: "Log in, claim daily drop, or chat.", reward: 'Unlock "Turbo Speed" weekends or Multipliers.', investment: "Loss Aversion: Missing a day breaks the chain." },
+          connections: { 
+            inputs: ["micro-tribe", "data-market", "sachet-upsell", "signal-scout", "mystery-box"], 
+            outputs: ["digital-karma", "load-roulette", "skill-tree", "foodie-roulette"] 
+          },
+        },
+        {
+          id: "quest-chain",
+          title: "Quest Chain",
+          category: "CATALYST - Engagement",
+          icon: ArrowRight,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Sequential action framing to drive specific, high-value behaviors.",
+          loop: { trigger: "Weekly Challenge notification.", action: "Log in -> Pay Bill -> Redeem.", reward: "2x Points Multiplier.", investment: "Active Strategy: Planning spend around multipliers." },
+          connections: { 
+            inputs: ["sachet-upsell", "prediction-market", "signal-scout", "partner-copilot"], 
+            outputs: ["foodie-roulette", "skill-tree", "globe-passport"] 
+          },
+        },
+        {
+          id: "load-roulette",
+          title: "Load Roulette",
+          category: "CATALYST - Engagement",
+          icon: Dices,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Variable reward framing for standard transactions to increase perceived value.",
+          loop: { trigger: "User prepares to top-up ₱50.", action: "Selects 'Mystery Load' option.", reward: "Chance to win ₱100, ₱500, or ₱1000.", investment: "Excitement: Top-ups become a thrill, not a chore." },
+          connections: { 
+            inputs: ["streak-economy", "sachet-upsell"], 
+            outputs: ["mystery-box", "data-staking"] 
+          },
+        },
+        {
+          id: "foodie-roulette",
+          title: "Foodie Roulette",
+          category: "CATALYST - Engagement",
+          icon: Utensils,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Location-triggered variable rewards driving offline traffic for partners.",
+          loop: { trigger: "Lunchtime (11 AM) push notification.", action: "User spins the wheel in-app.", reward: "Unique discount code for a nearby partner.", investment: "Habit: App becomes the daily lunch decision maker." },
+          connections: { 
+            inputs: ["quest-chain", "partner-copilot", "environment-sales", "streak-economy"], // UPDATED: Added streak-economy
+            outputs: ["mystery-box", "social-drops"] 
+          },
+        },
+
+        {
+          id: "load-roulette",
+          title: "Load Roulette",
+          category: "CATALYST - Engagement",
+          icon: Dices,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Variable reward framing for standard transactions to increase perceived value.",
+          loop: { trigger: "User prepares to top-up ₱50.", action: "Selects 'Mystery Load' option.", reward: "Chance to win ₱100, ₱500, or ₱1000.", investment: "Excitement: Top-ups become a thrill, not a chore." },
+          connections: { 
+            inputs: ["streak-economy", "sachet-upsell"], // Streaks & Purchases trigger spins
+            outputs: ["mystery-box", "data-staking"] // Wins & Surplus
+          },
+        },
+        {
+          id: "foodie-roulette",
+          title: "Foodie Roulette",
+          category: "CATALYST - Engagement",
+          icon: Utensils,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Location-triggered variable rewards driving offline traffic for partners.",
+          loop: { trigger: "Lunchtime (11 AM) push notification.", action: "User spins the wheel in-app.", reward: "Unique discount code for a nearby partner.", investment: "Habit: App becomes the daily lunch decision maker." },
+          connections: { 
+            inputs: ["quest-chain", "partner-copilot", "environment-sales"], // Quests & B2B Inventory
+            outputs: ["mystery-box", "social-drops"] // Rewards & UGC
+          },
+        },
+        {
+          id: "mystery-box",
+          title: "Mystery Box",
+          category: "CATALYST - Engagement",
+          icon: Gift,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Stochastic reward delivery system generating dopamine loops.",
+          loop: { trigger: "Top-up above ₱50.", action: "Spins the wheel.", reward: "Random prize (Data/Voucher).", investment: 'Dopamine: Chasing the "Golden Ticket".' },
+          connections: { 
+            inputs: ["load-roulette", "foodie-roulette", "data-heist"], 
+            outputs: ["streak-economy", "cloud-lock", "data-staking"] // Assets
+          },
+        },
+        {
+          id: "sachet-upsell",
+          title: "Sachet Upsell",
+          category: "CATALYST - Engagement",
+          icon: ShoppingBag,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Context-aware micropayments for Quality of Service (QoS).",
+          loop: { trigger: "High latency detected.", action: 'One-tap "Boost Speed".', reward: "1 Hour Priority Traffic.", investment: "Micro-transaction habit." },
+          connections: { 
+            inputs: ["environment-sales", "signal-scout", "data-market"], // Triggers (Low signal, Rain, or Burned data)
+            outputs: ["quest-chain", "nomad-passport", "streak-economy"] // Progress
+          },
+        },
+        {
+          id: "prediction-market",
+          title: "Prediction Market",
+          category: "CATALYST - Engagement",
+          icon: TrendingUp,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Gamified asset sink leveraging event speculation and social trends.",
+          loop: { trigger: "NBA Finals / Miss Universe event.", action: "User stakes 5GB on a winner.", reward: "Win = Data Back + Lifestyle Voucher.", investment: "Gamification: Turns passive data into active currency." },
+          connections: { 
+            inputs: ["data-staking", "digital-real-estate", "globe-insider"], // Capital & Insider Info
+            outputs: ["fandom-dao", "quest-chain"] // Influence & Progress
+          },
+        },
+        {
+          id: "the-detour",
+          title: "The Detour",
+          category: "CATALYST - Engagement",
+          icon: Compass,
+          color: "text-yellow-400",
+          bgColor: "bg-yellow-900/30",
+          borderColor: "border-yellow-500",
+          summary: "Discovery engine monetizing location context via partner suggestions.",
+          loop: { trigger: "User enters a new city/zone.", action: "App pushes a 'Detour' suggestion (Secret Cafe).", reward: "Discount/Perk at venue + Explorer XP.", investment: "Habit: App becomes a travel companion." },
+          connections: { 
+            inputs: ["signal-scout", "partner-copilot"], // Location data & Inventory
+            outputs: ["nomad-passport", "travel-badges", "social-drops"] // Travel status & UGC
+          },
+        },
+
+        // --- PILLAR 4: BAYANIHAN (Social) ---
+        {
+          id: "micro-tribe",
+          title: "Micro-Tribe",
+          category: "BAYANIHAN - Social",
+          icon: Users,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Small-group social lock-in mechanism utilizing accountability.",
+          loop: { trigger: "Create a squad of 4.", action: "Collective ₱500 load target.", reward: "Free YouTube for everyone.", investment: "Social Pressure: Cannot let friends down." },
+          connections: { 
+            inputs: ["ar-geocache", "digital-balikbayan", "social-drops", "digital-real-estate"], 
+            outputs: ["streak-economy", "typhoon-guard", "digital-karma", "travel-squad"] 
+          },
+        },
+        {
+          id: "travel-squad",
+          title: "Travel Squad",
+          category: "BAYANIHAN - Social",
+          icon: Globe,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Shared roaming pool for group travelers, creating social lock-in.",
+          loop: { trigger: "Users plan a trip together.", action: "Create a shared roaming bucket.", reward: "Cheaper cost per GB.", investment: "Social Lock: The group stays on GOMO for the trip." },
+          connections: { 
+            inputs: ["micro-tribe"], 
+            outputs: ["nomad-passport", "booking-bridge"] 
+          },
+        },
+        {
+          id: "social-drops",
+          title: "Social Drops",
+          category: "BAYANIHAN - Social",
+          icon: MessageCircle,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Geospatial UGC layer driving physical exploration and connection.",
+          loop: { trigger: "User wants to leave a mark at a location.", action: "Drops a geo-tagged message/gift.", reward: "Social connection (finder replies/thanks).", investment: "Content creation: Populating the world map." },
+          connections: { 
+            inputs: ["ar-geocache", "the-detour", "travel-badges", "partner-copilot"], 
+            outputs: ["micro-tribe", "digital-karma"] 
+          },
+        },
+        {
+          id: "travel-badges",
+          title: "Travel Badges",
+          category: "KEEPER - Retention",
+          icon: Award,
+          color: "text-blue-400",
+          bgColor: "bg-blue-900/30",
+          borderColor: "border-blue-500",
+          summary: "Achievement system gamifying physical movement and discovery.",
+          loop: { trigger: "User detected in a new city.", action: "Checks in to claim the 'Explorer Badge'.", reward: "Unlocks exclusive partner discounts.", investment: "Collection: Desire to complete the travel map." },
+          connections: { 
+            inputs: ["nomad-passport", "the-detour", "ar-geocache"], 
+            outputs: ["legacy-perks", "booking-bridge", "social-drops"] 
+          },
+        },
+        {
+          id: "signal-scout",
+          title: "Signal Scout",
+          category: "BAYANIHAN - Social",
+          icon: Wifi,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Crowdsourced network intelligence loop.",
+          loop: { trigger: "User experiences connection drop.", action: "Marks location on 'Signal Map'.", reward: "Earns 50MB 'Scout Bounty'.", investment: "Contribution: User feels ownership of network quality." },
+          connections: { 
+            inputs: ["speed-test-bounty", "riders-radar", "sachet-upsell"], // Verified by users or triggered by bad speed
+            outputs: ["environment-sales", "sachet-upsell", "the-detour", "digital-karma", "typhoon-guard", "streak-economy"] 
+          },
+        },
+        {
+          id: "speed-test-bounty",
+          title: "Speed Test Bounty",
+          category: "BAYANIHAN - Social",
+          icon: Crosshair,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Incentivized verification tasks for network QA.",
+          loop: { trigger: "Network requests data in specific area.", action: "User runs in-app speed test.", reward: "Instant data credit.", investment: "Gig Work: Performing labor for the network." },
+          connections: { 
+            inputs: ["digital-balikbayan"], 
+            outputs: ["signal-scout"] 
+          },
+        },
+        {
+          id: "data-heist",
+          title: "Data Heist",
+          category: "BAYANIHAN - Social",
+          icon: UserPlus,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Synchronous group challenge to accelerate burn rate.",
+          loop: { trigger: "Long weekend starts.", action: "Squad burns 50GB together.", reward: "Loot Box (PS5 Raffle).", investment: "Burn Rate: Depleting tanks together." },
+          connections: { 
+            inputs: ["fandom-dao"], 
+            outputs: ["mystery-box", "data-market"] 
+          },
+        },
+        {
+          id: "fandom-dao",
+          title: "Fandom DAO",
+          category: "BAYANIHAN - Social",
+          icon: Heart,
+          color: "text-orange-400",
+          bgColor: "bg-orange-900/30",
+          borderColor: "border-orange-500",
+          summary: "Collective resource pooling driven by affinity groups.",
+          loop: { trigger: "Vote for Idol billboard.", action: "Donate unused data to House.", reward: "Idol wins real-world ads.", investment: "Tribalism: Recruiting others to the network." },
+          connections: { 
+            inputs: ["prediction-market", "globe-insider", "digital-real-estate"], 
+            outputs: ["data-heist", "data-market"] 
+          },
+        },
+        // --- PILLAR 5: NEXUS (Scalability) ---
+        {
+          id: "partner-copilot",
+          title: "Partner Co-pilot",
+          category: "NEXUS - Scalability",
+          icon: Briefcase,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "B2B engine. Merchants inject value (Vouchers/Ads) into the system to acquire users.",
+          loop: { trigger: "Merchant needs foot traffic.", action: "Merchant bids for 'Foodie Roulette' slot or 'AR Drop'.", reward: "High-intent customer walks through the door.", investment: "B2B Lock-in: GOMO becomes their primary marketing channel." },
+          connections: { 
+            inputs: ["data-market", "globe-passport", "quest-chain"], // Fueled by users with data/status looking for quests
+            outputs: ["foodie-roulette", "ar-geocache", "the-detour", "social-drops"] 
+          },
+        },
+        {
+          id: "environment-sales",
+          title: "Environment Trigger",
+          category: "NEXUS - Scalability",
+          icon: CloudRain,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "External trigger system bridging physical events to digital offers.",
+          loop: { trigger: "Heavy rain or traffic detected via Signal Scout.", action: "App pushes 'Boredom Buster' promo.", reward: "Discounted streaming pack.", investment: "Reliance: The app understands your context." },
+          connections: { 
+            inputs: ["signal-scout"], 
+            outputs: ["sachet-upsell", "foodie-roulette"] 
+          },
+        },
+        {
+          id: "data-trash",
+          title: "Data Exchange",
+          category: "NEXUS - Scalability",
+          icon: Trash2,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "Value exchange protocol. Turns physical waste into digital currency.",
+          loop: { trigger: "User has plastic waste.", action: "Drops it at a kiosk & scans QR.", reward: "Instant Data Credit.", investment: "Values Alignment: 'This brand shares my values.'" },
+          connections: { 
+            inputs: ["quest-chain", "nomad-passport"], 
+            outputs: ["cloud-lock", "data-market", "digital-karma"] 
+          },
+        },
+        {
+          id: "ar-geocache",
+          title: "AR Geo-Caching",
+          category: "NEXUS - Scalability",
+          icon: MapPin,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "The delivery mechanism for location-based value.",
+          loop: { trigger: "User opens AR Viewfinder.", action: "Scans the horizon.", reward: "Finds a Merchant BOGO or Social Drop.", investment: "Physicality: Moving your body to extract value." },
+          connections: { 
+            inputs: ["riders-radar", "nomad-passport", "partner-copilot"], 
+            outputs: ["micro-tribe", "social-drops", "travel-badges"] 
+          },
+        },
+        {
+          id: "riders-radar",
+          title: "Riders Radar",
+          category: "NEXUS - Scalability",
+          icon: Smartphone,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "Utility-based segment lock-in for gig workers.",
+          loop: { trigger: "Rider starts shift.", action: 'Toggles "GPS Priority".', reward: "More bookings via stable net.", investment: "Livelihood dependence." },
+          connections: { 
+            inputs: [], 
+            outputs: ["ar-geocache", "signal-scout"] 
+          },
+        },
+        {
+          id: "digital-balikbayan",
+          title: "Digital Balikbayan",
+          category: "NEXUS - Scalability",
+          icon: Briefcase, 
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "Cross-border value transfer anchoring household networks.",
+          loop: { trigger: "OFW sends care package.", action: "Family claims Digital Box.", reward: "Shared Data + Vouchers.", investment: "Family network lock-in." },
+          connections: { 
+            inputs: [], 
+            outputs: ["speed-test-bounty", "micro-tribe"] 
+          },
+        },
+        {
+          id: "booking-bridge",
+          title: "Booking Bridge",
+          category: "NEXUS - Scalability",
+          icon: Calendar,
+          color: "text-emerald-400",
+          bgColor: "bg-emerald-900/30",
+          borderColor: "border-emerald-500",
+          summary: "Commerce integration turning external spend into internal assets.",
+          loop: { trigger: "User plans a trip.", action: "Books flight via in-app partner link.", reward: "5% of booking value returned as Data Credits.", investment: "Financial Lock-in: Travel budget funds connectivity." },
+          connections: { 
+            inputs: ["travel-badges", "nomad-passport", "travel-squad"], 
+            outputs: ["data-staking", "globe-passport"] 
+          },
+        }
+      ];
+
+      // --- NEW: GLOBAL FLOATING NAVIGATION COMPONENT ---
+      const GlobalDock = () => (
+          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+              <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 p-2 rounded-2xl shadow-2xl flex items-center gap-1">
+                  
+                  {/* Strategy Node */}
+                  <div className="group relative">
+                      <button className="p-3 bg-slate-800 text-white rounded-xl shadow-inner border border-slate-600/50">
+                          <Layout className="w-5 h-5" />
+                      </button>
+                      <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
+                          Strategy Node
+                      </span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-px h-8 bg-slate-700/50 mx-1"></div>
+
+                  {/* Partner Engine Link */}
+                  <div className="group relative">
+                      <a href="partner-copilot.html" className="p-3 text-slate-400 hover:text-emerald-400 hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center">
+                          <Briefcase className="w-5 h-5" />
+                      </a>
+                      <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
+                          Merchant Engine
+                      </span>
+                  </div>
+
+                  {/* Consumer Layer Link */}
+                  <div className="group relative">
+                      <a href="digital_drops.html" className="p-3 text-slate-400 hover:text-blue-400 hover:bg-slate-800 rounded-xl transition-all flex items-center justify-center">
+                          <MapPin className="w-5 h-5" />
+                      </a>
+                      <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
+                          Digital Drops
+                      </span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-px h-8 bg-slate-700/50 mx-1"></div>
+              </div>
+          </div>
+      );
+
+      function GrowthSystemDashboard() {
+        const [selectedSystemId, setSelectedSystemId] = useState("sachet-upsell");
+        const [showFullEcosystem, setShowFullEcosystem] = useState(false);
+        const categories = ["ANCHOR - Trust", "KEEPER - Retention", "CATALYST - Engagement", "BAYANIHAN - Social", "NEXUS - Scalability"];
+
+        // Filter logic if needed, currently showing all or filtered set based on prop
+        const visibleSystems = useMemo(() => showFullEcosystem ? growthSystems : growthSystems, [showFullEcosystem]); 
+        const selectedSystem = visibleSystems.find(s => s.id === selectedSystemId) || visibleSystems[0];
+        
+        // Helper to find ANY system
+        const getVisibleSystem = (id) => growthSystems.find(s => s.id === id);
+
+        // SET THIS TO false FOR LIVE DEPLOYMENT
+        const [maintenanceMode, setMaintenanceMode] = useState(true);
+
+        if (maintenanceMode) {
+          return <MaintenanceView onBack={() => setMaintenanceMode(false)} />;
+        }
+
+        return (
+          <div className="min-h-screen bg-slate-950 text-slate-100 p-6 flex flex-col pb-32"> {/* Added padding bottom for dock */}
+            {/* Header */}
+            <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-20 mb-6 p-4 rounded-xl flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-gomo-gradient rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg">G</div>
+                <div>
+                  <h1 className="font-bold text-2xl tracking-tight">Growth Protocol <span className="text-slate-500 font-light">v2.0A</span></h1>
+                  <span className="text-xs text-slate-400 uppercase tracking-widest font-semibold">System Synergy Visualizer</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className={`text-xs font-bold uppercase transition-colors ${!showFullEcosystem ? 'text-white' : 'text-slate-500'}`}>Core Loop</span>
+                <button onClick={() => setShowFullEcosystem(!showFullEcosystem)} className="relative w-12 h-6 rounded-full bg-slate-800 border border-slate-600 focus:outline-none">
+                   <div className={`absolute top-1 left-1 w-4 h-4 rounded-full transition-all transform ${showFullEcosystem ? 'translate-x-6 bg-cyan-500' : 'translate-x-0 bg-yellow-400'}`}></div>
+                </button>
+                <span className={`text-xs font-bold uppercase transition-colors ${showFullEcosystem ? 'text-white' : 'text-slate-500'}`}>Full View</span>
+              </div>
+            </header>
+
+            <div className="grid lg:grid-cols-12 gap-8 items-start h-full">
+               {/* Sidebar */}
+               <div className="lg:col-span-4 space-y-6 h-full overflow-y-auto pr-2 custom-scrollbar max-h-[85vh]">
+                 {categories.map((cat) => {
+                    const items = visibleSystems.filter(s => s.category.startsWith(cat));
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={cat} className="space-y-2">
+                        <p className="text-[10px] font-black uppercase text-slate-600 tracking-widest pl-2 mb-2 flex items-center gap-2"><span className="w-4 h-px bg-slate-800"></span>{cat}</p>
+                        {items.map(system => (
+                          <button key={system.id} onClick={() => setSelectedSystemId(system.id)} className={`w-full group px-4 py-3 rounded-lg border text-left transition-all ${selectedSystemId === system.id ? `${system.bgColor} ${system.borderColor} border-l-4 translate-x-1 shadow-xl` : "bg-slate-900 border-slate-800 hover:border-slate-700"}`}>
+                            <div className="flex items-center gap-3">
+                              <system.icon className={`w-4 h-4 shrink-0 ${selectedSystemId === system.id ? system.color : "text-slate-500"}`} />
+                              <h3 className={`font-semibold text-sm truncate ${selectedSystemId === system.id ? "text-white" : "text-slate-400"}`}>{system.title}</h3>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    );
+                 })}
+               </div>
+
+               {/* Main Stage */}
+               <div className="lg:col-span-8 space-y-8 animate-fade-in">
+                  {selectedSystem && (
+                    <>
+                      {/* Synergy Map */}
+                      <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 relative overflow-hidden shadow-2xl">
+                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+                        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 min-h-[350px]">
+                           {/* Inputs */}
+                           <div className="flex-1 w-full flex flex-col justify-center gap-3">
+                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Zap className="w-3 h-3" /> Powered By (Inputs)</p>
+                             {selectedSystem.connections.inputs.length === 0 ? <div className="text-[10px] text-slate-700 font-bold uppercase italic border border-dashed border-slate-800 p-4 rounded-xl text-center">Foundational Node</div> : selectedSystem.connections.inputs.map(inputId => { const sys = getVisibleSystem(inputId); if (!sys) return null; return ( <div key={inputId} onClick={() => setSelectedSystemId(inputId)} className="p-3 rounded-xl bg-slate-800/50 border border-slate-700 flex items-center gap-3 group/item cursor-pointer hover:bg-slate-800 transition-colors"><sys.icon className={`w-4 h-4 ${sys.color}`} /><span className="text-xs font-bold text-slate-300">{sys.title}</span><ArrowRight className="w-3 h-3 text-slate-600 ml-auto" /></div> ); })}
+                           </div>
+                           
+                           {/* Center Node */}
+                           <div className="w-64 aspect-square rounded-full border-2 border-dashed border-slate-700 flex items-center justify-center p-4 relative group">
+                             <div className={`absolute inset-0 ${selectedSystem.bgColor} blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity`}></div>
+                             <div className={`w-full h-full rounded-full ${selectedSystem.bgColor} border-2 ${selectedSystem.borderColor} flex flex-col items-center justify-center text-center gap-2 z-10 shadow-2xl`}>
+                               <selectedSystem.icon className={`w-12 h-12 ${selectedSystem.color}`} />
+                               <span className="font-black text-lg leading-tight px-4 uppercase tracking-tighter text-white">{selectedSystem.title}</span>
+                               <span className="text-[10px] uppercase font-bold text-slate-400">Active System</span>
+                             </div>
+                           </div>
+
+                           {/* Outputs */}
+                           <div className="flex-1 w-full flex flex-col justify-center gap-3">
+                              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 text-right">Fuels (Outputs) <Zap className="w-3 h-3 inline ml-2" /></p>
+                              {selectedSystem.connections.outputs.length === 0 ? <div className="text-[10px] text-slate-700 font-bold uppercase italic text-right border border-dashed border-slate-800 p-4 rounded-xl">Terminal Value Node</div> : selectedSystem.connections.outputs.map(outputId => { const sys = getVisibleSystem(outputId); if (!sys) return null; return ( <div key={outputId} onClick={() => setSelectedSystemId(outputId)} className="p-3 rounded-xl bg-slate-800/50 border border-slate-700 flex flex-row-reverse items-center gap-3 group/item cursor-pointer hover:bg-slate-800 transition-colors"><sys.icon className={`w-4 h-4 ${sys.color}`} /><span className="text-xs font-bold text-slate-300">{sys.title}</span><ArrowRight className="w-3 h-3 text-slate-600 mr-auto" /></div> ); })}
+                           </div>
+                         </div>
+                      </div>
+
+                      {/* Hook Model Card */}
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className={`p-10 rounded-[3rem] border border-slate-800 ${selectedSystem.bgColor} shadow-2xl relative overflow-hidden group`}>
+                          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><selectedSystem.icon className="w-24 h-24" /></div>
+                          <div className="relative z-10">
+                              <div className="inline-block px-3 py-1 rounded-full border border-white/10 bg-black/20 text-[10px] font-bold text-white mb-4 uppercase tracking-widest">{selectedSystem.category} Engine</div>
+                              <h2 className="text-3xl font-black text-white mb-6 tracking-tighter uppercase">{selectedSystem.title}</h2>
+                              <p className="text-slate-300 text-lg opacity-90 leading-relaxed font-medium italic">"{selectedSystem.summary}"</p>
+                          </div>
+                        </div>
+
+                        <div className="bg-slate-900 border border-slate-800 rounded-[3rem] p-8 space-y-6 shadow-2xl">
+                          <h4 className="text-xs font-black uppercase text-slate-500 tracking-widest border-b border-slate-800 pb-4">The Hook Model</h4>
+                          
+                          <div className="flex gap-4">
+                              <div className={`mt-1 w-8 h-8 rounded-xl border ${selectedSystem.borderColor} bg-slate-950 flex items-center justify-center shrink-0 font-black text-[10px] text-white`}>01</div>
+                              <div><h4 className="text-[10px] font-black uppercase text-slate-400 mb-1">Trigger</h4><p className="text-sm text-slate-200">{selectedSystem.loop.trigger}</p></div>
+                          </div>
+                          
+                          <div className="flex gap-4">
+                              <div className={`mt-1 w-8 h-8 rounded-xl border ${selectedSystem.borderColor} bg-slate-950 flex items-center justify-center shrink-0 font-black text-[10px] text-white`}>02</div>
+                              <div><h4 className="text-[10px] font-black uppercase text-slate-400 mb-1">Action</h4><p className="text-sm text-slate-200">{selectedSystem.loop.action}</p></div>
+                          </div>
+
+                          <div className="flex gap-4">
+                              <div className={`mt-1 w-8 h-8 rounded-xl border ${selectedSystem.borderColor} bg-slate-950 flex items-center justify-center shrink-0 font-black text-[10px] text-white`}>03</div>
+                              <div><h4 className="text-[10px] font-black uppercase text-slate-400 mb-1">Variable Reward</h4><p className="text-sm text-slate-200">{selectedSystem.loop.reward}</p></div>
+                          </div>
+
+                          <div className="flex gap-4 pt-4 border-t border-slate-800">
+                               <div className="w-8 flex justify-center"><Briefcase className="w-4 h-4 text-gomo-pink" /></div>
+                               <div><h4 className="text-[10px] font-black uppercase text-gomo-pink tracking-widest mb-1">Strategic Investment</h4><p className="text-sm text-slate-400 italic">{selectedSystem.loop.investment}</p></div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+               </div>
+            </div>
+
+            {/* Global Floating Navigation */}
+            <GlobalDock />
+          </div>
+        );
+      }
+
+       /** --- MAINTENANCE COMPONENT --- */
+      const MaintenanceView = ({ onBack }) => (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 relative overflow-hidden text-center px-6">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gomo-gradient opacity-20 blur-[120px] rounded-full animate-pulse-slow"></div>
+
+          <div className="relative z-10 space-y-10 max-w-2xl mx-auto">
+            <div className="w-24 h-24 bg-slate-900 border border-slate-700 rounded-3xl flex items-center justify-center mx-auto shadow-2xl relative group">
+              <div className="absolute inset-0 bg-gomo-gradient opacity-20 rounded-3xl blur-md group-hover:opacity-40 transition-opacity"></div>
+              <Hammer className="w-10 h-10 text-white relative z-10 animate-bounce" />
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                System <span className="text-gomo-gradient">Maintenance</span>
+              </h1>
+              <p className="text-slate-400 text-lg md:text-xl font-medium leading-relaxed">
+                The Growth Protocol Engine is currently undergoing scheduled
+                upgrades to optimize your ecosystem performance.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 max-w-md mx-auto backdrop-blur-sm">
+              <div className="flex justify-between items-center text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
+                <span>Optimization Progress</span>
+                <span className="text-gomo-pink animate-pulse">
+                  Processing...
+                </span>
+              </div>
+              <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-full bg-gomo-gradient w-2/3 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+              </div>
+              <p className="text-[10px] text-slate-600 mt-3 font-mono">
+                ESTIMATED DURATION:{" "}
+                <button
+                  onClick={onBack}
+                  className="hover:text-gomo-pink underline decoration-dotted transition-colors cursor-pointer font-bold"
+                >
+                  2
+                </button>{" "}
+                HOURS
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+
+      const root = createRoot(document.getElementById("root"));
+      root.render(<GrowthSystemDashboard />);
+    </script>
+  </body>
+</html>

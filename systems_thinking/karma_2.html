@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO | Digital Karma: The Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            overflow: hidden;
+        }
+
+        .gomo-pink { color: #D20E56; }
+        .bg-gomo-pink { background-color: #D20E56; }
+        .bg-gomo-gradient {
+            background: linear-gradient(135deg, #D20E56 0%, #6665FE 100%);
+        }
+        
+        /* Game Animations */
+        .glow-purple { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(168, 85, 247, 0.2); }
+        .glow-gold { box-shadow: 0 0 40px rgba(251, 191, 36, 0.5), inset 0 0 25px rgba(251, 191, 36, 0.3); }
+
+        @keyframes float-up {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+
+        .floating-xp {
+            position: absolute;
+            pointer-events: none;
+            font-weight: 900;
+            color: #4ade80;
+            animation: float-up 0.8s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes screen-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake { animation: screen-shake 0.2s ease-in-out 2; }
+
+        /* Tier Specific Visuals */
+        .og-iridescent {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b, #fbbf24, #fef3c7);
+            background-size: 300% 300%;
+            animation: iridescent 4s ease infinite;
+        }
+
+        @keyframes iridescent {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cooldown-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: rgba(0,0,0,0.5);
+            transition: height linear;
+        }
+
+        .card-inner-glow {
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+        }
+
+        /* SVG Glows */
+        .svg-glow-purple { filter: drop-shadow(0 0 8px #a855f7); }
+        .svg-glow-gold { filter: drop-shadow(0 0 12px #fbbf24); }
+
+        ::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-4">
+
+    <!-- Mobile Wrapper -->
+    <div id="game-container" class="w-[375px] h-[812px] bg-slate-950 rounded-[50px] shadow-2xl border-[10px] border-slate-900 relative overflow-hidden flex flex-col text-white">
+        
+        <!-- App Header: Stats Bar -->
+        <div class="pt-12 px-6 pb-2 z-20 bg-slate-950/80 backdrop-blur-md flex justify-between items-center border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 border-2 border-slate-700 overflow-hidden">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" />
+                    </div>
+                </div>
+                <div>
+                    <h1 id="tier-name-top" class="text-[10px] font-black tracking-widest text-slate-500 uppercase italic">Scout Class</h1>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <div class="w-20 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="energy-bar" class="h-full bg-yellow-400 w-full transition-all duration-300"></div>
+                        </div>
+                        <span class="text-[8px] font-bold text-yellow-400">⚡ ENERGY</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-end">
+                <div id="streak-counter" class="text-[8px] font-bold text-orange-400 uppercase tracking-widest">
+                    <i class="fas fa-fire mr-1"></i> 3 Day Streak
+                </div>
+                <div class="text-[8px] font-black text-slate-500 uppercase mt-1">GOMO Trust Protocol</div>
+            </div>
+        </div>
+
+        <!-- Scrollable Game Content -->
+        <div class="flex-1 overflow-y-auto px-6 pb-24 relative" id="click-zone">
+            
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="space-y-6 pt-4">
+                
+                <!-- Hero Section: The Character Card -->
+                <div id="character-card" class="relative glass rounded-[32px] p-6 card-inner-glow border-t border-white/20 transition-all duration-500 overflow-hidden">
+                    <!-- Background Decoration -->
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                    
+                    <div class="flex justify-between items-start relative z-10">
+                        <div class="space-y-4">
+                            <!-- Level Indicator -->
+                            <div class="inline-flex flex-col">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Player Level</span>
+                                <div class="flex items-baseline gap-1">
+                                    <span id="level-display" class="text-5xl font-black italic tracking-tighter leading-none">12</span>
+                                    <span class="text-xs font-bold text-gomo-pink uppercase">PRO</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Karma / Reputation Stat -->
+                            <div class="space-y-1">
+                                <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Digital Reputation</span>
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 flex items-center gap-2">
+                                        <i class="fas fa-shield-halved text-blue-400 text-xs"></i>
+                                        <span id="karma-score" class="text-xl font-black">245</span>
+                                    </div>
+                                    <div id="score-delta" class="bg-green-500 text-white px-2 py-0.5 rounded-full text-[9px] font-black opacity-0 transition-opacity">+15</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Unique Masterpiece Badge Display -->
+                        <div class="flex flex-col items-center">
+                            <div id="tier-badge" class="w-24 h-24 flex items-center justify-center drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                                <svg width="90" height="90" viewBox="0 0 100 100" id="badge-svg">
+                                    <defs>
+                                        <linearGradient id="bronze-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#92400e" />
+                                            <stop offset="50%" style="stop-color:#b45309" />
+                                            <stop offset="100%" style="stop-color:#78350f" />
+                                        </linearGradient>
+                                        <linearGradient id="chrome-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#e2e8f0" />
+                                            <stop offset="50%" style="stop-color:#94a3b8" />
+                                            <stop offset="100%" style="stop-color:#475569" />
+                                        </linearGradient>
+                                        <linearGradient id="purple-jewel" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#d946ef" />
+                                            <stop offset="100%" style="stop-color:#7c3aed" />
+                                        </linearGradient>
+                                        <linearGradient id="gold-crown" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#fbbf24" />
+                                            <stop offset="50%" style="stop-color:#fef3c7" />
+                                            <stop offset="100%" style="stop-color:#d97706" />
+                                        </linearGradient>
+                                        <filter id="f1" x="0" y="0">
+                                          <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+                                        </filter>
+                                    </defs>
+                                    <g id="badge-group"></g>
+                                </svg>
+                            </div>
+                            <span id="tier-name-hero" class="text-[10px] font-black text-white italic mt-1 tracking-widest uppercase">The Scout</span>
+                        </div>
+                    </div>
+
+                    <!-- Tier Description -->
+                    <div class="mt-6 pt-4 border-t border-white/10">
+                        <p id="tier-desc" class="text-[10px] text-slate-400 leading-relaxed italic">"Every OG was once a Scout. Build your reputation to unlock higher permissions within the GOMO ecosystem."</p>
+                    </div>
+
+                    <!-- Next Level Progress (Boss Bar style) -->
+                    <div class="mt-6">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <span class="text-[9px] font-black text-slate-500 uppercase">Evolution Progress: <span id="next-tier-name" class="text-blue-400">The Mover</span></span>
+                            <span id="xp-needed" class="text-[9px] font-black text-slate-400">105 to go</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-900/50 rounded-full overflow-hidden border border-white/5 shadow-inner">
+                            <div id="progress-bar" class="h-full bg-gomo-gradient w-[24.5%] transition-all duration-1000"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quest Menu -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Active Missions</h3>
+                        <div class="h-px flex-1 bg-white/5 mx-4"></div>
+                        <span class="text-[9px] font-bold text-slate-600">DAILY RESET</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Quest 1 -->
+                        <button onclick="startQuest(this, 35, 'Streak Maintainer', 5000)" class="relative glass p-4 rounded-3xl text-left group overflow-hidden active:scale-95 transition-all">
+                            <div class="relative z-10">
+                                <div class="w-8 h-8 rounded-xl bg-orange-500/20 flex items-center justify-center mb-3">
+                                    <i class="fas fa-fire text-orange-500 text-sm"></i>
+                                </div>
+                                <p class="text-xs font-black text-white">Daily Check</p>
+                                <p class="text-[9px] text-slate-400 font-bold">+35 REP</p>
+                            </div>
+                            <div class="cooldown-overlay"></div>
+                        </button>
+                        
+                        <!-- Quest 2 -->
+                        <button onclick="startQuest(this, 55, 'Sustainability Pro', 8000)" class="relative glass p-4 rounded-3xl text-left group overflow-hidden active:scale-95 transition-all">
+                            <div class="relative z-10">
+                                <div class="w-8 h-8 rounded-xl bg-green-500/20 flex items-center justify-center mb-3">
+                                    <i class="fas fa-recycle text-green-500 text-sm"></i>
+                                </div>
+                                <p class="text-xs font-black text-white">Data Trash</p>
+                                <p class="text-[9px] text-slate-400 font-bold">+55 REP</p>
+                            </div>
+                            <div class="cooldown-overlay"></div>
+                        </button>
+
+                        <!-- Quest 3 -->
+                        <button onclick="startQuest(this, 120, 'Ecosystem Expansion', 15000)" class="relative glass p-4 rounded-3xl text-left group overflow-hidden active:scale-95 transition-all col-span-2">
+                            <div class="flex items-center justify-between relative z-10">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                                        <i class="fas fa-users text-blue-500 text-base"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-black text-white">Micro-Tribe Referral</p>
+                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-tighter">Grow your network effect</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-black text-blue-400">+120</span>
+                                </div>
+                            </div>
+                            <div class="cooldown-overlay"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Evolution Unlocks Section -->
+                <div class="space-y-4 pb-8">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Unlocked Perks</h3>
+                        <div class="h-px flex-1 bg-white/5 mx-4"></div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div id="perk-mover" class="glass p-4 rounded-3xl flex items-center justify-between opacity-30 grayscale transition-all duration-500 border border-transparent">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-tags text-slate-500 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-black text-white">Mo Creds Lifestyle</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">Locked: Mover evolution</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-700 perk-lock"></i>
+                        </div>
+
+                        <div id="perk-typhoon" class="glass p-4 rounded-3xl flex items-center justify-between opacity-30 grayscale transition-all border border-transparent">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-cloud-bolt text-slate-500 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-black text-white">Typhoon Guard</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">Locked: 650 Rep Required</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-700 perk-lock"></i>
+                        </div>
+                        
+                        <div id="perk-insider" class="glass p-4 rounded-3xl flex items-center justify-between opacity-30 grayscale transition-all border border-transparent">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-ticket text-slate-500 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-black text-white">Globe Insider</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">Locked: 650 Rep Required</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-700 perk-lock"></i>
+                        </div>
+
+                        <div id="perk-og" class="glass p-4 rounded-3xl flex items-center justify-between opacity-30 grayscale transition-all duration-500 border border-transparent">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center">
+                                    <i class="fas fa-crown text-slate-500 perk-icon"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-black text-white">Legacy Perks (Permanent VIP)</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">Locked: OG evolution</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-lock text-slate-700 perk-lock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ledger View -->
+            <div id="ledger-view" class="hidden pt-4 space-y-4">
+                <h2 class="text-xl font-black italic tracking-tighter">Combat Log</h2>
+                <div id="ledger-container" class="space-y-2 pb-10">
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="absolute bottom-0 w-full h-24 glass flex justify-around items-center px-6 pb-4 z-30">
+            <button onclick="switchView('dashboard')" class="flex flex-col items-center gap-1">
+                <div id="nav-dash" class="w-10 h-10 rounded-2xl bg-gomo-gradient flex items-center justify-center shadow-lg">
+                    <i class="fas fa-id-card text-sm text-white"></i>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest text-white">Profile</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 opacity-30">
+                <div class="w-10 h-10 flex items-center justify-center"><i class="fas fa-shop text-sm"></i></div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Shop</span>
+            </button>
+            <button onclick="switchView('ledger')" class="flex flex-col items-center gap-1">
+                <div id="nav-ledger" class="w-10 h-10 flex items-center justify-center transition-all">
+                    <i class="fas fa-scroll text-sm text-slate-500"></i>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-widest text-slate-500">Log</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 opacity-30">
+                <div class="w-10 h-10 flex items-center justify-center"><i class="fas fa-trophy text-sm"></i></div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Rank</span>
+            </button>
+        </div>
+
+        <!-- Notch Overlay -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-2xl z-50"></div>
+    </div>
+
+    <!-- Game Logic -->
+    <script>
+        let karma = 245;
+        let energy = 100;
+        let level = 12;
+
+        const BADGE_DESIGNS = {
+            SCOUT: () => `
+                <!-- Ornate Iron & Bronze Shield -->
+                <path d="M50 5 L90 25 L90 60 L50 95 L10 60 L10 25 Z" fill="url(#bronze-metal)" stroke="#451a03" stroke-width="4"/>
+                <path d="M50 15 L80 30 L80 55 L50 85 L20 55 L20 30 Z" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <path d="M50 35 L60 45 L50 55 L40 45 Z" fill="#ef4444" filter="url(#f1)"/>
+                <path d="M50 35 L60 45 L50 55 L40 45 Z" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.6"/>
+            `,
+            MOVER: () => `
+                <!-- Mechanical Winged Chrome Shield -->
+                <path d="M10 30 Q10 10 30 15 L50 10 L70 15 Q90 10 90 30 L90 55 L50 90 L10 55 Z" fill="url(#chrome-grad)" stroke="#1e293b" stroke-width="4"/>
+                <path d="M20 35 L40 35 M60 35 L80 35 M25 45 L40 45 M60 45 L75 45" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M50 25 L65 55 H35 Z" fill="#3b82f6" opacity="0.8"/>
+            `,
+            INSIDER: () => `
+                <!-- Orbital Energy Core Jewel -->
+                <circle cx="50" cy="50" r="46" fill="url(#purple-jewel)" stroke="#2e1065" stroke-width="4"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="6 4"/>
+                <circle cx="50" cy="50" r="18" fill="white" fill-opacity="0.1" stroke="white" stroke-width="2"/>
+                <rect x="46" y="46" width="8" height="8" rx="2" fill="white" class="svg-glow-purple"/>
+            `,
+            OG: () => `
+                <!-- Radiant Grand Master Gold Medal -->
+                <path d="M10 20 L30 10 L70 10 L90 20 L95 50 L50 95 L5 50 Z" fill="url(#gold-grad)" stroke="#78350f" stroke-width="2" class="svg-glow-gold"/>
+                <path d="M20 25 L40 35 L50 25 L60 35 L80 25" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="22" fill="white" fill-opacity="0.15" stroke="white" stroke-width="1" stroke-dasharray="2 2"/>
+                <circle cx="50" cy="10" r="4" fill="white" class="svg-glow-gold"/>
+            `
+        };
+
+        const TIERS = {
+            SCOUT: { min: 0, max: 350, name: "THE SCOUT", next: "The Mover", color: "#475569", fill: "#334155", design: BADGE_DESIGNS.SCOUT },
+            MOVER: { min: 351, max: 650, name: "THE MOVER", next: "The Insider", color: "#3b82f6", fill: "#1e3a8a", design: BADGE_DESIGNS.MOVER },
+            INSIDER: { min: 651, max: 899, name: "THE INSIDER", next: "The OG", color: "#a855f7", fill: "#581c87", design: BADGE_DESIGNS.INSIDER },
+            OG: { min: 900, max: 1000, name: "THE OG", next: "MAX RANK", color: "#fbbf24", fill: "#78350f", design: BADGE_DESIGNS.OG }
+        };
+
+        function switchView(view) {
+            const dash = document.getElementById('dashboard-view');
+            const ledger = document.getElementById('ledger-view');
+            const navDash = document.getElementById('nav-dash');
+            const navLedger = document.getElementById('nav-ledger');
+            
+            if (view === 'dashboard') {
+                dash.classList.remove('hidden');
+                ledger.classList.add('hidden');
+                navDash.classList.add('bg-gomo-gradient');
+                navLedger.classList.remove('bg-gomo-gradient');
+                navLedger.querySelector('i').className = "fas fa-scroll text-sm text-slate-500";
+                navDash.querySelector('i').className = "fas fa-id-card text-sm text-white";
+            } else {
+                dash.classList.add('hidden');
+                ledger.classList.remove('hidden');
+                navLedger.classList.add('bg-gomo-gradient');
+                navDash.classList.remove('bg-gomo-gradient');
+                navDash.querySelector('i').className = "fas fa-id-card text-sm text-slate-500";
+                navLedger.querySelector('i').className = "fas fa-scroll text-sm text-white";
+            }
+        }
+
+        function spawnXPText(x, y, amount) {
+            const el = document.createElement('div');
+            el.className = 'floating-xp';
+            el.innerText = `+${amount} REP`;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 800);
+        }
+
+        function startQuest(btn, amount, name, duration) {
+            if (btn.classList.contains('disabled') || energy < 15) return;
+            
+            // Sub energy
+            energy -= 15;
+            document.getElementById('energy-bar').style.width = `${energy}%`;
+            
+            const rect = btn.getBoundingClientRect();
+            spawnXPText(rect.left + rect.width / 2, rect.top, amount);
+
+            btn.classList.add('disabled', 'opacity-50', 'pointer-events-none');
+            const overlay = btn.querySelector('.cooldown-overlay');
+            overlay.style.height = '100%';
+            
+            setTimeout(() => {
+                overlay.style.transition = `height ${duration}ms linear`;
+                overlay.style.height = '0%';
+            }, 50);
+
+            setTimeout(() => {
+                btn.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
+                overlay.style.transition = 'none';
+            }, duration);
+
+            // Add Karma
+            karma = Math.min(1000, karma + amount);
+            
+            const container = document.getElementById('ledger-container');
+            const entry = document.createElement('div');
+            entry.className = "glass p-3 rounded-xl flex justify-between items-center text-[10px]";
+            entry.innerHTML = `<span>MISSION: ${name}</span><span class="font-black text-green-400">+${amount} REP</span>`;
+            container.prepend(entry);
+
+            updateUI();
+        }
+
+        function updateUI() {
+            const scoreEl = document.getElementById('karma-score');
+            const card = document.getElementById('character-card');
+            const tierNameHero = document.getElementById('tier-name-hero');
+            const tierTop = document.getElementById('tier-name-top');
+            const nextTierName = document.getElementById('next-tier-name');
+            const xpNeeded = document.getElementById('xp-needed');
+            const bar = document.getElementById('progress-bar');
+            const badgeGroup = document.getElementById('badge-group');
+            const levelDisplay = document.getElementById('level-display');
+
+            scoreEl.innerText = karma;
+            
+            const newLevel = Math.floor(karma / 20) + 1;
+            if (newLevel > level) {
+                level = newLevel;
+                levelDisplay.innerText = level;
+                document.getElementById('game-container').classList.add('shake');
+                setTimeout(() => document.getElementById('game-container').classList.remove('shake'), 400);
+            }
+
+            let tier;
+            if (karma < 351) tier = TIERS.SCOUT;
+            else if (karma < 651) tier = TIERS.MOVER;
+            else if (karma < 900) tier = TIERS.INSIDER;
+            else tier = TIERS.OG;
+
+            tierTop.innerText = `${tier.name} CLASS`;
+            tierNameHero.innerText = tier.name;
+            nextTierName.innerText = tier.next;
+            
+            const pointsToNext = (tier.next === 'MAX RANK') ? 0 : (tier.max - karma + 1);
+            xpNeeded.innerText = (pointsToNext === 0) ? "ELITE" : `${pointsToNext} to go`;
+            
+            const currentPercent = (karma / 10).toFixed(1);
+            bar.style.width = `${currentPercent}%`;
+
+            badgeGroup.innerHTML = tier.design();
+
+            // Card Glows & Visuals
+            card.className = "relative glass rounded-[32px] p-6 card-inner-glow border-t border-white/20 transition-all duration-700 overflow-hidden " + 
+                (tier === TIERS.INSIDER ? 'glow-purple border-purple-500/30' : tier === TIERS.OG ? 'glow-gold border-yellow-500/30' : 'border-white/10');
+            
+            if (tier === TIERS.OG) {
+                card.classList.add('og-iridescent');
+                tierNameHero.className = "text-[10px] font-black text-yellow-900 italic mt-1 tracking-widest uppercase";
+                card.querySelectorAll('span, p, h2').forEach(el => {
+                    if(!el.classList.contains('text-gomo-pink')) el.classList.replace('text-slate-400', 'text-yellow-900/70');
+                });
+            } else if (tier === TIERS.INSIDER) {
+                tierNameHero.className = "text-[10px] font-black text-purple-400 italic mt-1 tracking-widest uppercase";
+            } else if (tier === TIERS.MOVER) {
+                tierNameHero.className = "text-[10px] font-black text-blue-400 italic mt-1 tracking-widest uppercase";
+            }
+
+            // Gating Logic
+            if (karma >= 351) {
+                const moverPerk = document.getElementById('perk-mover');
+                moverPerk.classList.remove('opacity-30', 'grayscale');
+                moverPerk.classList.add('border-blue-500/20');
+                moverPerk.querySelector('i').className = "fas fa-tags text-blue-400";
+                moverPerk.querySelector('p:last-child').innerText = "Status: UNLOCKED";
+                moverPerk.querySelector('.perk-lock').className = "fas fa-check-circle text-green-500";
+            }
+
+            if (karma >= 650) {
+                document.getElementById('perk-typhoon').classList.remove('opacity-30', 'grayscale');
+                document.getElementById('perk-typhoon').classList.add('border-blue-500/20');
+                document.getElementById('perk-typhoon').querySelector('i').className = "fas fa-cloud-bolt text-blue-400";
+                document.getElementById('perk-typhoon').querySelector('p:last-child').innerText = "Status: UNLOCKED";
+                document.getElementById('perk-typhoon').querySelector('.fa-lock').className = "fas fa-check-circle text-green-500";
+                
+                document.getElementById('perk-insider').classList.remove('opacity-30', 'grayscale');
+                document.getElementById('perk-insider').classList.add('border-purple-500/20');
+                document.getElementById('perk-insider').querySelector('i').className = "fas fa-ticket text-purple-400";
+                document.getElementById('perk-insider').querySelector('p:last-child').innerText = "Status: UNLOCKED";
+                document.getElementById('perk-insider').querySelector('.fa-lock').className = "fas fa-check-circle text-green-500";
+            }
+
+            if (karma >= 900) {
+                const ogPerk = document.getElementById('perk-og');
+                ogPerk.classList.remove('opacity-30', 'grayscale');
+                ogPerk.classList.add('border-yellow-500/20');
+                ogPerk.querySelector('i').className = "fas fa-crown text-yellow-500";
+                ogPerk.querySelector('p:last-child').innerText = "Status: UNLOCKED";
+                ogPerk.querySelector('.perk-lock').className = "fas fa-check-circle text-green-500";
+            }
+        }
+
+        // Energy Regen
+        setInterval(() => {
+            if (energy < 100) {
+                energy = Math.min(100, energy + 2);
+                document.getElementById('energy-bar').style.width = `${energy}%`;
+            }
+        }, 4000);
+
+        updateUI();
+    </script>
+</body>
+</html>

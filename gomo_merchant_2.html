@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOMO Partner Co-Pilot: Your Guide to AI-Powered Growth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .step-card {
+        background-color: white;
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e5e7eb;
+      }
+      .step-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .gomo-purple {
+        color: #8a2be2;
+      }
+      .gomo-pink {
+        color: #ff1493;
+      }
+      .text-gomo-gradient {
+        background-image: linear-gradient(to right, #8a2be2, #ff1493);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+      .bg-gomo-gradient {
+        background-image: linear-gradient(to right, #8a2be2, #ff1493);
+      }
+      .phone-mockup {
+        width: 300px;
+        height: 600px;
+        border: 12px solid #1f2937;
+        border-radius: 40px;
+        background-color: #f9fafb;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .phone-screen {
+        flex-grow: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .phone-notch {
+        width: 120px;
+        height: 20px;
+        background-color: #1f2937;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .btn-primary {
+        background-image: linear-gradient(to right, #a251ff, #ff1493);
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+      }
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(199, 21, 133, 0.4);
+      }
+      .dashboard-card {
+        background-color: #1f2937; /* slate-800 */
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #374151; /* slate-700 */
+      }
+      .ai-suggestion-box {
+        background-color: #f3e8ff; /* purple-100 */
+        border: 1px solid #d8b4fe; /* purple-300 */
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-top: 1.5rem;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 sm:p-8">
+      <!-- Header -->
+      <header class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-bold text-gomo-gradient mb-4">
+          GOMO Partner Co-Pilot
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          Stop searching for customers. Let our AI bring them directly to you.
+          Drive real growth with zero upfront costs and zero extra work.
+        </p>
+      </header>
+
+      <!-- Why Partner with GOMO? -->
+      <section class="mb-20 max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-12">
+          Why Partner with GOMO?
+          <span class="text-gomo-gradient"
+            >Effortless Growth, Zero Extra Work.</span
+          >
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+          <div class="bg-white p-8 rounded-2xl shadow-lg border">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-4 text-gomo-gradient"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <h3 class="text-xl font-bold mb-2">Acquire New Customers</h3>
+            <p class="text-gray-600">
+              Our AI identifies high-value GOMO users near your store and
+              actively sends them your offers, turning app users into loyal,
+              paying customers.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl shadow-lg border">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-4 text-gomo-gradient"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 12v.01M12 12v.01M12 16v.01M12 16v.01M12 21v-1.1c-.88-.044-1.73-.234-2.558-.562a17.96 17.96 0 01-6.313-3.662m15.44 0a17.96 17.96 0 00-6.313-3.662M12 3c-.88.044-1.73.234-2.558.562a17.96 17.96 0 00-6.313-3.662m15.44 0a17.96 17.96 0 01-6.313-3.662"
+              />
+            </svg>
+            <h3 class="text-xl font-bold mb-2">Increase Sales, Not Costs</h3>
+            <p class="text-gray-600">
+              No setup fees, monthly charges, or special hardware required. You
+              only give value when you get value—a guaranteed return on
+              investment for every redemption.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl shadow-lg border">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-4 text-gomo-gradient"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+            <h3 class="text-xl font-bold mb-2">Get Paid Automatically</h3>
+            <p class="text-gray-600">
+              Forget about manual invoicing. Our system automatically calculates
+              your earnings and settles them directly to your GCash or bank
+              account. Effortless and reliable.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Merchant Journey -->
+      <section class="mb-20">
+        <h2 class="text-4xl font-bold text-center mb-12">
+          The 15-Minute Setup:
+          <span class="gomo-purple">From Sign-Up to First Offer</span>
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <!-- Step 1: Sign-Up -->
+          <div class="step-card">
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                1
+              </div>
+              <h3 class="text-2xl font-bold">Instant Self-Service Sign-Up</h3>
+            </div>
+            <p class="text-gray-600 mb-6">
+              A merchant visits
+              <a href="#" class="gomo-pink font-semibold">partners.gomo.ph</a>
+              and fills out only the essentials.
+            </p>
+            <div class="bg-gray-100 p-6 rounded-2xl border">
+              <label
+                for="businessName"
+                class="block text-sm font-medium text-gray-700"
+                >Business Name</label
+              >
+              <input
+                type="text"
+                id="businessName"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                placeholder="Cha Time"
+              />
+
+              <label
+                for="account"
+                class="block text-sm font-medium text-gray-700 mt-4"
+                >GCash or Bank Account</label
+              >
+              <input
+                type="text"
+                id="account"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                placeholder="0917XXXXXXX"
+              />
+
+              <label
+                for="category"
+                class="block text-sm font-medium text-gray-700 mt-4"
+                >Business Category</label
+              >
+              <input
+                type="text"
+                id="category"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                placeholder="Food & Beverage"
+              />
+
+              <button class="w-full btn-primary mt-6">Create Account</button>
+              <p class="text-xs text-gray-500 mt-2 text-center">
+                Account created in "Pending Verification." Log in and set up
+                your first offer immediately!
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2: Offer Creation with AI -->
+          <div class="step-card">
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                2
+              </div>
+              <h3 class="text-2xl font-bold">AI-Assisted Offer Creation</h3>
+            </div>
+            <p class="text-gray-600 mb-6">
+              Partners fill in the blanks and our AI co-pilot gives real-time
+              suggestions to maximize success.
+            </p>
+            <div class="bg-gray-100 p-6 rounded-2xl border">
+              <p class="font-semibold mb-2">Choose Template:</p>
+              <div class="flex space-x-2 mb-4">
+                <span
+                  class="bg-purple-200 text-purple-800 text-sm font-medium px-3 py-1 rounded-full cursor-pointer"
+                  >Free Item</span
+                >
+                <span
+                  class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full cursor-pointer"
+                  >% Discount</span
+                >
+                <span
+                  class="bg-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full cursor-pointer"
+                  >Peso Discount</span
+                >
+              </div>
+              <label
+                for="offerTitle"
+                class="block text-sm font-medium text-gray-700"
+                >Offer Title</label
+              >
+              <input
+                type="text"
+                id="offerTitle"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                value="Free Milk Tea"
+              />
+
+              <label
+                for="gemCost"
+                class="block text-sm font-medium text-gray-700 mt-4"
+                >Gem Cost</label
+              >
+              <input
+                type="number"
+                id="gemCost"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
+                value="300"
+              />
+
+              <!-- AI Suggestion Box -->
+              <div class="ai-suggestion-box">
+                <div class="flex items-center text-purple-800">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
+                  </svg>
+                  <h4 class="font-bold text-sm">AI Assistant</h4>
+                </div>
+                <ul
+                  class="text-xs text-purple-700 mt-2 list-disc list-inside space-y-1"
+                >
+                  <li>
+                    <strong>Title:</strong> Try 'Your Next Milk Tea is on Us!'
+                    for a more personal touch.
+                  </li>
+                  <li>
+                    <strong>Cost:</strong> We suggest
+                    <strong>300-350 Gems</strong> to be competitive in your
+                    area.
+                  </li>
+                  <li>
+                    <strong>Forecast:</strong> Similar offers see
+                    <strong>50-70 redemptions</strong> in their first week.
+                  </li>
+                </ul>
+              </div>
+
+              <button class="w-full btn-primary mt-6">Activate Offer</button>
+            </div>
+          </div>
+
+          <!-- Step 3: App Setup -->
+          <div class="step-card">
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                3
+              </div>
+              <h3 class="text-2xl font-bold">Simple Staff Training</h3>
+            </div>
+            <p class="text-gray-600 mb-6">
+              Download the "GOMO Partner" app. Training is one sentence: "Tap
+              the button and scan."
+            </p>
+            <div class="flex justify-center items-center mt-8">
+              <div class="phone-mockup relative">
+                <div class="phone-notch"></div>
+                <div class="phone-screen text-center">
+                  <h4 class="text-xl font-bold text-gray-800 mb-2">
+                    GOMO Partner
+                  </h4>
+                  <p class="text-gray-500 mb-8">Cha Time - SM Megamall</p>
+                  <button
+                    class="w-48 h-48 bg-gomo-gradient rounded-full flex items-center justify-center text-white text-lg font-bold shadow-2xl flex-col hover:scale-105 transition-transform"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-16 w-16 mb-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4v1m6 11h2m-6.5 6.5l-1-1M6 12H4m14 0h2M12 20v-1m6.5-6.5l-1 1M6 12H4m7 7l-1-1m-5.5-5.5l1-1m0 0l-1-1m1 1l-1 1"
+                      />
+                    </svg>
+                    Scan Customer QR
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partner Dashboard -->
+      <section class="mb-20">
+        <h2 class="text-4xl font-bold text-center mb-4">
+          The AI-Powered Dashboard
+        </h2>
+        <p class="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Go beyond data. Get actionable insights and growth strategies from
+          your AI Co-Pilot.
+        </p>
+        <div
+          class="bg-slate-900 p-4 sm:p-8 rounded-3xl border border-slate-700 max-w-6xl mx-auto text-white shadow-2xl"
+        >
+          <!-- Dashboard Header -->
+          <div
+            class="flex flex-col sm:flex-row justify-between items-center mb-8"
+          >
+            <h3 class="text-2xl font-bold text-white mb-4 sm:mb-0">
+              Welcome, Cha Time!
+            </h3>
+            <div class="flex items-center space-x-4">
+              <span class="text-sm text-gray-400"
+                >Tuesday, Oct 7, 2025 - 11:21 AM</span
+              >
+              <button
+                class="text-sm font-medium text-gray-300 hover:text-gomo-pink"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+
+          <!-- At a Glance Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="dashboard-card flex items-center">
+              <div class="p-3 bg-gomo-gradient rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-400">Redemptions Today</p>
+                <p class="text-2xl font-bold">12</p>
+              </div>
+            </div>
+            <div class="dashboard-card flex items-center">
+              <div class="p-3 bg-gomo-gradient rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-400">Redemptions This Week</p>
+                <p class="text-2xl font-bold">84</p>
+              </div>
+            </div>
+            <div class="dashboard-card flex items-center">
+              <div class="p-3 bg-gomo-gradient rounded-lg mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-400">Pending Payout</p>
+                <p class="text-2xl font-bold">₱2,520</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Dashboard Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- AI Co-Pilot Insights -->
+            <div
+              class="dashboard-card lg:col-span-1 bg-slate-800 border-purple-500/50"
+            >
+              <div class="flex items-center mb-4 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 mr-3 text-purple-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
+                </svg>
+                <h4 class="font-bold text-lg">AI Co-Pilot Insights</h4>
+              </div>
+              <ul class="space-y-4 text-sm">
+                <li class="flex items-start">
+                  <p class="text-gray-300">
+                    <strong class="text-purple-400">Peak Time Alert:</strong>
+                    It's 11:21 AM. Expect your usual lunch rush to begin soon.
+                    Yesterday you had 8 redemptions between 12 PM and 2 PM.
+                  </p>
+                </li>
+                <li class="flex items-start">
+                  <p class="text-gray-300">
+                    <strong class="text-purple-400">Growth Opportunity:</strong>
+                    Your 'Free Milk Tea' is a hit! We recommend launching a 'Buy
+                    One, Get One' offer to attract new customers.
+                    <a
+                      href="#"
+                      class="font-bold text-white underline hover:text-gomo-pink"
+                      >Create with AI</a
+                    >
+                  </p>
+                </li>
+                <li class="flex items-start">
+                  <p class="text-gray-300">
+                    <strong class="text-purple-400">New Customers:</strong> 40%
+                    of your GOMO redeemers last week were first-time visitors.
+                    The program is successfully driving new foot traffic!
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Active Offers -->
+            <div class="dashboard-card lg:col-span-2">
+              <div class="flex justify-between items-center mb-4">
+                <h4 class="font-bold text-lg text-white">Active Offers</h4>
+                <button class="btn-primary !py-2 !px-4 !text-sm">
+                  Create New Offer
+                </button>
+              </div>
+              <ul class="space-y-3">
+                <li
+                  class="flex justify-between items-center p-4 bg-slate-800 rounded-lg"
+                >
+                  <div>
+                    <p class="font-semibold text-white">Free Milk Tea</p>
+                    <p class="text-xs text-gray-400">
+                      300 Gems | Ends Nov 6, 2025
+                    </p>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <button
+                      title="Edit Offer"
+                      class="text-gray-400 hover:text-blue-400"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      title="Pause Offer"
+                      class="text-gray-400 hover:text-red-400"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+                <li
+                  class="flex justify-between items-center p-4 bg-slate-800 rounded-lg"
+                >
+                  <div>
+                    <p class="font-semibold text-white">10% Off Total Bill</p>
+                    <p class="text-xs text-gray-400">
+                      50 Gems | Ends Dec 31, 2025
+                    </p>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <button
+                      title="Edit Offer"
+                      class="text-gray-400 hover:text-blue-400"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      title="Pause Offer"
+                      class="text-gray-400 hover:text-red-400"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bidding Section -->
+      <section class="mb-20">
+        <h2 class="text-4xl font-bold text-center mb-4">
+          Amplify Your Reach:
+          <span class="text-gomo-gradient">Featured Offer Bidding</span>
+        </h2>
+        <p class="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+          Want to be front and center? Use your earned Gems to bid for premium
+          placement in the GOMO app and capture the attention of thousands of
+          users.
+        </p>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Bidding UI Mockup -->
+          <div class="dashboard-card bg-slate-900 p-8">
+            <h3 class="text-2xl font-bold text-white mb-6">
+              Featured Placement Bidding
+            </h3>
+            <div class="space-y-6">
+              <!-- Homepage Banner Slot -->
+              <div>
+                <label class="font-bold text-lg text-white"
+                  >Homepage Banner</label
+                >
+                <p class="text-sm text-gray-400 mb-3">
+                  The most prominent spot in the app.
+                </p>
+                <div
+                  class="p-4 bg-slate-800 rounded-lg flex justify-between items-center"
+                >
+                  <div>
+                    <p class="text-xs text-gray-400">Current Top Bid</p>
+                    <p class="text-xl font-bold text-purple-400">
+                      5,000 Gems / day
+                    </p>
+                  </div>
+                  <span class="text-sm font-medium text-gray-500"
+                    >by Starbucks</span
+                  >
+                </div>
+              </div>
+              <!-- Your Bid -->
+              <div>
+                <label for="yourBid" class="font-bold text-lg text-white"
+                  >Your Bid for Homepage Banner</label
+                >
+                <div class="flex items-center space-x-3 mt-2">
+                  <input
+                    type="number"
+                    id="yourBid"
+                    class="bg-slate-700 text-white placeholder-gray-400 rounded-lg p-3 w-full border border-slate-600 focus:ring-purple-500 focus:border-purple-500"
+                    placeholder="e.g., 5100"
+                  />
+                  <button class="btn-primary !py-3 !px-6">Place Bid</button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">
+                  Bids are in Gems. Winning bids have Gems deducted from their
+                  account daily.
+                </p>
+              </div>
+              <div class="text-center pt-4">
+                <a
+                  href="#"
+                  class="text-sm text-purple-400 font-semibold hover:underline"
+                  >View all bidding slots</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone Mockup showing Featured -->
+          <div class="flex justify-center">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <div class="phone-screen !p-0 justify-start">
+                <div class="w-full p-4 bg-white border-b sticky top-0">
+                  <h4 class="text-lg font-bold text-center">GOMO Rewards</h4>
+                </div>
+                <div class="p-4 w-full">
+                  <h5 class="font-bold text-lg mb-2 text-gomo-purple">
+                    Featured For You
+                  </h5>
+                  <div
+                    class="bg-white rounded-xl shadow-2xl border-2 border-purple-400 text-left w-full transform scale-105"
+                  >
+                    <div class="relative">
+                      <img
+                        src="https://placehold.co/400x200/d1d5db/374151?text=Milk+Tea"
+                        alt="Milk Tea"
+                        class="rounded-t-lg"
+                      />
+                      <span
+                        class="absolute top-2 right-2 bg-gomo-gradient text-white text-xs font-bold px-2 py-1 rounded-full"
+                        >FEATURED</span
+                      >
+                    </div>
+                    <div class="p-4">
+                      <h5 class="font-bold text-lg">Free Milk Tea</h5>
+                      <p class="text-sm text-gray-500">Cha Time</p>
+                      <p class="text-base font-bold gomo-purple mt-2">
+                        300 Gems
+                      </p>
+                    </div>
+                  </div>
+                  <hr class="my-6" />
+                  <h5 class="font-bold text-lg mb-2">Nearby Offers</h5>
+                  <!-- Other offers would go here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- User Journey -->
+      <section class="mb-20">
+        <h2 class="text-4xl font-bold text-center mb-12">
+          How We Drive Customers to Your Store
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <!-- Step 1: Discover -->
+          <div class="step-card flex flex-col items-center">
+            <div class="flex items-center mb-4 self-start">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                1
+              </div>
+              <h3 class="text-2xl font-bold">AI-Powered Discovery</h3>
+            </div>
+            <p class="text-gray-600 mb-6 self-start">
+              Our smart platform doesn't just show offers—it creates
+              opportunities by connecting the right customer to your business at
+              the right time.
+            </p>
+            <div class="phone-mockup relative">
+              <div class="phone-notch"></div>
+              <div class="phone-screen !p-0 justify-start">
+                <div class="w-full p-4 bg-white border-b">
+                  <h4 class="text-lg font-bold text-center">Rewards For You</h4>
+                </div>
+                <!-- Notification -->
+                <div
+                  class="bg-purple-100 border border-purple-300 rounded-xl p-3 m-4 text-left"
+                >
+                  <p class="font-bold text-purple-800">
+                    Hey! You're near Cha Time!
+                  </p>
+                  <p class="text-sm text-purple-700">
+                    Redeem a free Milk Tea for 300 Gems.
+                  </p>
+                </div>
+                <!-- Offer Card -->
+                <div
+                  class="bg-white rounded-xl p-4 m-4 shadow-md border text-left w-full"
+                >
+                  <img
+                    src="https://placehold.co/400x200/d1d5db/374151?text=Milk+Tea"
+                    alt="Milk Tea"
+                    class="rounded-lg mb-3"
+                  />
+                  <h5 class="font-bold">Free Milk Tea</h5>
+                  <p class="text-sm text-gray-500">Cha Time</p>
+                  <p class="text-base font-bold gomo-purple mt-2">300 Gems</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Redeem & Generate QR -->
+          <div class="step-card flex flex-col items-center">
+            <div class="flex items-center mb-4 self-start">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                2
+              </div>
+              <h3 class="text-2xl font-bold">Redeem & Get QR Code</h3>
+            </div>
+            <p class="text-gray-600 mb-6 self-start">
+              They confirm in-app, Gems are deducted, and a dynamic,
+              one-time-use QR code is generated.
+            </p>
+            <div class="phone-mockup relative">
+              <div class="phone-notch"></div>
+              <div class="phone-screen text-center bg-gray-900 text-white">
+                <h4 class="text-xl font-bold mb-2">1 Free Milk Tea</h4>
+                <p class="text-gray-300 mb-6">
+                  Show this QR code to the cashier.
+                </p>
+                <img
+                  src="https://placehold.co/200x200/ffffff/1f2937?text=QR"
+                  alt="QR Code"
+                  class="rounded-lg border-8 border-white"
+                />
+                <p class="text-sm text-gray-400 mt-6">Code expires in 15:00</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: In-Store Scan -->
+          <div class="step-card flex flex-col items-center">
+            <div class="flex items-center mb-4 self-start">
+              <div
+                class="bg-gomo-gradient text-white rounded-full h-12 w-12 flex items-center justify-center font-bold text-xl mr-4"
+              >
+                3
+              </div>
+              <h3 class="text-2xl font-bold">The 5-Second Scan</h3>
+            </div>
+            <p class="text-gray-600 mb-6 self-start">
+              The staff scans the user's code. The validation is instant. The
+              transaction is complete.
+            </p>
+            <div class="phone-mockup relative bg-green-500">
+              <div class="phone-notch !bg-green-500"></div>
+              <div class="phone-screen text-center text-white">
+                <div
+                  class="w-32 h-32 bg-white rounded-full flex items-center justify-center mb-6"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-24 w-24 text-green-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <h4 class="text-4xl font-bold">SUCCESS!</h4>
+                <div class="bg-white/20 p-4 rounded-lg mt-4 text-left">
+                  <p>
+                    <span class="font-semibold">Offer:</span> 1 Free Milk Tea
+                  </p>
+                  <p><span class="font-semibold">Customer:</span> Juan D.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Backend Process -->
+      <section class="mb-20">
+        <h2 class="text-4xl font-bold text-center mb-12">
+          The Backend: <span class="gomo-purple">Automated & Frictionless</span>
+        </h2>
+        <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+          <div class="p-6">
+            <div
+              class="bg-gomo-gradient text-white rounded-full h-16 w-16 flex items-center justify-center font-bold text-3xl mx-auto mb-4"
+            >
+              ✓
+            </div>
+            <h3 class="text-xl font-bold mb-2">Instant Validation</h3>
+            <p class="text-gray-600">
+              QR code is scanned, validated, and marked as "used" in real-time
+              to prevent re-use.
+            </p>
+          </div>
+          <div class="p-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-4 gomo-pink"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <h3 class="text-xl font-bold mb-2">Automated Settlement</h3>
+            <p class="text-gray-600">
+              Total value of redemptions is calculated and paid out
+              automatically to the partner's registered account.
+            </p>
+          </div>
+          <div class="p-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto mb-4 gomo-purple"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+            <h3 class="text-xl font-bold mb-2">Simple Analytics</h3>
+            <p class="text-gray-600">
+              Partners can track redemptions, view earnings, and manage offers
+              in their portal dashboard.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="text-center my-20">
+        <div class="bg-slate-900 rounded-3xl p-12 max-w-4xl mx-auto shadow-2xl">
+          <h2 class="text-4xl font-bold text-white mb-4">
+            Ready to Grow Your Business?
+          </h2>
+          <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
+            Join hundreds of businesses already acquiring new customers and
+            increasing sales with GOMO. Sign up is free, takes minutes, and
+            requires no commitment.
+          </p>
+          <button class="btn-primary !py-4 !px-8 !text-lg !font-bold">
+            Become a GOMO Partner Today
+          </button>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

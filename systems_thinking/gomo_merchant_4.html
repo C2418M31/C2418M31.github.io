@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMO Partner Co-Pilot: AI-Powered Growth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Specific brand colors */
+        .gomo-purple { color: #8a2be2; }
+        .gomo-pink { color: #ff1493; }
+        
+        .text-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .bg-gomo-gradient {
+            background-image: linear-gradient(to right, #8a2be2, #ff1493);
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to right, #a251ff, #ff1493);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.4);
+        }
+
+        .dashboard-card {
+            background-color: #111827; /* Darker Slate for High Contrast */
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1px solid #374151;
+            transition: all 0.2s ease;
+        }
+        
+        .dashboard-card:hover {
+            border-color: #4b5563;
+            background-color: #1f2937;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            border: 12px solid #1f2937;
+            border-radius: 40px;
+            position: relative;
+            background: #f9fafb;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        .phone-notch {
+            width: 120px;
+            height: 20px;
+            background-color: #1f2937;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .bid-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 20, 147, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0); }
+        }
+
+        .hero-image-container {
+            background: radial-gradient(circle at center, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+        }
+
+        .benefit-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            height: 200px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-card py-4 px-8 flex justify-between items-center border-b border-gray-200">
+        <div class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-gomo-gradient rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg">G</div>
+            <span class="font-bold text-xl tracking-tight">Partner <span class="gomo-purple">Co-Pilot</span></span>
+        </div>
+        <div class="hidden md:flex space-x-8 font-semibold text-gray-600">
+            <a href="#benefits" class="hover:text-gomo-purple transition">Benefits</a>
+            <a href="#dashboard" class="hover:text-gomo-purple transition">Dashboard</a>
+            <a href="#creative" class="hover:text-gomo-purple transition">Creative Studio</a>
+            <a href="#marketplace" class="hover:text-gomo-purple transition">Marketplace</a>
+        </div>
+        <button class="btn-primary px-6 py-2.5 rounded-full shadow-lg">Launch Dashboard</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-20 pb-16 px-6">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center gap-12 max-w-6xl text-center lg:text-left">
+            <div class="lg:w-1/2">
+                <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight text-gomo-gradient">
+                    GOMO Partner <br>Co-Pilot
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed font-medium">
+                    Stop searching for customers. Let our AI bring them directly to you. <br class="hidden md:block">
+                    Drive real growth with zero upfront costs and zero extra work.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <button class="btn-primary px-10 py-4 rounded-full text-lg shadow-2xl">Start Growing Now</button>
+                </div>
+            </div>
+            <div class="lg:w-1/2 hero-image-container p-4">
+                <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white bg-slate-100 aspect-video flex items-center justify-center relative">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000" alt="AI Co-Pilot Visual" class="object-cover w-full h-full opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        </div>
+                        <span class="text-white font-bold text-lg">System Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Why Partner with GOMO? -->
+    <section id="benefits" class="py-24 bg-white border-y border-gray-100">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="text-4xl font-black text-center mb-4 text-gray-800 tracking-tight">Why Partner with GOMO?</h2>
+            <p class="text-center text-xl font-bold text-gomo-gradient mb-16">Effortless Growth, Zero Extra Work.</p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Acquire New Customers -->
+                <div class="group bg-white p-2 rounded-[3rem] border border-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(138,43,226,0.2)] transition duration-500">
+                    <div class="benefit-img-wrapper mb-8">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Customer Growth">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-6 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+                            <span class="text-white text-xs font-bold uppercase tracking-widest">Live Discovery</span>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-10">
+                        <h3 class="text-2xl font-black mb-4 text-gray-800">Acquire New Customers</h3>
+                        <p class="text-gray-600 leading-relaxed text-lg">Our AI identifies high-value GOMO users near your store and actively sends them your offers, turning app users into loyal, paying customers.</p>
+                    </div>
+                </div>
+
+                <!-- Increase Sales, Not Costs -->
+                <div class="group bg-white p-2 rounded-[3rem] border border-gray-100 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_rgba(255,20,147,0.2)] transition duration-500">
+                    <div class="benefit-img-wrapper mb-8">
+                        <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="ROI Growth">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-6">
+                            <span class="bg-gomo-gradient text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">ROI Optimized</span>
+                        </div>
+                    </div>
+                    <div class="px-8 pb-10">
+                        <h3 class="text-2xl font-black mb-4 text-gray-800">Increase Sales, Not Costs</h3>
+                        <p class="text-gray-600 leading-relaxed text-lg">No setup fees, monthly charges, or special hardware required. You only give value when you get value—a guaranteed return on investment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The AI-Powered Dashboard -->
+    <section id="dashboard" class="py-24 px-6 bg-[#0B0F1A] text-white">
+        <div class="container mx-auto max-w-7xl">
+            <!-- Section Title -->
+            <div class="mb-12">
+                <h2 class="text-4xl md:text-5xl font-black mb-3">The AI-Powered Dashboard</h2>
+                <p class="text-slate-400 text-lg leading-relaxed max-w-2xl">Go beyond data. Get actionable insights and growth strategies from your AI Co-Pilot.</p>
+            </div>
+
+            <!-- Personalized Profile Bar -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-slate-700/50 pb-10 gap-6">
+                <div>
+                    <h3 class="text-3xl font-black text-white mb-1 tracking-tight">Welcome, Cha Time!</h3>
+                    <p class="text-sm text-slate-400 font-medium">Tuesday, Oct 7, 2025 - 11:21 AM</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="bg-slate-800/80 px-8 py-4 rounded-3xl border border-slate-700 flex items-center gap-4 shadow-2xl">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none">Wallet</span>
+                        <span class="text-2xl font-black gomo-purple leading-none tracking-tighter">428.5 GB</span>
+                    </div>
+                    <button class="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-gomo-pink transition border border-slate-700 px-6 py-3 rounded-xl hover:bg-slate-800">Logout</button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Main Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+                <!-- Left: Flow and Active Campaigns -->
+                <div class="lg:col-span-8 flex flex-col gap-8">
+                    <!-- Redemption Flow (Made Smaller) -->
+                    <div class="dashboard-card bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-200">Redemption Flow</h3>
+                                    <p class="text-[10px] text-slate-500">Live influx monitoring</p>
+                                </div>
+                            </div>
+                            <!-- Condensed Graph -->
+                            <div class="h-40 w-full flex items-end justify-between gap-2 px-4">
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 40%"></div>
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 60%"></div>
+                                <div class="w-full bg-gomo-gradient rounded-t-lg relative h-[85%] shadow-[0_0_20px_rgba(138,43,226,0.3)]"></div>
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 55%"></div>
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 70%"></div>
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 45%"></div>
+                                <div class="w-full bg-slate-800 rounded-t-lg" style="height: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Campaigns Section -->
+                    <div class="dashboard-card bg-slate-900/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-slate-200 uppercase tracking-widest">Active Placements</h3>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">3 Slots Active</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                                <p class="text-[9px] font-bold text-gomo-pink uppercase mb-1">Homepage Ad</p>
+                                <p class="text-sm font-bold truncate">Flash Perk B1G1</p>
+                                <div class="mt-3 h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gomo-pink" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                                <p class="text-[9px] font-bold text-gomo-purple uppercase mb-1">Voucher Shelf</p>
+                                <p class="text-sm font-bold truncate">Free Milk Tea</p>
+                                <div class="mt-3 h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gomo-purple" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                                <p class="text-[9px] font-bold text-blue-400 uppercase mb-1">Direct Push</p>
+                                <p class="text-sm font-bold truncate">Nearby Blast</p>
+                                <div class="mt-3 h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-400" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Stats Stack -->
+                <div class="lg:col-span-4 flex flex-col gap-8">
+                    <!-- Redemption Stats -->
+                    <div class="dashboard-card border-l-8 border-l-purple-500 flex flex-col justify-center py-8">
+                        <div class="mb-6">
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Redemptions Day</p>
+                            <p class="text-4xl font-black text-white tracking-tighter">14 <span class="text-xs font-normal text-slate-500 uppercase">Users</span></p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Weekly Redemptions</p>
+                            <p class="text-4xl font-black text-white tracking-tighter">84 <span class="text-xs font-normal text-slate-500 uppercase">Users</span></p>
+                        </div>
+                    </div>
+                    <!-- ROI Stats -->
+                    <div class="dashboard-card border-l-8 border-l-pink-500 flex flex-col justify-center py-8">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-3 tracking-widest">Active Ad ROI</p>
+                        <div class="flex items-center gap-6">
+                            <p class="text-5xl font-black text-white tracking-tighter">4.8x</p>
+                            <span class="bg-pink-500/20 text-gomo-pink text-[10px] font-black px-3 py-1 rounded-full border border-pink-500/30 uppercase">High Reach</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Co-Pilot Recommendation (Retained) -->
+            <div class="bg-slate-800/40 p-8 rounded-[2.5rem] border border-slate-700 flex flex-col md:flex-row gap-10 items-center shadow-inner">
+                <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-purple-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gomo-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="text-xl font-bold mb-2">AI Co-Pilot Recommendation</h4>
+                    <p class="text-slate-400 text-base leading-relaxed italic">"Flash Vouchers deployed now are seeing 3x higher conversion for your category. Consider a 5 GB boost."</p>
+                </div>
+                <button class="btn-primary px-10 py-4 rounded-full text-base font-bold shadow-xl w-full md:w-auto uppercase tracking-widest text-xs">Accept & Deploy</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Merchant Studio (Updated Workspace Content) -->
+    <section id="creative" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2">
+                    <span class="gomo-pink font-black text-sm tracking-widest uppercase mb-4 block underline decoration-4 decoration-gomo-purple underline-offset-8">Merchant Studio</span>
+                    <h2 class="text-4xl md:text-6xl font-black mb-10 leading-tight text-gray-900 tracking-tighter uppercase">The Growth <br><span class="text-gomo-purple">Workspace</span></h2>
+                    
+                    <div class="space-y-6">
+                        <!-- High-Convert Voucher -->
+                        <div class="p-1 bg-gomo-gradient rounded-[2rem] shadow-xl transform transition hover:-translate-y-1 duration-300">
+                            <div class="p-6 bg-white rounded-[1.9rem] flex justify-between items-center group cursor-pointer">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-16 bg-purple-100 gomo-purple rounded-2xl flex items-center justify-center group-hover:bg-gomo-gradient group-hover:text-white transition-all duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-black text-xl text-gray-800 uppercase tracking-tighter">High-Convert Voucher</h4>
+                                        <p class="text-sm text-gray-500 font-medium">Generate QR codes for in-store Perks.</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-black gomo-purple bg-purple-50 px-4 py-1 rounded-full border border-purple-200">1.0 GB</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual Homepage Ad -->
+                        <div class="p-1 bg-gomo-gradient rounded-[2rem] shadow-xl transform transition hover:-translate-y-1 duration-300">
+                            <div class="p-6 bg-white rounded-[1.9rem] flex justify-between items-center group cursor-pointer">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-16 bg-pink-100 gomo-pink rounded-2xl flex items-center justify-center group-hover:bg-gomo-gradient group-hover:text-white transition-all duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-black text-xl text-gray-800 uppercase tracking-tighter">Visual Homepage Ad</h4>
+                                        <p class="text-sm text-gray-500 font-medium">AI-designed banners for the App Home.</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-black gomo-pink bg-pink-50 px-4 py-1 rounded-full border border-pink-200">2.5 GB</span>
+                            </div>
+                        </div>
+
+                        <!-- Direct Push Notif -->
+                        <div class="p-6 bg-gray-50 border border-gray-200 rounded-[2rem] flex justify-between items-center group cursor-pointer hover:border-blue-400 transition-all">
+                            <div class="flex items-center gap-6">
+                                <div class="w-16 h-16 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-xl text-gray-800 uppercase tracking-tighter">Direct Push Notif</h4>
+                                    <p class="text-sm text-gray-500 font-medium italic">Ping users within 1km of your door.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-black text-blue-600 uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-blue-100 shadow-sm">1.5 GB</span>
+                        </div>
+
+                        <!-- In-App Pop Message -->
+                        <div class="p-6 bg-gray-50 border border-gray-200 rounded-[2rem] flex justify-between items-center group cursor-pointer hover:border-teal-400 transition-all">
+                            <div class="flex items-center gap-6">
+                                <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-xl text-gray-800 uppercase tracking-tighter">In-App Pop Message</h4>
+                                    <p class="text-sm text-gray-500 font-medium italic">Targeted pop-ups during active use.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-black text-teal-600 uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-teal-100 shadow-sm">2.0 GB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Studio Preview Area -->
+                <div class="lg:w-1/2 w-full flex justify-center relative">
+                    <div class="absolute -top-10 -right-10 w-80 h-80 bg-gomo-gradient opacity-10 blur-3xl rounded-full"></div>
+                    <div class="phone-mockup border-[12px] border-slate-950">
+                        <div class="phone-notch"></div>
+                        <div class="flex flex-col h-full bg-[#f8fafc]">
+                            <div class="bg-white p-5 pt-10 border-b border-gray-100 flex justify-between items-center text-gray-800 shadow-sm">
+                                <span class="font-black gomo-purple italic text-sm tracking-tighter uppercase leading-none">Studio</span>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                                    <span class="text-[8px] font-black text-gray-400 uppercase">System Ready</span>
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <div class="bg-white rounded-3xl p-4 shadow-xl border border-gray-100 mb-6 transform scale-[1.02]">
+                                    <p class="text-[9px] font-black text-gray-300 uppercase mb-3 tracking-widest text-center">Active Canvas</p>
+                                    <div class="bg-slate-900 rounded-2xl aspect-[16/9] flex items-center justify-center p-4 relative overflow-hidden group">
+                                        <div class="absolute inset-0 bg-gomo-gradient opacity-40 group-hover:opacity-60 transition duration-500"></div>
+                                        <div class="relative z-10 text-center">
+                                            <p class="text-white font-black text-2xl italic leading-none mb-1 shadow-lg uppercase">Free Perk</p>
+                                            <p class="gomo-pink text-[9px] font-black tracking-[0.2em] uppercase bg-black/20 px-2 py-0.5 rounded">Cha Time Mega</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-50 border border-purple-100 rounded-2xl p-4 mb-8">
+                                    <p class="text-[10px] font-black text-purple-700 uppercase mb-2 tracking-widest">Co-Pilot Hint</p>
+                                    <p class="text-[11px] text-purple-900 leading-relaxed font-medium italic">"GOMO users respond 40% better to 'Free Perk' headings than '%' discounts."</p>
+                                </div>
+                                <button class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-xs shadow-2xl hover:bg-black transition-all">Save & Deploy Asset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Marketplace -->
+    <section id="marketplace" class="py-24 bg-slate-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black mb-4 tracking-tight uppercase">The <span class="text-gomo-gradient">Placement</span> Marketplace</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-lg">Turn your creative assets into traffic. Bid for premium slots or secure fixed-rate proximity placements.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                <div class="space-y-6">
+                    <!-- Zone 1: Bidding -->
+                    <div class="p-8 bg-slate-800 border-2 border-purple-500/30 rounded-[3rem] relative group shadow-[0_30px_60px_-15px_rgba(138,43,226,0.3)]">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <h3 class="font-black text-2xl mb-1 uppercase tracking-tighter">Homepage Premium</h3>
+                                <div class="flex items-center gap-2 mt-3">
+                                    <span class="bg-purple-500/20 text-purple-400 text-[10px] font-black px-2 py-0.5 rounded border border-purple-500/30 uppercase">Live Auction</span>
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">24h Cycle</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-slate-500 uppercase font-black mb-1">High Bid</p>
+                                <p class="text-4xl font-black text-white tracking-tighter">14.5 GB</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-900/50 rounded-[1.5rem] p-5 mb-8 border border-slate-700/50">
+                            <div class="flex items-center gap-2 mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                                <p class="text-[10px] font-black text-purple-400 uppercase tracking-widest">Auction Rules & Reset</p>
+                            </div>
+                            <ul class="text-[11px] text-slate-400 space-y-3 font-medium">
+                                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span> Reset Time: <strong class="text-white ml-auto font-black uppercase">Tonight, 12:00 AM PHT</strong></li>
+                                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span> Winner captures the #1 spot for the next 24 hours.</li>
+                                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-purple-500 rounded-full"></span> Outbid protection: We ping you if your spot is taken.</li>
+                            </ul>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <input type="number" placeholder="15.0" class="flex-grow bg-slate-700 border-none rounded-2xl px-5 py-4 font-black text-white focus:ring-2 focus:ring-purple-500 placeholder:text-slate-500 shadow-inner">
+                            <button class="bg-gomo-gradient px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-widest bid-pulse shadow-lg">Bid Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Zone 2: Voucher Shelf -->
+                    <div class="p-6 bg-slate-800 border-2 border-slate-700 rounded-[2rem] hover:border-pink-500/50 transition duration-300 group cursor-pointer shadow-lg">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h4 class="font-black text-xl group-hover:text-gomo-pink transition uppercase tracking-tighter">Voucher Shelf</h4>
+                                <p class="text-xs text-slate-400 font-medium italic">Priority listing in 'Rewards' tab.</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] text-slate-500 font-black uppercase tracking-widest">Fixed Rate</p>
+                                <p class="text-2xl font-black tracking-tighter italic">2.5 GB <span class="text-[10px] opacity-40 font-normal">/ day</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-6 bg-slate-800 border border-slate-700 rounded-[2rem] shadow-lg">
+                            <p class="text-[10px] font-black text-blue-400 uppercase mb-2 tracking-widest">Map Zone</p>
+                            <p class="text-xl font-black tracking-tighter italic">4.2 GB</p>
+                            <p class="text-[9px] text-slate-500 font-bold">Daily Slot</p>
+                        </div>
+                        <div class="p-6 bg-slate-800 border border-slate-700 rounded-[2rem] shadow-lg">
+                            <p class="text-[10px] font-black text-teal-400 uppercase mb-2 tracking-widest">Push Blast</p>
+                            <p class="text-xl font-black tracking-tighter italic">6.0 GB</p>
+                            <p class="text-[9px] text-slate-500 font-bold">Per 1k Users</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Preview Display -->
+                <div class="flex flex-col items-center">
+                    <p class="text-xs font-black text-slate-500 mb-8 uppercase tracking-[0.3em] italic">Merchant Preview Map</p>
+                    <div class="phone-mockup border-[12px] border-slate-950">
+                        <div class="phone-notch"></div>
+                        <div class="p-0 flex flex-col h-full bg-[#f1f5f9]">
+                            <div class="bg-white p-6 pt-12 border-b border-gray-100 flex justify-between items-center text-gray-900 shadow-md">
+                                <span class="font-black gomo-purple italic text-xl tracking-tighter uppercase">Rewards</span>
+                                <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200"></div>
+                            </div>
+                            <div class="flex-grow p-5 space-y-6 overflow-y-auto">
+                                <div class="border-4 border-gomo-pink rounded-3xl p-2 bg-pink-500/5 relative shadow-2xl transform rotate-1">
+                                    <div class="bg-slate-200 h-28 rounded-2xl flex items-center justify-center">
+                                        <p class="text-[10px] font-black opacity-30 uppercase tracking-[0.2em] text-center px-6">Zone A: Homepage Bid Winner</p>
+                                    </div>
+                                    <span class="absolute -top-3 -right-3 bg-gomo-pink text-[7px] text-white px-3 py-1 rounded-full font-black shadow-xl uppercase">Prime #1</span>
+                                </div>
+                                
+                                <div class="border-4 border-gomo-purple rounded-3xl p-5 bg-purple-500/5 relative shadow-2xl transform -rotate-1">
+                                    <p class="text-[9px] font-black opacity-40 mb-3 uppercase italic leading-none tracking-widest">Zone B: Priority Shelf</p>
+                                    <div class="flex gap-4 overflow-hidden">
+                                        <div class="w-28 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center flex-shrink-0 border border-gray-100">
+                                            <div class="w-12 h-1 bg-slate-100 rounded"></div>
+                                        </div>
+                                        <div class="w-28 h-20 bg-white rounded-2xl shadow-sm flex-shrink-0 opacity-40 border border-gray-100"></div>
+                                    </div>
+                                    <span class="absolute -top-3 -right-3 bg-gomo-purple text-[7px] text-white px-3 py-1 rounded-full font-black shadow-xl uppercase">Featured</span>
+                                </div>
+
+                                <div class="h-4 w-1/3 bg-slate-200 rounded-full"></div>
+                                <div class="h-28 w-full bg-slate-200 rounded-3xl opacity-20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <footer class="bg-white border-t border-gray-100 py-24 px-6 text-center">
+        <h2 class="text-4xl font-extrabold mb-6 text-gray-900 tracking-tight uppercase">Ready to Grow with GOMO?</h2>
+        <p class="text-gray-500 mb-12 max-w-2xl mx-auto text-lg font-medium">Join hundreds of businesses already acquiring new customers and increasing sales with GOMO. Sign up is free, takes minutes, and requires no commitment.</p>
+        <button class="btn-primary px-16 py-6 rounded-full font-black text-xl shadow-[0_20px_50px_rgba(138,43,226,0.3)] hover:scale-105 transition-all">Become a GOMO Partner Today</button>
+        <div class="mt-24 pt-10 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">
+            <p>© 2025 GOMO Philippines. All rights reserved.</p>
+            <div class="flex gap-10">
+                <a href="#" class="hover:text-gomo-purple transition">Privacy Policy</a>
+                <a href="#" class="hover:text-gomo-purple transition">Terms of Service</a>
+                <a href="#" class="hover:text-gomo-purple transition">Merchant Support</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
