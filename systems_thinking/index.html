@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Growth Protocol v2.3 - Strategy Dashboard</title>
+  <title>Growth Protocol v2.4 - Strategy Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@
         color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
         summary: "The ecosystem's Trust Score. Aggregates all positive behavior to gatekeep scarce resources.",
         loop: { trigger: "User maintains a streak, helps a peer, or reports signal issues.", action: "Earns Karma Points (Reliability Score).", reward: "Unlocks emergency benefits & VIP access.", investment: "Reputation Lock: High cost to abandon a good score." },
-        launchMode: "Simple binary reputation: Good Standing (active 30+ days, no violations) vs. New User. Based on tenure and top-up consistency only.",
+        launchMode: "Simple binary reputation: Good Standing (active 30+ days) vs. New User. Based on tenure only. Limited value without T1 behavioral signals — score lacks nuance until Streaks and Micro-Tribe generate engagement data.",
         fullMode: "Multi-signal score aggregating streaks, Micro-Tribe contributions, Signal Scout reports, and Social Drops activity. Weighted scoring with decay.",
         killCriteria: { metric: "% of users with active Karma score above threshold", target: ">30% of MAU engaged in score-building actions within 60 days", deadline: "90 days", action: "If <15% engagement, simplify scoring to binary (Good Standing / New)" },
         whyTier: "T2: Requires behavioral data from T1 features (Streaks, Micro-Tribe) to calculate meaningful scores. Without T1 engagement signals, the Karma score has nothing to aggregate.",
@@ -57,7 +57,7 @@
         color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
         summary: "Crisis-response protocol. Auto-pauses expiry clocks when Signal #2 detected in user location.",
         loop: { trigger: "Signal #2 detected in user location.", action: "System auto-pauses expiry clocks.", reward: "Connectivity preserved for emergency use.", investment: "Trust Capital: Extreme loyalty due to 'human' treatment." },
-        launchMode: "Manual expiry pause triggered by PAGASA weather alerts for affected regions. Broad geographic targeting.",
+        launchMode: "Manual expiry pause triggered by PAGASA weather alerts for broad regions. Works but lacks precision — without Signal Scout location data, targeting is geographic rather than per-user, resulting in over-coverage and missed edge cases.",
         fullMode: "Auto-triggered using Signal Scout location data + Digital Karma trust filtering. Granular per-user activation with verified location.",
         killCriteria: { metric: "NPS lift among affected users vs. control", target: "+20 NPS points among Typhoon Guard recipients", deadline: "First typhoon season cycle", action: "If NPS lift <5, reduce to simple expiry extension without branding" },
         whyTier: "Requires Signal Scout location data and Digital Karma trust scores to target precisely. Launch Mode uses PAGASA alerts, but intelligent per-user activation needs T1 data maturity.",
@@ -67,7 +67,7 @@
         color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
         summary: "Tenure-based status locking mechanism rewarding long-term network loyalty.",
         loop: { trigger: "User hits 3-year anniversary.", action: "Unlocks 'Veteran' status.", reward: "Permanent VIP Support access.", investment: "Identity: Refusal to restart as a 'nobody' elsewhere." },
-        launchMode: "Simple anniversary milestone notifications with a badge and one-time data bonus at 1yr, 2yr, 3yr marks.",
+        launchMode: "Simple anniversary milestone notifications with badge and one-time data bonus. Functional but shallow — without Skill Tree, Globe Passport, and Digital Karma feeding into status, tenure alone is a weak differentiator.",
         fullMode: "Full tiered status system fed by Skill Tree progression, Globe Passport level, Travel Badges, and Digital Karma. Permanent VIP access unlocks.",
         killCriteria: { metric: "Churn rate among Legacy Perk holders vs. non-holders", target: "Legacy users churn at <50% the rate of non-Legacy users", deadline: "180 days post-launch", action: "If churn differential <10%, merge into simpler loyalty tier" },
         whyTier: "Tenure-based — only meaningful after users have accumulated 1+ years of history. Needs Skill Tree, Globe Passport, and Digital Karma data to create differentiated status tiers.",
@@ -79,7 +79,7 @@
         color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
         summary: "Scarcity-based access gate using reputation scores to filter for high-value users.",
         loop: { trigger: "High-demand event announced.", action: "User enters 'Waiting Room' via app.", reward: "Priority queue based on Reliability Score.", investment: "Status Maintenance: User avoids churn to keep score high." },
-        launchMode: "Simple FIFO waiting room for event access. Priority based on account tenure only. No scoring required.",
+        launchMode: "Simple FIFO waiting room for event access. Priority based on account tenure only. Works but defeats the purpose — without Digital Karma scoring, high-value users get no advantage over inactive accounts.",
         fullMode: "Priority queue ranked by Digital Karma score + Legacy Perks status. Dynamic waitlist with real-time position updates.",
         killCriteria: { metric: "Waiting Room conversion rate and 30-day retention of participants", target: ">40% of Waiting Room users complete a transaction; +15% retention vs. control", deadline: "After 3 event cycles", action: "If conversion <20%, pivot to simpler priority access without scoring" },
         whyTier: "Scarcity access requires a trust score to rank users. Without Digital Karma (T2) and Legacy Perks (T2) data, priority ranking is meaningless — just FIFO.",
@@ -119,7 +119,7 @@
         color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
         summary: "Context-specific status tier for high-value roaming and travel segments.",
         loop: { trigger: "User buys roaming data.", action: "Unlocks 'Passport Tier'.", reward: "Airport lounge access.", investment: "Maintenance: Keeping roaming load active." },
-        launchMode: "Simple roaming badge awarded after first roaming purchase. Basic discount on next roaming pack.",
+        launchMode: "Simple roaming badge awarded after first roaming purchase. Basic discount on next roaming pack. Minimal standalone value — without Sachet Upsell roaming boosts, Detour discovery, and Booking Bridge travel data, it’s a badge without an ecosystem.",
         fullMode: "Full tiered system with Sachet Upsell roaming boosts, Detour discovery integration, Booking Bridge travel data, and Travel Squad shared pools.",
         killCriteria: { metric: "Roaming ARPU lift among Nomad tier users", target: "+25% roaming ARPU vs. non-tiered roaming users", deadline: "90 days after launch", action: "If ARPU lift <10%, merge into Globe Passport as a travel badge" },
         whyTier: "Requires an established roaming user base and partner network (airport lounges, travel deals) to deliver value. Needs Sachet Upsell, Detour, and Booking Bridge data to target effectively.",
@@ -129,7 +129,7 @@
         color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
         summary: "Asset ownership economy centered on digital identity and number scarcity.",
         loop: { trigger: "User desires a status number (e.g. 888).", action: "Bids on or trades numbers in-app.", reward: "Ownership of a high-value digital asset.", investment: "Identity Lock-in: You never churn your 'Golden Number'." },
-        launchMode: "Simple premium number catalog with fixed pricing. No bidding, no trading. Purchase and own.",
+        launchMode: "Simple premium number catalog with fixed pricing. Purchase and own. Viable only at scale — without a large, engaged user base and Digital Karma trust gating, number scarcity doesn’t exist and the feature feels arbitrary.",
         fullMode: "Full auction system with bidding, trading marketplace, and status display. Gated by Legacy Perks status and Digital Karma trust score.",
         killCriteria: { metric: "Number auction participation rate; premium number retention rate", target: ">500 bids in first auction cycle; premium holders retain at 95%+", deadline: "90 days", action: "If <100 bids, shelve and revisit when user base exceeds threshold" },
         whyTier: "Needs large, engaged user base to create number scarcity demand. Premium number auctions fail without critical mass. Requires Legacy Perks status and Digital Karma trust to gate ownership.",
@@ -139,7 +139,7 @@
         color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
         summary: "DeFi-inspired holding mechanism. Lock data for 30 days, get 20% interest back.",
         loop: { trigger: "User has surplus data.", action: "Locks 10GB for 30 days.", reward: "Gets 12GB back (20% interest).", investment: "Time Lock: Cannot churn while assets are staked." },
-        launchMode: "Simple 'Save for Later' — lock surplus data for 30 days, get 10% bonus. One-tap activation, no complexity.",
+        launchMode: "Simple “Save for Later” — lock surplus data for 30 days, get 10% bonus. Functional but low adoption expected — without T1 engagement generating surplus data (Mystery Box wins, streak rewards), few users have excess to stake.",
         fullMode: "Tiered staking with variable interest rates based on Typhoon Guard trust, Booking Bridge spend, and Load Roulette wins. Multiple lock periods.",
         killCriteria: { metric: "Staking adoption rate; 30-day retention of stakers", target: ">8% of surplus-data users stake; staker retention +20% vs. control", deadline: "60 days", action: "If adoption <3%, simplify to auto-rollover with smaller bonus" },
         whyTier: "Requires users to have surplus data — which comes from T1 engagement (Mystery Box wins, streak rewards). Without a habit of accumulation from T1, there’s nothing to stake.",
@@ -151,7 +151,7 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Dynamic burn mechanism. Flash auctions where users bid data for real-world prizes.",
         loop: { trigger: "Flash Auction alert at 8:00 PM.", action: "User bids GBs for concert tickets/sneakers.", reward: "Winning user burns data for high-value item.", investment: "Burn Rate: Empty data tanks require new top-ups." },
-        launchMode: "Fixed-price data exchange: trade X GB for a voucher from internal catalog. No bidding, no auction mechanics.",
+        launchMode: "Fixed-price data exchange: trade X GB for a voucher from internal catalog. Works but low energy — without Data Staking surplus and active engagement from T1, participation will be minimal and auctions feel empty.",
         fullMode: "Full flash auction system with real-time bidding, fueled by Data Staking surplus and Data Exchange credits. Partner Co-pilot merchant prizes.",
         killCriteria: { metric: "Auction participation rate; post-auction top-up conversion", target: ">5% of notified users participate; >60% of winners top-up within 48hrs", deadline: "After 5 auction cycles", action: "If participation <2%, pivot to fixed-price data-for-voucher exchange" },
         whyTier: "Needs Data Staking surplus and active engagement to create bidding demand. Flash auctions with <100 participants feel dead. Requires T1 to build the user habit of valuing data as currency.",
@@ -181,7 +181,7 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Variable reward framing for standard transactions to increase perceived value.",
         loop: { trigger: "User prepares to top-up \u20B150.", action: "Selects 'Mystery Load' option.", reward: "Chance to win \u20B1100, \u20B1500, or \u20B11000.", investment: "Excitement: Top-ups become a thrill, not a chore." },
-        launchMode: "Simple random bonus on top-up: guaranteed small extra (e.g. +5MB) with rare larger prizes. No dependencies.",
+        launchMode: "Simple random bonus on top-up: guaranteed small extra with rare larger prizes. Functional but unoptimized — without Streak Economy pattern data, trigger timing is random rather than strategically placed at habit moments.",
         fullMode: "Full spin wheel mechanic triggered by Streak Economy streaks and Sachet Upsell purchases. Prizes feed Mystery Box and Data Staking.",
         killCriteria: { metric: "Mystery Load opt-in rate; top-up frequency change", target: ">20% of top-ups use Mystery Load; top-up frequency +10%", deadline: "60 days", action: "If opt-in <8%, increase guaranteed minimum reward" },
         whyTier: "Requires Streak Economy engagement data to optimize trigger timing. Without knowing user top-up patterns from T1, the variable reward timing is random rather than strategic.",
@@ -191,7 +191,7 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Location-triggered variable rewards driving offline traffic for partners.",
         loop: { trigger: "Lunchtime (11 AM) push notification.", action: "User spins the wheel in-app.", reward: "Unique discount code for a nearby partner.", investment: "Habit: App becomes the daily lunch decision maker." },
-        launchMode: "Internal food voucher spin (GrabFood/Foodpanda codes) at lunchtime. No direct merchant integration needed.",
+        launchMode: "Internal food voucher spin (GrabFood/Foodpanda codes) at lunchtime. Works but generic — without Partner Co-pilot merchant inventory and Streak Economy engagement patterns, spins feel disconnected from the GOMO experience.",
         fullMode: "Full Partner Co-pilot merchant slots, Environment Trigger weather-aware timing, Streak Economy streak-locked premium spins.",
         killCriteria: { metric: "Spin rate at lunchtime; voucher redemption rate at partner", target: ">10% of notified users spin; >25% of spinners redeem", deadline: "60 days", action: "If spin rate <4%, test different time windows or remove push trigger" },
         whyTier: "Requires Partner Co-pilot merchant inventory and Streak Economy engagement patterns to time spins effectively. Launch Mode works with generic vouchers, but full value needs T1+T2 data.",
@@ -221,7 +221,7 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Gamified asset sink. Users stake data on event outcomes (NBA, Miss Universe).",
         loop: { trigger: "NBA Finals / Miss Universe event.", action: "User stakes 5GB on a winner.", reward: "Win = Data Back + Lifestyle Voucher.", investment: "Gamification: Turns passive data into active currency." },
-        launchMode: "Simple prediction polls (no data staking). Vote on outcomes, correct voters earn small data bonus.",
+        launchMode: "Simple prediction polls: vote on event outcomes, correct voters earn small data bonus. Engagement-only, no staking — without Data Staking surplus and the data-as-currency habit built by T1, staking mechanics have no foundation.",
         fullMode: "Full staking mechanism using Data Staking surplus, Digital Real Estate status multipliers, and Globe Insider event access. Quest Chain event tie-ins.",
         killCriteria: { metric: "Staking participation per event; data burned vs. regenerated", target: ">3% of MAU participate per major event; net data burn >0", deadline: "After 3 event cycles", action: "If participation <1%, simplify to prediction polls without staking" },
         whyTier: "Needs an engaged user base that values data as currency (built by T1 Streaks + T2 Data Staking). Without data-as-currency habit, staking feels alien. Also needs event partnerships.",
@@ -231,7 +231,7 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Discovery engine monetizing location context via partner suggestions.",
         loop: { trigger: "User enters a new city/zone.", action: "App pushes a 'Detour' suggestion.", reward: "Discount/Perk at venue + Explorer XP.", investment: "Habit: App becomes a travel companion." },
-        launchMode: "Curated list of partner venues by city. Manual recommendations, no real-time location triggering.",
+        launchMode: "Curated list of partner venues by city. Manual recommendations. Low engagement expected — without Signal Scout real-time location data and Partner Co-pilot merchant inventory, suggestions are static and quickly outdated.",
         fullMode: "Real-time location-triggered suggestions using Signal Scout data and Partner Co-pilot merchant inventory. Auto-generated discovery feeds.",
         killCriteria: { metric: "Detour suggestion tap-through; venue visit confirmation rate", target: ">8% tap-through; >15% of tappers visit the venue", deadline: "90 days", action: "If tap-through <3%, reduce to passive discovery feed" },
         whyTier: "Needs Partner Co-pilot merchant network and Signal Scout location intelligence to generate relevant suggestions. Without real partner inventory and location data, suggestions are generic.",
@@ -253,7 +253,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Shared roaming pool for group travelers, creating social lock-in.",
         loop: { trigger: "Users plan a trip together.", action: "Create a shared roaming bucket.", reward: "Cheaper cost per GB.", investment: "Social Lock: The group stays on GOMO for the trip." },
-        launchMode: "Simple shared data pool between 2-4 users for a set period. Manual activation, fixed pricing.",
+        launchMode: "Simple shared data pool between 2-4 users for a set period. Manual activation. Narrow use case — without Micro-Tribe social habits and Nomad Passport travel behavior data, group travel pools lack the user base to gain traction.",
         fullMode: "Integrated with Micro-Tribe squads, Nomad Passport tier benefits, and Booking Bridge travel bookings for auto-activation.",
         killCriteria: { metric: "Shared bucket creation rate; group roaming ARPU", target: ">100 buckets created/month; group ARPU +20% vs. individual roaming", deadline: "90 days", action: "If <30 buckets/month, merge into Nomad Passport as group feature" },
         whyTier: "Needs Micro-Tribe social habits established and roaming user volume. Shared roaming pools only make sense when group travel behavior is proven and the partner network is mature.",
@@ -263,7 +263,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Geospatial UGC layer. Users drop geo-tagged messages/gifts at physical locations.",
         loop: { trigger: "User wants to leave a mark at a location.", action: "Drops a geo-tagged message/gift.", reward: "Social connection (finder replies/thanks).", investment: "Content creation: Populating the world map." },
-        launchMode: "Simple location-tagged message board within the app. Text-only drops. Manual discovery.",
+        launchMode: "Simple location-tagged message board within the app. Text-only drops. Very low discovery rate expected — without critical mass of daily users from T1/T2, most drops will never be found, making the feature feel empty.",
         fullMode: "Full AR discovery layer with Partner Co-pilot sponsored drops, Detour venue integration, and Travel Badge location tie-ins.",
         killCriteria: { metric: "Drops created per week; discovery/interaction rate", target: ">1000 drops/week; >20% of drops get discovered within 7 days", deadline: "90 days", action: "If <200 drops/week, limit to event-based drops only" },
         whyTier: "Needs critical mass of active users to make geo-tagged content discoverable. <200 drops/week means most drops are never found. Requires AR Geo-Cache, Detour, and Travel Badge ecosystem.",
@@ -273,7 +273,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Achievement system gamifying physical movement and discovery.",
         loop: { trigger: "User detected in a new city.", action: "Checks in to claim 'Explorer Badge'.", reward: "Unlocks exclusive partner discounts.", investment: "Collection: Desire to complete the travel map." },
-        launchMode: "Simple city check-in badges. Manual claim. Basic badge collection view in profile.",
+        launchMode: "Simple city check-in badges with manual claim. Basic collection view. Low motivation — without Nomad Passport roaming data, Detour venue visits, and AR Geo-Cache auto-detection, badge collection requires too much manual effort for too little reward.",
         fullMode: "Auto-detected via Nomad Passport roaming, Detour venue visits, and AR Geo-Cache discoveries. Linked to Legacy Perks and Booking Bridge discounts.",
         killCriteria: { metric: "Badge claim rate; discount redemption rate", target: ">10% of traveling users claim badges; >20% redeem linked discounts", deadline: "90 days", action: "If claim rate <3%, merge into Globe Passport as passive milestones" },
         whyTier: "Needs Nomad Passport roaming data, Detour venue network, and AR Geo-Cache infrastructure to auto-detect locations. Manual check-ins alone don’t justify the build investment.",
@@ -283,7 +283,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Crowdsourced network intelligence. Users report dead zones for data bounties.",
         loop: { trigger: "User experiences connection drop.", action: "Marks location on 'Signal Map'.", reward: "Earns 50MB 'Scout Bounty'.", investment: "Contribution: User feels ownership of network quality." },
-        launchMode: "Simple 'Report a Dead Zone' button with location pin. Fixed 50MB reward per verified report.",
+        launchMode: "Simple “Report a Dead Zone” button with location pin. Fixed 50MB reward. Works but low volume expected — without T1 Streak Economy driving daily app opens, users aren’t in the app frequently enough to generate consistent reports.",
         fullMode: "Full signal map with Speed Test Bounty verification, Rider Radar gig worker data, heatmaps feeding Environment Triggers and Sachet Upsell targeting.",
         killCriteria: { metric: "Reports submitted per week; data quality/accuracy rate", target: ">5000 reports/week; >70% accuracy when validated against network data", deadline: "60 days", action: "If <1000 reports/week, reduce to passive background reporting" },
         whyTier: "Requires enough users with Sachet Upsell and Streak Economy habits to generate consistent crowdsourced reports. Without T1 engagement driving daily opens, report volume is too low to be useful.",
@@ -293,7 +293,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Incentivized verification tasks for network QA in specific areas.",
         loop: { trigger: "Network requests data in specific area.", action: "User runs in-app speed test.", reward: "Instant data credit.", investment: "Gig Work: Performing labor for the network." },
-        launchMode: "Simple in-app speed test with instant small data reward. No targeting \u2014 available to all users anytime.",
+        launchMode: "Simple in-app speed test with instant small data reward. Available to all users anytime. Functional but untargeted — without Signal Scout infrastructure, tests are random rather than directed at areas that need verification.",
         fullMode: "Targeted bounties for specific locations, verified against Signal Scout reports. Digital Balikbayan family-sourced testing in rural areas.",
         killCriteria: { metric: "Test completion rate per request; data accuracy", target: ">50% of targeted users complete test; results within 10% of tower data", deadline: "60 days", action: "If completion <20%, increase reward or reduce frequency" },
         whyTier: "Requires Signal Scout infrastructure to target specific areas for testing. Without the reporting framework, bounties are untargeted and data is low-quality.",
@@ -303,7 +303,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Synchronous group challenge. Squad burns 50GB together for raffle entry.",
         loop: { trigger: "Long weekend starts.", action: "Squad burns 50GB together.", reward: "Loot Box (PS5 Raffle).", investment: "Burn Rate: Depleting tanks together." },
-        launchMode: "Simple group data challenge: squad that uses the most data in a weekend gets a prize. Leaderboard only.",
+        launchMode: "Simple group data challenge: squad that uses most data in a weekend gets a prize. Leaderboard only. Low participation expected — without established Micro-Tribe squads and Fandom DAO communities, group events have no existing social infrastructure to activate.",
         fullMode: "Full synchronous event with Fandom DAO team competitions, Mystery Box loot tier integration, and Data Market prize pool.",
         killCriteria: { metric: "Heist participation rate; post-heist top-up rate", target: ">2% of squads participate; >70% of participants top-up within 72hrs", deadline: "After 3 event cycles", action: "If participation <0.5%, merge into regular Mystery Box as group variant" },
         whyTier: "Needs established Micro-Tribe squads and Fandom DAO communities to create group competition. Without social structures from BAYANIHAN, group burn events have no participants.",
@@ -313,7 +313,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Collective resource pooling. Fans donate data to win real-world idol ads.",
         loop: { trigger: "Vote for Idol billboard.", action: "Donate unused data to House.", reward: "Idol wins real-world ads.", investment: "Tribalism: Recruiting others to the network." },
-        launchMode: "Simple polling/voting for fan favorites. No data donation \u2014 just engagement and social sharing.",
+        launchMode: "Simple polling/voting for fan favorites. No data donation, just engagement. Surface-level only — without Prediction Market, Globe Insider event access, and Digital Real Estate status systems, DAOs have no meaningful currency or stakes to drive collective action.",
         fullMode: "Full DAO with data pooling from Prediction Market, Globe Insider event access, and Digital Real Estate status-weighted voting power.",
         killCriteria: { metric: "DAO creation rate; total data donated per campaign", target: ">10 active DAOs; >1TB total donated per campaign cycle", deadline: "After 2 campaign cycles", action: "If <3 DAOs active, simplify to voting-only without data pooling" },
         whyTier: "Needs Prediction Market engagement, Globe Insider event access, and Digital Real Estate status systems to create meaningful collective action. Without ecosystem maturity, DAOs have no currency to pool.",
@@ -325,7 +325,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "B2B engine. Merchants bid for slots to reach high-intent GOMO users.",
         loop: { trigger: "Merchant needs foot traffic.", action: "Merchant bids for 'Foodie Roulette' slot.", reward: "High-intent customer walks through the door.", investment: "B2B Lock-in: GOMO becomes their primary marketing channel." },
-        launchMode: "Manual merchant onboarding. Fixed voucher inventory from 5-10 launch partners. No bidding system.",
+        launchMode: "Manual merchant onboarding with fixed voucher inventory from 5-10 launch partners. Works but weak pitch — without T1 engagement data (DAU, streaks, top-up frequency), merchants have no proof of an engaged audience to market to.",
         fullMode: "Self-serve merchant portal with real-time bidding, Data Market prize injection, Globe Passport user targeting, and Quest Chain campaign creation.",
         killCriteria: { metric: "Merchant sign-up rate; merchant renewal rate after first campaign", target: ">20 merchants in first 60 days; >50% renew after first campaign", deadline: "90 days", action: "If sign-ups <5, pivot to direct sales with top 10 target merchants" },
         whyTier: "Requires T1 user engagement data (DAU, streaks, top-up frequency) to pitch merchants. Without proof of engaged users, merchant sign-ups will be near zero. Needs Quest Chain and Globe Passport data.",
@@ -335,7 +335,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "External trigger system. Rain/traffic \u2192 contextual streaming or delivery promos.",
         loop: { trigger: "Heavy rain or traffic detected.", action: "App pushes 'Boredom Buster' promo.", reward: "Discounted streaming pack.", investment: "Reliance: The app understands your context." },
-        launchMode: "Weather API integration + scheduled push notifications during rainy hours. Generic streaming promo. No Signal Scout data needed.",
+        launchMode: "Weather API integration with scheduled push notifications during rainy hours. Generic streaming promo. Works but blunt — without Signal Scout crowdsourced data, targeting is city-wide rather than hyperlocal.",
         fullMode: "Real-time triggers using Signal Scout crowdsourced data, feeding Sachet Upsell contextual pricing and Foodie Roulette weather-aware spins.",
         killCriteria: { metric: "Trigger-to-conversion rate; incremental revenue per trigger event", target: ">8% conversion on weather triggers; +\u20B115 incremental revenue per trigger", deadline: "60 days (requires rainy season data)", action: "If conversion <3%, reduce to notification-only without promo" },
         whyTier: "Requires Signal Scout crowdsourced weather/location data to trigger contextually. Launch Mode uses basic weather API, but intelligent targeting needs T1 engagement + T2 Signal Scout maturity.",
@@ -345,7 +345,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Value exchange. Physical waste \u2192 QR scan at kiosk \u2192 instant data credit.",
         loop: { trigger: "User has plastic waste.", action: "Drops it at a kiosk & scans QR.", reward: "Instant Data Credit.", investment: "Values Alignment: 'This brand shares my values.'" },
-        launchMode: "Digital eco-challenge quests within the app (e.g. 'Eco Week'). No physical kiosk needed. Virtual participation.",
+        launchMode: "Digital eco-challenge quests within the app (e.g. “Eco Week”). Virtual participation only. Limited impact — without physical kiosk partnerships and operational logistics, the real-world exchange that makes this feature distinctive doesn’t exist.",
         fullMode: "Full physical kiosk network with QR scanning, Cloud Lock credit integration, Data Market exchange, and Digital Karma eco-bonus.",
         killCriteria: { metric: "Kiosk scan volume; user sentiment/brand lift", target: ">500 scans/week across kiosks; measurable NPS lift in eco-conscious segment", deadline: "90 days", action: "If <100 scans/week, reduce to digital-only eco challenges" },
         whyTier: "Needs physical kiosk partnerships and operational logistics. Digital eco-challenges can launch earlier, but the full physical exchange requires partner infrastructure and regulatory compliance.",
@@ -355,7 +355,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Location-based AR treasure hunts. Scan the horizon for merchant BOGOs or social drops.",
         loop: { trigger: "User opens AR Viewfinder.", action: "Scans the horizon.", reward: "Finds a Merchant BOGO or Social Drop.", investment: "Physicality: Moving your body to extract value." },
-        launchMode: "QR-code based treasure hunts at partner locations. No AR technology needed. Simple scan-and-claim.",
+        launchMode: "QR-code based treasure hunts at partner locations. No AR technology needed. Simplified but limited — without Partner Co-pilot merchant drops, Nomad Passport travel integration, and sufficient user density, hunts feel sparse and unrewarding.",
         fullMode: "Full AR viewfinder with Rider Radar location seeding, Nomad Passport travel integration, and Partner Co-pilot sponsored drops.",
         killCriteria: { metric: "AR session starts per week; find-to-redemption rate", target: ">2000 sessions/week; >30% of finds lead to redemption", deadline: "90 days", action: "If <500 sessions/week, pivot to QR-code based hunts without AR" },
         whyTier: "Needs Partner Co-pilot merchant drops, Nomad Passport travel data, and sufficient user density for AR discovery to feel alive. Without ecosystem maturity, AR sessions find nothing.",
@@ -365,7 +365,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Utility-based segment lock-in for gig workers. GPS Priority for more bookings.",
         loop: { trigger: "Rider starts shift.", action: "Toggles 'GPS Priority'.", reward: "More bookings via stable net.", investment: "Livelihood dependence." },
-        launchMode: "Simple 'Rider Mode' toggle that optimizes data for location services. No external partnerships needed.",
+        launchMode: "Simple “Rider Mode” toggle optimizing data for location services. Functional but unproven segment — without AR Geo-Cache delivery integration and Signal Scout automatic reporting, value proposition is limited to basic connectivity.",
         fullMode: "Full gig worker suite with AR Geo-Cache delivery drops, Signal Scout automatic reporting during rides, and rider-specific data plans.",
         killCriteria: { metric: "Rider segment adoption; rider churn rate vs. general population", target: ">1000 active rider users; rider churn <50% of general churn", deadline: "90 days", action: "If adoption <200, expand to other gig segments (delivery, freelance)" },
         whyTier: "Requires identifying and targeting gig worker segment. Can launch as simple ‘Rider Mode’ toggle, but full value needs AR Geo-Cache delivery integration and Signal Scout automatic reporting.",
@@ -375,7 +375,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Cross-border value transfer. OFW sends Digital Care Box to family in PH.",
         loop: { trigger: "OFW sends care package.", action: "Family claims Digital Box.", reward: "Shared Data + Vouchers.", investment: "Family network lock-in." },
-        launchMode: "Simple data gifting: send a pre-set data bundle to a PH number from abroad. No box branding, just one-tap send.",
+        launchMode: "Simple data gifting: send a pre-set data bundle to a PH number from abroad. One-tap send. Works but transactional — without Micro-Tribe family squad integration and Speed Test Bounty family participation, it’s just a gift, not a network builder.",
         fullMode: "Full Digital Care Box with curated vouchers, Speed Test Bounty family participation, and Micro-Tribe family squad auto-creation.",
         killCriteria: { metric: "Boxes sent per month; family member activation rate", target: ">500 boxes/month; >60% of family recipients become active users", deadline: "90 days", action: "If <100 boxes/month, simplify to data gifting without box branding" },
         whyTier: "Requires OFW channel access and cross-border payment/delivery infrastructure. Can launch as simple data gifting, but full Care Box needs partner voucher integration.",
@@ -385,7 +385,7 @@
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Commerce integration. Book flights via partner link \u2192 5% returned as Data Credits.",
         loop: { trigger: "User plans a trip.", action: "Books flight via in-app partner link.", reward: "5% of booking value returned as Data Credits.", investment: "Financial Lock-in: Travel budget funds connectivity." },
-        launchMode: "Simple affiliate links to travel partners. Cashback as data credits tracked manually.",
+        launchMode: "Simple affiliate links to travel partners. Cashback as data credits tracked manually. Undifferentiated — without Travel Badge infrastructure, Nomad Passport tier system, and Travel Squad pool activation, it’s a generic cashback link any telco could offer.",
         fullMode: "Full in-app booking flow with Travel Badge auto-unlock, Nomad Passport tier progression, Travel Squad shared pool activation, and Globe Passport XP.",
         killCriteria: { metric: "Booking click-through rate; completed bookings per month", target: ">3% click-through; >100 completed bookings/month", deadline: "90 days", action: "If bookings <20/month, reduce to affiliate link without in-app flow" },
         whyTier: "Needs travel partner affiliate agreements, Travel Badge infrastructure, and Nomad Passport tier system. Without the travel ecosystem, it’s just a generic affiliate link with no differentiation.",
@@ -465,7 +465,7 @@
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-gomo-gradient rounded-lg flex items-center justify-center text-white font-black text-sm">G</div>
                 <div>
-                  <h1 className="font-bold text-base tracking-tight">Growth Protocol <span className="text-slate-600 font-light mono text-xs">v2.3</span></h1>
+                  <h1 className="font-bold text-base tracking-tight">Growth Protocol <span className="text-slate-600 font-light mono text-xs">v2.4</span></h1>
                   <p className="text-[9px] text-slate-500 uppercase tracking-widest font-semibold">Strategy Dashboard \u2014 Launch Mode / Full Mode</p>
                 </div>
               </div>
@@ -525,10 +525,12 @@
 
                   {/* Launch Mode / Full Mode */}
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-[#0d1220] border border-cyan-500/10 rounded-xl p-5 space-y-3">
+                    <div className={`bg-[#0d1220] border rounded-xl p-5 space-y-3 ${selected.tier === "T1" ? "border-cyan-500/10" : selected.tier === "T2" ? "border-amber-500/10" : "border-slate-500/10"}`}>
                       <div className="flex items-center gap-2">
                         <ModeBadge mode="launch" />
-                        <span className="text-[9px] font-black uppercase text-slate-500 tracking-widest">Ships standalone \u2014 no dependencies</span>
+                        <span className="text-[9px] font-black uppercase text-slate-500 tracking-widest">
+                          {selected.tier === "T1" ? "Ships standalone \u2014 generates foundational data" : selected.tier === "T2" ? "Ships in lite mode \u2014 performs best with T1 data" : "Ships as MVP \u2014 requires ecosystem for full potential"}
+                        </span>
                       </div>
                       <p className="text-sm text-slate-200 leading-relaxed">{selected.launchMode}</p>
                     </div>
@@ -628,8 +630,8 @@
                     <span className="text-[8px] font-black uppercase text-slate-600 tracking-widest">Tiers</span>
                     {Object.entries(TIER_CONFIG).map(([k,v]) => (<div key={k} className="flex items-center gap-1.5"><TierBadge tier={k} /><span className="text-[10px] text-slate-500">{v.desc}</span></div>))}
                     <span className="text-[8px] font-black uppercase text-slate-600 tracking-widest ml-4">Modes</span>
-                    <div className="flex items-center gap-1.5"><ModeBadge mode="launch" /><span className="text-[10px] text-slate-500">No dependencies</span></div>
-                    <div className="flex items-center gap-1.5"><ModeBadge mode="full" /><span className="text-[10px] text-slate-500">Ecosystem-connected</span></div>
+                    <div className="flex items-center gap-1.5"><ModeBadge mode="launch" /><span className="text-[10px] text-slate-500">Launchable (performance varies by tier)</span></div>
+                    <div className="flex items-center gap-1.5"><ModeBadge mode="full" /><span className="text-[10px] text-slate-500">Fully connected to ecosystem</span></div>
                     <span className="text-[9px] text-slate-600 ml-auto mono">{filtered.length}/{growthSystems.length} visible</span>
                   </div>
                 </div>
@@ -673,3 +675,4 @@
   </script>
 </body>
 </html>
+
