@@ -90,7 +90,7 @@
     );
 
     /* ═══════════════════════════════════════════
-       SECTION 2: THE FOUR LENSES
+       SECTION 2: THE FOUR TYPES
        ═══════════════════════════════════════════ */
 
     const lensData = [
@@ -195,15 +195,15 @@
       <div className="space-y-8 animate-in">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-5xl mb-4">🔍</p>
-          <h2 className="text-3xl font-black text-gray-900 mb-3">The Four Questions</h2>
-          <p className="text-lg text-gray-500">Before any feature goes into the app, it must answer YES to at least one of these. If it answers NO to all four — it doesn't belong. Click each one to see examples.</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">The Four Types</h2>
+          <p className="text-lg text-gray-500">Once an idea passes the 3 Questions, it needs to fit at least one of these four types. If it doesn't fit any — it doesn't belong. Click each one to see examples.</p>
         </div>
         <div className="max-w-3xl mx-auto space-y-3">
           {lensData.map(l => <LensCard key={l.name} lens={l} />)}
         </div>
         <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
-          <p className="text-xl font-bold text-white mb-2">That's it. Four questions.</p>
-          <p className="text-gray-400">If a feature idea can't answer YES to at least one, it's not bad — it just doesn't have a home in the app yet. We redesign it until it does, or we don't build it.</p>
+          <p className="text-xl font-bold text-white mb-2">That's it. Four types.</p>
+          <p className="text-gray-400">If a feature idea doesn't fit at least one type, it's not a bad idea — it just doesn't have a home in the app yet. We redesign it until it fits, or we don't build it.</p>
         </div>
       </div>
     );
@@ -222,7 +222,7 @@
 
         <div className="max-w-3xl mx-auto space-y-3">
           {[
-            { n: "1", q: "Which of the 4 questions does it answer YES to?", why: "If it doesn't answer any — we don't build it (or we redesign it until it does)", emoji: "🔍" },
+            { n: "1", q: "Which of the 4 types does it fit?", why: "If it doesn't fit any — we don't build it (or we redesign it until it does)", emoji: "🔍" },
             { n: "2", q: "Does it connect to something else in the app?", why: "Features that stand alone are like menu items nobody orders — they take up space without adding value", emoji: "🔗" },
             { n: "3", q: "After someone uses it, what happens next?", why: "Every feature should lead the user to do something else. If it's a dead end, we redesign it", emoji: "➡️" },
             { n: "4", q: "How do we know if it's working?", why: "If we can't measure it, we can't improve it. We pick one number to watch", emoji: "📊" },
@@ -252,7 +252,7 @@
         desc: "Someone suggests adding a daily horoscope to the app home screen to boost daily opens.",
         options: [
           { text: "Build it — daily opens are good!", correct: false },
-          { text: "Reject — it doesn't answer any of the 4 questions", correct: true },
+          { text: "Reject — it doesn't fit any of the 4 types", correct: true },
         ],
         explanation: "The horoscope doesn't spread GOMO (not NEXUS), doesn't build value over time (not KEEPER), isn't triggered by context (not CATALYST), and isn't social (not BAYANIHAN). It might get daily opens, but it has nothing to do with what GOMO does. It's sushi in an adobo restaurant.",
         redesign: "Turn it into a \"Daily Check-in Streak\" — open the app 7 days in a row, earn bonus data. Now it answers KEEPER (value builds over time) and has a metric (streak completion rate).",
@@ -261,7 +261,7 @@
         title: "Speed Boost When Internet is Slow",
         desc: "The app detects that your internet is slow. A button appears: \"Boost Speed for ₱10 — 1 hour of fast internet.\"",
         options: [
-          { text: "Build it — this answers the CATALYST question", correct: true },
+          { text: "Build it — this fits the CATALYST type", correct: true },
           { text: "Reject — it's just trying to take money from users", correct: false },
         ],
         explanation: "This is CATALYST in its purest form — the right offer at the right moment. The user's internet is actually slow, so the offer feels helpful, not annoying. It's like offering hot soup on a rainy day. The timing makes it feel like a service, not a sales pitch.",
@@ -274,7 +274,7 @@
           { text: "Reject — too complicated", correct: false },
           { text: "Build it — it answers BAYANIHAN and KEEPER", correct: true },
         ],
-        explanation: "This is \"Micro-Tribe.\" It answers BAYANIHAN (better with friends — social pressure keeps everyone loading) AND KEEPER (the group progress builds over the month — you don't want to let your barkada down). One feature, two questions answered. These are the strongest features.",
+        explanation: "This is \"Micro-Tribe.\" It answers BAYANIHAN (better with friends — social pressure keeps everyone loading) AND KEEPER (the group progress builds over the month — you don't want to let your barkada down). One feature, two types covered. These are the strongest features.",
         redesign: null,
       },
       {
@@ -282,9 +282,9 @@
         desc: "Marketing wants to put a promotional banner on the home screen showing the same offer to all users at all times.",
         options: [
           { text: "Build it — promos drive revenue", correct: false },
-          { text: "Question it — which of the 4 questions does this answer?", correct: true },
+          { text: "Question it — which of the 4 types does this fit?", correct: true },
         ],
-        explanation: "A static banner that shows the same thing to everyone doesn't answer CATALYST (no context awareness — everyone sees it regardless of their situation). It doesn't answer any other question either. It's the restaurant equivalent of handing the same flyer to every person who walks by. The Growth Protocol would push us to make it contextual — show different offers to different users based on their behavior, time of day, or location.",
+        explanation: "A static banner that shows the same thing to everyone doesn't answer CATALYST (no context awareness — everyone sees it regardless of their situation). It doesn't fit any other type either. It's the restaurant equivalent of handing the same flyer to every person who walks by. The system would push us to make it contextual — show different offers to different users based on their behavior, time of day, or location.",
         redesign: "Instead of a static banner, use the BFF to show different promos to different users. Low balance? Show a top-up offer. Heavy streamer? Show a data pack. Lunchtime? Show food deals. Same banner slot, but now it answers CATALYST.",
       },
       {
@@ -380,7 +380,7 @@
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-5xl mb-4">🔄</p>
           <h2 className="text-3xl font-black text-gray-900 mb-3">Why Connected Features Win</h2>
-          <p className="text-lg text-gray-500">The four questions aren't separate buckets. They form a loop where each one feeds the next.</p>
+          <p className="text-lg text-gray-500">The four types aren't separate buckets. They form a loop where each one feeds the next.</p>
         </div>
 
         <div className="max-w-3xl mx-auto">
@@ -410,7 +410,7 @@
 
         <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
           <p className="text-xl font-bold text-white mb-3">The strongest features sit on this loop.</p>
-          <p className="text-gray-400">A feature that only answers one question is fine. But a feature that answers two questions AND connects to the loop? That's the one that compounds. That's why Micro-Tribe (BAYANIHAN + KEEPER) is stronger than a simple referral code.</p>
+          <p className="text-gray-400">A feature that only fits one type is fine. But a feature that fits two types AND connects to the loop? That's the one that compounds. That's why Micro-Tribe (BAYANIHAN + KEEPER) is stronger than a simple referral code.</p>
         </div>
       </div>
     );
