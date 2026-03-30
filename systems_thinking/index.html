@@ -446,9 +446,9 @@
        MAIN DASHBOARD
        ═══════════════════════════════════════════════════════════ */
     function Dashboard() {
-      const [selectedId, setSelectedId] = useState("sachet-upsell");
+      const [selectedId, setSelectedId] = useState("streak-economy");
       const [tierFilter, setTierFilter] = useState("ALL");
-      const [maintenanceMode, setMaintenanceMode] = useState(true);
+      const [maintenanceMode, setMaintenanceMode] = useState(false);
 
       const filtered = useMemo(() => tierFilter === "ALL" ? growthSystems : growthSystems.filter(s => s.tier === tierFilter), [tierFilter]);
       const selected = growthSystems.find(s => s.id === selectedId) || growthSystems[0];
