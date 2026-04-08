@@ -1,0 +1,41 @@
+{
+    "isEnabled": true,
+    "initialStateExpanded": false,
+    "backgroundColor": "#610320",
+    "borderColor": "#fefff2",
+    "collapsedElements": [
+        {
+            "type": "SPIEL",
+            "value": "🎁 Get %reward% for you and your friend!",
+            "reward": "FREE 4GB",
+            "order": 1
+        }
+    ],
+    "expandedElements": [
+        {
+            "type": "SPIEL",
+            "value": "Get %reward% for you and your friend when they activate a SIM using your referral code!",
+            "reward": "FREE 3GB ✨",
+            "order": 2
+        },
+        {
+            "type": "CODE_BOX",
+            "layoutDirection": "ICONS_FIRST",
+            "shareButton": {
+                "text": "Hey, I got you free data that doesn’t expire 💜! Use my code {{custom_attribute.${Referral Code} | default: '********'}} when you buy a GOMO SIM in the GOMO app to unlock your extra 2GBs. Get it here: ",
+                "dynamicLink": "https://gomo.dra.agconnect.link/PvA8",
+                "imageUrl": "url of the asset here"
+            },
+            "copyButton": {
+                "text": "Hey, I’m sharing my GOMO perk with you 💜! Get 2GB FREE no-expiry data when you buy a GOMO SIM in the GOMO app using my code {{custom_attribute.${Referral Code} | default: '********'}}. Get yours here: ",
+                "dynamicLink": "https://gomo.dra.agconnect.link/PvA8"
+            },
+            "order": 3
+        },
+        {
+            "type": "SPACER",
+            "height": 10,
+            "order": 4
+        }
+    ]
+}
