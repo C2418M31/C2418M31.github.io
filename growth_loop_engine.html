@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Growth Loop Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0f1117;
+      --ink-soft:  #3a3f4a;
+      --ink-muted: #7a8090;
+      --teal:      #0d9488;
+      --teal-dim:  #134e4a;
+      --gold:      #d97706;
+      --bg:        #fafaf8;
+      --surface:   #ffffff;
+      --border:    #e8e6e0;
+      --accent-bg: #f0fdf9;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 80px 24px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, #0d948830 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border: 1px solid var(--teal);
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #a0aab8;
+      font-weight: 300;
+      font-style: italic;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: #5a6272;
+      text-transform: uppercase;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .article {
+      padding: 64px 0 100px;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .lead {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 28px 0 10px;
+    }
+
+    p {
+      margin-bottom: 18px;
+      color: var(--ink-soft);
+      font-size: 1.0rem;
+    }
+
+    /* ── PULLQUOTE ── */
+    blockquote {
+      margin: 40px 0;
+      padding: 28px 32px;
+      background: var(--accent-bg);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 8px 8px 0;
+    }
+
+    blockquote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: var(--teal-dim);
+      margin: 0;
+    }
+
+    blockquote strong {
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .highlight { background: #fef3c7; padding: 1px 3px; border-radius: 2px; }
+
+    /* ── FOUR LAYERS GRID ── */
+    .layers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0 8px;
+    }
+
+    .layer-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .layer-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+
+    .layer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--teal);
+    }
+
+    .layer-num {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .layer-card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .layer-card p {
+      font-size: 0.88rem;
+      margin: 0;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOUR LENSES ── */
+    .lens-list {
+      list-style: none;
+      margin: 24px 0;
+    }
+
+    .lens-list li {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .lens-list li:last-child { border-bottom: none; }
+
+    .lens-badge {
+      flex-shrink: 0;
+      min-width: 90px;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    .lens-badge.amplifier { background: #0d9488; }
+    .lens-badge.loyalty   { background: #7c3aed; }
+    .lens-badge.trigger   { background: #d97706; }
+    .lens-badge.community { background: #1d4ed8; }
+
+    .lens-body { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; }
+    .lens-body strong { color: var(--ink); font-weight: 500; }
+
+    /* ── 30/60/90 TIMELINE ── */
+    .timeline {
+      margin: 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 46px;
+      bottom: -12px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-dot {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      padding: 4px 0 28px;
+    }
+
+    .timeline-content strong {
+      display: block;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .timeline-content p {
+      font-size: 0.92rem;
+      margin: 0;
+    }
+
+    /* ── CLOSING ── */
+    .signal-bar {
+      background: var(--ink);
+      color: #fff;
+      border-radius: 10px;
+      padding: 36px 36px;
+      margin: 48px 0 0;
+      text-align: center;
+    }
+
+    .signal-bar .signal-flow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+
+    .signal-bar .signal-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1, .hero-sub, .hero-meta {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-sub  { animation-delay: 0.12s; }
+    .hero-meta { animation-delay: 0.22s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .layers-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 20px 52px; }
+      blockquote { padding: 22px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-tag">Growth Enablement</div>
+    <h1>The Growth<br /><em>Loop Engine</em></h1>
+    <p class="hero-sub">A perspective on building products that learn.</p>
+    <p class="hero-meta">6 min read</p>
+  </header>
+
+  <!-- ARTICLE -->
+  <main class="article">
+    <div class="container">
+
+      <!-- INTRO -->
+      <div class="lead">
+        <p>What's often missing isn't better features. It's that they were never meant to talk to each other.</p>
+        <p>The deeper issue is that features were never looked at holistically. Each one built in isolation, no orchestration between them. So when users arrived at the app, discoverability suffered not because individual features were bad, but because they never formed a system.</p>
+        <p>That tends to be where the real friction lives. Not in any single feature, but in the space between them.</p>
+        <p>The Growth Loop Engine is one way to think about that challenge not as a feature list or a roadmap, but as a system where every experiment connects to the last one, feeds the next one, and makes the product smarter with every cycle.</p>
+      </div>
+
+      <blockquote>
+        <p>This is <strong><span class="highlight">systems thinking</span></strong> in practice: every output becomes the input to the next cycle. The engine doesn't just run. <strong>It learns.</strong></p>
+      </blockquote>
+
+      <!-- THE PROBLEM -->
+      <div class="section">
+        <p class="section-label">The Problem</p>
+        <h2>Where the friction tends to live</h2>
+        <p>When a product has no daily-use features, users open it to complete a task and leave. There's no second reason to return. Each missed return is a missed opportunity to deepen the relationship, upsell, or discover what actually drives engagement.</p>
+        <p>Finding the right engagement hook rarely comes from planning alone. It tends to be <em>discovered</em> through experimentation. And that requires a kind of infrastructure that takes time to build: a way to test quickly, measure precisely, and either double down or cut cleanly.</p>
+        <p>Without it, learning tends to stop the moment something goes live. It becomes harder to move on from a feature once it's out there, even when the numbers aren't pointing the right way.</p>
+      </div>
+
+      <!-- THE FRAMEWORK -->
+      <div class="section">
+        <p class="section-label">The Framework</p>
+        <h2>Four layers, one repeating cycle</h2>
+        <p>The Growth Loop Engine has four components, each built around a different question.</p>
+
+        <div class="layers-grid">
+          <div class="layer-card">
+            <div class="layer-num">Layer 01</div>
+            <h3>The Signal Layer</h3>
+            <p>Surfaces the real problem not a whiteboard assumption, but friction a real user is experiencing. Draws from customer data, competitive signals, and the experiment archive.</p>
+          </div>
+          <div class="layer-card">
+            <div class="layer-num">Layer 02</div>
+            <h3>The Filter</h3>
+            <p>Qualifies ideas before anyone touches a keyboard. Three questions: Does it solve a real user problem? Does it help the business? Can it be tested cheaply first?</p>
+          </div>
+          <div class="layer-card">
+            <div class="layer-num">Layer 03</div>
+            <h3>The Gate</h3>
+            <p>The checkpoint before building starts. Assigns a success metric, confirms the feature connects to something else in the product, and sets a removal date upfront.</p>
+          </div>
+          <div class="layer-card">
+            <div class="layer-num">Layer 04</div>
+            <h3>The Learning Loop</h3>
+            <p>Where speed becomes knowledge. Every experiment gets measured. Every decision Scale, Iterate, or Kill gets recorded. Nothing is wasted, not even the failures.</p>
+          </div>
+        </div>
+      </div>
+
+      <blockquote>
+        <p>A feature that gets killed but taught the team what drives engagement is more valuable than a feature that stays forever and teaches the team nothing.</p>
+      </blockquote>
+
+      <!-- FOUR LENSES -->
+      <div class="section">
+        <p class="section-label">Going Deeper</p>
+        <h2>The four lenses, in practice</h2>
+        <p>Not every feature drives growth the same way. Some spread the product. Some deepen loyalty. Some show up at exactly the right moment. Some work better in groups. The four lenses map those patterns and make it possible to design experiments with a specific growth outcome in mind.</p>
+
+        <ul class="lens-list">
+          <li>
+            <span class="lens-badge amplifier">Amplifier</span>
+            <div class="lens-body"><strong>Organic reach without ad spend.</strong> An annual usage summary users share on social the product spreads itself.</div>
+          </li>
+          <li>
+            <span class="lens-badge loyalty">Loyalty</span>
+            <div class="lens-body"><strong>Creates a reason to return.</strong> A daily streak that rewards consecutive opens makes leaving feel costly.</div>
+          </li>
+          <li>
+            <span class="lens-badge trigger">Trigger</span>
+            <div class="lens-body"><strong>Context-aware, not random.</strong> A personalized offer that appears right when a user runs low not pushed on a schedule.</div>
+          </li>
+          <li>
+            <span class="lens-badge community">Community</span>
+            <div class="lens-body"><strong>Uses the social graph as a growth mechanism.</strong> A group pool where friends collectively contribute for a shared reward.</div>
+          </li>
+        </ul>
+
+        <p>Features that hit multiple lenses compound. A group challenge users share publicly is both Community and Amplifier. A streak tied to a tiered reward that unlocks shareable content hits all four. The question when designing an experiment isn't just "what should we build?" it's <em>"what kind of growth does this drive, and how will we know?"</em></p>
+      </div>
+
+      <!-- 30/60/90 -->
+      <div class="section">
+        <p class="section-label">The Exit Ramp</p>
+        <h2>The 30/60/90 Removal Rule</h2>
+        <p>One of the harder disciplines in product work is knowing when to let something go. Without a pre-agreed definition of what "not working" looks like, features tend to stay longer than they should.</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">30</div>
+            <div class="timeline-content">
+              <strong>Is anyone using it?</strong>
+              <p>Is the metric trending in the right direction? Early signal check not a verdict, just a read.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">60</div>
+            <div class="timeline-content">
+              <strong>Is it hitting the target?</strong>
+              <p>Is it helping other features? This is where compound effects start to show or don't.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">90</div>
+            <div class="timeline-content">
+              <strong>Has it earned its place?</strong>
+              <p>Based on data against a standard everyone already understood not on who built it or how long it took.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE PAYOFF -->
+      <div class="section">
+        <p class="section-label">The Payoff</p>
+        <h2>What changes when the engine runs</h2>
+        <p>One of the more immediate shifts is in how the conversation gets framed. The question moves from <em>which features to build</em> toward <em>what the team is trying to learn</em>. Every experiment has a hypothesis, a metric, and a deadline. That tends to move decisions closer to evidence.</p>
+        <p>The deeper shift takes longer but matters more. Every experiment including the ones that get killed gets documented. What was tested, what happened, what was learned. That archive is the team's institutional memory. It's what makes the tenth experiment smarter than the first.</p>
+        <p>The archive also becomes the foundation for something else entirely. AI can read across every experiment the team has ever run what worked, what didn't, and why and start connecting dots that would take a human months to notice. The tenth experiment doesn't just benefit from nine past learnings. It benefits from AI finding the pattern across all nine.</p>
+        <p>The goal isn't to ship more. It's to build the shortest path between a hypothesis and a decision and to keep shortening it with every cycle.</p>
+      </div>
+
+      <blockquote>
+        <p>A team that learns together builds better than a team that ships alone.</p>
+      </blockquote>
+
+      <!-- CLOSING BAR -->
+      <div class="signal-bar">
+        <div class="signal-flow">Signal → Filter → Gate → Learning Loop</div>
+        <div class="signal-tagline">The product doesn't just ship.<br />It compounds.</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Growth Enablement &nbsp;·&nbsp; GOMO &nbsp;·&nbsp; 2025
+    </div>
+  </footer>
+
+</body>
+</html>
