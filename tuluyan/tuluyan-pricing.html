@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Tuluyan</title>
+<meta name="description" content="Tuluyan pricing: ₱250/month subscription, 0.8% transaction fee, and payment processing at cost. No setup fees, no hidden charges.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
+  --navy: #0C1B2A; --navy-mid: #162536;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --green: #059669; --green-bg: #ECFDF5;
+  --red: #DC2626; --amber: #D97706; --purple: #7C3AED;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; padding: 0 40px; gap: 8px; }
+.nav-logo { display: flex; align-items: center; gap: 8px; margin-right: 16px; }
+.nav-logo-mark { width: 30px; height: 30px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-logo-text { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; }
+.nav-logo-text span { color: var(--teal); }
+.nav-beta { font-size: 10px; font-weight: 700; color: var(--teal); background: var(--teal-light); padding: 2px 7px; border-radius: 100px; letter-spacing: .4px; }
+.nav-links { display: flex; gap: 2px; flex: 1; }
+.nav-link { padding: 8px 14px; font-size: 14px; font-weight: 500; color: var(--muted); border-radius: 7px; transition: color .15s, background .15s; cursor: pointer; border: none; background: transparent; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-link:hover { color: var(--text); background: var(--surface2); }
+.nav-link.active { color: var(--teal); background: var(--teal-light); font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.btn-ghost { padding: 9px 16px; font-size: 14px; font-weight: 500; color: var(--text); border: 1px solid var(--border2); border-radius: 8px; cursor: pointer; transition: background .15s; background: transparent; font-family: inherit; }
+.btn-ghost:hover { background: var(--surface2); }
+.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.btn-cta:hover { background: var(--teal-dark); }
+
+/* LAYOUT */
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 72px 40px 100px; }
+.page-header { text-align: center; margin-bottom: 56px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+.page-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+.page-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+
+/* TOGGLE */
+.toggle-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 36px; }
+.toggle-btn { padding: 9px 22px; border-radius: 9px; font-size: 14px; font-weight: 600; border: 1.5px solid var(--border2); cursor: pointer; font-family: inherit; background: var(--white); color: var(--muted); transition: all .15s; }
+.toggle-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.save-badge { font-size: 12px; font-weight: 700; color: var(--green); background: var(--green-bg); padding: 3px 10px; border-radius: 100px; }
+
+/* PRICE CARD */
+.price-card { background: var(--white); border: 1.5px solid var(--teal); border-radius: 20px; padding: 40px; box-shadow: 0 0 0 4px rgba(11,138,154,.07); margin-bottom: 56px; }
+.price-display { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; color: var(--text); }
+.price-display sup { font-size: 24px; font-weight: 700; vertical-align: top; margin-top: 10px; display: inline-block; }
+.price-display em { font-size: 16px; font-weight: 500; color: var(--muted); font-style: normal; letter-spacing: 0; }
+.price-billing { font-size: 13.5px; color: var(--muted); margin-top: 6px; margin-bottom: 32px; }
+.price-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700; background: var(--teal); color: var(--white); transition: background .15s, box-shadow .15s; margin-bottom: 32px; box-shadow: 0 4px 14px rgba(11,138,154,.28); }
+.price-cta:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.38); }
+.price-rows { display: flex; flex-direction: column; gap: 12px; }
+.price-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+.price-row-label { color: var(--muted); }
+.price-row-val { font-weight: 600; }
+.price-row-val.good { color: var(--green); }
+.price-divider { height: 1px; background: var(--border); margin: 4px 0; }
+.included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+.included-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
+
+/* CONTENT SECTIONS */
+.content-section { margin-bottom: 64px; }
+.content-section h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.content-section .amount { font-size: 18px; font-weight: 700; color: var(--teal); margin-bottom: 16px; }
+.content-section p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+.content-section p:last-child { margin-bottom: 0; }
+.info-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; gap: 16px; margin-bottom: 32px; }
+.info-box-icon { flex-shrink: 0; width: 36px; height: 36px; background: var(--teal-light); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.info-box-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.info-box-body p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 0; }
+
+/* RECEIPTS */
+.receipts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+.receipt { border: 1px solid var(--border2); border-radius: 14px; overflow: hidden; }
+.receipt.us { border-color: rgba(11,138,154,.3); }
+.receipt-header { background: var(--surface); padding: 12px 20px; border-bottom: 1px dashed var(--border2); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); text-align: center; }
+.receipt.us .receipt-header { background: var(--teal-light); color: var(--teal); }
+.receipt-body { padding: 20px; font-family: 'Plus Jakarta Sans', monospace; font-size: 13.5px; }
+.receipt-line { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.receipt-line-label { color: var(--muted); }
+.receipt-line-val { font-weight: 600; }
+.receipt-line-val.neg { color: var(--red); }
+.receipt-sep { border: none; border-top: 1px dashed var(--border2); margin: 14px 0; }
+.receipt-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.receipt-total-val.good { color: var(--green); }
+.receipt-note { font-size: 12px; text-align: center; color: var(--hint); }
+
+/* CALCULATOR */
+.calc-section { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; margin-bottom: 64px; }
+.calc-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-align: center; margin-bottom: 6px; }
+.calc-section .calc-sub { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 28px; }
+.calc-type-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 28px; }
+.calc-tab { padding: 8px 18px; border-radius: 8px; font-size: 13.5px; font-weight: 600; border: 1.5px solid var(--border2); cursor: pointer; font-family: inherit; background: var(--white); color: var(--muted); transition: all .15s; }
+.calc-tab.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.sliders { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 24px; }
+.slider-group label { font-size: 13.5px; font-weight: 600; }
+.slider-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.slider-val { font-size: 14px; font-weight: 700; color: var(--teal); }
+.slider-hint { font-size: 12px; color: var(--hint); margin-bottom: 8px; }
+input[type=range] { width: 100%; height: 4px; border-radius: 2px; appearance: none; background: var(--surface2); outline: none; }
+input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--teal); cursor: pointer; box-shadow: 0 2px 6px rgba(11,138,154,.3); }
+.slider-ends { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--hint); margin-top: 4px; }
+
+/* COMPARISON TABLE */
+.compare-wrap { overflow-x: auto; margin-bottom: 24px; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare-table th { padding: 12px 16px; text-align: right; font-weight: 700; border-bottom: 2px solid var(--border2); font-size: 13px; }
+.compare-table th:first-child { text-align: left; }
+.compare-table th.hl { color: var(--teal); }
+.compare-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: top; }
+.compare-table td:first-child { text-align: left; font-weight: 600; font-size: 13.5px; }
+.compare-table td span.sub { display: block; font-size: 12px; font-weight: 400; color: var(--hint); }
+.compare-table td.hl { background: rgba(11,138,154,.03); }
+.keep-row td { background: var(--surface); }
+.keep-row td:first-child { font-size: 15px; }
+.keep-good { font-size: 20px; font-weight: 800; color: var(--green); }
+.keep-pct { font-size: 12px; font-weight: 600; color: var(--green); }
+.keep-muted { font-size: 17px; font-weight: 700; color: var(--muted); }
+.keep-muted-pct { font-size: 12px; color: var(--hint); }
+.savings-badge { display: inline-block; background: var(--green-bg); color: var(--green); font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 100px; }
+
+/* LOSSES TABLE */
+.losses-box { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.losses-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.losses-box .losses-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.losses-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.losses-table th { padding: 10px 12px; text-align: right; font-size: 12.5px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); }
+.losses-table th:first-child { text-align: left; }
+.losses-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); font-weight: 600; }
+.losses-table td:first-child { text-align: left; font-weight: 600; }
+.losses-table tr:last-child td { border-bottom: none; }
+.val-bad { color: var(--red); }
+.val-good { color: var(--green); }
+.val-muted { color: var(--muted); font-weight: 500; }
+.roi-text { font-size: 15px; font-weight: 700; text-align: center; margin-top: 16px; }
+.calc-footnote { font-size: 12px; color: var(--hint); text-align: center; margin-top: 16px; }
+
+/* FEATURE GRID */
+.section-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.section-sub-sm { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 64px; }
+.feat-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: box-shadow .2s, border-color .2s, transform .2s; }
+.feat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); border-color: var(--border2); transform: translateY(-2px); }
+.feat-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--surface2); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.feat-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.feat-card p { font-size: 12.5px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+.feat-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.feat-list li { font-size: 12px; color: var(--muted); }
+.feat-list li::before { content: '·'; margin-right: 5px; color: var(--hint); }
+
+/* AT A GLANCE TABLE */
+.glance-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 64px; }
+.glance-table th { padding: 12px 16px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border2); font-size: 13px; }
+.glance-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--muted); }
+.glance-table td:first-child { font-weight: 600; color: var(--text); }
+.glance-table tr:last-child td { border-bottom: none; }
+
+/* NEVER CHARGE */
+.never-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; text-align: center; margin-bottom: 64px; }
+.never-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.never-box p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+/* LARGE PROPERTIES */
+.large-box { background: var(--white); border: 1px solid var(--border2); border-radius: 14px; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 64px; }
+.large-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.large-box p { font-size: 14px; color: var(--muted); }
+.large-link { padding: 11px 22px; background: var(--surface2); border-radius: 9px; font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; transition: background .15s; }
+.large-link:hover { background: var(--surface); }
+
+/* FINAL CTA */
+.final-cta { background: var(--navy); border-radius: 20px; padding: 56px 40px; text-align: center; }
+.final-cta h2 { font-size: 28px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 12px; }
+.final-cta p { font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 32px; }
+.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(11,138,154,.3); }
+.cta-primary:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.4); }
+.cta-footnote { font-size: 12.5px; color: rgba(255,255,255,.3); margin-top: 16px; }
+
+/* FOOTER */
+footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06); padding: 52px 40px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.footer-brand-tagline { font-size: 13px; color: rgba(255,255,255,.35); margin-top: 12px; max-width: 220px; line-height: 1.6; }
+.footer-col h5 { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+.footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col-links a { font-size: 13.5px; color: rgba(255,255,255,.45); transition: color .15s; }
+.footer-col-links a:hover { color: rgba(255,255,255,.8); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; font-size: 12.5px; color: rgba(255,255,255,.25); flex-wrap: wrap; gap: 12px; }
+.footer-bottom a { color: rgba(255,255,255,.35); }
+.footer-bottom a:hover { color: rgba(255,255,255,.6); }
+.footer-bottom-links { display: flex; gap: 18px; }
+
+@media (max-width: 768px) {
+  .page-wrap { padding: 48px 20px 80px; }
+  .receipts-grid, .feat-grid { grid-template-columns: 1fr; }
+  .large-box { flex-direction: column; }
+  nav { padding: 0 20px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="tuluyan-homepage.html" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
+    </div>
+    <span class="nav-logo-text">Tulu<span>yan</span></span>
+    <span class="nav-beta">Beta</span>
+  </a>
+  <div class="nav-links">
+    <a href="tuluyan-pricing.html" class="nav-link active">Pricing</a>
+    <a href="tuluyan-trust.html" class="nav-link">Trust &amp; Safety</a>
+    <a href="tuluyan-about.html" class="nav-link">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-cta">Get started free</button>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<main class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">Pricing</div>
+    <h1 class="page-title">Three line items.<br>That's the whole bill.</h1>
+    <p class="page-sub">Subscription, transaction fee, and payment processing. All shown here, all charged at the rate you see. Nothing changes when you're not looking.</p>
+  </div>
+
+  <!-- TOGGLE -->
+  <div class="toggle-row">
+    <button class="toggle-btn active" id="btn-yr" onclick="setPlan('yr')">Yearly</button>
+    <button class="toggle-btn" id="btn-mo" onclick="setPlan('mo')">Monthly</button>
+    <span class="save-badge">Save 2 months with yearly</span>
+  </div>
+
+  <!-- PRICE CARD -->
+  <div class="price-card">
+    <div class="price-display" id="price-display">₱250 <em>/ month</em></div>
+    <div class="price-billing" id="billing-note">Billed once a year · Covers up to 6 units · <span id="extra-unit">+₱40 per additional unit</span></div>
+    <a href="#" class="price-cta">Get started — it's free to try</a>
+    <div class="price-rows">
+      <div class="price-row"><span class="price-row-label">Up to 6 units</span><span class="price-row-val">Included</span></div>
+      <div class="price-row"><span class="price-row-label">Each additional unit</span><span class="price-row-val" id="unit-price">+₱40 / unit</span></div>
+      <div class="price-divider"></div>
+      <div class="price-row"><span class="price-row-label">Transaction fee</span><span class="price-row-val" id="txn-fee" style="color:var(--teal)">0.8% on completed</span></div>
+      <div class="price-row"><span class="price-row-label">Payment processing</span><span class="price-row-val">Gateway cost, no markup</span></div>
+      <div class="price-row"><span class="price-row-label">AI assistant</span><span class="price-row-val">Credit-based</span></div>
+      <div class="price-divider"></div>
+      <div class="price-row"><span class="price-row-label">Cancellation fee</span><span class="price-row-val good">None</span></div>
+      <div class="price-row"><span class="price-row-label">Feature gates</span><span class="price-row-val good">None — everything included</span></div>
+      <div class="price-row"><span class="price-row-label">Lock-in</span><span class="price-row-val" id="lock-in">One year</span></div>
+    </div>
+    <div class="included-grid">
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Full dashboard</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>25+ property types</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Guest ID verification</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>GCash, Maya, QR Ph</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AI assistant (18 skills)</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Lease &amp; contract tools</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>HOA &amp; dues management</div>
+      <div class="included-item"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" fill="var(--teal-light)"/><path d="M4.5 7L6 8.5L9.5 5" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Marketplace listing</div>
+    </div>
+  </div>
+
+  <!-- AI CREDITS -->
+  <div class="info-box" style="margin-bottom:56px">
+    <div class="info-box-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+    </div>
+    <div class="info-box-body">
+      <h3>How AI credits work</h3>
+      <p>The AI assistant is included in every plan. It runs on credits — you get started and buy more as needed. If you run out, everything else keeps working normally. Credit pricing is shown inside the platform.</p>
+    </div>
+  </div>
+
+  <!-- TRANSACTION FEE -->
+  <div class="content-section">
+    <h2>Transaction fee</h2>
+    <div class="amount" id="txn-amount">0.8% per completed transaction</div>
+    <p>This covers Tuluyan's server and operational costs for every booking, rent collection, or dues payment processed on the platform. It applies only when a transaction completes. Nothing is charged on cancellations or failed payments.</p>
+    <p>Yearly subscribers get a reduced rate of 0.8% instead of 1%.</p>
+  </div>
+
+  <!-- GATEWAY FEES -->
+  <div class="content-section">
+    <h2>Payment gateway fees</h2>
+    <p>When a guest, tenant, or unit owner pays through Tuluyan, the payment gateway charges a processing fee. Tuluyan passes this through at cost — no markup, ever.</p>
+    <p>The fee depends on the payment method and the gateway available in your market. The full amount, including the processing fee, is shown before any payment is confirmed. No surprises on either side.</p>
+    <p>You choose which payment methods to enable. If you turn a method off, its fee doesn't apply.</p>
+  </div>
+
+  <!-- RECEIPTS -->
+  <div class="receipts-grid">
+    <div class="receipt us">
+      <div class="receipt-header">On Tuluyan</div>
+      <div class="receipt-body">
+        <div class="receipt-line"><span class="receipt-line-label">Booking total</span><span class="receipt-line-val">₱2,400.00</span></div>
+        <div class="receipt-line"><span class="receipt-line-label">Transaction fee (0.8%)</span><span class="receipt-line-val neg">−₱19.20</span></div>
+        <div class="receipt-line"><span class="receipt-line-label">QR Ph processing (1.5%)</span><span class="receipt-line-val neg">−₱36.00</span></div>
+        <hr class="receipt-sep">
+        <div class="receipt-total"><span>Operator receives</span><span class="receipt-total-val good">₱2,344.80</span></div>
+        <div class="receipt-note">97.7% of the booking goes to you</div>
+      </div>
+    </div>
+    <div class="receipt">
+      <div class="receipt-header">On a typical marketplace</div>
+      <div class="receipt-body">
+        <div class="receipt-line"><span class="receipt-line-label">Booking total</span><span class="receipt-line-val">₱2,400.00</span></div>
+        <div class="receipt-line"><span class="receipt-line-label">Platform fee (15.5%)</span><span class="receipt-line-val neg">−₱372.00</span></div>
+        <hr class="receipt-sep">
+        <div class="receipt-total"><span>Operator receives</span><span class="receipt-total-val" style="color:var(--muted)">₱2,028.00</span></div>
+        <div class="receipt-note">84.5% of the booking goes to the operator</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--hint);text-align:center;margin-bottom:64px">On a typical marketplace, the same booking costs the operator 15–20%. On Tuluyan, the operator keeps over 97%.</p>
+
+  <!-- SAVINGS CALCULATOR -->
+  <div class="calc-section">
+    <h2>See what you'd save</h2>
+    <p class="calc-sub">Adjust the sliders to match your property. The table updates automatically.</p>
+    <div class="calc-type-tabs">
+      <button class="calc-tab active">Short-Term Stays</button>
+      <button class="calc-tab">Long-Term Rentals</button>
+      <button class="calc-tab">Building Admin</button>
+      <button class="calc-tab">Events Places</button>
+    </div>
+    <div class="sliders">
+      <div class="slider-group">
+        <div class="slider-meta">
+          <label>Number of units</label>
+          <span class="slider-val" id="units-val">6</span>
+        </div>
+        <div class="slider-hint">Total rooms or spaces you manage across all properties.</div>
+        <input type="range" id="units-slider" min="1" max="400" value="6" oninput="updateCalc()">
+        <div class="slider-ends"><span>1</span><span>400</span></div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-meta">
+          <label>Monthly booking income</label>
+          <span class="slider-val" id="income-val">₱120,000</span>
+        </div>
+        <div class="slider-hint">Your total monthly revenue from bookings before any fees.</div>
+        <input type="range" id="income-slider" min="20000" max="1000000" step="10000" value="120000" oninput="updateCalc()">
+        <div class="slider-ends"><span>₱20,000</span><span>₱1,000,000</span></div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-meta">
+          <label>Monthly losses from payment issues</label>
+          <span class="slider-val" id="losses-val">₱5,000</span>
+        </div>
+        <div class="slider-hint">Fake screenshots, no-shows, unverified guests. Set to zero if this never happens.</div>
+        <input type="range" id="losses-slider" min="0" max="24000" step="500" value="5000" oninput="updateCalc()">
+        <div class="slider-ends"><span>₱0</span><span>₱24,000</span></div>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <p style="font-size:12.5px;color:var(--hint);margin-bottom:10px">Annual costs based on your inputs. Tuluyan charges 0.8% (yearly) per transaction plus a subscription. OTA platforms take 15–20% of every booking.</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="hl">Tuluyan</th>
+            <th>Airbnb</th>
+            <th>Booking.com</th>
+            <th>Agoda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Platform fee<span class="sub">% of bookings</span></td>
+            <td class="hl" id="c-txn">—</td>
+            <td id="c-airbnb-fee">—</td>
+            <td id="c-booking-fee">—</td>
+            <td id="c-agoda-fee">—</td>
+          </tr>
+          <tr>
+            <td>Subscription</td>
+            <td class="hl" id="c-sub">₱2,500/yr</td>
+            <td style="color:var(--hint)">₱0</td>
+            <td style="color:var(--hint)">₱0</td>
+            <td style="color:var(--hint)">₱0</td>
+          </tr>
+          <tr>
+            <td>Processing<span class="sub">Gateway pass-through</span></td>
+            <td class="hl" id="c-proc">—</td>
+            <td style="color:var(--hint)">Included</td>
+            <td style="color:var(--hint)">Included</td>
+            <td style="color:var(--hint)">Included</td>
+          </tr>
+          <tr class="keep-row">
+            <td style="font-size:15px;font-weight:700">You keep</td>
+            <td class="hl"><div class="keep-good" id="c-tul-keep">—</div><div class="keep-pct" id="c-tul-pct">—</div></td>
+            <td><div class="keep-muted" id="c-airbnb-keep">—</div><div class="keep-muted-pct" id="c-airbnb-pct">—</div></td>
+            <td><div class="keep-muted" id="c-booking-keep">—</div><div class="keep-muted-pct" id="c-booking-pct">—</div></td>
+            <td><div class="keep-muted" id="c-agoda-keep">—</div><div class="keep-muted-pct" id="c-agoda-pct">—</div></td>
+          </tr>
+          <tr>
+            <td>Annual savings</td>
+            <td class="hl">—</td>
+            <td id="c-save-airbnb">—</td>
+            <td id="c-save-booking">—</td>
+            <td id="c-save-agoda">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="losses-box">
+      <h3>What those losses cost you</h3>
+      <p class="losses-sub" id="losses-sub-text">Based on your estimate of ₱5,000/month in losses.</p>
+      <table class="losses-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Without Tuluyan</th>
+            <th>With Tuluyan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Annual losses</td>
+            <td class="val-bad" id="l-without">₱60,000</td>
+            <td class="val-good">₱0</td>
+          </tr>
+          <tr>
+            <td>Subscription cost</td>
+            <td class="val-muted">₱0</td>
+            <td class="val-muted">₱2,500</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="roi-text" id="roi-text">Your subscription pays for itself 24x over just from prevented losses.</p>
+    </div>
+    <p class="calc-footnote">Estimates based on your input. Processing fee is a gateway pass-through at cost, no markup. OTAs provide marketplace distribution which Tuluyan does not yet match at scale.</p>
+  </div>
+
+  <!-- LARGE PROPERTIES -->
+  <div class="large-box">
+    <div>
+      <h3>Above 400 units?</h3>
+      <p>At that scale, pricing and setup are better handled directly. Write to us and we'll work out what makes sense.</p>
+    </div>
+    <a href="mailto:hello@tuluyan.ph" class="large-link">hello@tuluyan.ph →</a>
+  </div>
+
+  <!-- NEVER CHARGE -->
+  <div class="never-box">
+    <h3>What Tuluyan will never charge</h3>
+    <p>Setup fees · Cancellation fees · Guest or tenant access fees · Data export fees · Contract penalties · Feature unlock fees</p>
+  </div>
+
+  <!-- AT A GLANCE -->
+  <div style="margin-bottom:16px">
+    <h2 class="section-title">At a glance</h2>
+  </div>
+  <table class="glance-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Yearly</th>
+        <th>Monthly</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Base (up to 6 units)</td><td>₱250 / month</td><td>₱300 / month</td></tr>
+      <tr><td>Additional units</td><td>+₱40 / unit</td><td>+₱50 / unit</td></tr>
+      <tr><td>Billed</td><td>Once a year</td><td>Every month</td></tr>
+      <tr><td>Transaction fee</td><td>0.8% on completed</td><td>1% on completed</td></tr>
+      <tr><td>Payment processing</td><td>Gateway cost, no markup</td><td>Gateway cost, no markup</td></tr>
+      <tr><td>AI assistant</td><td>Credit-based</td><td>Credit-based</td></tr>
+      <tr><td>Cancellation fee</td><td>None</td><td>None</td></tr>
+      <tr><td>Lock-in</td><td>One year</td><td>None</td></tr>
+      <tr><td>Above 400 units</td><td>Contact us</td><td>Contact us</td></tr>
+    </tbody>
+  </table>
+
+  <!-- FEATURE GRID -->
+  <div style="margin-bottom:32px">
+    <h2 class="section-title">Everything included. No feature gates.</h2>
+    <p class="section-sub-sm">One subscription covers your entire operation. Every feature below is available on every plan.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+      <h3>Property Management</h3><p>Manage everything from a single dashboard.</p>
+      <ul class="feat-list"><li>Multi-property support</li><li>25+ property types</li><li>Unit auto-generation</li><li>Calendar &amp; availability</li><li>Dynamic pricing rules</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg></div>
+      <h3>Bookings &amp; Short-Term</h3><p>Full booking lifecycle from inquiry to checkout.</p>
+      <ul class="feat-list"><li>Auto-unit assignment</li><li>Guest ID verification</li><li>Calendar sync</li><li>Check-in/out tracking</li><li>Booking references</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10 9H8M16 13H8M16 17H8"/></svg></div>
+      <h3>Long-Term Leasing</h3><p>Applications, contracts, and rent in one place.</p>
+      <ul class="feat-list"><li>Lease applications</li><li>Tenant screening</li><li>Monthly rent collection</li><li>Deposit tracking</li><li>Utility management</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="11" rx="2"/><path d="M6 7V5C6 3.34 7.34 2 9 2h2C12.66 2 14 3.34 14 5v2"/><circle cx="10" cy="12.5" r="1.5" fill="#D97706"/></svg></div>
+      <h3>HOA &amp; Building Admin</h3><p>Dues, assessments, and building operations.</p>
+      <ul class="feat-list"><li>Assessment creation</li><li>Auto-recurring charges</li><li>Late penalty config</li><li>Delinquent tracking</li><li>Building announcements</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div>
+      <h3>Payments &amp; Finances</h3><p>Collect, track, and reconcile every peso.</p>
+      <ul class="feat-list"><li>GCash, Maya, QR Ph, cards</li><li>Real-time confirmation</li><li>Auto-invoicing</li><li>Transaction ledger</li><li>Operator payouts</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></div>
+      <h3>AI Assistant</h3><p>Your copilot for setup, messaging, and reporting.</p>
+      <ul class="feat-list"><li>18 built-in skills</li><li>Property setup help</li><li>Guest messaging</li><li>Financial reports</li><li>Custom skill creation</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+      <h3>Trust &amp; Safety</h3><p>Verified identities and payments before approval.</p>
+      <ul class="feat-list"><li>Government ID + selfie</li><li>Payment before approval</li><li>Property verification</li><li>Reputation scoring</li><li>Verified badge</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1c.32-.32.86-.22.98.22a6 6 0 0 1-8.26 7.06l-7.91 7.91a1 1 0 0 1-3-3l7.91-7.91a6 6 0 0 1 7.06-8.26c.44.12.54.66.22.98z"/></svg></div>
+      <h3>Operations &amp; Maintenance</h3><p>Track work, assign vendors, close the loop.</p>
+      <ul class="feat-list"><li>Activity tracking</li><li>Vendor management</li><li>Checklist templates</li><li>Procurement &amp; POs</li><li>Tenant requests</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3>Affiliate Program</h3><p>Let partners earn from referrals you control.</p>
+      <ul class="feat-list"><li>Operator-set commission</li><li>Link tracking</li><li>Completed bookings only</li><li>Payout management</li><li>Partner approval</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg></div>
+      <h3>Communications</h3><p>Message guests and tenants without sharing personal info.</p>
+      <ul class="feat-list"><li>Built-in messaging</li><li>Message templates</li><li>Email notifications</li><li>Conversation history</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DB2777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.66v1.63a2 2 0 0 1-.98 1.70A5 5 0 0 0 7 22M14 14.66v1.63a2 2 0 0 0 .98 1.70A5 5 0 0 1 17 22M4 22h16M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/></svg></div>
+      <h3>Events &amp; Venues</h3><p>Ticketing, venue bookings, and event coordination.</p>
+      <ul class="feat-list"><li>Hosted events + tickets</li><li>Venue booking inquiries</li><li>Event window mgmt</li><li>Guest count tracking</li></ul>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></div>
+      <h3>Reputation System</h3><p>A trusted record that follows every user on the platform.</p>
+      <ul class="feat-list"><li>Cross-property history</li><li>Guest behavior scores</li><li>Operator ratings</li><li>Verified badge system</li></ul>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Ready to list your property?</h2>
+    <p>Start free. Set up in minutes with the AI assistant. No credit card required until you're ready to go live.</p>
+    <a href="#" class="cta-primary">Get started free →</a>
+    <p class="cta-footnote">₱250/month · No setup fees · Cancel anytime</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="tuluyan-homepage.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
+          <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
+          <span class="nav-logo-text" style="color:white">Tulu<span>yan</span></span>
+        </a>
+        <p class="footer-brand-tagline">Property management infrastructure for independent operators across the Philippines.</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:10px">hello@tuluyan.ph</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">For Operators</a></li>
+          <li><a href="#">For Affiliates</a></li>
+          <li><a href="tuluyan-pricing.html">Pricing</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="tuluyan-trust.html">Trust &amp; Safety</a></li>
+          <li><a href="tuluyan-about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Tuluyan. All rights reserved. Locally crafted infrastructure.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Feedback &amp; Bugs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+let currentPlan = 'yr';
+
+function setPlan(plan) {
+  currentPlan = plan;
+  const isYr = plan === 'yr';
+  document.getElementById('btn-yr').classList.toggle('active', isYr);
+  document.getElementById('btn-mo').classList.toggle('active', !isYr);
+  document.getElementById('price-display').innerHTML = isYr ? '₱250 <em>/ month</em>' : '₱300 <em>/ month</em>';
+  document.getElementById('billing-note').innerHTML = isYr
+    ? 'Billed once a year · Covers up to 6 units · <span id="extra-unit">+₱40 per additional unit</span>'
+    : 'Billed every month · Covers up to 6 units · <span id="extra-unit">+₱50 per additional unit</span>';
+  document.getElementById('unit-price').textContent = isYr ? '+₱40 / unit' : '+₱50 / unit';
+  document.getElementById('txn-fee').textContent = isYr ? '0.8% on completed' : '1% on completed';
+  document.getElementById('txn-amount').textContent = isYr ? '0.8% per completed transaction' : '1% per completed transaction';
+  document.getElementById('lock-in').textContent = isYr ? 'One year' : 'None';
+  updateCalc();
+}
+
+function fmt(n) {
+  return '₱' + Math.round(n).toLocaleString('en-PH');
+}
+
+function updateCalc() {
+  const units = parseInt(document.getElementById('units-slider').value);
+  const monthly = parseInt(document.getElementById('income-slider').value);
+  const losses = parseInt(document.getElementById('losses-slider').value);
+
+  document.getElementById('units-val').textContent = units;
+  document.getElementById('income-val').textContent = '₱' + monthly.toLocaleString('en-PH');
+  document.getElementById('losses-val').textContent = losses === 0 ? '₱0' : '₱' + losses.toLocaleString('en-PH');
+
+  const annual = monthly * 12;
+  const txnRate = currentPlan === 'yr' ? 0.008 : 0.01;
+  const sub = 2500;
+  const proc = annual * 0.015;
+  const txn = annual * txnRate;
+  const tuluyanTotal = txn + sub + proc;
+  const tuluyanKeeps = annual - tuluyanTotal;
+
+  const airbnbFee = annual * 0.155;
+  const airbnbKeeps = annual - airbnbFee;
+
+  const bookingFee = annual * 0.20;
+  const bookingKeeps = annual - bookingFee;
+
+  const agodaFee = annual * 0.20;
+  const agodaKeeps = annual - agodaFee;
+
+  document.getElementById('c-txn').innerHTML = fmt(txn) + '<span class="sub">' + (txnRate * 100).toFixed(1) + '%</span>';
+  document.getElementById('c-proc').innerHTML = fmt(proc) + '<span class="sub">~1.5%</span>';
+  document.getElementById('c-airbnb-fee').innerHTML = fmt(airbnbFee) + '<span class="sub">15.5%</span>';
+  document.getElementById('c-booking-fee').innerHTML = fmt(bookingFee) + '<span class="sub">20.0%</span>';
+  document.getElementById('c-agoda-fee').innerHTML = fmt(agodaFee) + '<span class="sub">20.0%</span>';
+
+  const tPct = ((tuluyanKeeps / annual) * 100).toFixed(1);
+  const aPct = ((airbnbKeeps / annual) * 100).toFixed(1);
+  const bPct = ((bookingKeeps / annual) * 100).toFixed(1);
+
+  document.getElementById('c-tul-keep').textContent = fmt(tuluyanKeeps);
+  document.getElementById('c-tul-pct').textContent = tPct + '%';
+  document.getElementById('c-airbnb-keep').textContent = fmt(airbnbKeeps);
+  document.getElementById('c-airbnb-pct').textContent = aPct + '%';
+  document.getElementById('c-booking-keep').textContent = fmt(bookingKeeps);
+  document.getElementById('c-booking-pct').textContent = bPct + '%';
+  document.getElementById('c-agoda-keep').textContent = fmt(agodaKeeps);
+  document.getElementById('c-agoda-pct').textContent = bPct + '%';
+
+  const saveAirbnb = tuluyanKeeps - airbnbKeeps;
+  const saveBooking = tuluyanKeeps - bookingKeeps;
+
+  document.getElementById('c-save-airbnb').innerHTML = '<span class="savings-badge">+' + fmt(saveAirbnb) + ' saved</span>';
+  document.getElementById('c-save-booking').innerHTML = '<span class="savings-badge">+' + fmt(saveBooking) + ' saved</span>';
+  document.getElementById('c-save-agoda').innerHTML = '<span class="savings-badge">+' + fmt(saveBooking) + ' saved</span>';
+
+  const annualLosses = losses * 12;
+  document.getElementById('l-without').textContent = fmt(annualLosses);
+  document.getElementById('losses-sub-text').textContent = 'Based on your estimate of ₱' + losses.toLocaleString('en-PH') + '/month in losses.';
+  const roi = losses > 0 ? (annualLosses / sub).toFixed(1) + 'x over just from prevented losses.' : 'fully covered just from your subscription savings vs. OTAs.';
+  document.getElementById('roi-text').textContent = losses > 0
+    ? 'Your subscription pays for itself ' + roi
+    : 'Switch to yearly and your subscription cost is covered by savings vs. OTA platforms.';
+
+  // Calc type tabs behavior (cosmetic, same data)
+  document.querySelectorAll('.calc-tab').forEach((t, i) => {
+    t.onclick = () => {
+      document.querySelectorAll('.calc-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    };
+  });
+}
+
+updateCalc();
+</script>
+</body>
+</html>

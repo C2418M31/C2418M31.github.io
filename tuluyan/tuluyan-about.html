@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Tuluyan</title>
+<meta name="description" content="Tuluyan is property management infrastructure built for independent operators in the Philippines. Learn who we are and why we built it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
+  --navy: #0C1B2A; --navy-mid: #162536;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --green: #059669; --green-bg: #ECFDF5;
+  --amber: #D97706;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; padding: 0 40px; gap: 8px; }
+.nav-logo { display: flex; align-items: center; gap: 8px; margin-right: 16px; }
+.nav-logo-mark { width: 30px; height: 30px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-logo-text { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; }
+.nav-logo-text span { color: var(--teal); }
+.nav-beta { font-size: 10px; font-weight: 700; color: var(--teal); background: var(--teal-light); padding: 2px 7px; border-radius: 100px; letter-spacing: .4px; }
+.nav-links { display: flex; gap: 2px; flex: 1; }
+.nav-link { padding: 8px 14px; font-size: 14px; font-weight: 500; color: var(--muted); border-radius: 7px; transition: color .15s, background .15s; cursor: pointer; border: none; background: transparent; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; }
+.nav-link:hover { color: var(--text); background: var(--surface2); }
+.nav-link.active { color: var(--teal); background: var(--teal-light); font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.btn-ghost { padding: 9px 16px; font-size: 14px; font-weight: 500; color: var(--text); border: 1px solid var(--border2); border-radius: 8px; cursor: pointer; transition: background .15s; background: transparent; font-family: inherit; }
+.btn-ghost:hover { background: var(--surface2); }
+.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.btn-cta:hover { background: var(--teal-dark); }
+
+/* HERO */
+.hero { background: var(--navy); padding: 88px 40px 100px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 75% 60% at 50% 0%, rgba(11,138,154,.2) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(11,138,154,.15); border: 1px solid rgba(11,138,154,.3); color: #5DD8E8; padding: 5px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 600; margin-bottom: 24px; }
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DD8E8; }
+.hero h1 { font-size: clamp(32px, 4.5vw, 54px); font-weight: 800; color: var(--white); line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 22px; }
+.hero h1 em { color: #5DD8E8; font-style: normal; }
+.hero-sub { font-size: 17px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+
+/* PAGE WRAP */
+.page-wrap { max-width: 860px; margin: 0 auto; padding: 80px 40px 100px; }
+
+/* SHARED */
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+.section-title { font-size: clamp(24px, 3vw, 36px); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 14px; }
+.body-text { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+.body-text:last-child { margin-bottom: 0; }
+.body-text strong { color: var(--text); font-weight: 600; }
+.section-block { margin-bottom: 80px; }
+.section-rule { height: 1px; background: var(--border); margin-bottom: 80px; }
+
+/* MISSION */
+.mission-quote { font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; color: var(--text); line-height: 1.4; letter-spacing: -0.5px; border-left: 3px solid var(--teal); padding-left: 24px; margin: 40px 0; }
+
+/* STATS */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 48px 0; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; text-align: center; }
+.stat-box-num { font-size: 36px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
+.stat-box-num span { color: var(--teal); }
+.stat-box-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* VALUES */
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+.value-card { border: 1px solid var(--border); border-radius: 16px; padding: 28px; background: var(--white); transition: box-shadow .2s, border-color .2s, transform .2s; }
+.value-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); border-color: var(--teal); transform: translateY(-2px); }
+.value-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--teal-light); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.value-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.value-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* WHO WE SERVE */
+.serve-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+.serve-item { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; align-items: flex-start; }
+.serve-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.serve-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.serve-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* BUILT DIFFERENT */
+.diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 40px; }
+.diff-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.diff-item-label { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--hint); margin-bottom: 8px; }
+.diff-item p { font-size: 14px; color: var(--text); line-height: 1.6; }
+.diff-item .highlight { color: var(--teal); font-weight: 600; }
+
+/* CONTACT */
+.contact-section { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; margin-bottom: 80px; }
+.contact-section h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px; }
+.contact-section p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9px; font-size: 14px; font-weight: 600; transition: all .15s; }
+.contact-link.email { background: var(--teal); color: var(--white); box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.contact-link.email:hover { background: var(--teal-dark); }
+.contact-link.secondary { background: var(--white); border: 1px solid var(--border2); color: var(--text); }
+.contact-link.secondary:hover { background: var(--surface2); }
+
+/* FINAL CTA */
+.final-cta { background: var(--navy); border-radius: 20px; padding: 56px 40px; text-align: center; }
+.final-cta h2 { font-size: 28px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 12px; }
+.final-cta p { font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 32px; }
+.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(11,138,154,.3); }
+.cta-primary:hover { background: var(--teal-dark); }
+.cta-secondary { display: inline-block; background: rgba(255,255,255,.08); color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.14); padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 500; margin-left: 10px; transition: background .15s; }
+.cta-secondary:hover { background: rgba(255,255,255,.12); }
+
+/* FOOTER */
+footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06); padding: 52px 40px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.footer-brand-tagline { font-size: 13px; color: rgba(255,255,255,.35); margin-top: 12px; max-width: 220px; line-height: 1.6; }
+.footer-col h5 { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+.footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col-links a { font-size: 13.5px; color: rgba(255,255,255,.45); transition: color .15s; }
+.footer-col-links a:hover { color: rgba(255,255,255,.8); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; font-size: 12.5px; color: rgba(255,255,255,.25); flex-wrap: wrap; gap: 12px; }
+.footer-bottom a { color: rgba(255,255,255,.35); }
+.footer-bottom a:hover { color: rgba(255,255,255,.6); }
+.footer-bottom-links { display: flex; gap: 18px; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 60px 20px 72px; }
+  .page-wrap { padding: 56px 20px 80px; }
+  .stats-row { grid-template-columns: 1fr; }
+  .values-grid, .diff-grid { grid-template-columns: 1fr; }
+  .contact-section { padding: 32px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .cta-secondary { margin-left: 0; margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="tuluyan-homepage.html" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
+    </div>
+    <span class="nav-logo-text">Tulu<span>yan</span></span>
+    <span class="nav-beta">Beta</span>
+  </a>
+  <div class="nav-links">
+    <a href="tuluyan-pricing.html" class="nav-link">Pricing</a>
+    <a href="tuluyan-trust.html" class="nav-link">Trust &amp; Safety</a>
+    <a href="tuluyan-about.html" class="nav-link active">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn-ghost">Sign in</button>
+    <button class="btn-cta">Get started free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><div class="hero-tag-dot"></div>About Tuluyan</div>
+    <h1>Built for the<br>operators OTAs <em>ignore.</em></h1>
+    <p class="hero-sub">Tuluyan is property management infrastructure for independent operators in the Philippines — the ones running transient houses, boarding rooms, HOAs, and everything in between.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="page-wrap">
+
+  <!-- MISSION -->
+  <div class="section-block">
+    <div class="eyebrow">Our mission</div>
+    <h2 class="section-title">Keep more of what<br>you earn. Run it better.</h2>
+    <p class="body-text">The average Filipino property operator is a small business owner managing a few units, maybe a whole building. They're handling bookings through Facebook Messenger. Chasing rent over GCash. Tracking maintenance with a notebook. They're keeping 80 cents of every peso while a platform in another country pockets the other 20.</p>
+    <p class="body-text">Tuluyan is the platform we built to change that. Not by being another marketplace — but by giving operators the tools to run their own operation cleanly, directly, and profitably.</p>
+    <blockquote class="mission-quote">"If you manage it, Tuluyan handles it. And you keep 97% of what you collect."</blockquote>
+    <p class="body-text">We're a small team building property management infrastructure that's actually designed for how Filipino properties work: short-term stays booked over social media, long-term leases managed in person, HOA dues tracked in spreadsheets. We think you deserve better than that.</p>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- STATS -->
+  <div class="section-block">
+    <div class="eyebrow">At a glance</div>
+    <h2 class="section-title">Tuluyan today</h2>
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-box-num">25<span>+</span></div>
+        <div class="stat-box-label">Property types — from transient houses to HOAs</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-num">0<span>.8%</span></div>
+        <div class="stat-box-label">Transaction fee on yearly plan — that's it</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-num">₱250</div>
+        <div class="stat-box-label">Per month for up to 6 units on the yearly plan</div>
+      </div>
+    </div>
+    <p class="body-text">We're in Beta. That means you're building with us — and we take that seriously. Features are being added every week based on what operators actually need, not what looks good on a product roadmap.</p>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- WHY WE BUILT IT -->
+  <div class="section-block">
+    <div class="eyebrow">Why we built this</div>
+    <h2 class="section-title">The problem was obvious.<br>The solution wasn't.</h2>
+    <p class="body-text">Property operators in the Philippines have been underserved by software for a long time. The global platforms — Airbnb, Booking.com, Agoda — take 15–20% of every booking and offer no real tools for operators who want to work outside of them. Property management software from other markets is built for entirely different regulatory and payment environments.</p>
+    <p class="body-text">What exists locally is fragmented: bookings managed on one app, payments on another, ID verification nowhere. There's no reputation system. No way to know if a guest damaged a property somewhere else. No tools for HOA dues or long-term lease tracking that don't involve a spreadsheet.</p>
+    <p class="body-text">We built Tuluyan to bring all of that together — <strong>payments, ID verification, reputation, leases, bookings, HOA administration, and a direct booking link you actually own</strong> — under one subscription that costs less than what most platforms take in a single booking.</p>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- VALUES -->
+  <div class="section-block">
+    <div class="eyebrow">What we believe</div>
+    <h2 class="section-title">The values behind the platform</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Operators own their business</h3>
+        <p>You set the prices. You set the rules. You own the guest relationship. Tuluyan is infrastructure — not a marketplace that holds your listings hostage.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Pricing should be obvious</h3>
+        <p>Three line items. No hidden fees. No "contact sales for pricing." No fees that appear after you've committed. What you see on the pricing page is what you pay.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+        </div>
+        <h3>Every operator type matters</h3>
+        <p>HOA operators don't see themselves in "short-term rental" software. Boarding house owners don't see themselves in enterprise property management. We built for all of them.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Trust is structural, not optional</h3>
+        <p>ID verification, real-time payments, and reputation tracking aren't features you turn on for premium plans. They're part of the foundation — on every plan, for every transaction.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Local context, not local flavor</h3>
+        <p>We didn't translate a global product for the Philippines. We built from the ground up for GCash, QR Ph, Philippine property law, HOA structures, and the way leasing actually works here.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Ship fast, fix fast</h3>
+        <p>We're a small team in Beta. We move quickly, listen carefully, and fix things when they break. If something's wrong, tell us — we read every message sent to hello@tuluyan.ph.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- WHO WE SERVE -->
+  <div class="section-block">
+    <div class="eyebrow">Who we build for</div>
+    <h2 class="section-title">Every operator type,<br>actually covered</h2>
+    <p class="body-text" style="margin-bottom:0">Tuluyan is not a short-term rental platform with a few extra features bolted on. It's built from scratch for the full spectrum of property operators in the Philippines.</p>
+    <div class="serve-list">
+      <div class="serve-item">
+        <div class="serve-dot" style="background:var(--teal)"></div>
+        <div>
+          <h4>Short-term operators</h4>
+          <p>Transient houses, hotels, resorts, B&Bs, vacation rentals, pension houses, villas, glamping sites, guest houses, lodges, hostels. Every booking from inquiry to checkout — guest ID verified, payment confirmed before check-in, direct booking link you own and share.</p>
+        </div>
+      </div>
+      <div class="serve-item">
+        <div class="serve-dot" style="background:#7C3AED"></div>
+        <div>
+          <h4>Long-term rental operators</h4>
+          <p>Apartments, condominiums, boarding houses, dormitories, co-living spaces, apartelles, studios, townhouses. Lease applications, tenant screening with verified ID, monthly rent collection, deposit and advance tracking — all in one place.</p>
+        </div>
+      </div>
+      <div class="serve-item">
+        <div class="serve-dot" style="background:var(--amber)"></div>
+        <div>
+          <h4>HOA and building administrators</h4>
+          <p>Subdivisions and condominium corporations. Assessment creation, auto-recurring charges, delinquent tracking, late penalty configuration, unit owner verification, building announcements. Most platforms don't acknowledge you exist. We do.</p>
+        </div>
+      </div>
+      <div class="serve-item">
+        <div class="serve-dot" style="background:#DB2777"></div>
+        <div>
+          <h4>Event venue operators</h4>
+          <p>Event venues, function halls, and spaces that host ticketed events. Venue booking inquiries, hosted event creation with tickets, event window management, and guest count tracking.</p>
+        </div>
+      </div>
+      <div class="serve-item">
+        <div class="serve-dot" style="background:#2563EB"></div>
+        <div>
+          <h4>Commercial property operators</h4>
+          <p>Offices, retail spaces, warehouses, co-working spaces. The same lease and payment tools used for residential properties, adapted for commercial arrangements.</p>
+        </div>
+      </div>
+      <div class="serve-item">
+        <div class="serve-dot" style="background:var(--green)"></div>
+        <div>
+          <h4>Rural and agri-tourism operators</h4>
+          <p>Farm stays and campsites that need short-term booking management without the overhead of a hotel system — or a 20% commission to an OTA that doesn't even know where they are.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- BUILT DIFFERENTLY -->
+  <div class="section-block">
+    <div class="eyebrow">Built differently</div>
+    <h2 class="section-title">What sets Tuluyan apart</h2>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-item-label">Pricing model</div>
+        <p>Subscription + <span class="highlight">0.8% transaction fee</span> on the yearly plan. No 15–20% commission that scales with your revenue.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-label">Marketplace</div>
+        <p><span class="highlight">Optional, not required.</span> All tools work for direct bookings. When you're ready to reach new guests publicly, the marketplace is one toggle away.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-label">Payment gateway</div>
+        <p>Passed through at cost, <span class="highlight">no markup.</span> The gateway's fee is the gateway's fee — Tuluyan doesn't add on top.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-label">Feature access</div>
+        <p><span class="highlight">Everything included on every plan.</span> No tier splits, no feature unlocks. One subscription covers HOA, long-term, short-term, and events.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-label">Direct booking</div>
+        <p>Every property gets a page at <span class="highlight">tuluyan.ph/p/your-property</span>. Share it directly. Keep 97% of what guests pay.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-label">AI assistant</div>
+        <p>18 built-in skills for setup, messaging, reports, and daily operations. <span class="highlight">Credit-based</span> so you only pay for what you use.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+
+  <!-- CONTACT -->
+  <div class="contact-section">
+    <div class="eyebrow">Get in touch</div>
+    <h2>We read every message.</h2>
+    <p>Questions about the platform, a feature you'd like to see, a bug you found, or just wanting to introduce your property — we want to hear it. We're a small team and we respond personally.</p>
+    <div class="contact-links">
+      <a href="mailto:hello@tuluyan.ph" class="contact-link email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        hello@tuluyan.ph
+      </a>
+      <a href="tuluyan-trust.html" class="contact-link secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+        Trust &amp; Safety
+      </a>
+      <a href="tuluyan-pricing.html" class="contact-link secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+        See pricing
+      </a>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Your property. Your rules.<br>Your 97%.</h2>
+    <p>Start free. Set up your property in minutes with the AI assistant. No credit card required until you're ready to go live.</p>
+    <a href="#" class="cta-primary">Get started free</a>
+    <a href="tuluyan-pricing.html" class="cta-secondary">See pricing →</a>
+    <p style="font-size:12.5px;color:rgba(255,255,255,.3);margin-top:20px">₱250/month · No setup fees · Cancel anytime</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="tuluyan-homepage.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
+          <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
+          <span class="nav-logo-text" style="color:white">Tulu<span>yan</span></span>
+        </a>
+        <p class="footer-brand-tagline">Property management infrastructure for independent operators across the Philippines.</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:10px">hello@tuluyan.ph</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">For Operators</a></li>
+          <li><a href="#">For Affiliates</a></li>
+          <li><a href="tuluyan-pricing.html">Pricing</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="tuluyan-trust.html">Trust &amp; Safety</a></li>
+          <li><a href="tuluyan-about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul class="footer-col-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Tuluyan. All rights reserved. Locally crafted infrastructure.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Feedback &amp; Bugs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
