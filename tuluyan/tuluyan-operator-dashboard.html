@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Tuluyan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
+  --navy: #0C1B2A; --navy-mid: #162536; --navy-light: #1E3448;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --white: #FFFFFF; --bg: #F9FAFB; --surface: #F3F4F6; --surface2: #E5E7EB;
+  --green: #059669; --green-bg: #ECFDF5; --green-border: #6EE7B7;
+  --amber: #D97706; --amber-bg: #FFFBEB; --amber-border: #FCD34D;
+  --red: #DC2626; --red-bg: #FEF2F2;
+  --sidebar: 240px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+
+/* ── LAYOUT ── */
+.app { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar);
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100; overflow-y: auto;
+}
+.sidebar::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 120% 50% at -10% 0%, rgba(11,138,154,.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.sb-logo {
+  display: flex; align-items: center; gap: 9px;
+  padding: 26px 22px 28px;
+  position: relative; z-index: 1;
+}
+.logo-mark {
+  width: 30px; height: 30px; background: var(--teal); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-text { font-size: 17px; font-weight: 800; color: var(--white); letter-spacing: -0.4px; }
+.logo-text span { color: #5DD8E8; }
+.sb-nav { flex: 1; padding: 0 10px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 2px; }
+.sb-section { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.2); padding: 14px 12px 6px; }
+.sb-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 10px;
+  font-size: 13.5px; font-weight: 600;
+  color: rgba(255,255,255,.5);
+  cursor: pointer; transition: background .15s, color .15s;
+  position: relative; user-select: none;
+}
+.sb-item:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); }
+.sb-item.active { background: rgba(11,138,154,.2); color: var(--white); }
+.sb-item.active::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 18px; background: var(--teal); border-radius: 0 2px 2px 0;
+}
+.sb-icon { width: 17px; height: 17px; flex-shrink: 0; opacity: .7; }
+.sb-item.active .sb-icon { opacity: 1; }
+.sb-badge { margin-left: auto; background: var(--teal); color: white; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 100px; }
+.sb-user {
+  padding: 14px 20px 20px; border-top: 1px solid rgba(255,255,255,.06);
+  display: flex; align-items: center; gap: 10px;
+  position: relative; z-index: 1;
+}
+.user-av {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--teal); color: white;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.user-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); }
+.user-role { font-size: 11px; color: rgba(255,255,255,.3); margin-top: 1px; }
+.logout-btn {
+  margin-left: auto; width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.25); cursor: pointer; transition: background .15s, color .15s;
+}
+.logout-btn:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.6); }
+
+/* ── MAIN ── */
+.main { margin-left: var(--sidebar); flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0 32px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-greeting h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+.topbar-greeting p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.tb-btn {
+  height: 36px; padding: 0 16px; border-radius: 9px;
+  border: 1.5px solid var(--border2); font-size: 13px; font-weight: 600;
+  color: var(--text); background: var(--white); cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  transition: border-color .15s, background .15s;
+}
+.tb-btn:hover { border-color: var(--teal); background: var(--teal-light); color: var(--teal-dark); }
+.btn-primary {
+  height: 36px; padding: 0 18px; border-radius: 9px; border: none;
+  font-size: 13px; font-weight: 700; background: var(--teal); color: white;
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  transition: background .15s, transform .1s;
+}
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+/* ── CONTENT ── */
+.content { padding: 28px 32px; flex: 1; }
+.content-inner { max-width: 1160px; margin: 0 auto; }
+
+/* ── STATS ── */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 20px;
+  transition: box-shadow .2s;
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+.stat-lbl { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .3px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.stat-lbl svg { width: 15px; height: 15px; opacity: .6; }
+.stat-val { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
+.stat-val sub { font-size: 14px; font-weight: 600; color: var(--muted); letter-spacing: 0; vertical-align: baseline; }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+.delta { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; }
+.up { background: var(--green-bg); color: var(--green); }
+.neutral { background: var(--amber-bg); color: var(--amber); }
+
+/* ── SECTION HEADER ── */
+.sec-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.sec-title { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+.sec-link { font-size: 13px; font-weight: 600; color: var(--teal); }
+.sec-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── PROPERTY CARDS ── */
+.props-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+.prop-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: box-shadow .2s, border-color .2s, transform .2s; cursor: pointer;
+}
+.prop-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.09); border-color: rgba(11,138,154,.25); transform: translateY(-2px); }
+.prop-thumb {
+  height: 130px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; font-size: 40px;
+}
+.prop-status {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 100px;
+}
+.s-active { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.s-draft { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.prop-body { padding: 14px 16px 16px; }
+.prop-type { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--teal); background: var(--teal-light); padding: 3px 9px; border-radius: 100px; margin-bottom: 7px; }
+.prop-name { font-size: 14px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 3px; }
+.prop-loc { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+.prop-loc svg { width: 11px; height: 11px; flex-shrink: 0; }
+.prop-metrics { display: flex; gap: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
+.pm { display: flex; flex-direction: column; }
+.pm-val { font-size: 14px; font-weight: 700; }
+.pm-lbl { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 1px; }
+
+/* Add card */
+.add-card {
+  background: var(--white); border: 1.5px dashed var(--border2); border-radius: 16px;
+  min-height: 260px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; padding: 24px; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.add-card:hover { border-color: var(--teal); background: var(--teal-light); }
+.add-icon-wrap {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--surface); border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; transition: background .2s, border-color .2s;
+}
+.add-card:hover .add-icon-wrap { background: rgba(11,138,154,.15); border-color: rgba(11,138,154,.3); }
+.add-card p { font-size: 14px; font-weight: 600; color: var(--muted); }
+.add-card span { font-size: 12px; color: var(--hint); text-align: center; }
+
+/* ── BOTTOM GRID ── */
+.bottom-grid { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+
+/* ── ACTIVITY ── */
+.activity-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+.activity-list { display: flex; flex-direction: column; }
+.act-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.act-item:last-child { border-bottom: none; }
+.act-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.d-green { background: var(--green); }
+.d-amber { background: var(--amber); }
+.d-teal { background: var(--teal); }
+.d-muted { background: var(--hint); }
+.act-text { font-size: 13.5px; line-height: 1.4; }
+.act-text strong { font-weight: 600; }
+.act-time { font-size: 11px; color: var(--hint); margin-top: 2px; }
+
+/* ── TIPS CARD ── */
+.tips-card {
+  background: var(--navy); border-radius: 14px; padding: 20px 22px;
+  position: relative; overflow: hidden;
+}
+.tips-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 100% 80% at 80% 100%, rgba(11,138,154,.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+.tips-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 16px; position: relative; z-index: 1; }
+.tip-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; position: relative; z-index: 1; }
+.tip-item:last-child { margin-bottom: 0; }
+.tip-num {
+  width: 20px; height: 20px; border-radius: 6px;
+  background: rgba(11,138,154,.3); border: 1px solid rgba(11,138,154,.4);
+  font-size: 11px; font-weight: 700; color: #5DD8E8;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.tip-text { font-size: 12.5px; color: rgba(255,255,255,.6); line-height: 1.5; }
+.tip-text strong { color: rgba(255,255,255,.9); font-weight: 600; }
+
+
+/* ══════════════════════════════════════════════════ */
+/* ══ WIZARD OVERLAY ══ */
+/* ══════════════════════════════════════════════════ */
+.wizard {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--bg);
+  display: none; flex-direction: column;
+  overflow-y: auto;
+}
+.wizard.open { display: flex; }
+
+/* ── WZ HEADER ── */
+.wz-header {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0 40px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 10; flex-shrink: 0;
+}
+.wz-back {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13.5px; font-weight: 600; color: var(--muted);
+  cursor: pointer; border: none; background: none;
+  padding: 6px 0; transition: color .15s;
+}
+.wz-back:hover { color: var(--text); }
+.wz-hdr-title { font-size: 15px; font-weight: 700; }
+.wz-hdr-step { font-size: 12px; color: var(--muted); }
+
+/* ── PROGRESS ── */
+.wz-progress {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0 40px; height: 56px;
+  display: flex; align-items: center;
+  flex-shrink: 0;
+}
+.ps {
+  display: flex; align-items: center; gap: 10px;
+  flex: 1; position: relative;
+}
+.ps:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(14px + 18px); right: calc(-50% + 14px + 18px);
+  top: 50%; transform: translateY(-50%);
+  height: 1px; background: var(--border2); z-index: 0;
+}
+.ps.done::after { background: var(--teal); }
+.ps-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--border2); background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--muted);
+  flex-shrink: 0; z-index: 1; position: relative;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.ps.active .ps-dot { border-color: var(--teal); background: var(--teal); color: white; }
+.ps.done .ps-dot { border-color: var(--teal); background: var(--teal); color: white; }
+.ps-labels { display: flex; flex-direction: column; }
+.ps-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+.ps.active .ps-label { color: var(--teal); font-weight: 700; }
+.ps.done .ps-label { color: var(--teal); }
+.ps-sub { font-size: 10px; color: var(--hint); }
+
+/* ── WZ BODY ── */
+.wz-body { max-width: 700px; width: 100%; margin: 0 auto; padding: 40px 40px 100px; }
+.wz-step { display: none; }
+.wz-step.active { display: block; }
+.wz-step-title { font-size: 24px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 6px; }
+.wz-step-sub { font-size: 15px; color: var(--muted); margin-bottom: 32px; line-height: 1.5; }
+
+/* Type cards */
+.type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px; }
+.type-card {
+  border: 2px solid var(--border2); border-radius: 16px;
+  padding: 22px 18px; cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+  text-align: center; position: relative; background: var(--white);
+}
+.type-card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(11,138,154,.1); transform: translateY(-2px); }
+.type-card.sel { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(11,138,154,.12); background: var(--teal-light); }
+.type-check {
+  position: absolute; top: 10px; right: 10px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--teal); color: white; font-size: 11px;
+  display: none; align-items: center; justify-content: center;
+}
+.type-card.sel .type-check { display: flex; }
+.type-icon {
+  width: 54px; height: 54px; border-radius: 15px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 25px; margin: 0 auto 12px;
+  transition: background .15s, border-color .15s;
+}
+.type-card.sel .type-icon { background: rgba(11,138,154,.15); border-color: rgba(11,138,154,.3); }
+.type-name { font-size: 14px; font-weight: 800; letter-spacing: -0.2px; margin-bottom: 4px; }
+.type-desc { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.type-examples { font-size: 11px; color: var(--hint); margin-top: 7px; line-height: 1.5; }
+
+/* Form fields */
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.frow.full { grid-template-columns: 1fr; }
+.fld { display: flex; flex-direction: column; gap: 5px; }
+.flabel { font-size: 13.5px; font-weight: 600; }
+.flabel .opt { font-weight: 400; color: var(--hint); font-size: 12px; margin-left: 4px; }
+.finput, .fselect {
+  height: 44px; padding: 0 14px;
+  border: 1.5px solid var(--border2); border-radius: 10px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: var(--white); outline: none;
+  transition: border-color .15s, box-shadow .15s; appearance: none;
+}
+.finput:focus, .fselect:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(11,138,154,.1); }
+.ftextarea {
+  padding: 12px 14px; min-height: 80px; resize: vertical;
+  border: 1.5px solid var(--border2); border-radius: 10px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: var(--white); outline: none; line-height: 1.5;
+  transition: border-color .15s;
+}
+.ftextarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(11,138,154,.1); }
+.fselect-wrap { position: relative; }
+.fselect-wrap::after {
+  content: ''; position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4.5px solid transparent; border-right: 4.5px solid transparent;
+  border-top: 5px solid var(--muted); pointer-events: none;
+}
+.fselect-wrap .fselect { width: 100%; padding-right: 36px; cursor: pointer; }
+.fhint { font-size: 12px; color: var(--hint); }
+.section-divider { font-size: 13px; font-weight: 700; color: var(--text); margin: 24px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+/* Price prefix input */
+.price-wrap { display: flex; }
+.price-pre {
+  height: 44px; padding: 0 13px;
+  border: 1.5px solid var(--border2); border-right: none;
+  border-radius: 10px 0 0 10px;
+  font-size: 14px; font-weight: 600; color: var(--muted);
+  background: var(--surface); display: flex; align-items: center;
+}
+.price-wrap .finput { border-radius: 0 10px 10px 0; flex: 1; }
+
+/* Amenity grid */
+.amenity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+.am-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border: 1.5px solid var(--border2); border-radius: 10px;
+  cursor: pointer; background: var(--white);
+  transition: border-color .15s, background .15s;
+  font-size: 13px; font-weight: 500; user-select: none;
+}
+.am-item.on { border-color: var(--teal); background: var(--teal-light); color: var(--teal-dark); }
+.am-check {
+  width: 16px; height: 16px; border-radius: 4px;
+  border: 1.5px solid var(--border2); background: white;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 10px;
+  transition: background .15s, border-color .15s;
+}
+.am-item.on .am-check { background: var(--teal); border-color: var(--teal); color: white; }
+
+/* Toggles */
+.toggle-group { background: var(--white); border: 1.5px solid var(--border2); border-radius: 14px; padding: 4px 20px; margin-bottom: 16px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.toggle-row:last-child { border-bottom: none; }
+.toggle-lbl { font-size: 13.5px; font-weight: 600; }
+.toggle-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.tgl {
+  width: 40px; height: 22px; border-radius: 100px;
+  background: var(--surface2); border: none; cursor: pointer;
+  position: relative; transition: background .2s; flex-shrink: 0;
+}
+.tgl.on { background: var(--teal); }
+.tgl::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  transition: transform .2s;
+}
+.tgl.on::after { transform: translateX(18px); }
+
+/* Done state */
+.done-wrap { text-align: center; padding: 20px 0; }
+.done-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--green-bg); border: 2px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 24px; }
+.done-title { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 8px; }
+.done-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.done-card { max-width: 440px; margin: 0 auto 28px; background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-align: left; }
+.done-card-thumb { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+.done-card-body { padding: 16px 20px 18px; }
+.done-pill { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--teal); background: var(--teal-light); padding: 3px 9px; border-radius: 100px; margin-bottom: 8px; }
+.done-prop-name { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 12px; }
+.done-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.dd-lbl { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+.dd-val { font-size: 13px; font-weight: 700; }
+.done-actions { display: flex; gap: 12px; justify-content: center; }
+.btn-done-p { height: 46px; padding: 0 28px; border-radius: 12px; border: none; font-size: 14px; font-weight: 700; background: var(--teal); color: white; cursor: pointer; transition: background .15s, transform .1s; }
+.btn-done-p:hover { background: var(--teal-dark); transform: translateY(-1px); }
+.btn-done-g { height: 46px; padding: 0 22px; border-radius: 12px; border: 1.5px solid var(--border2); font-size: 14px; font-weight: 600; color: var(--text); background: var(--white); cursor: pointer; transition: border-color .15s; }
+.btn-done-g:hover { border-color: var(--teal); }
+
+/* ── WZ FOOTER ── */
+.wz-footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; bottom: 0; z-index: 10; flex-shrink: 0;
+}
+.wz-footer-hint { font-size: 13px; color: var(--muted); }
+.wz-footer-btns { display: flex; gap: 10px; }
+.btn-back {
+  height: 42px; padding: 0 20px; border-radius: 10px;
+  border: 1.5px solid var(--border2); font-size: 14px; font-weight: 600;
+  color: var(--text); background: var(--white); cursor: pointer;
+  transition: border-color .15s;
+}
+.btn-back:hover { border-color: var(--teal); }
+.btn-next {
+  height: 42px; padding: 0 22px; border-radius: 10px; border: none;
+  font-size: 14px; font-weight: 700; background: var(--teal); color: white;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: background .15s, transform .1s;
+}
+.btn-next:hover { background: var(--teal-dark); transform: translateY(-1px); }
+.btn-next:disabled { background: var(--surface2); color: var(--hint); cursor: not-allowed; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .props-grid { grid-template-columns: repeat(2, 1fr); }
+  .bottom-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .content { padding: 20px; }
+  .topbar { padding: 0 20px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .props-grid { grid-template-columns: 1fr; }
+  .wz-body { padding: 24px 20px 80px; }
+  .wz-header, .wz-progress, .wz-footer { padding-left: 20px; padding-right: 20px; }
+  .type-grid { grid-template-columns: 1fr; }
+  .frow { grid-template-columns: 1fr; }
+  .amenity-grid { grid-template-columns: 1fr 1fr; }
+  .ps-labels { display: none; }
+  .done-details { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .amenity-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ DASHBOARD ════════════════ -->
+<div class="app" id="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="logo-mark">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 7V18H12V13H8V18H2V7L10 2Z" fill="white"/></svg>
+      </div>
+      <div class="logo-text">Tulu<span>yan</span></div>
+    </div>
+    <nav class="sb-nav">
+      <span class="sb-section">Manage</span>
+      <div class="sb-item active" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm1 5a1 1 0 100 2h12a1 1 0 100-2H4z"/></svg>
+        Dashboard
+      </div>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+        My Properties
+      </div>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+        Bookings
+        <span class="sb-badge">3</span>
+      </div>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+        Tenants
+      </div>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+        Finances
+      </div>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg>
+        Messages
+        <span class="sb-badge">2</span>
+      </div>
+      <span class="sb-section">Account</span>
+      <div class="sb-item" onclick="setNav(this)">
+        <svg class="sb-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+        Settings
+      </div>
+    </nav>
+    <div class="sb-user">
+      <div class="user-av">JD</div>
+      <div>
+        <div class="user-name">Jay Dee</div>
+        <div class="user-role">Operator</div>
+      </div>
+      <div class="logout-btn" title="Sign out">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-greeting">
+        <h2 id="greeting-text">Good morning, Jay Dee 👋</h2>
+        <p id="greeting-date">Loading…</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="tb-btn">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-2.83-2h5.66A3 3 0 0110 18z"/></svg>
+          Alerts
+        </button>
+        <button class="btn-primary" onclick="openWizard()">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+          Add property
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+    <div class="content-inner">
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-lbl"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg> Total Properties</div>
+          <div class="stat-val">2</div>
+          <div class="stat-sub"><span class="delta up">+1</span> from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-lbl"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg> Occupancy</div>
+          <div class="stat-val">87<sub>%</sub></div>
+          <div class="stat-sub"><span class="delta up">▲ 5%</span> vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-lbl"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg> Revenue (May)</div>
+          <div class="stat-val">₱<sub style="font-size:22px;font-weight:800;letter-spacing:-0.5px;">42,800</sub></div>
+          <div class="stat-sub"><span class="delta up">+12%</span> vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-lbl"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg> Pending Actions</div>
+          <div class="stat-val">3</div>
+          <div class="stat-sub"><span class="delta neutral">2 bookings</span> need review</div>
+        </div>
+      </div>
+
+      <!-- PROPERTIES -->
+      <div class="sec-hdr">
+        <h3 class="sec-title">My Properties</h3>
+        <a href="#" class="sec-link">View all →</a>
+      </div>
+      <div class="props-grid">
+        <!-- Property 1 -->
+        <div class="prop-card">
+          <div class="prop-thumb" style="background:linear-gradient(135deg,#E0F4F7,#b2e4ec);">
+            🏨
+            <span class="prop-status s-active">Active</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-type">Short-term</div>
+            <div class="prop-name">Seaside Studio BGC</div>
+            <div class="prop-loc"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg> BGC, Taguig City</div>
+            <div class="prop-metrics">
+              <div class="pm"><div class="pm-val">₱2,800</div><div class="pm-lbl">per night</div></div>
+              <div class="pm"><div class="pm-val">4.9 ★</div><div class="pm-lbl">rating</div></div>
+              <div class="pm"><div class="pm-val">12</div><div class="pm-lbl">bookings</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Property 2 -->
+        <div class="prop-card">
+          <div class="prop-thumb" style="background:linear-gradient(135deg,#FEF3C7,#fde58a);">
+            🏢
+            <span class="prop-status s-active">Active</span>
+          </div>
+          <div class="prop-body">
+            <div class="prop-type">HOA / Building</div>
+            <div class="prop-name">Avida Towers Makati</div>
+            <div class="prop-loc"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg> Makati City, Metro Manila</div>
+            <div class="prop-metrics">
+              <div class="pm"><div class="pm-val">48</div><div class="pm-lbl">units</div></div>
+              <div class="pm"><div class="pm-val">96%</div><div class="pm-lbl">dues paid</div></div>
+              <div class="pm"><div class="pm-val">₱2,400</div><div class="pm-lbl">dues/unit</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Add card -->
+        <div class="add-card" onclick="openWizard()">
+          <div class="add-icon-wrap">+</div>
+          <p>Add another property</p>
+          <span>Short-term, long-term, HOA, and more</span>
+        </div>
+      </div>
+
+      <!-- BOTTOM GRID -->
+      <div class="bottom-grid">
+        <!-- Activity -->
+        <div>
+          <div class="sec-hdr">
+            <h3 class="sec-title">Recent Activity</h3>
+            <a href="#" class="sec-link">View all →</a>
+          </div>
+          <div class="activity-card">
+            <div class="activity-list">
+              <div class="act-item">
+                <div class="act-dot d-green"></div>
+                <div>
+                  <div class="act-text"><strong>New booking confirmed</strong> — Maria Santos, Seaside Studio BGC. 3 nights (May 24–27).</div>
+                  <div class="act-time">2 hours ago</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot d-amber"></div>
+                <div>
+                  <div class="act-text"><strong>Dues reminder sent</strong> — 4 units at Avida Towers have not paid for May.</div>
+                  <div class="act-time">5 hours ago</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot d-teal"></div>
+                <div>
+                  <div class="act-text"><strong>Guest verified</strong> — Carlo Reyes completed government ID verification for Seaside Studio BGC.</div>
+                  <div class="act-time">Yesterday, 3:14 PM</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot d-green"></div>
+                <div>
+                  <div class="act-text"><strong>Payment received</strong> — ₱5,600 from Maria Santos via GCash. Booking #TUL-0042.</div>
+                  <div class="act-time">Yesterday, 2:51 PM</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-dot d-muted"></div>
+                <div>
+                  <div class="act-text"><strong>Booking inquiry</strong> — Anonymous guest, Seaside Studio BGC, June 1–4. Awaiting ID verification.</div>
+                  <div class="act-time">May 20, 9:30 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips -->
+        <div>
+          <div class="sec-hdr">
+            <h3 class="sec-title">Get the most out of Tuluyan</h3>
+          </div>
+          <div class="tips-card">
+            <div class="tips-lbl">Next steps for you</div>
+            <div class="tip-item">
+              <div class="tip-num">1</div>
+              <div class="tip-text"><strong>Add property photos</strong> — listings with photos get 3× more inquiries.</div>
+            </div>
+            <div class="tip-item">
+              <div class="tip-num">2</div>
+              <div class="tip-text"><strong>Set your payout method</strong> — revenue goes straight to your bank or GCash.</div>
+            </div>
+            <div class="tip-item">
+              <div class="tip-num">3</div>
+              <div class="tip-text"><strong>Add a co-manager</strong> — let someone handle day-to-day without giving up ownership.</div>
+            </div>
+            <div class="tip-item">
+              <div class="tip-num">4</div>
+              <div class="tip-text"><strong>Enable booking rules</strong> — block dates, set minimum stays, add house rules.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-inner -->
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+
+<!-- ════════════════ ADD PROPERTY WIZARD ════════════════ -->
+<div id="wizard" class="wizard">
+
+  <!-- HEADER -->
+  <div class="wz-header">
+    <button class="wz-back" onclick="closeWizard()">
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+      Back to Dashboard
+    </button>
+    <div class="wz-hdr-title">Add a Property</div>
+    <div class="wz-hdr-step" id="wz-step-lbl">Step 1 of 4</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="wz-progress" id="wz-prog">
+    <div class="ps active" id="ps1">
+      <div class="ps-dot">1</div>
+      <div class="ps-labels"><div class="ps-label">Property Type</div><div class="ps-sub">What you offer</div></div>
+    </div>
+    <div class="ps" id="ps2">
+      <div class="ps-dot">2</div>
+      <div class="ps-labels"><div class="ps-label">Basic Info</div><div class="ps-sub">Name & location</div></div>
+    </div>
+    <div class="ps" id="ps3">
+      <div class="ps-dot">3</div>
+      <div class="ps-labels"><div class="ps-label">Details</div><div class="ps-sub">Units & setup</div></div>
+    </div>
+    <div class="ps" id="ps4">
+      <div class="ps-dot">4</div>
+      <div class="ps-labels"><div class="ps-label">Pricing</div><div class="ps-sub">Rates & rules</div></div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="wz-body">
+
+    <!-- STEP 1: TYPE -->
+    <div class="wz-step active" id="s1">
+      <h2 class="wz-step-title">What kind of property are you adding?</h2>
+      <p class="wz-step-sub">This shapes the forms and tools you'll see. You can manage multiple types from one account.</p>
+      <div class="type-grid">
+        <div class="type-card" onclick="pickType('short',this)">
+          <div class="type-check">✓</div>
+          <div class="type-icon">🏨</div>
+          <div class="type-name">Short-term Stays</div>
+          <div class="type-desc">Nightly or weekly rentals for transient guests.</div>
+          <div class="type-examples">Condotel · Transient house · Airbnb-style</div>
+        </div>
+        <div class="type-card" onclick="pickType('long',this)">
+          <div class="type-check">✓</div>
+          <div class="type-icon">🏠</div>
+          <div class="type-name">Long-term Rentals</div>
+          <div class="type-desc">Monthly leases for apartments and rooms.</div>
+          <div class="type-examples">Apartment · Boarding house · Bedspacer</div>
+        </div>
+        <div class="type-card" onclick="pickType('hoa',this)">
+          <div class="type-check">✓</div>
+          <div class="type-icon">🏢</div>
+          <div class="type-name">HOA / Building Admin</div>
+          <div class="type-desc">Manage dues, residents, and maintenance.</div>
+          <div class="type-examples">Condominium · Village HOA · Townhouse</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: BASIC INFO -->
+    <div class="wz-step" id="s2">
+      <h2 class="wz-step-title">Name your property</h2>
+      <p class="wz-step-sub">Keep it short and recognizable — you can change it anytime.</p>
+      <div class="frow full">
+        <div class="fld">
+          <label class="flabel">Property name</label>
+          <input type="text" class="finput" id="f-name" placeholder="e.g. Sunset Studio Ortigas">
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="fld">
+          <label class="flabel">Street address</label>
+          <input type="text" class="finput" id="f-addr" placeholder="Unit / Floor, Building, Street">
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">City</label>
+          <input type="text" class="finput" id="f-city" placeholder="e.g. Mandaluyong City">
+        </div>
+        <div class="fld">
+          <label class="flabel">Province / Region</label>
+          <div class="fselect-wrap">
+            <select class="fselect" id="f-region">
+              <option value="">Select province</option>
+              <option>Metro Manila (NCR)</option>
+              <option>Cebu</option>
+              <option>Davao del Sur</option>
+              <option>Laguna</option>
+              <option>Bulacan</option>
+              <option>Cavite</option>
+              <option>Rizal</option>
+              <option>Pampanga</option>
+              <option>Batangas</option>
+              <option>Iloilo</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="fld">
+          <label class="flabel">Google Maps link <span class="opt">(optional)</span></label>
+          <input type="url" class="finput" id="f-maps" placeholder="https://maps.app.goo.gl/...">
+          <span class="fhint">Makes it easier for guests and tenants to find you.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 SHORT-TERM -->
+    <div class="wz-step" id="s3-short">
+      <h2 class="wz-step-title">Tell us about your space</h2>
+      <p class="wz-step-sub">Quick setup — customize every detail from your property dashboard later.</p>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Units / rooms</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1 unit</option><option>2–5 units</option><option>6–10 units</option><option>11–20 units</option><option>21–50 units</option><option>51+ units</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Max guests per unit</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1</option><option>2</option><option selected>4</option><option>6</option><option>8+</option></select></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Check-in time</label>
+          <div class="fselect-wrap"><select class="fselect"><option>12:00 PM</option><option>1:00 PM</option><option selected>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Check-out time</label>
+          <div class="fselect-wrap"><select class="fselect"><option>9:00 AM</option><option>10:00 AM</option><option selected>11:00 AM</option><option>12:00 PM</option></select></div>
+        </div>
+      </div>
+      <div class="section-divider">Amenities included</div>
+      <div class="amenity-grid">
+        <label class="am-item on" onclick="toggleAm(this)"><div class="am-check">✓</div> WiFi</label>
+        <label class="am-item on" onclick="toggleAm(this)"><div class="am-check">✓</div> Air conditioning</label>
+        <label class="am-item on" onclick="toggleAm(this)"><div class="am-check">✓</div> Hot water</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> Pool access</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> Parking</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> Kitchen</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> TV / Netflix</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> Gym access</label>
+        <label class="am-item" onclick="toggleAm(this)"><div class="am-check"></div> CCTV / Security</label>
+      </div>
+    </div>
+
+    <!-- STEP 3 LONG-TERM -->
+    <div class="wz-step" id="s3-long">
+      <h2 class="wz-step-title">Tell us about your rental</h2>
+      <p class="wz-step-sub">Set up your unit structure and lease terms. You can customize per-unit later.</p>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Total units</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1</option><option>2–5</option><option>6–10</option><option>11–20</option><option>21–50</option><option>51+</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Unit types</label>
+          <div class="fselect-wrap"><select class="fselect"><option>Studio</option><option>1-bedroom</option><option>2-bedroom</option><option>3-bedroom</option><option>Mixed</option></select></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Minimum lease</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1 month</option><option>3 months</option><option selected>6 months</option><option>1 year</option><option>2 years</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Furnishing</label>
+          <div class="fselect-wrap"><select class="fselect"><option>Unfurnished</option><option selected>Semi-furnished</option><option>Fully furnished</option></select></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Security deposit</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1 month</option><option selected>2 months</option><option>3 months</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Advance rent</label>
+          <div class="fselect-wrap"><select class="fselect"><option>None</option><option selected>1 month</option><option>2 months</option></select></div>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="fld">
+          <label class="flabel">House rules <span class="opt">(optional)</span></label>
+          <textarea class="ftextarea" placeholder="e.g. No pets. No overnight visitors. Quiet hours after 10 PM."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 HOA -->
+    <div class="wz-step" id="s3-hoa">
+      <h2 class="wz-step-title">Set up your building</h2>
+      <p class="wz-step-sub">Tuluyan handles dues collection, resident records, and incident tracking for you.</p>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Total units</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1–10</option><option>11–20</option><option>21–50</option><option selected>51–100</option><option>101–200</option><option>201+</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Building type</label>
+          <div class="fselect-wrap"><select class="fselect"><option>Condominium</option><option>Subdivision / Village</option><option>Townhouse cluster</option><option>Office building</option><option>Other</option></select></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Monthly dues (per unit)</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="2,400"></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Due date each month</label>
+          <div class="fselect-wrap"><select class="fselect"><option>1st</option><option>5th</option><option selected>10th</option><option>15th</option><option>End of month</option></select></div>
+        </div>
+      </div>
+      <div class="section-divider">Dues breakdown <span style="font-size:12px;font-weight:400;color:var(--muted)">(optional but recommended)</span></div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Maintenance fund</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="1,500"></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Sinking fund</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="600"></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Security / CCTV</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="300"></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Other fees</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="0"></div>
+        </div>
+      </div>
+      <div class="toggle-group" style="margin-top:8px;">
+        <div class="toggle-row"><div><div class="toggle-lbl">Send automated monthly reminders</div><div class="toggle-sub">Residents get a nudge 3 days before dues are due</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Allow GCash / online payment</div><div class="toggle-sub">Residents pay dues directly through Tuluyan</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">5-day grace period</div><div class="toggle-sub">No late fee for 5 days past the due date</div></div><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- STEP 4 SHORT-TERM -->
+    <div class="wz-step" id="s4-short">
+      <h2 class="wz-step-title">Set your rates</h2>
+      <p class="wz-step-sub">You can update pricing anytime and add seasonal rates or promos later.</p>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Nightly rate</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="2,500"></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Weekend rate <span class="opt">(optional)</span></label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="3,000"></div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Security deposit</label>
+          <div class="fselect-wrap"><select class="fselect"><option>None</option><option>₱500</option><option selected>₱1,000</option><option>₱2,000</option></select></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Minimum stay</label>
+          <div class="fselect-wrap"><select class="fselect"><option selected>1 night</option><option>2 nights</option><option>3 nights</option><option>7 nights</option></select></div>
+        </div>
+      </div>
+      <div class="toggle-group">
+        <div class="toggle-row"><div><div class="toggle-lbl">Instant booking</div><div class="toggle-sub">Guests can book without waiting for your approval</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Require ID verification before booking</div><div class="toggle-sub">Only verified guests (gov't ID) can book your property</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Moderate cancellation policy</div><div class="toggle-sub">Full refund if cancelled 5+ days before check-in</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- STEP 4 LONG-TERM -->
+    <div class="wz-step" id="s4-long">
+      <h2 class="wz-step-title">Set your monthly rent</h2>
+      <p class="wz-step-sub">Set a base rate — customize per unit and add promo rates for new tenants later.</p>
+      <div class="frow">
+        <div class="fld">
+          <label class="flabel">Monthly rent (per unit)</label>
+          <div class="price-wrap"><div class="price-pre">₱</div><input type="number" class="finput" placeholder="8,500"></div>
+        </div>
+        <div class="fld">
+          <label class="flabel">Late payment fee <span class="opt">(optional)</span></label>
+          <div class="fselect-wrap"><select class="fselect"><option selected>None</option><option>₱200/day</option><option>₱500 flat</option><option>5% of rent</option></select></div>
+        </div>
+      </div>
+      <div class="toggle-group">
+        <div class="toggle-row"><div><div class="toggle-lbl">Utilities included in rent</div><div class="toggle-sub">Water, electricity, internet bundled into monthly rate</div></div><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Auto-send monthly billing statements</div><div class="toggle-sub">Tenants get a statement via SMS/email every billing cycle</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Require ID verification before move-in</div><div class="toggle-sub">Only verified tenants (gov't ID) can sign a lease</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- STEP 4 HOA -->
+    <div class="wz-step" id="s4-hoa">
+      <h2 class="wz-step-title">Almost done — review your setup</h2>
+      <p class="wz-step-sub">You can invite residents and add unit details after publishing.</p>
+      <div class="toggle-group">
+        <div class="toggle-row"><div><div class="toggle-lbl">Generate a resident invitation link</div><div class="toggle-sub">Residents can join your building and pay dues directly</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Require your approval before residents join</div><div class="toggle-sub">You review and approve each resident before they get access</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Enable maintenance request portal</div><div class="toggle-sub">Residents submit and track repair requests online</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="toggle-lbl">Monthly financial report for the board</div><div class="toggle-sub">Auto-generate dues collection summary for HOA board members</div></div><button class="tgl on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- DONE -->
+    <div class="wz-step" id="s-done">
+      <div class="done-wrap">
+        <div class="done-icon">🎉</div>
+        <h2 class="done-title">Your property is ready!</h2>
+        <p class="done-sub" id="done-sub-text">Add photos to your listing, then start accepting bookings.</p>
+        <div class="done-card">
+          <div class="done-card-thumb" id="done-thumb" style="background:linear-gradient(135deg,var(--teal-light),rgba(11,138,154,.15));">🏨</div>
+          <div class="done-card-body">
+            <div class="done-pill" id="done-pill">Short-term</div>
+            <div class="done-prop-name" id="done-name">Your new property</div>
+            <div class="done-details">
+              <div><div class="dd-lbl">Status</div><div class="dd-val" style="color:var(--green)">● Active</div></div>
+              <div><div class="dd-lbl">ID verification</div><div class="dd-val">Required ✓</div></div>
+              <div><div class="dd-lbl">Created</div><div class="dd-val" id="done-date">Today</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="done-actions">
+          <button class="btn-done-p" onclick="closeWizard()">Go to dashboard</button>
+          <button class="btn-done-g" onclick="restartWizard()">Add another property</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wz-body -->
+
+  <!-- FOOTER -->
+  <div class="wz-footer" id="wz-foot">
+    <div class="wz-footer-hint" id="wz-hint">Select a property type to continue</div>
+    <div class="wz-footer-btns">
+      <button class="btn-back" id="btn-back" onclick="wzBack()" style="display:none">← Back</button>
+      <button class="btn-next" id="btn-next" onclick="wzNext()" disabled>Continue <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+    </div>
+  </div>
+
+</div><!-- /wizard -->
+
+
+<script>
+// ── Greeting ──
+(function() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('greeting-text').textContent = g + ', Jay Dee 👋';
+  const d = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('greeting-date').textContent = days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+})();
+
+// ── Sidebar nav ──
+function setNav(el) {
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Wizard state ──
+let step = 1;
+let type = null;
+const TOTAL = 4;
+
+function openWizard() {
+  step = 1; type = null;
+  document.querySelectorAll('.wz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('s1').classList.add('active');
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('sel'));
+  syncProgress();
+  syncFooter();
+  document.getElementById('wizard').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWizard() {
+  document.getElementById('wizard').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function restartWizard() { openWizard(); }
+
+// ── Type selection ──
+function pickType(t, el) {
+  type = t;
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled = false;
+  const labels = { short: 'Short-term stays selected', long: 'Long-term rentals selected', hoa: 'HOA / Building Admin selected' };
+  document.getElementById('wz-hint').textContent = labels[t];
+}
+
+// ── Navigation ──
+function wzNext() {
+  if (step === 1 && !type) return;
+  if (step < TOTAL) {
+    setStep(step + 1);
+  } else {
+    showDone();
+  }
+}
+function wzBack() {
+  if (step > 1) setStep(step - 1);
+}
+
+function setStep(n) {
+  getStepEl(step)?.classList.remove('active');
+  step = n;
+  getStepEl(step)?.classList.add('active');
+  syncProgress();
+  syncFooter();
+  document.getElementById('wizard').scrollTop = 0;
+}
+
+function getStepEl(n) {
+  if (n === 1) return document.getElementById('s1');
+  if (n === 2) return document.getElementById('s2');
+  if (n === 3) return document.getElementById('s3-' + type);
+  if (n === 4) return document.getElementById('s4-' + type);
+  return null;
+}
+
+function syncProgress() {
+  for (let i = 1; i <= TOTAL; i++) {
+    const ps = document.getElementById('ps' + i);
+    const dot = ps.querySelector('.ps-dot');
+    ps.classList.remove('active', 'done');
+    if (i < step) { ps.classList.add('done'); dot.textContent = '✓'; }
+    else if (i === step) { ps.classList.add('active'); dot.textContent = i; }
+    else { dot.textContent = i; }
+  }
+  document.getElementById('wz-step-lbl').textContent = 'Step ' + step + ' of ' + TOTAL;
+}
+
+function syncFooter() {
+  const back = document.getElementById('btn-back');
+  const next = document.getElementById('btn-next');
+  const hint = document.getElementById('wz-hint');
+  back.style.display = step > 1 ? 'block' : 'none';
+  if (step === TOTAL) {
+    next.innerHTML = 'Publish property <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+  } else {
+    next.innerHTML = 'Continue <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>';
+  }
+  if (step === 1) {
+    next.disabled = !type;
+    if (!type) hint.textContent = 'Select a property type to continue';
+  } else {
+    next.disabled = false;
+    const h2 = ['', '', 'Add your property name and location', 'Configure your property details', 'Set your pricing and preferences'];
+    hint.textContent = h2[step] || '';
+  }
+}
+
+function showDone() {
+  getStepEl(step)?.classList.remove('active');
+  const name = document.getElementById('f-name')?.value.trim() || 'Your new property';
+  const labels = { short: 'Short-term', long: 'Long-term', hoa: 'HOA / Building' };
+  const emojis = { short: '🏨', long: '🏠', hoa: '🏢' };
+  const subs = {
+    short: 'Add photos to attract guests. Your listing is live — verified guests can now inquire and book.',
+    long: 'Invite your first tenant to start a lease. Your rental is open for applications.',
+    hoa: 'Send residents an invite link. They can pay dues and submit requests right away.'
+  };
+  document.getElementById('done-name').textContent = name;
+  document.getElementById('done-pill').textContent = labels[type] || '';
+  document.getElementById('done-thumb').textContent = emojis[type] || '🏠';
+  document.getElementById('done-sub-text').textContent = subs[type] || '';
+  const d = new Date();
+  document.getElementById('done-date').textContent = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('s-done').classList.add('active');
+  document.getElementById('wz-foot').style.display = 'none';
+  document.getElementById('wz-prog').style.display = 'none';
+  document.getElementById('wz-step-lbl').textContent = 'All done!';
+  document.getElementById('wizard').scrollTop = 0;
+}
+
+// ── Amenity toggle ──
+function toggleAm(el) {
+  el.classList.toggle('on');
+  const check = el.querySelector('.am-check');
+  check.textContent = el.classList.contains('on') ? '✓' : '';
+}
+</script>
+</body>
+</html>
