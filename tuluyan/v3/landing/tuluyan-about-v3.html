@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Tuluyan</title>
-<meta name="description" content="Tuluyan is property management infrastructure built for independent operators in the Philippines. Learn who we are and why we built it.">
+<title>About — tuluyan.</title>
+<meta name="description" content="tuluyan. is property management infrastructure built for independent operators in the Philippines. Learn who we are and why we built it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
-  --navy: #0C1B2A; --navy-mid: #162536;
+  --onyx: #1A1A1A; --coral: #FEA5A4; --linen: #F2F0EB;
+  --teal: #1A1A1A; --teal-dark: #111111; --teal-light: #F2F0EB;
+  --navy: #1A1A1A; --navy-mid: #1A1A1A;
   --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
   --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
-  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F2F0EB; --surface2: #F3F4F6;
   --green: #059669; --green-bg: #ECFDF5;
   --amber: #D97706;
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6, .stat-num { font-family: 'League Spartan', sans-serif; }
 a { text-decoration: none; color: inherit; }
 
 /* NAV */
@@ -38,17 +40,17 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 .nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .btn-ghost { padding: 9px 16px; font-size: 14px; font-weight: 500; color: var(--text); border: 1px solid var(--border2); border-radius: 8px; cursor: pointer; transition: background .15s; background: transparent; font-family: inherit; }
 .btn-ghost:hover { background: var(--surface2); }
-.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(11,138,154,.25); display: inline-flex; align-items: center; text-decoration: none; }
+.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(26,26,26,.25); display: inline-flex; align-items: center; text-decoration: none; }
 .btn-cta:hover { background: var(--teal-dark); }
 
 /* HERO */
 .hero { background: var(--navy); padding: 88px 40px 100px; text-align: center; position: relative; overflow: hidden; }
-.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 75% 60% at 50% 0%, rgba(11,138,154,.2) 0%, transparent 70%); pointer-events: none; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 75% 60% at 50% 0%, rgba(26,26,26,.2) 0%, transparent 70%); pointer-events: none; }
 .hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
-.hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(11,138,154,.15); border: 1px solid rgba(11,138,154,.3); color: #5DD8E8; padding: 5px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 600; margin-bottom: 24px; }
-.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DD8E8; }
+.hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(26,26,26,.15); border: 1px solid rgba(26,26,26,.3); color: #FEA5A4; padding: 5px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 600; margin-bottom: 24px; }
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #FEA5A4; }
 .hero h1 { font-size: clamp(32px, 4.5vw, 54px); font-weight: 800; color: var(--white); line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 22px; }
-.hero h1 em { color: #5DD8E8; font-style: normal; }
+.hero h1 em { color: #FEA5A4; font-style: normal; }
 .hero-sub { font-size: 17px; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 520px; margin: 0 auto; }
 
 /* PAGE WRAP */
@@ -101,7 +103,7 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 .contact-section p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
 .contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9px; font-size: 14px; font-weight: 600; transition: all .15s; }
-.contact-link.email { background: var(--teal); color: var(--white); box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.contact-link.email { background: var(--teal); color: var(--white); box-shadow: 0 2px 8px rgba(26,26,26,.25); }
 .contact-link.email:hover { background: var(--teal-dark); }
 .contact-link.secondary { background: var(--white); border: 1px solid var(--border2); color: var(--text); }
 .contact-link.secondary:hover { background: var(--surface2); }
@@ -110,7 +112,7 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 .final-cta { background: var(--navy); border-radius: 20px; padding: 56px 40px; text-align: center; }
 .final-cta h2 { font-size: 28px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 12px; }
 .final-cta p { font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 32px; }
-.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(11,138,154,.3); }
+.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(26,26,26,.3); }
 .cta-primary:hover { background: var(--teal-dark); }
 .cta-secondary { display: inline-block; background: rgba(255,255,255,.08); color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.14); padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 500; margin-left: 10px; transition: background .15s; }
 .cta-secondary:hover { background: rgba(255,255,255,.12); }
@@ -146,21 +148,21 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="tuluyan-homepage.html" class="nav-logo">
+    <a href="tuluyan-homepage-v3.html" class="nav-logo">
       <div class="nav-logo-mark">
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
       </div>
-      <span class="nav-logo-text">Tulu<span>yan</span></span>
+      <span class="nav-logo-text">tuluyan.</span>
     </a>
     <div class="nav-links">
-      <a href="tuluyan-pricing.html" class="nav-link">Pricing</a>
-      <a href="tuluyan-trust.html" class="nav-link">Trust &amp; Safety</a>
-      <a href="tuluyan-affiliates.html" class="nav-link">Affiliates</a>
-      <a href="tuluyan-about.html" class="nav-link active">About</a>
+      <a href="tuluyan-pricing-v3.html" class="nav-link">Pricing</a>
+      <a href="tuluyan-trust-v3.html" class="nav-link">Trust &amp; Safety</a>
+      <a href="tuluyan-affiliates-v3.html" class="nav-link">Affiliates</a>
+      <a href="tuluyan-about-v3.html" class="nav-link active">About</a>
     </div>
     <div class="nav-right">
       <button class="btn-ghost">Sign in</button>
-      <a href="tuluyan-get-started.html" class="btn-cta">Get started free</a>
+      <a href="tuluyan-get-started-v3.html" class="btn-cta">Get started</a>
     </div>
   </div>
 </nav>
@@ -170,7 +172,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="hero-inner">
     <div class="hero-tag"><div class="hero-tag-dot"></div>About Tuluyan</div>
     <h1>Built for the<br>operators OTAs <em>ignore.</em></h1>
-    <p class="hero-sub">Tuluyan is property management infrastructure for independent operators in the Philippines — the ones running transient houses, boarding rooms, HOAs, and everything in between.</p>
+    <p class="hero-sub">tuluyan. is property management infrastructure for independent operators in the Philippines — the ones running transient houses, boarding rooms, HOAs, and everything in between.</p>
   </div>
 </section>
 
@@ -182,7 +184,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
     <div class="eyebrow">Our mission</div>
     <h2 class="section-title">Keep more of what<br>you earn. Run it better.</h2>
     <p class="body-text">The average Filipino property operator is a small business owner managing a few units, maybe a whole building. They're handling bookings through Facebook Messenger. Chasing rent over GCash. Tracking maintenance with a notebook. They're keeping 80 cents of every peso while a platform in another country pockets the other 20.</p>
-    <p class="body-text">Tuluyan is the platform we built to change that. Not by being another marketplace — but by giving operators the tools to run their own operation cleanly, directly, and profitably.</p>
+    <p class="body-text">tuluyan. is the platform we built to change that. Not by being another marketplace — but by giving operators the tools to run their own operation cleanly, directly, and profitably.</p>
     <blockquote class="mission-quote">"If you manage it, Tuluyan handles it. And you keep 97% of what you collect."</blockquote>
     <p class="body-text">We're a small team building property management infrastructure that's actually designed for how Filipino properties work: short-term stays booked over social media, long-term leases managed in person, HOA dues tracked in spreadsheets. We think you deserve better than that.</p>
   </div>
@@ -233,7 +235,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <h3>Operators own their business</h3>
-        <p>You set the prices. You set the rules. You own the guest relationship. Tuluyan is infrastructure — not a marketplace that holds your listings hostage.</p>
+        <p>You set the prices. You set the rules. You own the guest relationship. tuluyan. is infrastructure — not a marketplace that holds your listings hostage.</p>
       </div>
       <div class="value-card">
         <div class="value-icon">
@@ -279,7 +281,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="section-block">
     <div class="eyebrow">Who we build for</div>
     <h2 class="section-title">Every operator type,<br>actually covered</h2>
-    <p class="body-text" style="margin-bottom:0">Tuluyan is not a short-term rental platform with a few extra features bolted on. It's built from scratch for the full spectrum of property operators in the Philippines.</p>
+    <p class="body-text" style="margin-bottom:0">tuluyan. is not a short-term rental platform with a few extra features bolted on. It's built from scratch for the full spectrum of property operators in the Philippines.</p>
     <div class="serve-list">
       <div class="serve-item">
         <div class="serve-dot" style="background:var(--teal)"></div>
@@ -372,11 +374,11 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         hello@tuluyan.ph
       </a>
-      <a href="tuluyan-trust.html" class="contact-link secondary">
+      <a href="tuluyan-trust-v3.html" class="contact-link secondary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
         Trust &amp; Safety
       </a>
-      <a href="tuluyan-pricing.html" class="contact-link secondary">
+      <a href="tuluyan-pricing-v3.html" class="contact-link secondary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
         See pricing
       </a>
@@ -387,8 +389,8 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="final-cta">
     <h2>Your property. Your rules.<br>Your 97%.</h2>
     <p>Start free. Set up your property in minutes with the AI assistant. No credit card required until you're ready to go live.</p>
-    <a href="tuluyan-get-started.html" class="cta-primary">Get started free</a>
-    <a href="tuluyan-pricing.html" class="cta-secondary">See pricing →</a>
+    <a href="tuluyan-get-started-v3.html" class="cta-primary">Get started</a>
+    <a href="tuluyan-pricing-v3.html" class="cta-secondary">See pricing →</a>
     <p style="font-size:12.5px;color:rgba(255,255,255,.3);margin-top:20px">₱250/month · No setup fees · Cancel anytime</p>
   </div>
 
@@ -399,9 +401,9 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <a href="tuluyan-homepage.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
+        <a href="tuluyan-homepage-v3.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
           <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
-          <span class="nav-logo-text" style="color:white">Tulu<span>yan</span></span>
+          <span class="nav-logo-text" style="color:white">tuluyan.</span>
         </a>
         <p class="footer-brand-tagline">Property management infrastructure for independent operators across the Philippines.</p>
         <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:10px">hello@tuluyan.ph</p>
@@ -411,7 +413,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <ul class="footer-col-links">
           <li><a href="#">For Operators</a></li>
           <li><a href="#">For Affiliates</a></li>
-          <li><a href="tuluyan-pricing.html">Pricing</a></li>
+          <li><a href="tuluyan-pricing-v3.html">Pricing</a></li>
           <li><a href="#">Changelog</a></li>
         </ul>
       </div>
@@ -420,8 +422,8 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <ul class="footer-col-links">
           <li><a href="#">Help Center</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="tuluyan-trust.html">Trust &amp; Safety</a></li>
-          <li><a href="tuluyan-about.html">About</a></li>
+          <li><a href="tuluyan-trust-v3.html">Trust &amp; Safety</a></li>
+          <li><a href="tuluyan-about-v3.html">About</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -445,3 +447,5 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
 
 </body>
 </html>
+
+

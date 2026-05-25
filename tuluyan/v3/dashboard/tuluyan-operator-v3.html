@@ -6,22 +6,28 @@
 <title>Tuluyan — Dashboard Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & BASE ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --sidebar: #1B2B3A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
-  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7; --teal-mid: rgba(11,138,154,0.12);
-  --bg: #F0F2F5; --white: #FFFFFF;
-  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
-  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --sidebar: #1A1A1A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
+  --onyx: #1A1A1A; --onyx-80: rgba(26,26,26,0.8); --onyx-50: rgba(26,26,26,0.5);
+  --onyx-20: rgba(26,26,26,0.2); --onyx-10: rgba(26,26,26,0.10); --onyx-07: rgba(26,26,26,0.07); --onyx-06: rgba(26,26,26,0.06);
+  --coral: #FEA5A4; --coral-soft: rgba(254,165,164,0.18);
+  --linen: #F2F0EB;
+  /* keep teal aliases pointing to onyx for backward compat with any teal refs */
+  --teal: #1A1A1A; --teal-dark: #000000; --teal-light: #F2F0EB; --teal-mid: rgba(26,26,26,0.10);
+  --bg: #F2F0EB; --white: #FFFFFF;
+  --text: #1A1A1A; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(26,26,26,0.08); --border2: rgba(26,26,26,0.13);
   --green: #059669; --green-bg: #ECFDF5;
   --amber: #D97706; --amber-bg: #FFFBEB;
   --red: #DC2626; --red-bg: #FEF2F2;
   --radius: 12px; --radius-sm: 8px;
 }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboard-header h1, .go-live-box h2, .earnings-box-amount { font-family: 'League Spartan', sans-serif; }
 
 /* ── APP SHELL ── */
 .app { display: flex; height: 100vh; overflow: hidden; }
@@ -29,7 +35,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* ── SIDEBAR ── */
 .sidebar { width: 200px; background: var(--sidebar); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
 .sidebar-logo { display: flex; align-items: center; gap: 8px; padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-.logo-mark { width: 28px; height: 28px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-mark { width: 28px; height: 28px; background: rgba(255,255,255,0.12); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .logo-text { font-size: 16px; font-weight: 800; color: white; letter-spacing: -0.3px; }
 .sidebar-section { padding: 20px 10px 8px; }
 .sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 8px; margin-bottom: 6px; }
@@ -38,7 +44,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .nav-item.active { background: var(--sidebar-active); color: white; }
 .nav-item svg { flex-shrink: 0; opacity: 0.7; }
 .nav-item.active svg { opacity: 1; }
-.nav-badge { margin-left: auto; background: var(--teal); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
+.nav-badge { margin-left: auto; background: var(--coral); color: var(--onyx); font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
 
 /* ── MAIN ── */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -48,8 +54,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 .btn-icon { width: 36px; height: 36px; border: 1px solid var(--border2); border-radius: 8px; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: background .15s; }
 .btn-icon:hover { background: var(--bg); }
-.btn-primary { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 7px; transition: background .15s; }
-.btn-primary:hover { background: var(--teal-dark); }
+.btn-primary { background: var(--onyx); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 7px; transition: opacity .15s; }
+.btn-primary:hover { opacity: 0.82; }
 .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--border2); border-radius: 8px; padding: 9px 16px; font-size: 13.5px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background .15s; }
 .btn-secondary:hover { background: var(--bg); }
 .content { flex: 1; overflow-y: auto; padding: 28px; }
@@ -68,21 +74,21 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .section-header h3 { font-size: 16px; font-weight: 700; }
-.section-header a { font-size: 13px; color: var(--teal); font-weight: 600; cursor: pointer; }
+.section-header a { font-size: 13px; color: var(--onyx); font-weight: 600; cursor: pointer; }
 
 .properties-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
 .prop-card { background: var(--white); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: box-shadow .2s; }
 .prop-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
 .prop-card-header { height: 110px; display: flex; align-items: center; justify-content: center; position: relative; font-size: 48px; }
-.prop-card-header.short-term { background: linear-gradient(135deg, #C8EEF5, #A0DDE8); }
-.prop-card-header.long-term { background: linear-gradient(135deg, #D5E8FF, #B8D4F8); }
-.prop-card-header.hoa { background: linear-gradient(135deg, #FFF0C8, #FFE08A); }
+.prop-card-header.short-term { background: linear-gradient(135deg, #E8E5DF, #D4D0C8); }
+.prop-card-header.long-term { background: linear-gradient(135deg, #E4E1DA, #CCCAB8); }
+.prop-card-header.hoa { background: linear-gradient(135deg, #EAE7E0, #D8D4CC); }
 .prop-card-header.add { background: var(--bg); border: 2px dashed var(--border2); }
 .prop-type-badge { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; }
-.prop-type-badge.short { background: var(--teal-light); color: var(--teal); }
+.prop-type-badge.short { background: rgba(26,26,26,0.07); color: var(--onyx); }
 .prop-type-badge.hoa { background: #FFFBEB; color: var(--amber); }
-.prop-type-badge.long { background: #EFF6FF; color: #2563EB; }
-.status-badge { position: absolute; top: 10px; right: 10px; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; background: var(--green-bg); color: var(--green); }
+.prop-type-badge.long { background: rgba(26,26,26,0.07); color: var(--onyx); }
+.status-badge { position: absolute; top: 10px; right: 10px; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; background: var(--onyx); color: white; }
 .prop-card-body { padding: 14px 16px; }
 .prop-name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
 .prop-loc { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
@@ -90,7 +96,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .prop-stat-item { font-size: 12px; color: var(--muted); }
 .prop-stat-item strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); }
 .add-prop-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: 100%; min-height: 180px; cursor: pointer; color: var(--muted); transition: all .15s; }
-.add-prop-card:hover { color: var(--teal); }
+.add-prop-card:hover { color: var(--onyx); }
 .add-icon { width: 36px; height: 36px; border: 2px solid currentColor; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .add-prop-card p { font-size: 13.5px; font-weight: 600; }
 .add-prop-card span { font-size: 12px; }
@@ -110,7 +116,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .next-steps-card { background: var(--sidebar); border-radius: var(--radius); padding: 20px; }
 .next-steps-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }
 .next-step-item { display: flex; gap: 10px; padding: 8px 0; }
-.next-step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--teal); color: white; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.next-step-num { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.18); color: white; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
 .next-step-text { font-size: 12.5px; color: rgba(255,255,255,0.75); line-height: 1.5; }
 .next-step-text strong { color: white; display: block; }
 
@@ -124,29 +130,29 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 
 /* Amenity chips */
 .amenity-chip { display: flex; align-items: center; gap: 7px; padding: 10px 14px; border: 1.5px solid var(--border2); border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .15s; user-select: none; background: var(--white); }
-.amenity-chip:hover { border-color: var(--teal); color: var(--teal); }
-.amenity-chip.selected { background: var(--teal-light); border-color: var(--teal); color: var(--teal); font-weight: 600; }
-.amenity-chip.selected svg { color: var(--teal); }
+.amenity-chip:hover { border-color: var(--onyx); color: var(--onyx); }
+.amenity-chip.selected { background: var(--onyx); border-color: var(--onyx); color: white; font-weight: 600; }
+.amenity-chip.selected svg { color: white; }
 .amenity-chip svg { flex-shrink: 0; }
 
 /* Step indicator */
 .step-indicator { display: flex; align-items: center; gap: 0; margin-bottom: 32px; }
 .step-item { display: flex; align-items: center; gap: 8px; }
 .step-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
-.step-num.done { background: var(--teal); color: white; }
-.step-num.active { background: var(--text); color: white; }
+.step-num.done { background: var(--onyx); color: white; }
+.step-num.active { background: var(--onyx); color: white; }
 .step-num.pending { background: var(--border2); color: var(--hint); }
 .step-label { font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; }
 .step-label.active { color: var(--text); }
-.step-label.done { color: var(--teal); }
+.step-label.done { color: var(--onyx); }
 .step-line { flex: 1; height: 1.5px; background: var(--border2); margin: 0 12px; }
-.step-line.done { background: var(--teal); }
+.step-line.done { background: var(--onyx); }
 
 /* Category cards (Image 1 style) */
 .category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
 .cat-card { background: var(--white); border: 2px solid var(--border2); border-radius: 16px; padding: 28px 24px; cursor: pointer; transition: all .18s; text-align: center; }
-.cat-card:hover { border-color: var(--teal); box-shadow: 0 4px 16px rgba(11,138,154,.1); }
-.cat-card.selected { border-color: var(--teal); background: var(--teal-light); }
+.cat-card:hover { border-color: var(--onyx); box-shadow: 0 4px 16px rgba(26,26,26,.1); }
+.cat-card.selected { border-color: var(--onyx); background: var(--onyx-06); }
 .cat-card-icon { font-size: 42px; margin-bottom: 14px; display: block; }
 .cat-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
 .cat-card p { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
@@ -176,8 +182,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* HOA sub-type cards */
 .hoa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
 .hoa-card { background: var(--white); border: 2px solid var(--border2); border-radius: 12px; padding: 22px 18px; cursor: pointer; transition: all .15s; text-align: center; }
-.hoa-card:hover { border-color: var(--teal); }
-.hoa-card.selected { border-color: var(--teal); background: var(--teal-light); }
+.hoa-card:hover { border-color: var(--onyx); }
+.hoa-card.selected { border-color: var(--onyx); background: var(--onyx-06); }
 .hoa-card-icon { font-size: 32px; margin-bottom: 10px; display: block; }
 .hoa-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
 .hoa-card p { font-size: 12px; color: var(--muted); line-height: 1.4; }
@@ -190,12 +196,12 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
 .field label span { color: var(--red); }
 .field input, .field textarea, .field select { width: 100%; border: 1.5px solid var(--border2); border-radius: 8px; padding: 10px 13px; font-family: inherit; font-size: 14px; color: var(--text); outline: none; transition: border-color .15s; background: white; }
-.field input:focus, .field textarea:focus { border-color: var(--teal); }
+.field input:focus, .field textarea:focus { border-color: var(--onyx); }
 .field input::placeholder, .field textarea::placeholder { color: var(--hint); }
 .field textarea { resize: none; height: 80px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field-hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
-.loc-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--teal); font-weight: 600; cursor: pointer; float: right; margin-top: -30px; }
+.loc-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--onyx); font-weight: 600; cursor: pointer; float: right; margin-top: -30px; }
 
 /* Unit counter */
 .unit-counter { display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border2); border-radius: 8px; overflow: hidden; width: fit-content; margin-bottom: 12px; }
@@ -206,14 +212,14 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .unit-names strong { color: var(--text); }
 
 /* Earnings estimate */
-.earnings-box { background: var(--teal-light); border: 1px solid rgba(11,138,154,.2); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
-.earnings-box-label { font-size: 11.5px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
-.earnings-box-amount { font-size: 20px; font-weight: 800; color: var(--teal); }
-.earnings-box-note { font-size: 12px; color: var(--teal-dark); margin-top: 3px; opacity: .8; }
+.earnings-box { background: var(--onyx-06); border: 1px solid var(--border2); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+.earnings-box-label { font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.earnings-box-amount { font-size: 20px; font-weight: 800; color: var(--onyx); }
+.earnings-box-note { font-size: 12px; color: var(--muted); margin-top: 3px; opacity: .8; }
 
 /* Photo upload */
 .photo-upload { border: 2px dashed var(--border2); border-radius: 10px; padding: 36px; text-align: center; cursor: pointer; transition: all .15s; }
-.photo-upload:hover { border-color: var(--teal); background: var(--teal-light); }
+.photo-upload:hover { border-color: var(--onyx); background: var(--linen); }
 .photo-upload p { font-size: 14px; font-weight: 600; color: var(--muted); margin-top: 8px; }
 .photo-upload span { font-size: 12px; color: var(--hint); }
 
@@ -223,11 +229,11 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .go-live-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
 .go-live-box p { font-size: 14.5px; color: var(--muted); margin-bottom: 20px; }
 .booking-link { background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; font-size: 13.5px; }
-.booking-link-url { color: var(--teal); font-weight: 600; }
+.booking-link-url { color: var(--onyx); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .go-live-next { text-align: left; background: var(--bg); border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
 .go-live-next h4 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
 .go-live-next-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; font-size: 13px; color: var(--muted); }
-.go-live-next-item svg { flex-shrink: 0; color: var(--teal); margin-top: 1px; }
+.go-live-next-item svg { flex-shrink: 0; color: var(--onyx); margin-top: 1px; }
 
 /* Onboarding nav */
 .onboard-nav { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; }
@@ -236,7 +242,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* ── PROPERTY EDIT PAGE ── */
 .prop-edit-header { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-start; }
 .prop-edit-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-.prop-edit-type { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); background: var(--teal-light); padding: 3px 8px; border-radius: 100px; }
+.prop-edit-type { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--onyx); background: var(--onyx-07); padding: 3px 8px; border-radius: 100px; }
 .prop-edit-status { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 100px; display: flex; align-items: center; gap: 4px; }
 .prop-edit-status.live { background: var(--green-bg); color: var(--green); }
 .prop-edit-status.live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
@@ -250,7 +256,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .tab-nav::-webkit-scrollbar { display: none; }
 .tab-btn { padding: 14px 16px; font-size: 13.5px; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: transparent; font-family: inherit; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; }
 .tab-btn:hover { color: var(--text); }
-.tab-btn.active { color: var(--text); font-weight: 600; border-bottom-color: var(--text); }
+.tab-btn.active { color: var(--onyx); font-weight: 600; border-bottom-color: var(--onyx); }
 .tab-content { display: none; padding: 26px; }
 .tab-content.active { display: block; }
 
@@ -258,21 +264,21 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .completeness-box { background: var(--bg); border-radius: 10px; padding: 20px; margin-bottom: 24px; }
 .completeness-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .completeness-title { font-size: 14px; font-weight: 700; }
-.completeness-pct { font-size: 14px; font-weight: 800; color: var(--teal); }
+.completeness-pct { font-size: 14px; font-weight: 800; color: var(--onyx); }
 .progress-track { height: 8px; background: var(--border2); border-radius: 100px; overflow: hidden; margin-bottom: 18px; }
-.progress-fill { height: 100%; background: var(--teal); border-radius: 100px; transition: width .6s ease; }
+.progress-fill { height: 100%; background: var(--onyx); border-radius: 100px; transition: width .6s ease; }
 .checklist-title { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
 .check-item { display: flex; align-items: flex-start; gap: 11px; padding: 9px 12px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; transition: background .15s; }
 .check-item:hover { background: rgba(0,0,0,.03); }
 .check-item-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; margin-top: 1px; }
-.check-item-icon.critical { background: var(--red-bg); color: var(--red); }
-.check-item-icon.high { background: var(--amber-bg); color: var(--amber); }
-.check-item-icon.normal { background: var(--bg); color: var(--muted); border: 1px solid var(--border2); }
-.check-item-icon.done { background: var(--green-bg); color: var(--green); }
+.check-item-icon.critical { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); }
+.check-item-icon.high { background: var(--coral-soft); color: var(--onyx); }
+.check-item-icon.normal { background: var(--onyx-06); color: var(--muted); border: 1px solid var(--border2); }
+.check-item-icon.done { background: var(--onyx); color: white; }
 .check-item-body { flex: 1; }
 .check-item-label { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
 .check-item-impact { font-size: 12px; color: var(--muted); }
-.check-item-action { font-size: 12px; color: var(--teal); font-weight: 600; white-space: nowrap; margin-top: 2px; }
+.check-item-action { font-size: 12px; color: var(--onyx); font-weight: 600; white-space: nowrap; margin-top: 2px; }
 .check-done .check-item-label { color: var(--muted); font-weight: 500; }
 
 /* Overview details */
@@ -283,8 +289,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .detail-row:last-child { border-bottom: none; }
 .detail-row-label { color: var(--muted); }
 .detail-row-val { font-weight: 600; text-align: right; }
-.detail-row-val.link { color: var(--teal); }
-.edit-link { font-size: 12px; color: var(--teal); font-weight: 600; cursor: pointer; }
+.detail-row-val.link { color: var(--onyx); text-decoration: underline; text-underline-offset: 2px; }
+.edit-link { font-size: 12px; color: var(--onyx); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
 .quick-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
 .quick-stat { background: var(--bg); border-radius: 10px; padding: 14px 16px; text-align: center; }
@@ -300,7 +306,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .unit-meta { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 .unit-status { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
 .unit-status.available { background: var(--green-bg); color: var(--green); }
-.unit-status.booked { background: var(--teal-light); color: var(--teal); }
+.unit-status.booked { background: var(--onyx-07); color: var(--onyx); }
 .unit-status.occupied { background: var(--amber-bg); color: var(--amber); }
 .unit-status.owned { background: #EFF6FF; color: #2563EB; }
 .unit-actions { display: flex; gap: 6px; }
@@ -321,7 +327,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* Tenants tab */
 .tenant-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .tenant-row:last-child { border-bottom: none; }
-.tenant-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tenant-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--onyx-06); color: var(--onyx); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .tenant-info { flex: 1; }
 .tenant-name { font-size: 14px; font-weight: 600; }
 .tenant-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -360,7 +366,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* Guests tab */
 .booking-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .booking-row:last-child { border-bottom: none; }
-.booking-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.booking-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--onyx-06); color: var(--onyx); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .booking-info { flex: 1; }
 .booking-name { font-size: 14px; font-weight: 600; }
 .booking-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -389,17 +395,63 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .flex-row { display: flex; align-items: center; gap: 10px; }
 .ml-auto { margin-left: auto; }
 .text-muted { color: var(--muted); font-size: 13px; }
-.text-teal { color: var(--teal); }
+.text-teal { color: var(--onyx); }
 .badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; }
-.badge-teal { background: var(--teal-light); color: var(--teal); }
+.badge-teal { background: var(--onyx-07); color: var(--onyx); }
 .badge-green { background: var(--green-bg); color: var(--green); }
 .badge-amber { background: var(--amber-bg); color: var(--amber); }
 .badge-red { background: var(--red-bg); color: var(--red); }
 .divider { height: 1px; background: var(--border); margin: 18px 0; }
-.add-btn { display: flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--teal); cursor: pointer; padding: 8px 0; }
+.add-btn { display: flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--onyx); cursor: pointer; padding: 8px 0; }
 .section-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
 .empty-state { text-align: center; padding: 36px; color: var(--muted); }
 .empty-state p { font-size: 14px; margin-top: 8px; }
+
+/* ── CHECK ITEMS (clickable) ── */
+.check-item:not(.check-done) { cursor: pointer; }
+.check-item:not(.check-done):hover { background: var(--onyx-06); }
+.check-item:not(.check-done):hover .check-item-action { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── MODALS ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 900; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: var(--white); border-radius: 16px; width: 500px; max-height: 88vh; overflow-y: auto; padding: 28px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.modal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+.modal-title { font-size: 16px; font-weight: 800; }
+.modal-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+.modal-close { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border2); background: transparent; cursor: pointer; font-size: 16px; color: var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-close:hover { background: var(--bg); }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border); }
+.mfield { margin-bottom: 16px; }
+.mfield label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.mfield input, .mfield select, .mfield textarea { width: 100%; border: 1.5px solid var(--border2); border-radius: 8px; padding: 9px 12px; font-family: inherit; font-size: 13.5px; color: var(--text); outline: none; transition: border-color .15s; background: var(--bg); }
+.mfield input:focus, .mfield select:focus, .mfield textarea:focus { border-color: var(--onyx); background: var(--white); }
+.mfield-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.mfield select { appearance: none; cursor: pointer; }
+.mfield-hint { font-size: 11.5px; color: var(--hint); margin-top: 4px; }
+
+/* ── PREVIEW MODAL ── */
+.preview-box { background: var(--bg); border-radius: 16px; width: 700px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+.preview-topbar { background: var(--white); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0; position: sticky; top: 0; z-index: 1; }
+.preview-url { font-size: 12.5px; color: var(--muted); background: var(--bg); border: 1px solid var(--border2); border-radius: 6px; padding: 5px 12px; flex: 1; margin: 0 14px; text-align: center; }
+.preview-photo { width: 100%; height: 220px; background: linear-gradient(135deg, #C8EEF5, #A0DDE8); display: flex; align-items: center; justify-content: center; font-size: 72px; }
+.preview-body { padding: 22px; }
+.preview-name { font-size: 20px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 4px; }
+.preview-meta { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.preview-rating { display: flex; align-items: center; gap: 4px; color: var(--amber); font-size: 13px; font-weight: 700; }
+.preview-section { margin-bottom: 20px; }
+.preview-section-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.preview-amenity-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.preview-amenity { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; background: var(--white); border: 1px solid var(--border2); border-radius: 8px; padding: 6px 12px; }
+.preview-book-box { background: var(--white); border: 1px solid var(--border2); border-radius: 14px; padding: 20px; margin-top: 4px; }
+.preview-price { font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 14px; }
+.preview-price span { font-size: 14px; font-weight: 500; color: var(--muted); }
+.preview-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border2); border: 1.5px solid var(--border2); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+.preview-date-cell { background: var(--white); padding: 10px 14px; }
+.preview-date-cell label { display: block; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.preview-date-cell span { font-size: 13px; font-weight: 600; }
+.preview-book-btn { width: 100%; padding: 13px; background: var(--onyx); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; margin-top: 10px; transition: opacity .15s; }
+.preview-book-btn:hover { opacity: 0.82; }
 </style>
 </head>
 <body>
@@ -411,11 +463,11 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
       <div class="logo-mark">
         <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
       </div>
-      <span class="logo-text">Tuluyan</span>
+      <span class="logo-text" style="font-family:'League Spartan',sans-serif;font-weight:800;letter-spacing:-0.03em">tuluyan.</span>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Manage</div>
-      <button class="nav-item" onclick="window.location.href='dashboard.html'">
+      <button class="nav-item" onclick="window.location.href='dashboard-v3.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
         Dashboard
       </button>
@@ -423,15 +475,15 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5V15H5.5V10.5H10.5V15H15V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
         My Properties
       </button>
-      <button class="nav-item" onclick="window.location.href='bookings.html'">
+      <button class="nav-item" onclick="window.location.href='bookings-v3.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Bookings <span class="nav-badge">3</span>
       </button>
-      <button class="nav-item" onclick="window.location.href='tenants.html'">
+      <button class="nav-item" onclick="window.location.href='tenants-v3.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14C2 11.2 4.7 9 8 9C11.3 9 14 11.2 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Tenants
       </button>
-      <button class="nav-item" onclick="window.location.href='finances.html'">
+      <button class="nav-item" onclick="window.location.href='finances-v3.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 7h13M5 10h2M9 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Finances
       </button>
@@ -834,7 +886,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
           <div class="prop-edit-loc"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="currentColor" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg> BGC, Taguig City</div>
         </div>
         <div class="prop-edit-actions">
-          <button class="btn-secondary">Preview listing</button>
+          <button class="btn-secondary" onclick="openPreview('short')">Preview listing</button>
           <button class="btn-secondary">⏸ Pause</button>
           <button class="btn-primary">✓ Live</button>
         </div>
@@ -858,7 +910,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
             <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
             <div class="checklist-title">Complete these to get more bookings</div>
             <!-- Priority 1: Critical -->
-            <div class="check-item">
+            <div class="check-item" onclick="goToTab('short','settings')">
               <div class="check-item-icon critical">!</div>
               <div class="check-item-body">
                 <div class="check-item-label">Set up your payout method</div>
@@ -866,7 +918,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               </div>
               <div class="check-item-action">Settings →</div>
             </div>
-            <div class="check-item">
+            <div class="check-item" onclick="goToTab('short','policies')">
               <div class="check-item-icon critical">!</div>
               <div class="check-item-body">
                 <div class="check-item-label">Add a cancellation policy</div>
@@ -875,7 +927,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               <div class="check-item-action">Policies →</div>
             </div>
             <!-- Priority 2: High impact -->
-            <div class="check-item">
+            <div class="check-item" onclick="openAddPhotos('short')">
               <div class="check-item-icon high">↑</div>
               <div class="check-item-body">
                 <div class="check-item-label">Add more photos (1 of 5 recommended)</div>
@@ -883,7 +935,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               </div>
               <div class="check-item-action">Add photos →</div>
             </div>
-            <div class="check-item">
+            <div class="check-item" onclick="openEditDescription('short')">
               <div class="check-item-icon high">↑</div>
               <div class="check-item-body">
                 <div class="check-item-label">Write a property description</div>
@@ -892,7 +944,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               <div class="check-item-action">Edit →</div>
             </div>
             <!-- Priority 3: Normal -->
-            <div class="check-item">
+            <div class="check-item" onclick="goToTab('short','policies')">
               <div class="check-item-icon normal">○</div>
               <div class="check-item-body">
                 <div class="check-item-label">Add house rules</div>
@@ -900,7 +952,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               </div>
               <div class="check-item-action">Policies →</div>
             </div>
-            <div class="check-item">
+            <div class="check-item" onclick="goToTab('short','pricing')">
               <div class="check-item-icon normal">○</div>
               <div class="check-item-body">
                 <div class="check-item-label">Set weekend &amp; holiday rates</div>
@@ -931,13 +983,13 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
           </div>
 
           <!-- Property details -->
-          <div class="detail-sections">
+          <div class="detail-sections" id="short-details-card">
             <div class="detail-section">
               <h4>Property details <span class="edit-link" style="float:right;font-weight:600;font-size:12px;text-transform:none;letter-spacing:0">Edit</span></h4>
               <div class="detail-row"><span class="detail-row-label">Name</span><span class="detail-row-val">Seaside Studio BGC</span></div>
               <div class="detail-row"><span class="detail-row-label">Type</span><span class="detail-row-val">Transient</span></div>
               <div class="detail-row"><span class="detail-row-label">Location</span><span class="detail-row-val">BGC, Taguig City</span></div>
-              <div class="detail-row"><span class="detail-row-label">Description</span><span class="detail-row-val" style="color:var(--hint)">Not set</span></div>
+              <div class="detail-row"><span class="detail-row-label">Description</span><span id="short-desc-val" class="detail-row-val" style="color:var(--hint)">Not set</span></div>
               <div class="detail-row"><span class="detail-row-label">Check-in</span><span class="detail-row-val">2:00 PM</span></div>
               <div class="detail-row"><span class="detail-row-label">Check-out</span><span class="detail-row-val">11:00 AM</span></div>
               <div class="detail-row"><span class="detail-row-label">Booking horizon</span><span class="detail-row-val">90 days</span></div>
@@ -952,15 +1004,16 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
                 <button class="btn-secondary" style="flex:1;font-size:12.5px;padding:8px">Share</button>
               </div>
               <div class="divider"></div>
-              <h4>Photos <span class="edit-link" style="float:right;font-weight:600;font-size:12px;text-transform:none;letter-spacing:0">Add more</span></h4>
-              <div style="background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--amber)">⚠ Only 1 photo — add at least 4 more</div>
+              <h4 id="short-photos-card">Photos <span class="edit-link" onclick="openAddPhotos('short')" style="float:right;font-weight:600;font-size:12px;text-transform:none;letter-spacing:0;cursor:pointer">Add more</span></h4>
+              <div id="short-photos-status" style="background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--amber)">⚠ Only 1 photo — add at least 4 more</div>
+              <div id="short-photo-grid" style="flex-wrap:wrap;gap:6px;margin-top:8px;display:none"></div>
             </div>
           </div>
         </div>
 
         <!-- Units tab -->
         <div class="tab-content" id="short-tab-units">
-          <div class="flex-row" style="margin-bottom:18px"><h3 style="font-size:16px;font-weight:700">Units (3)</h3><button class="btn-primary" style="margin-left:auto">+ Add unit</button></div>
+          <div class="flex-row" style="margin-bottom:18px"><h3 style="font-size:16px;font-weight:700">Units (3)</h3><button class="btn-primary" style="margin-left:auto" onclick="openAddUnit('short')">+ Add unit</button></div>
           <div class="units-list">
             <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 1 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status booked">Booked May 24–27</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
             <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 2 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
@@ -1108,9 +1161,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
               <div style="padding:6px;font-size:12.5px;border-radius:6px;background:var(--bg);cursor:pointer">31</div>
             </div>
             <!-- Booking detail tooltip -->
-            <div style="margin-top:14px;background:var(--teal-light);border:1px solid rgba(11,138,154,.2);border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+            <div style="margin-top:14px;background:var(--onyx-06);border:1px solid var(--border2);border-radius:8px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
               <div>
-                <div style="font-size:13px;font-weight:700;color:var(--teal)">📅 May 24–27 · Maria Santos</div>
+                <div style="font-size:13px;font-weight:700;color:var(--onyx)">📅 May 24–27 · Maria Santos</div>
                 <div style="font-size:12px;color:var(--muted);margin-top:2px">3 nights · 2 guests · ₱8,400 · Confirmed ✓</div>
               </div>
               <button class="btn-secondary" style="font-size:12px;padding:6px 12px">View booking</button>
@@ -1269,7 +1322,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
           <div class="prop-edit-name">Sunrise Apartments Pasig</div>
           <div class="prop-edit-loc"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="currentColor" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg> Kapitolyo, Pasig City</div>
         </div>
-        <div class="prop-edit-actions"><button class="btn-secondary">Preview listing</button><button class="btn-primary">✓ Live</button></div>
+        <div class="prop-edit-actions"><button class="btn-secondary" onclick="openPreview('long')">Preview listing</button><button class="btn-primary">✓ Live</button></div>
       </div>
       <div class="tabs">
         <div class="tab-nav">
@@ -1287,9 +1340,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
             <div class="completeness-header"><span class="completeness-title">Profile completeness</span><span class="completeness-pct">68%</span></div>
             <div class="progress-track"><div class="progress-fill" style="width:68%"></div></div>
             <div class="checklist-title">Complete these to attract more tenants</div>
-            <div class="check-item"><div class="check-item-icon critical">!</div><div class="check-item-body"><div class="check-item-label">Set up payout method</div><div class="check-item-impact">Rent payments can't be transferred without this</div></div><div class="check-item-action">Settings →</div></div>
-            <div class="check-item"><div class="check-item-icon high">↑</div><div class="check-item-body"><div class="check-item-label">Add more photos (2 of 5 recommended)</div><div class="check-item-impact">Listings with photos attract tenants 2× faster</div></div><div class="check-item-action">Add photos →</div></div>
-            <div class="check-item"><div class="check-item-icon normal">○</div><div class="check-item-body"><div class="check-item-label">Upload lease template</div><div class="check-item-impact">Pre-fill and send leases to tenants digitally</div></div><div class="check-item-action">Policies →</div></div>
+            <div class="check-item" onclick="goToTab('long','settings')"><div class="check-item-icon critical">!</div><div class="check-item-body"><div class="check-item-label">Set up payout method</div><div class="check-item-impact">Rent payments can't be transferred without this</div></div><div class="check-item-action">Settings →</div></div>
+            <div class="check-item" onclick="openAddPhotos('long')"><div class="check-item-icon high">↑</div><div class="check-item-body"><div class="check-item-label">Add more photos (2 of 5 recommended)</div><div class="check-item-impact">Listings with photos attract tenants 2× faster</div></div><div class="check-item-action">Add photos →</div></div>
+            <div class="check-item" onclick="goToTab('long','policies')"><div class="check-item-icon normal">○</div><div class="check-item-body"><div class="check-item-label">Upload lease template</div><div class="check-item-impact">Pre-fill and send leases to tenants digitally</div></div><div class="check-item-action">Policies →</div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">Units added (8 units)</div></div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">Monthly rent set (₱12,000)</div></div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">Location and description set</div></div></div>
@@ -1299,7 +1352,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
             <div class="quick-stat"><div class="quick-stat-num">₱72,000</div><div class="quick-stat-label">Rent collected (May)</div></div>
             <div class="quick-stat"><div class="quick-stat-num">2</div><div class="quick-stat-label">Late payments</div></div>
           </div>
-          <div class="detail-sections">
+          <div class="detail-sections" id="long-details-card">
             <div class="detail-section"><h4>Property details <span class="edit-link" style="float:right;font-weight:600;font-size:12px;text-transform:none;letter-spacing:0">Edit</span></h4><div class="detail-row"><span class="detail-row-label">Name</span><span class="detail-row-val">Sunrise Apartments Pasig</span></div><div class="detail-row"><span class="detail-row-label">Type</span><span class="detail-row-val">Apartment / Condo</span></div><div class="detail-row"><span class="detail-row-label">Location</span><span class="detail-row-val">Kapitolyo, Pasig</span></div><div class="detail-row"><span class="detail-row-label">Total units</span><span class="detail-row-val">8</span></div><div class="detail-row"><span class="detail-row-label">Min. lease</span><span class="detail-row-val">6 months</span></div></div>
             <div class="detail-section"><h4>Booking link</h4><div style="background:var(--white);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;margin-bottom:10px"><div class="detail-row-val link" style="font-size:13px">tuluyan.ph/p/sunrise-apartments-pasig</div></div><div class="flex-row"><button class="btn-secondary" style="flex:1;font-size:12.5px;padding:8px">Copy</button><button class="btn-secondary" style="flex:1;font-size:12.5px;padding:8px">Share</button></div></div>
           </div>
@@ -1307,7 +1360,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 
         <!-- Long-term Units -->
         <div class="tab-content" id="long-tab-units">
-          <div class="flex-row" style="margin-bottom:18px"><h3 style="font-size:16px;font-weight:700">Units (8)</h3><button class="btn-primary" style="margin-left:auto">+ Add unit</button></div>
+          <div class="flex-row" style="margin-bottom:18px"><h3 style="font-size:16px;font-weight:700">Units (8)</h3><button class="btn-primary" style="margin-left:auto" onclick="openAddUnit('long')">+ Add unit</button></div>
           <div class="units-list">
             <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 1-A</div><div class="unit-meta">1BR · 28sqm · Furnished</div></div><span class="unit-status occupied">Occupied — Ana Cruz</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
             <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 1-B</div><div class="unit-meta">1BR · 28sqm · Semi-furnished</div></div><span class="unit-status occupied">Occupied — Ben Santos</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
@@ -1373,8 +1426,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
             <div class="completeness-header"><span class="completeness-title">Profile completeness</span><span class="completeness-pct">78%</span></div>
             <div class="progress-track"><div class="progress-fill" style="width:78%"></div></div>
             <div class="checklist-title">Complete your building profile</div>
-            <div class="check-item"><div class="check-item-icon high">↑</div><div class="check-item-body"><div class="check-item-label">Upload association documents</div><div class="check-item-impact">Master deed, by-laws, and declaration of restrictions</div></div><div class="check-item-action">Settings →</div></div>
-            <div class="check-item"><div class="check-item-icon normal">○</div><div class="check-item-body"><div class="check-item-label">Configure maintenance schedule</div><div class="check-item-impact">Set recurring common area maintenance tasks</div></div><div class="check-item-action">Maintenance →</div></div>
+            <div class="check-item" onclick="goToTab('hoa','settings')"><div class="check-item-icon high">↑</div><div class="check-item-body"><div class="check-item-label">Upload association documents</div><div class="check-item-impact">Master deed, by-laws, and declaration of restrictions</div></div><div class="check-item-action">Settings →</div></div>
+            <div class="check-item" onclick="goToTab('hoa','maintenance')"><div class="check-item-icon normal">○</div><div class="check-item-body"><div class="check-item-label">Configure maintenance schedule</div><div class="check-item-impact">Set recurring common area maintenance tasks</div></div><div class="check-item-action">Maintenance →</div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">All 48 units added</div></div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">Monthly dues configured (₱2,400/unit)</div></div></div>
             <div class="check-item check-done"><div class="check-item-icon done">✓</div><div class="check-item-body"><div class="check-item-label">Late penalty configured</div></div></div>
@@ -1461,6 +1514,194 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- ══ ADD PHOTOS MODAL ══ -->
+<div id="photos-modal" class="modal-overlay" onclick="if(event.target===this)closePhotos()">
+  <div class="modal-box" style="width:540px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Add photos</div>
+        <div class="modal-sub">Listings with 5+ photos get 3× more inquiries</div>
+      </div>
+      <button class="modal-close" onclick="closePhotos()">✕</button>
+    </div>
+    <!-- Drop zone -->
+    <div id="photo-dropzone" onclick="document.getElementById('photo-file-input').click()" style="border:2px dashed var(--border2);border-radius:12px;padding:36px 24px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s">
+      <div style="font-size:32px;margin-bottom:10px">🖼️</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:4px">Click to browse photos</div>
+      <div style="font-size:12.5px;color:var(--muted)">JPG, PNG or WEBP · Max 10MB each · Up to 10 photos</div>
+    </div>
+    <input type="file" id="photo-file-input" accept="image/*" multiple style="display:none" onchange="handlePhotoSelect(event)">
+    <!-- Preview grid -->
+    <div id="photo-preview-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px"></div>
+    <div id="photo-count-note" style="font-size:12.5px;color:var(--muted);margin-top:10px;display:none"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closePhotos()">Cancel</button>
+      <button class="btn-primary" id="photo-save-btn" onclick="savePhotos()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Save photos
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDIT DESCRIPTION MODAL ══ -->
+<div id="desc-modal" class="modal-overlay" onclick="if(event.target===this)closeDesc()">
+  <div class="modal-box" style="width:520px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Property description</div>
+        <div class="modal-sub">Help guests or tenants understand what makes your place special</div>
+      </div>
+      <button class="modal-close" onclick="closeDesc()">✕</button>
+    </div>
+    <div class="mfield">
+      <label>Description</label>
+      <textarea id="desc-textarea" rows="6" style="width:100%;border:1.5px solid var(--border2);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:13.5px;color:var(--text);outline:none;resize:vertical;background:var(--bg);line-height:1.6;transition:border-color .15s" onfocus="this.style.borderColor='var(--teal)';this.style.background='var(--white)'" onblur="this.style.borderColor='var(--border2)';this.style.background='var(--bg)'" oninput="updateDescCount()" placeholder="e.g. A comfortable modern studio steps away from BGC's best restaurants and offices. Ideal for business travelers and couples — you'll love the natural light, fast Wi-Fi, and quiet surroundings."></textarea>
+      <div style="display:flex;justify-content:space-between;margin-top:5px">
+        <div class="mfield-hint">A good description is 2–4 sentences. Be specific about location, vibe, and who it's great for.</div>
+        <div id="desc-char-count" style="font-size:11.5px;color:var(--hint);white-space:nowrap;margin-left:12px">0 / 500</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeDesc()">Cancel</button>
+      <button class="btn-primary" onclick="saveDescription()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Save description
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD UNIT MODAL ══ -->
+<div id="add-unit-modal" class="modal-overlay" onclick="if(event.target===this)closeAddUnit()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Add a unit</div>
+        <div class="modal-sub" id="add-unit-subtitle">Enter the details for the new unit</div>
+      </div>
+      <button class="modal-close" onclick="closeAddUnit()">✕</button>
+    </div>
+    <div class="mfield">
+      <label>Unit name / number</label>
+      <input type="text" id="unit-name-input" placeholder="e.g. Unit 4, Room 2B, Suite A">
+    </div>
+    <div class="mfield-row">
+      <div class="mfield">
+        <label id="unit-type-label">Unit type</label>
+        <select id="unit-type-input">
+          <option value="Standard">Standard</option>
+          <option value="Deluxe">Deluxe</option>
+          <option value="Studio">Studio</option>
+          <option value="Suite">Suite</option>
+          <option value="1BR">1 Bedroom</option>
+          <option value="2BR">2 Bedroom</option>
+        </select>
+      </div>
+      <div class="mfield" id="unit-guests-field">
+        <label id="unit-guests-label">Max guests</label>
+        <input type="number" id="unit-guests-input" value="2" min="1" max="20">
+      </div>
+    </div>
+    <div class="mfield">
+      <label>Amenities / notes</label>
+      <input type="text" id="unit-amenities-input" placeholder="e.g. Air conditioning · Private bathroom · Wi-Fi">
+      <div class="mfield-hint">Short summary shown on the unit card</div>
+    </div>
+    <div class="mfield">
+      <label>Initial status</label>
+      <select id="unit-status-input">
+        <option value="available">Available</option>
+        <option value="maintenance">Under maintenance</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeAddUnit()">Cancel</button>
+      <button class="btn-primary" onclick="saveUnit()">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Add unit
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PREVIEW LISTING MODAL ══ -->
+<div id="preview-modal" class="modal-overlay" onclick="if(event.target===this)closePreview()">
+  <div class="preview-box">
+    <div class="preview-topbar">
+      <button class="modal-close" onclick="closePreview()">✕</button>
+      <div class="preview-url" id="preview-url">tuluyan.ph/p/seaside-studio-bgc</div>
+      <button class="btn-secondary" style="font-size:12px;padding:6px 14px">Open ↗</button>
+    </div>
+    <div id="preview-photo" class="preview-photo">🏖️</div>
+    <div class="preview-body">
+      <div style="display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:flex-start">
+        <div>
+          <div class="preview-name" id="preview-name">Seaside Studio BGC</div>
+          <div class="preview-meta">
+            <span id="preview-type-badge" style="font-size:11px;font-weight:700;background:var(--onyx-07);color:var(--onyx);padding:2px 8px;border-radius:100px">Short-term</span>
+            <span id="preview-location">📍 BGC, Taguig City</span>
+            <span class="preview-rating">★ 4.9 <span style="font-weight:400;color:var(--muted)">(28 reviews)</span></span>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">About this space</div>
+            <div id="preview-description" style="font-size:13.5px;color:var(--muted);line-height:1.6">A comfortable modern studio with stunning BGC views. Perfect for business travelers and couples looking for a home-away-from-home experience in the heart of the city.</div>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">What's included</div>
+            <div class="preview-amenity-row" id="preview-amenities">
+              <div class="preview-amenity">🌬️ Air conditioning</div>
+              <div class="preview-amenity">📶 Fast Wi-Fi</div>
+              <div class="preview-amenity">🛁 Private bathroom</div>
+              <div class="preview-amenity">📺 Smart TV</div>
+              <div class="preview-amenity">🍳 Kitchen</div>
+              <div class="preview-amenity">🅿️ Free parking</div>
+            </div>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">Policies</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:5px">
+              <span>🕑 Check-in: 2:00 PM &nbsp;·&nbsp; Check-out: 11:00 AM</span>
+              <span id="preview-policy-note" style="color:var(--amber)">⚠ Cancellation policy not set yet</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="preview-book-box">
+            <div class="preview-price" id="preview-price">₱2,800 <span>/ night</span></div>
+            <div class="preview-date-row">
+              <div class="preview-date-cell">
+                <label>Check-in</label>
+                <span>Select date</span>
+              </div>
+              <div class="preview-date-cell">
+                <label>Check-out</label>
+                <span>Select date</span>
+              </div>
+            </div>
+            <select style="width:100%;border:1.5px solid var(--border2);border-radius:8px;padding:9px 12px;font-family:inherit;font-size:13px;margin-bottom:10px;background:var(--bg);appearance:none">
+              <option>1 guest</option>
+              <option>2 guests</option>
+            </select>
+            <button class="preview-book-btn">Reserve now</button>
+            <div style="text-align:center;font-size:12px;color:var(--muted);margin-top:8px">You won't be charged yet</div>
+          </div>
+          <div style="margin-top:14px;padding:14px;background:var(--white);border:1px solid var(--border2);border-radius:12px">
+            <div style="font-size:12.5px;font-weight:700;margin-bottom:8px">Host</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--onyx-06);color:var(--onyx);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px">JD</div>
+              <div>
+                <div style="font-size:13px;font-weight:600">Jay Dee</div>
+                <div style="font-size:12px;color:var(--muted)">Joined 2024 · 3 properties</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1654,7 +1895,235 @@ function resetOnboarding() {
   showView('onboarding');
 }
 
-// Init
+// ── ADD PHOTOS ──
+let _photoPrefix = 'short';
+let _selectedFiles = [];
+
+function openAddPhotos(prefix) {
+  _photoPrefix = prefix;
+  _selectedFiles = [];
+  document.getElementById('photo-preview-grid').innerHTML = '';
+  document.getElementById('photo-count-note').style.display = 'none';
+  document.getElementById('photo-file-input').value = '';
+  document.getElementById('photos-modal').classList.add('open');
+}
+
+function closePhotos() {
+  document.getElementById('photos-modal').classList.remove('open');
+}
+
+function handlePhotoSelect(e) {
+  const files = Array.from(e.target.files);
+  _selectedFiles = files.slice(0, 10);
+  const grid = document.getElementById('photo-preview-grid');
+  grid.innerHTML = '';
+  _selectedFiles.forEach(file => {
+    const url = URL.createObjectURL(file);
+    const thumb = document.createElement('div');
+    thumb.style.cssText = 'width:88px;height:72px;border-radius:8px;overflow:hidden;border:1px solid var(--border2);position:relative;flex-shrink:0';
+    thumb.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover">`;
+    grid.appendChild(thumb);
+  });
+  const note = document.getElementById('photo-count-note');
+  note.textContent = `${_selectedFiles.length} photo${_selectedFiles.length !== 1 ? 's' : ''} selected`;
+  note.style.display = 'block';
+}
+
+function savePhotos() {
+  if (_selectedFiles.length === 0) { closePhotos(); return; }
+  const count = _selectedFiles.length;
+  const total = count + 1;
+  const statusEl = document.getElementById(_photoPrefix + '-photos-status');
+  if (statusEl) {
+    if (total >= 5) {
+      statusEl.style.background = 'var(--green-bg)';
+      statusEl.style.borderColor = 'rgba(5,150,105,.2)';
+      statusEl.style.color = 'var(--green)';
+      statusEl.textContent = `✓ ${total} photos added`;
+    } else {
+      statusEl.style.background = 'var(--amber-bg)';
+      statusEl.style.borderColor = 'rgba(217,119,6,.2)';
+      statusEl.style.color = 'var(--amber)';
+      statusEl.textContent = `⚠ ${total} photos — add at least ${5 - total} more`;
+    }
+  }
+  closePhotos();
+}
+
+// ── EDIT DESCRIPTION ──
+let _descPrefix = 'short';
+
+function openEditDescription(prefix) {
+  _descPrefix = prefix;
+  const valEl = document.getElementById(prefix + '-desc-val');
+  const current = valEl && valEl.textContent !== 'Not set' ? valEl.textContent : '';
+  const ta = document.getElementById('desc-textarea');
+  ta.value = current;
+  updateDescCount();
+  document.getElementById('desc-modal').classList.add('open');
+  setTimeout(() => ta.focus(), 60);
+}
+
+function closeDesc() {
+  document.getElementById('desc-modal').classList.remove('open');
+}
+
+function updateDescCount() {
+  const val = document.getElementById('desc-textarea').value;
+  document.getElementById('desc-char-count').textContent = val.length + ' / 500';
+}
+
+function saveDescription() {
+  const val = document.getElementById('desc-textarea').value.trim();
+  const valEl = document.getElementById(_descPrefix + '-desc-val');
+  if (valEl) {
+    valEl.textContent = val || 'Not set';
+    valEl.style.color = val ? 'var(--text)' : 'var(--hint)';
+  }
+  closeDesc();
+}
+
+// ── GO TO TAB ──
+function goToTab(prefix, tabName) {
+  const view = document.getElementById('view-edit-' + prefix);
+  if (!view) return;
+  const btn = Array.from(view.querySelectorAll('.tab-btn')).find(b => {
+    const oc = b.getAttribute('onclick') || '';
+    return oc.includes("'" + tabName + "'");
+  });
+  if (btn) btn.click();
+}
+
+// ── SCROLL TO SECTION WITHIN OVERVIEW ──
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── ADD UNIT MODAL ──
+let _addUnitPrefix = 'short';
+const _unitIcons = { short: '🛏️', long: '🏠', hoa: '🏢' };
+
+function openAddUnit(prefix) {
+  _addUnitPrefix = prefix;
+  const subtitle = { short: 'Short-term / Transient property', long: 'Long-term rental property', hoa: 'HOA / Building' };
+  document.getElementById('add-unit-subtitle').textContent = subtitle[prefix] || '';
+  const guestsField = document.getElementById('unit-guests-field');
+  const guestsLabel = document.getElementById('unit-guests-label');
+  const typeLabel = document.getElementById('unit-type-label');
+  if (prefix === 'hoa') {
+    guestsField.style.display = 'none';
+    typeLabel.textContent = 'Unit type';
+  } else if (prefix === 'long') {
+    guestsField.style.display = 'block';
+    guestsLabel.textContent = 'Max occupants';
+    typeLabel.textContent = 'Unit type';
+  } else {
+    guestsField.style.display = 'block';
+    guestsLabel.textContent = 'Max guests';
+    typeLabel.textContent = 'Room type';
+  }
+  document.getElementById('unit-name-input').value = '';
+  document.getElementById('unit-amenities-input').value = '';
+  document.getElementById('unit-status-input').value = 'available';
+  document.getElementById('add-unit-modal').classList.add('open');
+  setTimeout(() => document.getElementById('unit-name-input').focus(), 60);
+}
+
+function closeAddUnit() {
+  document.getElementById('add-unit-modal').classList.remove('open');
+}
+
+function saveUnit() {
+  const name = document.getElementById('unit-name-input').value.trim();
+  if (!name) { document.getElementById('unit-name-input').focus(); return; }
+  const type = document.getElementById('unit-type-input').value;
+  const guests = document.getElementById('unit-guests-input').value;
+  const amenities = document.getElementById('unit-amenities-input').value.trim() || 'Standard unit';
+  const statusVal = document.getElementById('unit-status-input').value;
+
+  const prefix = _addUnitPrefix;
+  const listId = prefix + '-tab-units';
+  const tabContent = document.getElementById(listId);
+  const list = tabContent ? tabContent.querySelector('.units-list') : null;
+  if (!list) { closeAddUnit(); return; }
+
+  const icon = _unitIcons[prefix] || '🛏️';
+  const guestsText = prefix !== 'hoa' ? ` · Max ${guests} guest${guests > 1 ? 's' : ''}` : '';
+  const meta = prefix === 'short'
+    ? `${type} · ${amenities}${guestsText}`
+    : prefix === 'long' ? `${type} · ${amenities}${guestsText}` : `${amenities}`;
+
+  const statusClass = statusVal === 'available' ? 'available' : 'maintenance';
+  const statusLabel = statusVal === 'available' ? 'Available' : 'Under maintenance';
+  const actionLabel = prefix === 'long' ? 'View' : 'Edit';
+
+  const row = document.createElement('div');
+  row.className = 'unit-row';
+  row.innerHTML = `<div class="unit-icon">${icon}</div><div class="unit-info"><div class="unit-name">${name} — ${type}</div><div class="unit-meta">${meta}</div></div><span class="unit-status ${statusClass}">${statusLabel}</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">${actionLabel}</button></div>`;
+  list.appendChild(row);
+
+  // Update units count in heading
+  const heading = tabContent.querySelector('h3');
+  if (heading) {
+    const match = heading.textContent.match(/\d+/);
+    const current = match ? parseInt(match[0]) : 0;
+    heading.textContent = `Units (${current + 1})`;
+  }
+
+  closeAddUnit();
+}
+
+// ── PREVIEW LISTING MODAL ──
+const _previewData = {
+  short: {
+    url: 'tuluyan.ph/p/seaside-studio-bgc',
+    name: 'Seaside Studio BGC',
+    photo: '🏖️',
+    type: 'Short-term',
+    location: '📍 BGC, Taguig City',
+    description: 'A comfortable modern studio with stunning BGC views. Perfect for business travelers and couples looking for a home-away-from-home experience in the heart of the city.',
+    price: '₱2,800 <span>/ night</span>',
+    policyNote: '<span style="color:var(--amber)">⚠ Cancellation policy not set yet</span>',
+    amenities: ['🌬️ Air conditioning','📶 Fast Wi-Fi','🛁 Private bathroom','📺 Smart TV','🍳 Kitchen','🅿️ Free parking']
+  },
+  long: {
+    url: 'tuluyan.ph/p/sunrise-apartments-pasig',
+    name: 'Sunrise Apartments Pasig',
+    photo: '🏢',
+    type: 'Long-term',
+    location: '📍 Kapitolyo, Pasig City',
+    description: 'Affordable and well-maintained apartments in the heart of Kapitolyo. Available units for long-term lease. Minutes from Ortigas CBD.',
+    price: '₱12,000 <span>/ month</span>',
+    policyNote: '<span style="color:var(--green)">✓ 6-month minimum lease · 30-day move-out notice</span>',
+    amenities: ['🌬️ Air conditioning','📶 Wi-Fi ready','🛁 Private bathroom','🚿 Hot & cold shower','🏪 Near groceries','🔐 24/7 security']
+  }
+};
+
+function openPreview(prefix) {
+  const d = _previewData[prefix];
+  if (!d) return;
+  document.getElementById('preview-url').textContent = d.url;
+  document.getElementById('preview-name').textContent = d.name;
+  document.getElementById('preview-photo').textContent = d.photo;
+  document.getElementById('preview-location').textContent = d.location;
+  document.getElementById('preview-description').textContent = d.description;
+  document.getElementById('preview-price').innerHTML = d.price;
+  document.getElementById('preview-policy-note').innerHTML = d.policyNote;
+  document.getElementById('preview-type-badge').textContent = d.type;
+  document.getElementById('preview-type-badge').style.background = 'rgba(26,26,26,0.07)';
+  document.getElementById('preview-type-badge').style.color = '#1A1A1A';
+  document.getElementById('preview-photo').style.background = 'linear-gradient(135deg, #E8E5DF, #D4D0C8)';
+  const amenEl = document.getElementById('preview-amenities');
+  amenEl.innerHTML = d.amenities.map(a => `<div class="preview-amenity">${a}</div>`).join('');
+  document.getElementById('preview-modal').classList.add('open');
+}
+
+function closePreview() {
+  document.getElementById('preview-modal').classList.remove('open');
+}
+
+// ── Init
 document.getElementById('step-1').style.display = 'block';
 
 // Handle navigation from other pages (e.g. dashboard.html → open a property view)
