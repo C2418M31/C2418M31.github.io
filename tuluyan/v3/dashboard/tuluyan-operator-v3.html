@@ -92,6 +92,10 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
 .prop-card-body { padding: 14px 16px; }
 .prop-name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
 .prop-loc { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+.prop-verif { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-bottom: 10px; letter-spacing: .2px; }
+.prop-verif.verified { background: var(--green-bg); color: var(--green); border: 1px solid rgba(5,150,105,.2); }
+.prop-verif.unverified { background: var(--red-bg); color: var(--red); border: 1px solid rgba(220,38,38,.2); }
+.prop-verif.review { background: #EFF6FF; color: #2563EB; border: 1px solid rgba(37,99,235,.2); }
 .prop-stats { display: flex; gap: 16px; border-top: 1px solid var(--border); padding-top: 10px; }
 .prop-stat-item { font-size: 12px; color: var(--muted); }
 .prop-stat-item strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); }
@@ -430,6 +434,32 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
 .mfield select { appearance: none; cursor: pointer; }
 .mfield-hint { font-size: 11.5px; color: var(--hint); margin-top: 4px; }
 
+/* ── VERIFICATION ── */
+.verif-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-top: 14px; }
+.verif-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.verif-card-title { font-size: 14px; font-weight: 700; }
+.verif-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+.verif-badge.pending { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(217,119,6,.2); }
+.verif-badge.verified { background: var(--green-bg); color: var(--green); border: 1px solid rgba(5,150,105,.2); }
+.verif-card-sub { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+.verif-doc-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.verif-doc-row:last-of-type { border-bottom: none; margin-bottom: 4px; }
+.verif-doc-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+.verif-doc-info { flex: 1; min-width: 0; }
+.verif-doc-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.verif-doc-hint { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+.verif-doc-status { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+.verif-doc-status.req { background: rgba(220,38,38,.07); color: var(--red); }
+.verif-doc-status.opt { background: var(--bg); color: var(--hint); border: 1px solid var(--border2); }
+.verif-doc-status.done { background: var(--green-bg); color: var(--green); }
+.verif-upload-btn { flex-shrink: 0; background: var(--white); color: var(--text); border: 1px solid var(--border2); border-radius: 7px; padding: 6px 13px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background .15s; white-space: nowrap; }
+.verif-upload-btn:hover { background: var(--bg); }
+.verif-upload-btn.uploaded { border-color: rgba(5,150,105,.3); color: var(--green); background: var(--green-bg); cursor: default; }
+.verif-submit { width: 100%; justify-content: center; margin-top: 14px; opacity: 0.45; cursor: not-allowed; }
+.verif-submit.ready { opacity: 1; cursor: pointer; }
+.verif-footnote { font-size: 12px; color: var(--hint); margin-top: 8px; text-align: center; }
+.tab-alert-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; background: var(--red); border-radius: 50%; border: 1.5px solid var(--white); }
+
 /* ── PREVIEW MODAL ── */
 .preview-box { background: var(--bg); border-radius: 16px; width: 700px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
 .preview-topbar { background: var(--white); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0; position: sticky; top: 0; z-index: 1; }
@@ -538,6 +568,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           </div>
           <div class="prop-card-body">
             <div class="prop-name">Seaside Studio BGC</div>
+            <div><span class="prop-verif unverified">⚠ Unverified</span></div>
             <div class="prop-loc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="currentColor" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>BGC, Taguig City</div>
             <div class="prop-stats">
               <div class="prop-stat-item"><strong>₱2,800</strong>per night</div>
@@ -554,6 +585,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           </div>
           <div class="prop-card-body">
             <div class="prop-name">Avida Towers Makati</div>
+            <div><span class="prop-verif verified">✓ Verified</span></div>
             <div class="prop-loc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="currentColor" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>Makati City, Metro Manila</div>
             <div class="prop-stats">
               <div class="prop-stat-item"><strong>48</strong>units</div>
@@ -570,6 +602,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           </div>
           <div class="prop-card-body">
             <div class="prop-name">Sunrise Apartments Pasig</div>
+            <div><span class="prop-verif review">● Under Review</span></div>
             <div class="prop-loc"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="currentColor" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>Kapitolyo, Pasig City</div>
             <div class="prop-stats">
               <div class="prop-stat-item"><strong>6/8</strong>occupied</div>
@@ -899,6 +932,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <button class="tab-btn" onclick="switchTab(this,'short','pricing')">Pricing</button>
           <button class="tab-btn" onclick="switchTab(this,'short','policies')">Policies</button>
           <button class="tab-btn" onclick="switchTab(this,'short','bookings')">Bookings</button>
+          <button class="tab-btn" id="short-tab-btn-verification" onclick="switchTab(this,'short','verification')" style="position:relative">Verification<span class="tab-alert-dot" id="short-verif-dot"></span></button>
           <button class="tab-btn" onclick="switchTab(this,'short','settings')">Settings</button>
         </div>
 
@@ -906,10 +940,18 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
         <div class="tab-content active" id="short-tab-overview">
           <!-- Completeness score -->
           <div class="completeness-box">
-            <div class="completeness-header"><span class="completeness-title">Listing completeness</span><span class="completeness-pct">45%</span></div>
-            <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+            <div class="completeness-header"><span class="completeness-title">Listing completeness</span><span class="completeness-pct">35%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:35%"></div></div>
             <div class="checklist-title">Complete these to get more bookings</div>
             <!-- Priority 1: Critical -->
+            <div class="check-item" onclick="document.getElementById('short-tab-btn-verification').click()">
+              <div class="check-item-icon critical">!</div>
+              <div class="check-item-body">
+                <div class="check-item-label">Complete property verification</div>
+                <div class="check-item-impact">Upload required documents to accept bookings</div>
+              </div>
+              <div class="check-item-action">Verify →</div>
+            </div>
             <div class="check-item" onclick="goToTab('short','settings')">
               <div class="check-item-icon critical">!</div>
               <div class="check-item-body">
@@ -1009,6 +1051,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
               <div id="short-photo-grid" style="flex-wrap:wrap;gap:6px;margin-top:8px;display:none"></div>
             </div>
           </div>
+
         </div>
 
         <!-- Units tab -->
@@ -1292,6 +1335,65 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <p style="font-size:12.5px;color:var(--hint);margin-top:16px">💡 A booking is only confirmed once the guest completes ID verification and payment clears. Pending bookings are not yet counted as revenue.</p>
         </div>
 
+        <!-- Verification tab -->
+        <div class="tab-content" id="short-tab-verification">
+          <div class="verif-card" style="margin-top:0">
+            <div class="verif-card-header">
+              <span class="verif-card-title">Property verification</span>
+              <span class="verif-badge pending" id="short-verif-badge">Pending</span>
+            </div>
+            <p class="verif-card-sub">Upload the required documents below to verify your property. Review takes 1–2 business days after submission.</p>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">🪪</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Government-issued ID</div>
+                <div class="verif-doc-hint">Owner or authorized operator · Passport, driver's license, or PhilSys ID</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('gov-id',this)">Upload</button>
+              <input type="file" id="verif-gov-id" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'gov-id')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📋</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Business or Mayor's permit</div>
+                <div class="verif-doc-hint">Current year · Issued by your local government unit</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('permit',this)">Upload</button>
+              <input type="file" id="verif-permit" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'permit')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">🏠</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Proof of ownership or authority to operate</div>
+                <div class="verif-doc-hint">TCT, tax declaration, or a lease agreement authorizing you to sub-lease</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('ownership',this)">Upload</button>
+              <input type="file" id="verif-ownership" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'ownership')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📄</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">BIR Certificate of Registration</div>
+                <div class="verif-doc-hint">Optional · Required only if you issue official receipts to guests</div>
+              </div>
+              <span class="verif-doc-status opt">Optional</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('bir',this)">Upload</button>
+              <input type="file" id="verif-bir" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'bir')">
+            </div>
+
+            <button class="btn-primary verif-submit" id="verif-submit-btn" disabled>Submit for review</button>
+            <p class="verif-footnote">You can continue setting up your listing while verification is in progress.</p>
+            <p id="short-verif-demo-approve" style="display:none;margin-top:12px;text-align:center"><a href="#" onclick="lockVerificationAsVerified('short');return false" style="color:var(--green);font-size:11px">[Demo: simulate admin approval →]</a></p>
+          </div>
+        </div>
+
         <!-- Settings tab -->
         <div class="tab-content" id="short-tab-settings">
           <div class="settings-section">
@@ -1331,6 +1433,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <button class="tab-btn" onclick="switchTab(this,'long','pricing')">Pricing</button>
           <button class="tab-btn" onclick="switchTab(this,'long','policies')">Policies</button>
           <button class="tab-btn" onclick="switchTab(this,'long','tenants')">Tenants</button>
+          <button class="tab-btn" id="long-tab-btn-verification" onclick="switchTab(this,'long','verification')" style="position:relative">Verification<span class="tab-alert-dot" id="long-verif-dot"></span></button>
           <button class="tab-btn" onclick="switchTab(this,'long','settings')">Settings</button>
         </div>
 
@@ -1392,6 +1495,65 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <div class="tenant-row"><div class="tenant-avatar">JR</div><div class="tenant-info"><div class="tenant-name">Jay Reyes</div><div class="tenant-meta">Unit 3-A · Since Feb 2026 · Lease ends Aug 2026</div></div><span class="unit-status" style="background:var(--green-bg);color:var(--green);padding:3px 10px;border-radius:100px;font-size:12px;font-weight:600">Paid</span><button class="btn-secondary" style="font-size:12px;padding:6px 12px;margin-left:8px">View</button></div>
         </div>
 
+        <!-- Long-term Verification -->
+        <div class="tab-content" id="long-tab-verification">
+          <div class="verif-card" style="margin-top:0">
+            <div class="verif-card-header">
+              <span class="verif-card-title">Property verification</span>
+              <span class="verif-badge pending" id="long-verif-badge">Pending</span>
+            </div>
+            <p class="verif-card-sub">Upload the required documents below to verify your property. Review takes 1–2 business days after submission.</p>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">🪪</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Government-issued ID</div>
+                <div class="verif-doc-hint">Owner or authorized operator · Passport, driver's license, or PhilSys ID</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('long-gov-id',this)">Upload</button>
+              <input type="file" id="verif-long-gov-id" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'long-gov-id','long')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📋</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Business or Mayor's permit</div>
+                <div class="verif-doc-hint">Current year · Issued by your local government unit</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('long-permit',this)">Upload</button>
+              <input type="file" id="verif-long-permit" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'long-permit','long')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">🏠</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Proof of ownership or authority to operate</div>
+                <div class="verif-doc-hint">TCT, tax declaration, or a lease agreement authorizing you to operate</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('long-ownership',this)">Upload</button>
+              <input type="file" id="verif-long-ownership" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'long-ownership','long')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📄</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">BIR Certificate of Registration</div>
+                <div class="verif-doc-hint">Optional · Required only if you issue official receipts to tenants</div>
+              </div>
+              <span class="verif-doc-status opt">Optional</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('long-bir',this)">Upload</button>
+              <input type="file" id="verif-long-bir" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'long-bir','long')">
+            </div>
+
+            <button class="btn-primary verif-submit" id="long-verif-submit-btn" disabled>Submit for review</button>
+            <p class="verif-footnote">You can continue setting up your listing while verification is in progress.</p>
+            <p id="long-verif-demo-approve" style="display:none;margin-top:12px;text-align:center"><a href="#" onclick="lockVerificationAsVerified('long');return false" style="color:var(--green);font-size:11px">[Demo: simulate admin approval →]</a></p>
+          </div>
+        </div>
+
         <!-- Settings -->
         <div class="tab-content" id="long-tab-settings">
           <div class="settings-section"><h4>Listing visibility</h4><div class="setting-row"><div class="setting-info"><h5>Marketplace listing</h5><p>Show this property so prospective tenants can find and apply</p></div><div class="toggle"></div></div></div>
@@ -1417,6 +1579,7 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <button class="tab-btn" onclick="switchTab(this,'hoa','dues')">Dues &amp; Assessments</button>
           <button class="tab-btn" onclick="switchTab(this,'hoa','announcements')">Announcements</button>
           <button class="tab-btn" onclick="switchTab(this,'hoa','maintenance')">Maintenance</button>
+          <button class="tab-btn" id="hoa-tab-btn-verification" onclick="switchTab(this,'hoa','verification')" style="position:relative">Verification<span class="tab-alert-dot" id="hoa-verif-dot"></span></button>
           <button class="tab-btn" onclick="switchTab(this,'hoa','settings')">Settings</button>
         </div>
 
@@ -1502,6 +1665,65 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
             <div class="unit-row"><div class="unit-icon">🔧</div><div class="unit-info"><div class="unit-name">Lobby aircon not cooling</div><div class="unit-meta">Reported by Unit 101 · May 20 · Assigned to: Vendor TBD</div></div><span class="unit-status" style="background:var(--red-bg);color:var(--red);padding:3px 10px;border-radius:100px;font-size:12px;font-weight:600">Open</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
             <div class="unit-row"><div class="unit-icon">💡</div><div class="unit-info"><div class="unit-name">Hallway lighting on Floor 3 flickering</div><div class="unit-meta">Reported by Unit 301 · May 22 · Assigned to: Electrician B</div></div><span class="unit-status" style="background:var(--amber-bg);color:var(--amber);padding:3px 10px;border-radius:100px;font-size:12px;font-weight:600">In progress</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
             <div class="unit-row"><div class="unit-icon">🚰</div><div class="unit-info"><div class="unit-name">Water pressure low — Floors 5–8</div><div class="unit-meta">Reported May 18 · Manila Water contacted</div></div><span class="unit-status" style="background:var(--amber-bg);color:var(--amber);padding:3px 10px;border-radius:100px;font-size:12px;font-weight:600">In progress</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
+          </div>
+        </div>
+
+        <!-- HOA Verification -->
+        <div class="tab-content" id="hoa-tab-verification">
+          <div class="verif-card" style="margin-top:0">
+            <div class="verif-card-header">
+              <span class="verif-card-title">HOA / Building verification</span>
+              <span class="verif-badge pending" id="hoa-verif-badge">Pending</span>
+            </div>
+            <p class="verif-card-sub">Upload the required documents to verify your HOA or building account. Review takes 1–2 business days after submission.</p>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">🪪</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Government-issued ID</div>
+                <div class="verif-doc-hint">Authorized HOA officer or building manager · Passport, driver's license, or PhilSys ID</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('hoa-gov-id',this)">Upload</button>
+              <input type="file" id="verif-hoa-gov-id" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'hoa-gov-id','hoa')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📜</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">HOA registration or SEC certificate</div>
+                <div class="verif-doc-hint">Proof that the association is duly registered</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('hoa-cert',this)">Upload</button>
+              <input type="file" id="verif-hoa-cert" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'hoa-cert','hoa')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📋</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Authorization letter</div>
+                <div class="verif-doc-hint">Signed letter from the board authorizing this account to manage the building</div>
+              </div>
+              <span class="verif-doc-status req">Required</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('hoa-auth',this)">Upload</button>
+              <input type="file" id="verif-hoa-auth" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'hoa-auth','hoa')">
+            </div>
+
+            <div class="verif-doc-row">
+              <div class="verif-doc-icon">📄</div>
+              <div class="verif-doc-info">
+                <div class="verif-doc-name">Master deed or declaration of restrictions</div>
+                <div class="verif-doc-hint">Optional but recommended · Speeds up review</div>
+              </div>
+              <span class="verif-doc-status opt">Optional</span>
+              <button class="verif-upload-btn" onclick="triggerVerifUpload('hoa-deed',this)">Upload</button>
+              <input type="file" id="verif-hoa-deed" accept="image/*,.pdf" style="display:none" onchange="markVerifUploaded(this,'hoa-deed','hoa')">
+            </div>
+
+            <button class="btn-primary verif-submit" id="hoa-verif-submit-btn" disabled>Submit for review</button>
+            <p class="verif-footnote">Your building account remains active while verification is in progress.</p>
+            <p id="hoa-verif-demo-approve" style="display:none;margin-top:12px;text-align:center"><a href="#" onclick="lockVerificationAsVerified('hoa');return false" style="color:var(--green);font-size:11px">[Demo: simulate admin approval →]</a></p>
           </div>
         </div>
 
@@ -1869,6 +2091,77 @@ function showGoLive() {
   document.getElementById('go-live-success').style.display = 'block';
   document.getElementById('step3-nav').style.display = 'none';
 }
+
+// ── VERIFICATION ──
+const verifUploaded = {};
+const verifRequiredDocs = {
+  short: ['gov-id', 'permit', 'ownership'],
+  long:  ['long-gov-id', 'long-permit', 'long-ownership'],
+  hoa:   ['hoa-gov-id', 'hoa-cert', 'hoa-auth']
+};
+function triggerVerifUpload(docId, btn) {
+  document.getElementById('verif-' + docId).click();
+}
+function markVerifUploaded(input, docId, prefix) {
+  if (!input.files.length) return;
+  prefix = prefix || 'short';
+  verifUploaded[docId] = input.files[0].name;
+  const row = input.closest('.verif-doc-row');
+  const statusEl = row.querySelector('.verif-doc-status');
+  const btn = row.querySelector('.verif-upload-btn');
+  statusEl.textContent = 'Uploaded';
+  statusEl.className = 'verif-doc-status done';
+  btn.textContent = '✓ ' + input.files[0].name.substring(0, 16) + (input.files[0].name.length > 16 ? '…' : '');
+  btn.classList.add('uploaded');
+  const required = verifRequiredDocs[prefix] || verifRequiredDocs.short;
+  const allDone = required.every(d => verifUploaded[d]);
+  const submitBtnId = prefix === 'short' ? 'verif-submit-btn' : prefix + '-verif-submit-btn';
+  const submitBtn = document.getElementById(submitBtnId);
+  if (submitBtn && allDone) { submitBtn.disabled = false; submitBtn.classList.add('ready'); }
+}
+function lockVerificationAsVerified(prefix) {
+  prefix = prefix || 'short';
+  const tabId = (prefix === 'short' ? 'short' : prefix) + '-tab-verification';
+  const tab = document.getElementById(tabId);
+  if (!tab) return;
+  const badgeId = prefix + '-verif-badge';
+  const badge = document.getElementById(badgeId);
+  if (badge) { badge.textContent = 'Verified'; badge.className = 'verif-badge verified'; }
+  tab.querySelectorAll('.verif-upload-btn, .verif-submit').forEach(el => {
+    el.disabled = true; el.style.pointerEvents = 'none'; el.style.opacity = '0.5';
+  });
+  tab.querySelectorAll('input[type=file]').forEach(el => el.disabled = true);
+  const dot = document.getElementById(prefix + '-verif-dot');
+  if (dot) dot.style.display = 'none';
+  const demo = document.getElementById(prefix + '-verif-demo-approve');
+  if (demo) demo.remove();
+}
+function initVerifSubmit(prefix) {
+  const btnId = prefix === 'short' ? 'verif-submit-btn' : prefix + '-verif-submit-btn';
+  const sb = document.getElementById(btnId);
+  if (!sb) return;
+  sb.addEventListener('click', function() {
+    if (this.disabled) return;
+    this.textContent = 'Submitted — under review';
+    this.disabled = true;
+    this.classList.remove('ready');
+    const badge = document.getElementById(prefix + '-verif-badge');
+    if (badge) { badge.textContent = 'Under review'; badge.style.cssText = 'background:#EFF6FF;color:#2563EB;border:1px solid rgba(37,99,235,.2)'; }
+    const dot = document.getElementById(prefix + '-verif-dot');
+    if (dot) { dot.style.background = '#2563EB'; }
+    const tabId = prefix + '-tab-verification';
+    document.querySelectorAll('#' + tabId + ' .verif-upload-btn:not(.uploaded)').forEach(b => {
+      b.disabled = true; b.style.opacity = '0.4'; b.style.pointerEvents = 'none';
+    });
+    const demo = document.getElementById(prefix + '-verif-demo-approve');
+    if (demo) demo.style.display = 'block';
+  });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  initVerifSubmit('short');
+  initVerifSubmit('long');
+  initVerifSubmit('hoa');
+});
 
 // ── TABS ──
 function switchTab(btn, prefix, tab) {

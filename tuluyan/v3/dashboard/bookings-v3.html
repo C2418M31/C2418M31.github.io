@@ -164,6 +164,42 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
 
 /* Empty state */
 .empty-row td { text-align: center; padding: 40px 18px; color: var(--hint); font-style: italic; font-size: 13.5px; }
+
+/* BOOKING DETAIL DRAWER */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.25); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .22s; }
+.drawer-overlay.open { opacity: 1; pointer-events: all; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--white); z-index: 201; box-shadow: -4px 0 32px rgba(0,0,0,0.12); transform: translateX(100%); transition: transform .25s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
+.drawer.open { transform: translateX(0); }
+.drawer-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; }
+.drawer-head-left { display: flex; align-items: center; gap: 12px; }
+.drawer-avatar { width: 42px; height: 42px; border-radius: 50%; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.drawer-avatar.short { background: var(--teal-light); color: var(--teal); }
+.drawer-avatar.long { background: var(--blue-bg); color: var(--blue); }
+.drawer-avatar.anon { background: var(--bg); color: var(--hint); border: 1.5px solid var(--border2); }
+.drawer-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.drawer-sub { font-size: 12px; color: var(--muted); }
+.drawer-close { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border2); background: transparent; cursor: pointer; font-size: 16px; color: var(--muted); display: flex; align-items: center; justify-content: center; transition: background .12s; flex-shrink: 0; }
+.drawer-close:hover { background: var(--bg); }
+.drawer-body { flex: 1; overflow-y: auto; padding: 20px 22px; }
+.drawer-section { margin-bottom: 20px; }
+.drawer-section-title { font-size: 10.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--hint); margin-bottom: 10px; }
+.drawer-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.drawer-row:last-child { border-bottom: none; }
+.drawer-row-label { color: var(--muted); }
+.drawer-row-val { font-weight: 600; text-align: right; }
+.drawer-amount-box { background: var(--bg); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.drawer-amount-total { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 2px; }
+.drawer-amount-sub { font-size: 12px; color: var(--muted); }
+.drawer-id-box { background: var(--amber-bg); border: 1px solid rgba(217,119,6,.25); border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+.drawer-id-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.drawer-id-text strong { font-size: 13.5px; font-weight: 700; color: var(--amber); display: block; margin-bottom: 2px; }
+.drawer-id-text p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.drawer-foot { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+.drawer-foot .btn-primary { flex: 1; justify-content: center; }
+.drawer-foot .btn-secondary { flex: 1; justify-content: center; }
+.drawer-foot .btn-danger { flex: 1; justify-content: center; background: transparent; color: var(--red); border: 1px solid rgba(220,38,38,.35); border-radius: 8px; padding: 9px 16px; font-size: 13.5px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background .12s; }
+.drawer-foot .btn-danger:hover { background: var(--red-bg); }
+.drawer-divider { height: 1px; background: var(--border); margin: 4px 0 16px; }
 </style>
 </head>
 <body>
@@ -343,7 +379,7 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
           <tbody id="bookings-tbody">
 
             <!-- Short-term: Maria Santos -->
-            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="maria santos unit 1 seaside studio bgc booking tul-0042">
+            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="maria santos unit 1 seaside studio bgc booking tul-0042" onclick="openDrawer('tul-0042')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar short">MS</div>
@@ -372,16 +408,16 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
                 <div class="amount-sub">₱2,800/night</div>
               </td>
               <td><span class="status-badge confirmed">Confirmed</span></td>
-              <td>
+              <td onclick="event.stopPropagation()">
                 <div class="row-actions">
-                  <button class="btn-row">Message</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="alert('Opening message thread with Maria Santos...')">Message</button>
+                  <button class="btn-row primary" onclick="openDrawer('tul-0042')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Short-term: Carlo Reyes -->
-            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="carlo reyes unit 3 seaside studio bgc booking tul-0043">
+            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="carlo reyes unit 3 seaside studio bgc booking tul-0043" onclick="openDrawer('tul-0043')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar short">CR</div>
@@ -410,16 +446,16 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
                 <div class="amount-sub">₱3,900/night</div>
               </td>
               <td><span class="status-badge confirmed">Confirmed</span></td>
-              <td>
+              <td onclick="event.stopPropagation()">
                 <div class="row-actions">
-                  <button class="btn-row">Message</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="alert('Opening message thread with Carlo Reyes...')">Message</button>
+                  <button class="btn-row primary" onclick="openDrawer('tul-0043')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Short-term: Anonymous -->
-            <tr data-property="seaside" data-status="pending" data-period="may" data-search="anonymous guest unit 2 seaside studio bgc june">
+            <tr data-property="seaside" data-status="pending" data-period="may" data-search="anonymous guest unit 2 seaside studio bgc june" onclick="openDrawer('tul-pending')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar anon">?</div>
@@ -448,16 +484,16 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
                 <div class="amount-sub">₱2,800/night</div>
               </td>
               <td><span class="status-badge pending">Pending ID</span></td>
-              <td>
+              <td onclick="event.stopPropagation()">
                 <div class="row-actions">
-                  <button class="btn-row danger">Decline</button>
-                  <button class="btn-row primary">Review</button>
+                  <button class="btn-row danger" onclick="declineBooking()">Decline</button>
+                  <button class="btn-row primary" onclick="openDrawer('tul-pending')">Review</button>
                 </div>
               </td>
             </tr>
 
             <!-- Long-term: Ana Cruz -->
-            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="ana cruz unit 1-a sunrise apartments pasig">
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="ana cruz unit 1-a sunrise apartments pasig" onclick="openDrawer('ac-may')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar long">AC</div>
@@ -488,14 +524,14 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
               <td><span class="status-badge paid">Paid</span></td>
               <td>
                 <div class="row-actions">
-                  <button class="btn-row">Message</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="event.stopPropagation();alert('Opening message thread with Ana Cruz...')">Message</button>
+                  <button class="btn-row primary" onclick="event.stopPropagation();openDrawer('ac-may')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Long-term: Ben Santos (overdue) -->
-            <tr data-property="sunrise" data-status="overdue" data-period="may" data-search="ben santos unit 1-b sunrise apartments pasig overdue">
+            <tr data-property="sunrise" data-status="overdue" data-period="may" data-search="ben santos unit 1-b sunrise apartments pasig overdue" onclick="openDrawer('bs-may')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar long">BS</div>
@@ -526,14 +562,14 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
               <td><span class="status-badge overdue">Overdue</span></td>
               <td>
                 <div class="row-actions">
-                  <button class="btn-row danger">Remind</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row danger" onclick="event.stopPropagation();alert('Payment reminder sent to Ben Santos.')">Remind</button>
+                  <button class="btn-row primary" onclick="event.stopPropagation();openDrawer('bs-may')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Long-term: Jay Reyes -->
-            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="jay reyes unit 3-a sunrise apartments pasig">
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="jay reyes unit 3-a sunrise apartments pasig" onclick="openDrawer('jr-may')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar long">JR</div>
@@ -564,14 +600,14 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
               <td><span class="status-badge paid">Paid</span></td>
               <td>
                 <div class="row-actions">
-                  <button class="btn-row">Message</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="event.stopPropagation();alert('Opening message thread with Jay Reyes...')">Message</button>
+                  <button class="btn-row primary" onclick="event.stopPropagation();openDrawer('jr-may')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Long-term: Rosa Dela Cruz -->
-            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="rosa dela cruz unit 2-a sunrise apartments pasig">
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="rosa dela cruz unit 2-a sunrise apartments pasig" onclick="openDrawer('rd-may')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar long">RD</div>
@@ -602,14 +638,14 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
               <td><span class="status-badge paid">Paid</span></td>
               <td>
                 <div class="row-actions">
-                  <button class="btn-row">Message</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="event.stopPropagation();alert('Opening message thread with Rosa Dela Cruz...')">Message</button>
+                  <button class="btn-row primary" onclick="event.stopPropagation();openDrawer('rd-may')">View</button>
                 </div>
               </td>
             </tr>
 
             <!-- Long-term: Marco Lim -->
-            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="marco lim unit 3-b sunrise apartments pasig">
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="marco lim unit 3-b sunrise apartments pasig" onclick="openDrawer('ml-may')" style="cursor:pointer">
               <td>
                 <div class="guest-cell">
                   <div class="guest-avatar long">ML</div>
@@ -640,8 +676,8 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
               <td><span class="status-badge paid">Paid</span></td>
               <td>
                 <div class="row-actions">
-                  <button class="btn-row">Renew</button>
-                  <button class="btn-row primary">View</button>
+                  <button class="btn-row" onclick="event.stopPropagation();alert('Lease renewal flow coming soon.')">Renew</button>
+                  <button class="btn-row primary" onclick="event.stopPropagation();openDrawer('ml-may')">View</button>
                 </div>
               </td>
             </tr>
@@ -661,6 +697,23 @@ h1, h2, h3, h4, h5, h6 { font-family: 'League Spartan', sans-serif; }
 
     </div>
   </div>
+</div>
+
+<!-- BOOKING DETAIL DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="booking-drawer">
+  <div class="drawer-head">
+    <div class="drawer-head-left">
+      <div class="drawer-avatar" id="d-avatar"></div>
+      <div>
+        <div class="drawer-title" id="d-title"></div>
+        <div class="drawer-sub" id="d-sub"></div>
+      </div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="d-body"></div>
+  <div class="drawer-foot" id="d-foot"></div>
 </div>
 
 <script>
@@ -738,6 +791,202 @@ function clearFilters() {
   document.getElementById('filter-period').value = 'may';
   applyFilters();
 }
+
+// ── BOOKING DRAWER ──
+const bookings = {
+  'tul-0042': {
+    type: 'view', kind: 'short',
+    initials: 'MS', name: 'Maria Santos', ref: '#TUL-0042',
+    sub: '⭐ 4.8 reputation · 6 past stays',
+    property: 'Seaside Studio BGC', unit: 'Unit 1 — Standard',
+    dates: 'May 24 – 27, 2026', nights: '3 nights · 2 guests',
+    checkin: 'May 24, 2026 · 2:00 PM', checkout: 'May 27, 2026 · 12:00 PM',
+    amount: '₱8,400', rate: '₱2,800 × 3 nights',
+    payout: '₱7,560', payoutNote: 'After 10% platform fee',
+    status: 'confirmed', statusLabel: 'Confirmed',
+    contact: '+63 917 xxx xxxx'
+  },
+  'tul-0043': {
+    type: 'view', kind: 'short',
+    initials: 'CR', name: 'Carlo Reyes', ref: '#TUL-0043',
+    sub: '⭐ 4.6 reputation · 3 past stays',
+    property: 'Seaside Studio BGC', unit: 'Unit 3 — Deluxe',
+    dates: 'Jun 1 – 5, 2026', nights: '4 nights · 3 guests',
+    checkin: 'Jun 1, 2026 · 2:00 PM', checkout: 'Jun 5, 2026 · 12:00 PM',
+    amount: '₱15,600', rate: '₱3,900 × 4 nights',
+    payout: '₱14,040', payoutNote: 'After 10% platform fee',
+    status: 'confirmed', statusLabel: 'Confirmed',
+    contact: '+63 998 xxx xxxx'
+  },
+  'tul-pending': {
+    type: 'review', kind: 'anon',
+    initials: '?', name: 'Anonymous guest', ref: '#TUL-pending',
+    sub: 'ID verification required before confirming',
+    property: 'Seaside Studio BGC', unit: 'Unit 2 — Standard',
+    dates: 'Jun 8 – 10, 2026', nights: '2 nights',
+    checkin: 'Jun 8, 2026 · 2:00 PM', checkout: 'Jun 10, 2026 · 12:00 PM',
+    amount: '₱5,600', rate: '₱2,800 × 2 nights',
+    status: 'pending'
+  },
+  'ac-may': {
+    type: 'view', kind: 'long',
+    initials: 'AC', name: 'Ana Cruz', ref: 'Unit 1-A · May 2026',
+    sub: 'Tenant since Jan 2026 · Lease ends Dec 2026',
+    property: 'Sunrise Apartments Pasig', unit: 'Unit 1-A · 1BR 28sqm',
+    dates: 'May 2026', nights: 'Paid May 4',
+    checkin: 'Lease start: Jan 1, 2026', checkout: 'Lease end: Dec 31, 2026',
+    amount: '₱12,000', rate: 'Monthly rent',
+    payout: '₱12,000', payoutNote: 'Direct transfer · GCash',
+    status: 'paid', statusLabel: 'Paid',
+    contact: '+63 912 xxx xxxx'
+  },
+  'bs-may': {
+    type: 'view', kind: 'long',
+    initials: 'BS', name: 'Ben Santos', ref: 'Unit 1-B · May 2026',
+    sub: '⚠ 25 days overdue · Lease ends Sep 2026',
+    property: 'Sunrise Apartments Pasig', unit: 'Unit 1-B · 1BR 28sqm',
+    dates: 'May 2026 (Due May 1)', nights: '25 days overdue',
+    checkin: 'Lease start: Mar 1, 2026', checkout: 'Lease end: Sep 30, 2026',
+    amount: '₱12,000', rate: 'Monthly rent + ₱500 late penalty',
+    payout: 'Pending payment', payoutNote: 'Send reminder to collect',
+    status: 'overdue', statusLabel: 'Overdue',
+    contact: '+63 905 xxx xxxx'
+  },
+  'jr-may': {
+    type: 'view', kind: 'long',
+    initials: 'JR', name: 'Jay Reyes', ref: 'Unit 3-A · May 2026',
+    sub: 'Tenant since Feb 2026 · Lease ends Aug 2026',
+    property: 'Sunrise Apartments Pasig', unit: 'Unit 3-A · Studio 20sqm',
+    dates: 'May 2026', nights: 'Paid May 3',
+    checkin: 'Lease start: Feb 1, 2026', checkout: 'Lease end: Aug 31, 2026',
+    amount: '₱12,000', rate: 'Monthly rent',
+    payout: '₱12,000', payoutNote: 'Direct transfer · GCash',
+    status: 'paid', statusLabel: 'Paid',
+    contact: '+63 918 xxx xxxx'
+  },
+  'rd-may': {
+    type: 'view', kind: 'long',
+    initials: 'RD', name: 'Rosa Dela Cruz', ref: 'Unit 2-A · May 2026',
+    sub: 'Tenant since Apr 2026 · Lease ends Oct 2026',
+    property: 'Sunrise Apartments Pasig', unit: 'Unit 2-A · Studio 20sqm',
+    dates: 'May 2026', nights: 'Paid May 5',
+    checkin: 'Lease start: Apr 1, 2026', checkout: 'Lease end: Oct 31, 2026',
+    amount: '₱12,000', rate: 'Monthly rent',
+    payout: '₱12,000', payoutNote: 'Direct transfer · GCash',
+    status: 'paid', statusLabel: 'Paid',
+    contact: '+63 921 xxx xxxx'
+  },
+  'ml-may': {
+    type: 'view', kind: 'long',
+    initials: 'ML', name: 'Marco Lim', ref: 'Unit 3-B · May 2026',
+    sub: '⚠ Lease ending in 60 days',
+    property: 'Sunrise Apartments Pasig', unit: 'Unit 3-B · Studio 20sqm',
+    dates: 'May 2026', nights: 'Paid May 3 · Renewal needed',
+    checkin: 'Lease start: Jul 2025', checkout: 'Lease end: Jul 31, 2026',
+    amount: '₱12,000', rate: 'Monthly rent',
+    payout: '₱12,000', payoutNote: 'Direct transfer · GCash',
+    status: 'paid', statusLabel: 'Paid',
+    contact: '+63 933 xxx xxxx'
+  }
+};
+
+function openDrawer(id) {
+  const b = bookings[id];
+  if (!b) return;
+  const av = document.getElementById('d-avatar');
+  av.className = 'drawer-avatar ' + b.kind;
+  av.textContent = b.initials;
+  document.getElementById('d-title').textContent = b.name;
+  document.getElementById('d-sub').textContent = b.ref;
+
+  const body = document.getElementById('d-body');
+  const foot = document.getElementById('d-foot');
+
+  if (b.type === 'review') {
+    body.innerHTML = `
+      <div class="drawer-id-box">
+        <div class="drawer-id-icon">🪪</div>
+        <div class="drawer-id-text">
+          <strong>ID verification pending</strong>
+          <p>The guest has not yet submitted their government ID. Tuluyan will notify you once the ID is verified. You may decline the booking at any time.</p>
+        </div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Booking details</div>
+        <div class="drawer-row"><span class="drawer-row-label">Property</span><span class="drawer-row-val">${b.property}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Unit</span><span class="drawer-row-val">${b.unit}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Dates</span><span class="drawer-row-val">${b.dates}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Duration</span><span class="drawer-row-val">${b.nights}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Check-in</span><span class="drawer-row-val">${b.checkin}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Check-out</span><span class="drawer-row-val">${b.checkout}</span></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Amount</div>
+        <div class="drawer-amount-box">
+          <div class="drawer-amount-total">${b.amount}</div>
+          <div class="drawer-amount-sub">${b.rate}</div>
+        </div>
+        <div class="drawer-row"><span class="drawer-row-label">Status</span><span class="drawer-row-val" style="color:var(--amber)">Awaiting ID verification</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--hint);line-height:1.5">Payment will only be charged once the guest's ID is verified and you do not decline. The booking will auto-expire in 48 hours if the guest does not complete verification.</p>`;
+    foot.innerHTML = `
+      <button class="btn-danger" onclick="declineBooking()">Decline</button>
+      <button class="btn-primary" style="background:var(--amber);border:none;border-radius:8px;padding:9px 18px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;flex:1;justify-content:center;display:flex;align-items:center" onclick="alert('Waiting for guest to submit ID — you\'ll be notified when ready to approve.')">Waiting for ID</button>`;
+  } else {
+    const isOverdue = b.status === 'overdue';
+    const payoutColor = isOverdue ? 'color:var(--red)' : 'color:var(--green)';
+    body.innerHTML = `
+      <div class="drawer-section">
+        <div class="drawer-section-title">Booking / Rental details</div>
+        <div class="drawer-row"><span class="drawer-row-label">Property</span><span class="drawer-row-val">${b.property}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Unit</span><span class="drawer-row-val">${b.unit}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Period</span><span class="drawer-row-val">${b.dates}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Duration</span><span class="drawer-row-val">${b.nights}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Check-in</span><span class="drawer-row-val">${b.checkin}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Check-out</span><span class="drawer-row-val">${b.checkout}</span></div>
+        ${b.contact ? `<div class="drawer-row"><span class="drawer-row-label">Contact</span><span class="drawer-row-val">${b.contact}</span></div>` : ''}
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Payment</div>
+        <div class="drawer-amount-box">
+          <div class="drawer-amount-total">${b.amount}</div>
+          <div class="drawer-amount-sub">${b.rate}</div>
+        </div>
+        ${b.payout ? `<div class="drawer-row"><span class="drawer-row-label">Payout to you</span><span class="drawer-row-val" style="${payoutColor}">${b.payout}</span></div>
+        <div class="drawer-row"><span class="drawer-row-label">Payout note</span><span class="drawer-row-val">${b.payoutNote}</span></div>` : ''}
+        <div class="drawer-row"><span class="drawer-row-label">Status</span><span class="drawer-row-val" ${isOverdue ? 'style="color:var(--red)"' : ''}>${b.statusLabel || b.status}</span></div>
+      </div>
+      <div class="drawer-sub" style="font-size:12px;color:var(--hint);line-height:1.5">${b.sub}</div>`;
+    if (isOverdue) {
+      foot.innerHTML = `
+        <button class="btn-secondary" style="flex:1;justify-content:center;display:flex;align-items:center" onclick="alert('Payment reminder sent to ${b.name}.')">Send reminder</button>
+        <button class="btn-primary" style="flex:1;justify-content:center;display:flex;align-items:center" onclick="alert('Opening message thread with ${b.name}...')">Message</button>`;
+    } else {
+      foot.innerHTML = `
+        <button class="btn-secondary" style="flex:1;justify-content:center;display:flex;align-items:center" onclick="alert('Opening message thread with ${b.name}...')">Message</button>
+        <button class="btn-primary" style="flex:1;justify-content:center;display:flex;align-items:center" onclick="alert('Invoice downloaded.')">Download invoice</button>`;
+    }
+  }
+
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.getElementById('booking-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.getElementById('booking-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function declineBooking() {
+  if (confirm('Decline this booking request? The guest will be notified.')) {
+    closeDrawer();
+    document.querySelector('[data-status="pending"]').style.opacity = '0.4';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 </script>
 </body>
 </html>
