@@ -1058,9 +1058,9 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
         <div class="tab-content" id="short-tab-units">
           <div class="flex-row" style="margin-bottom:18px"><h3 style="font-size:16px;font-weight:700">Units (3)</h3><button class="btn-primary" style="margin-left:auto" onclick="openAddUnit('short')">+ Add unit</button></div>
           <div class="units-list">
-            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 1 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status booked">Booked May 24–27</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
-            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 2 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
-            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 3 — Deluxe</div><div class="unit-meta">Max 4 guests · Air conditioning · Balcony · Sea view</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
+            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 1 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status booked">Booked May 24–27</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="openEditUnit(this,'short')">Edit</button></div></div>
+            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 2 — Standard</div><div class="unit-meta">Max 2 guests · Air conditioning · Private bathroom</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="openEditUnit(this,'short')">Edit</button></div></div>
+            <div class="unit-row"><div class="unit-icon">🛏️</div><div class="unit-info"><div class="unit-name">Unit 3 — Deluxe</div><div class="unit-meta">Max 4 guests · Air conditioning · Balcony · Sea view</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="openEditUnit(this,'short')">Edit</button></div></div>
           </div>
         </div>
 
@@ -1467,8 +1467,8 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
           <div class="units-list">
             <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 1-A</div><div class="unit-meta">1BR · 28sqm · Furnished</div></div><span class="unit-status occupied">Occupied — Ana Cruz</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
             <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 1-B</div><div class="unit-meta">1BR · 28sqm · Semi-furnished</div></div><span class="unit-status occupied">Occupied — Ben Santos</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">View</button></div></div>
-            <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 2-A</div><div class="unit-meta">Studio · 20sqm · Unfurnished</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
-            <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 2-B</div><div class="unit-meta">Studio · 20sqm · Furnished</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">Edit</button></div></div>
+            <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 2-A</div><div class="unit-meta">Studio · 20sqm · Unfurnished</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="openEditUnit(this,'long')">Edit</button></div></div>
+            <div class="unit-row"><div class="unit-icon">🏠</div><div class="unit-info"><div class="unit-name">Unit 2-B</div><div class="unit-meta">Studio · 20sqm · Furnished</div></div><span class="unit-status available">Available</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px" onclick="openEditUnit(this,'long')">Edit</button></div></div>
           </div>
         </div>
 
@@ -1846,6 +1846,56 @@ h1, h2, h3, h4, h5, h6, .stat-card-num, .quick-stat-num, .dues-card-val, .onboar
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
         Add unit
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDIT UNIT MODAL ══ -->
+<div id="edit-unit-modal" class="modal-overlay" onclick="if(event.target===this)closeEditUnit()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Edit unit</div>
+        <div class="modal-sub" id="edit-unit-subtitle">Update unit details</div>
+      </div>
+      <button class="modal-close" onclick="closeEditUnit()">✕</button>
+    </div>
+    <div class="mfield">
+      <label>Unit name / number</label>
+      <input type="text" id="edit-unit-name-input" placeholder="e.g. Unit 4, Room 2B, Suite A">
+    </div>
+    <div class="mfield-row">
+      <div class="mfield">
+        <label id="edit-unit-type-label">Unit type</label>
+        <select id="edit-unit-type-input">
+          <option value="Standard">Standard</option>
+          <option value="Deluxe">Deluxe</option>
+          <option value="Studio">Studio</option>
+          <option value="Suite">Suite</option>
+          <option value="1BR">1 Bedroom</option>
+          <option value="2BR">2 Bedroom</option>
+        </select>
+      </div>
+      <div class="mfield" id="edit-unit-guests-field">
+        <label id="edit-unit-guests-label">Max guests</label>
+        <input type="number" id="edit-unit-guests-input" value="2" min="1" max="20">
+      </div>
+    </div>
+    <div class="mfield">
+      <label>Amenities / notes</label>
+      <input type="text" id="edit-unit-amenities-input" placeholder="e.g. Air conditioning · Private bathroom · Wi-Fi">
+      <div class="mfield-hint">Short summary shown on the unit card</div>
+    </div>
+    <div class="mfield">
+      <label>Status</label>
+      <select id="edit-unit-status-input">
+        <option value="available">Available</option>
+        <option value="maintenance">Under maintenance</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeEditUnit()">Cancel</button>
+      <button class="btn-primary" onclick="saveEditUnit()">Save changes</button>
     </div>
   </div>
 </div>
@@ -2353,7 +2403,8 @@ function saveUnit() {
 
   const row = document.createElement('div');
   row.className = 'unit-row';
-  row.innerHTML = `<div class="unit-icon">${icon}</div><div class="unit-info"><div class="unit-name">${name} — ${type}</div><div class="unit-meta">${meta}</div></div><span class="unit-status ${statusClass}">${statusLabel}</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px">${actionLabel}</button></div>`;
+  const editAttr = actionLabel === 'Edit' ? ` onclick="openEditUnit(this,'${prefix}')"` : '';
+  row.innerHTML = `<div class="unit-icon">${icon}</div><div class="unit-info"><div class="unit-name">${name} — ${type}</div><div class="unit-meta">${meta}</div></div><span class="unit-status ${statusClass}">${statusLabel}</span><div class="unit-actions"><button class="btn-secondary" style="font-size:12px;padding:6px 12px"${editAttr}>${actionLabel}</button></div>`;
   list.appendChild(row);
 
   // Update units count in heading
@@ -2365,6 +2416,91 @@ function saveUnit() {
   }
 
   closeAddUnit();
+}
+
+// ── EDIT UNIT MODAL ──
+let _editUnitBtn = null;
+let _editUnitPrefix2 = 'short';
+
+function openEditUnit(btn, prefix) {
+  _editUnitBtn = btn;
+  _editUnitPrefix2 = prefix;
+  const row = btn.closest('.unit-row');
+  const nameEl = row.querySelector('.unit-name');
+  const metaEl = row.querySelector('.unit-meta');
+  const statusEl = row.querySelector('.unit-status');
+
+  const nameText = nameEl ? nameEl.textContent : '';
+  const dashIdx = nameText.indexOf(' — ');
+  const unitName = dashIdx !== -1 ? nameText.slice(0, dashIdx).trim() : nameText.trim();
+  const unitType = dashIdx !== -1 ? nameText.slice(dashIdx + 3).trim() : 'Standard';
+
+  const subtitleMap = { short: 'Short-term / Transient property', long: 'Long-term rental property', hoa: 'HOA / Building' };
+  document.getElementById('edit-unit-subtitle').textContent = subtitleMap[prefix] || '';
+
+  const guestsField = document.getElementById('edit-unit-guests-field');
+  const guestsLabel = document.getElementById('edit-unit-guests-label');
+  const typeLabel = document.getElementById('edit-unit-type-label');
+  if (prefix === 'hoa') {
+    guestsField.style.display = 'none';
+    typeLabel.textContent = 'Unit type';
+  } else if (prefix === 'long') {
+    guestsField.style.display = 'block';
+    guestsLabel.textContent = 'Max occupants';
+    typeLabel.textContent = 'Unit type';
+  } else {
+    guestsField.style.display = 'block';
+    guestsLabel.textContent = 'Max guests';
+    typeLabel.textContent = 'Room type';
+  }
+
+  document.getElementById('edit-unit-name-input').value = unitName;
+  const typeSelect = document.getElementById('edit-unit-type-input');
+  const matchOpt = Array.from(typeSelect.options).find(o => o.value === unitType);
+  typeSelect.value = matchOpt ? unitType : 'Standard';
+
+  const amenitiesRaw = metaEl ? metaEl.textContent : '';
+  const amenitiesClean = amenitiesRaw.replace(/^[^·]*·\s*/, '').replace(/\s*·\s*Max \d+ \w+.*$/, '').trim();
+  document.getElementById('edit-unit-amenities-input').value = amenitiesClean || amenitiesRaw;
+
+  const isMaintenance = statusEl && statusEl.classList.contains('maintenance');
+  document.getElementById('edit-unit-status-input').value = isMaintenance ? 'maintenance' : 'available';
+
+  document.getElementById('edit-unit-modal').classList.add('open');
+  setTimeout(() => document.getElementById('edit-unit-name-input').focus(), 60);
+}
+
+function closeEditUnit() {
+  document.getElementById('edit-unit-modal').classList.remove('open');
+  _editUnitBtn = null;
+}
+
+function saveEditUnit() {
+  const name = document.getElementById('edit-unit-name-input').value.trim();
+  if (!name) { document.getElementById('edit-unit-name-input').focus(); return; }
+  const type = document.getElementById('edit-unit-type-input').value;
+  const guests = document.getElementById('edit-unit-guests-input').value;
+  const amenities = document.getElementById('edit-unit-amenities-input').value.trim() || 'Standard unit';
+  const statusVal = document.getElementById('edit-unit-status-input').value;
+  const prefix = _editUnitPrefix2;
+
+  const row = _editUnitBtn ? _editUnitBtn.closest('.unit-row') : null;
+  if (!row) { closeEditUnit(); return; }
+
+  const guestsText = prefix !== 'hoa' ? ` · Max ${guests} guest${guests > 1 ? 's' : ''}` : '';
+  const meta = prefix === 'hoa' ? amenities : `${type} · ${amenities}${guestsText}`;
+
+  row.querySelector('.unit-name').textContent = `${name} — ${type}`;
+  row.querySelector('.unit-meta').textContent = meta;
+  const statusEl = row.querySelector('.unit-status');
+  if (statusEl && (statusEl.classList.contains('available') || statusEl.classList.contains('maintenance'))) {
+    const statusClass = statusVal === 'available' ? 'available' : 'maintenance';
+    const statusLabel = statusVal === 'available' ? 'Available' : 'Under maintenance';
+    statusEl.className = `unit-status ${statusClass}`;
+    statusEl.textContent = statusLabel;
+  }
+
+  closeEditUnit();
 }
 
 // ── PREVIEW LISTING MODAL ──
