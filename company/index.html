@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[YourCompany] — Software Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080D14;
+  --bg2:      #0C1220;
+  --bg3:      #111827;
+  --card:     #0F1929;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.12);
+  --cyan:     #0CDFCF;
+  --cyan-dim: rgba(12,223,207,0.12);
+  --cyan-glow:rgba(12,223,207,0.06);
+  --white:    #FFFFFF;
+  --g1:       rgba(255,255,255,0.85);
+  --g2:       rgba(255,255,255,0.5);
+  --g3:       rgba(255,255,255,0.3);
+  --r:        8px;
+  --r-lg:     14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--g1);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.12;letter-spacing:-0.5px}
+a{text-decoration:none}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:64px;
+  background:rgba(8,13,20,0.85);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+  display:flex;align-items:center;padding:0 max(5%, calc((100% - 1280px) / 2));gap:32px;
+}
+.logo{font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:var(--white);letter-spacing:-0.5px;white-space:nowrap}
+.logo em{color:var(--cyan);font-style:normal}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:auto}
+.nav-links a{font-size:13.5px;color:var(--g2);font-weight:400;transition:color .15s;letter-spacing:.01em}
+.nav-links a:hover{color:var(--white)}
+.nav-btn{
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  padding:8px 20px;border-radius:var(--r);
+  font-size:13px;font-weight:600;
+  transition:all .2s;white-space:nowrap;
+  background:transparent;
+}
+.nav-btn:hover{background:var(--cyan);color:var(--bg)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:120px max(5%, calc((100% - 1280px) / 2)) 100px;
+  position:relative;overflow:hidden;
+  background:var(--bg);
+}
+.hero-noise{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(12,223,207,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(12,223,207,0.03) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:820px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:28px;
+}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--cyan)}
+.hero h1{
+  font-size:clamp(42px,6vw,76px);
+  font-weight:800;color:var(--white);
+  margin-bottom:24px;line-height:1.05;
+  letter-spacing:-2px;
+}
+.hero h1 em{color:var(--cyan);font-style:normal}
+.hero-p{
+  font-size:18px;color:var(--g2);
+  max-width:520px;line-height:1.75;
+  margin-bottom:40px;font-weight:300;
+}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-cyan{
+  background:var(--cyan);color:var(--bg);
+  padding:13px 30px;border-radius:var(--r);
+  font-size:14px;font-weight:700;
+  transition:all .2s;display:inline-flex;align-items:center;gap:7px;
+  letter-spacing:.01em;
+}
+.btn-cyan:hover{opacity:.88;transform:translateY(-1px)}
+.btn-outline{
+  background:transparent;color:var(--g1);
+  border:1px solid var(--border2);
+  padding:13px 30px;border-radius:var(--r);
+  font-size:14px;font-weight:500;
+  transition:all .2s;
+}
+.btn-outline:hover{border-color:rgba(255,255,255,.35);color:var(--white)}
+
+/* ── SECTION BASE ── */
+.section{padding:96px max(5%, calc((100% - 1280px) / 2))}
+.section-alt{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:14px;
+}
+.eyebrow::before{content:'';display:block;width:16px;height:1px;background:var(--cyan)}
+.h2{font-size:clamp(28px,3.5vw,44px);font-weight:800;color:var(--white);margin-bottom:14px;letter-spacing:-1px}
+.lead{font-size:16px;color:var(--g2);line-height:1.75;max-width:500px;font-weight:300}
+.hdr{margin-bottom:52px}
+
+/* ── SERVICES ── */
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+}
+.svc-cell{
+  background:var(--card);
+  padding:36px 30px;
+  transition:background .2s;
+  position:relative;overflow:hidden;
+}
+.svc-cell::after{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:var(--cyan);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.svc-cell:hover{background:var(--bg3)}
+.svc-cell:hover::after{transform:scaleX(1)}
+.svc-cell.c7{grid-column:span 7}
+.svc-cell.c5{grid-column:span 5}
+.svc-cell.c4{grid-column:span 4}
+.svc-ico{
+  width:42px;height:42px;border-radius:var(--r);
+  background:var(--cyan-dim);border:1px solid rgba(12,223,207,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:20px;
+}
+.svc-cell h3{font-size:17px;font-weight:700;color:var(--white);margin-bottom:8px}
+.svc-cell p{font-size:13.5px;color:var(--g2);line-height:1.65;margin-bottom:16px;font-weight:300}
+.pill-row{display:flex;flex-wrap:wrap;gap:5px}
+.pill{
+  font-size:11px;font-weight:500;
+  color:var(--g3);
+  border:1px solid var(--border2);
+  padding:2px 10px;border-radius:100px;
+  background:rgba(255,255,255,0.03);
+}
+
+/* ── BUILDS ── */
+.builds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.b-card{background:var(--card);padding:30px 26px;transition:background .2s}
+.b-card:hover{background:var(--bg3)}
+.b-n{font-family:'Sora',sans-serif;font-size:11px;font-weight:800;color:var(--cyan);letter-spacing:.12em;margin-bottom:12px;display:block;opacity:.7}
+.b-card h3{font-size:15px;font-weight:700;color:var(--white);margin-bottom:7px}
+.b-card p{font-size:13px;color:var(--g2);line-height:1.65;font-weight:300}
+
+/* ── PROCESS ── */
+.proc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.p-step{background:var(--card);padding:36px 28px;transition:background .2s;position:relative}
+.p-step:hover{background:var(--bg3)}
+.p-n{
+  font-family:'Sora',sans-serif;
+  font-size:48px;font-weight:800;
+  color:rgba(12,223,207,.06);
+  line-height:1;margin-bottom:20px;
+  letter-spacing:-2px;
+}
+.p-step h3{font-size:16px;font-weight:700;color:var(--white);margin-bottom:7px}
+.p-step p{font-size:13px;color:var(--g2);line-height:1.65;font-weight:300}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.t-card{background:var(--card);padding:32px 26px;transition:background .2s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+.t-card:hover{background:var(--bg3)}
+.t-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.t-card:hover::before{transform:scaleX(1)}
+.t-av{
+  width:68px;height:68px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:18px;font-weight:800;
+  margin-bottom:18px;border:2px solid;
+  letter-spacing:.5px;
+}
+.av-ceo{
+  background:linear-gradient(135deg,rgba(12,223,207,.28) 0%,rgba(12,223,207,.08) 100%);
+  color:var(--cyan);border-color:rgba(12,223,207,.45);
+  box-shadow:0 0 20px rgba(12,223,207,.18),inset 0 1px 0 rgba(12,223,207,.25);
+}
+.av-cto{
+  background:linear-gradient(135deg,rgba(12,223,207,.22) 0%,rgba(12,223,207,.06) 100%);
+  color:var(--cyan);border-color:rgba(12,223,207,.38);
+  box-shadow:0 0 20px rgba(12,223,207,.14),inset 0 1px 0 rgba(12,223,207,.18);
+}
+.av-coo{
+  background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.04) 100%);
+  color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.22);
+  box-shadow:0 0 20px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.av-hmd{
+  background:linear-gradient(135deg,rgba(99,102,241,.28) 0%,rgba(99,102,241,.08) 100%);
+  color:#818CF8;border-color:rgba(99,102,241,.45);
+  box-shadow:0 0 20px rgba(99,102,241,.18),inset 0 1px 0 rgba(99,102,241,.22);
+}
+.av-ma{
+  background:linear-gradient(135deg,rgba(168,85,247,.24) 0%,rgba(168,85,247,.07) 100%);
+  color:#C084FC;border-color:rgba(168,85,247,.4);
+  box-shadow:0 0 20px rgba(168,85,247,.15),inset 0 1px 0 rgba(168,85,247,.18);
+}
+.av-web{
+  background:linear-gradient(135deg,rgba(59,130,246,.24) 0%,rgba(59,130,246,.07) 100%);
+  color:#60A5FA;border-color:rgba(59,130,246,.4);
+  box-shadow:0 0 20px rgba(59,130,246,.15),inset 0 1px 0 rgba(59,130,246,.18);
+}
+.av-dv{
+  background:linear-gradient(135deg,rgba(245,158,11,.24) 0%,rgba(245,158,11,.07) 100%);
+  color:#FCD34D;border-color:rgba(245,158,11,.4);
+  box-shadow:0 0 20px rgba(245,158,11,.15),inset 0 1px 0 rgba(245,158,11,.18);
+}
+.t-card h3{font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px}
+.t-role{font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:block;opacity:.8}
+.t-bio{font-size:12.5px;color:var(--g2);line-height:1.65;font-weight:300}
+
+/* ── WHY ── */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.w-card{background:var(--card);padding:36px 32px;display:flex;gap:20px;align-items:flex-start;transition:background .2s}
+.w-card:hover{background:var(--bg3)}
+.w-ico{
+  width:42px;height:42px;flex-shrink:0;
+  border-radius:var(--r);
+  background:var(--cyan-dim);border:1px solid rgba(12,223,207,.2);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.w-card h3{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+.w-card p{font-size:13px;color:var(--g2);line-height:1.65;font-weight:300}
+
+/* ── CTA STRIP ── */
+.cta-strip{
+  padding:96px max(5%, calc((100% - 1280px) / 2));
+  background:var(--bg);
+  text-align:center;
+  position:relative;overflow:hidden;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.cta-strip::before{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse, rgba(12,223,207,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.cta-strip h2{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--white);margin-bottom:14px;letter-spacing:-1.5px;position:relative}
+.cta-strip p{font-size:17px;color:var(--g2);max-width:440px;margin:0 auto 32px;font-weight:300;position:relative}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+.c-info .h2{font-size:30px}
+.c-info>p{font-size:15px;color:var(--g2);line-height:1.75;margin-bottom:36px;font-weight:300}
+.c-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.c-ico{
+  width:38px;height:38px;border-radius:var(--r);flex-shrink:0;
+  background:var(--cyan-dim);border:1px solid rgba(12,223,207,.2);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+.c-lbl{font-size:11px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1px}
+.c-val{font-size:14px;font-weight:500;color:var(--g1)}
+.form{display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:12px;font-weight:600;color:var(--g2);letter-spacing:.04em;text-transform:uppercase}
+.fg input,.fg select,.fg textarea{
+  padding:11px 14px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--r);
+  font-size:14px;font-family:'Inter',sans-serif;
+  color:var(--g1);
+  transition:border-color .15s,box-shadow .15s;
+  outline:none;appearance:none;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--g3)}
+.fg select option{background:var(--bg3);color:var(--g1)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(12,223,207,.07);
+}
+.fg textarea{resize:vertical;min-height:110px}
+.f-submit{
+  background:var(--cyan);color:var(--bg);
+  border:none;padding:13px 28px;
+  border-radius:var(--r);font-size:14px;font-weight:700;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  align-self:flex-start;transition:opacity .15s;
+  letter-spacing:.01em;
+}
+.f-submit:hover{opacity:.88}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg);
+  padding:56px max(5%, calc((100% - 1280px) / 2)) 28px;
+  border-top:1px solid var(--border);
+}
+.f-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:40px;padding-bottom:40px;
+  border-bottom:1px solid var(--border);
+}
+.f-logo{font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--white);margin-bottom:10px;letter-spacing:-0.3px}
+.f-logo em{color:var(--cyan);font-style:normal}
+.f-desc{font-size:13px;color:var(--g3);line-height:1.7;max-width:240px;font-weight:300}
+.f-col h4{font-size:10.5px;font-weight:700;color:var(--g3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.f-col ul a{font-size:13px;color:var(--g3);transition:color .15s}
+.f-col ul a:hover{color:var(--cyan)}
+.f-bot{display:flex;justify-content:space-between;align-items:center}
+.f-bot p{font-size:12px;color:rgba(255,255,255,.2)}
+
+@media(max-width:1024px){
+  .team-grid{grid-template-columns:repeat(3,1fr)}
+  .svc-cell.c7,.svc-cell.c5{grid-column:span 12}
+  .svc-cell.c4{grid-column:span 6}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .builds,.proc{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:48px}
+  .f-top{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .builds,.proc{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .svc-cell.c4{grid-column:span 12}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">[Your<em>Company</em>]</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#builds">What we build</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-noise"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Software Development · Philippines</div>
+    <h1>We build software<br>that <em>scales.</em></h1>
+    <p class="hero-p">Mobile apps, web platforms, and cloud infrastructure — engineered for Philippine businesses ready to grow.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-cyan">Get in touch →</a>
+      <a href="#services" class="btn-outline">Our services</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section section-alt" id="services">
+  <div class="hdr">
+    <div class="eyebrow">Services</div>
+    <h2 class="h2">What we do</h2>
+    <p class="lead">Five focused disciplines — each backed by specialists with proven, hands-on industry experience.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-cell c7">
+      <div class="svc-ico">📱</div>
+      <h3>Mobile Development</h3>
+      <p>Native and cross-platform mobile applications built for performance and scale. We cover the full lifecycle — from architecture through app store submission — across Android, iOS, and Compose Multiplatform.</p>
+      <div class="pill-row"><span class="pill">Android</span><span class="pill">iOS</span><span class="pill">Compose Multiplatform</span><span class="pill">Kotlin Multiplatform</span></div>
+    </div>
+    <div class="svc-cell c5">
+      <div class="svc-ico">🌐</div>
+      <h3>Web Development</h3>
+      <p>Full-stack web applications and platforms built for reliability, security, and long-term maintainability.</p>
+      <div class="pill-row"><span class="pill">Frontend</span><span class="pill">Backend</span><span class="pill">REST APIs</span></div>
+    </div>
+    <div class="svc-cell c4">
+      <div class="svc-ico">☁️</div>
+      <h3>Cloud & DevOps</h3>
+      <p>Infrastructure setup, migration, and management — with CI/CD pipelines and SRE practices that keep delivery fast and reliable.</p>
+      <div class="pill-row"><span class="pill">AWS</span><span class="pill">GCP</span><span class="pill">CI/CD</span><span class="pill">SRE</span></div>
+    </div>
+    <div class="svc-cell c4">
+      <div class="svc-ico">🔧</div>
+      <h3>Maintenance & Support</h3>
+      <p>Ongoing updates, monitoring, and technical support — your systems stay secure and stable long after launch.</p>
+      <div class="pill-row"><span class="pill">SLA-backed</span><span class="pill">Monitoring</span><span class="pill">Bug fixes</span></div>
+    </div>
+    <div class="svc-cell c4">
+      <div class="svc-ico">💡</div>
+      <h3>IT Consulting</h3>
+      <p>Strategic technology guidance — from architecture reviews to Fractional CTO engagements for growing companies.</p>
+      <div class="pill-row"><span class="pill">Fractional CTO</span><span class="pill">Tech strategy</span><span class="pill">Advisory</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section class="section" id="builds">
+  <div class="hdr">
+    <div class="eyebrow">Capability areas</div>
+    <h2 class="h2">What we build</h2>
+    <p class="lead">The types of products and platforms our team is equipped to design, architect, and ship.</p>
+  </div>
+  <div class="builds">
+    <div class="b-card"><span class="b-n">01</span><h3>Consumer mobile apps</h3><p>High-performance apps for Android and iOS — designed for engagement, retention, and real-world scale.</p></div>
+    <div class="b-card"><span class="b-n">02</span><h3>Cross-platform applications</h3><p>Single codebase, multiple platforms. Compose Multiplatform and KMP for teams that need speed without sacrificing native quality.</p></div>
+    <div class="b-card"><span class="b-n">03</span><h3>Enterprise web platforms</h3><p>Internal tools, dashboards, and management systems built around how your organization actually operates.</p></div>
+    <div class="b-card"><span class="b-n">04</span><h3>Cloud-native infrastructure</h3><p>Scalable backend systems and cloud environments designed for reliability, automation, and zero downtime.</p></div>
+    <div class="b-card"><span class="b-n">05</span><h3>Web applications & portals</h3><p>Customer-facing and internal web apps — from company websites to complex multi-user platforms.</p></div>
+    <div class="b-card"><span class="b-n">06</span><h3>DevOps & SRE pipelines</h3><p>CI/CD pipelines and site reliability engineering that keeps your systems running and your team shipping confidently.</p></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section-alt" id="process">
+  <div class="hdr">
+    <div class="eyebrow">How we work</div>
+    <h2 class="h2">Our delivery process</h2>
+    <p class="lead">Structured and transparent — no surprises, no scope creep, no black boxes at any stage.</p>
+  </div>
+  <div class="proc">
+    <div class="p-step"><div class="p-n">01</div><h3>Discovery</h3><p>We understand your business, goals, and constraints before a single line of code is written.</p></div>
+    <div class="p-step"><div class="p-n">02</div><h3>Planning</h3><p>A detailed technical plan, timeline, and cost breakdown — reviewed and approved by you before we begin.</p></div>
+    <div class="p-step"><div class="p-n">03</div><h3>Design</h3><p>UI/UX prototyping built around your users. You review and approve before development starts.</p></div>
+    <div class="p-step"><div class="p-n">04</div><h3>Development</h3><p>Agile, iterative delivery with regular check-ins. You see real progress at every stage.</p></div>
+    <div class="p-step"><div class="p-n">05</div><h3>QA & Testing</h3><p>Rigorous testing across devices, environments, and user scenarios before anything goes live.</p></div>
+    <div class="p-step"><div class="p-n">06</div><h3>Launch & Support</h3><p>Deployment, monitoring, and post-launch support. We stay with you well beyond go-live.</p></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="hdr">
+    <div class="eyebrow">Our team</div>
+    <h2 class="h2">The people behind the work</h2>
+    <p class="lead">When you engage us, you work directly with our core team — the same specialists who plan, architect, and deliver your solution.</p>
+  </div>
+  <div class="team-grid">
+    <div class="t-card">
+      <div class="t-av av-ceo">CE</div>
+      <h3>[CEO Name]</h3>
+      <span class="t-role">CEO / Managing Director</span>
+      <p class="t-bio">Leads company strategy, client relationships, and IT consulting engagements. Brings extensive experience in the Philippine technology and business landscape.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-cto">JD</div>
+      <h3>Jayceed Deyro</h3>
+      <span class="t-role">CTO / Tech Lead</span>
+      <p class="t-bio">Over 11 years in mobile development. Led engineering for GlobeOne, GOMO by Globe Telecom, and MyDST in Brunei — some of the region's most-used digital platforms.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-coo">EC</div>
+      <h3>Enrique Chuidan</h3>
+      <span class="t-role">COO</span>
+      <p class="t-bio">Keeps every engagement running on time and on budget. Oversees project coordination, client onboarding, and resource planning from kickoff through delivery.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-dv">VJ</div>
+      <h3>Vincent John</h3>
+      <span class="t-role">Head of Cloud & Infrastructure</span>
+      <p class="t-bio">Distinguished Mapua graduate, ranking 7th in the April 2015 ECE Board Examinations. Former Director at a leading IT solutions company and Lead SRE at Veltra, Japan.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-hmd">DL</div>
+      <h3>Denrick Laborada</h3>
+      <span class="t-role">Head of Mobile Development</span>
+      <p class="t-bio">Leads mobile delivery end to end — from architecture and planning through to app store deployment. Specialist across Android, iOS, and Compose Multiplatform.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-ma">CA</div>
+      <h3>Christian Andre Ingua</h3>
+      <span class="t-role">Mobile Architect</span>
+      <p class="t-bio">Defines the technical foundations of complex mobile systems — ensuring every solution is architected for performance, scalability, and long-term stability.</p>
+    </div>
+    <div class="t-card">
+      <div class="t-av av-web">ND</div>
+      <h3>Nico Diomaro</h3>
+      <span class="t-role">Web Full Stack Developer</span>
+      <p class="t-bio">Owns web delivery front to back — crafting intuitive interfaces and building robust, secure backend systems built to scale with your business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section section-alt" id="why">
+  <div class="hdr">
+    <div class="eyebrow">Why choose us</div>
+    <h2 class="h2">What makes us different</h2>
+    <p class="lead">A focused team of specialists who take full ownership of every project we put our name on.</p>
+  </div>
+  <div class="why-grid">
+    <div class="w-card"><div class="w-ico">🎯</div><div><h3>You work directly with the builders</h3><p>No account managers, no outsourcing. The team you meet is the team that designs, builds, and delivers your solution — from day one through launch.</p></div></div>
+    <div class="w-card"><div class="w-ico">🏆</div><div><h3>Proven at enterprise scale</h3><p>Our team has engineered platforms used by millions — including GlobeOne and GOMO — and led infrastructure for international companies in Japan and Brunei.</p></div></div>
+    <div class="w-card"><div class="w-ico">🇵🇭</div><div><h3>Built for the Philippine market</h3><p>We understand the local business context — the regulations, user behaviors, and infrastructure realities that offshore vendors consistently get wrong.</p></div></div>
+    <div class="w-card"><div class="w-ico">📋</div><div><h3>Transparent by default</h3><p>Fixed-scope proposals, clear timelines, and regular progress updates. You always know exactly where your project stands — and why.</p></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Ready to build something?</h2>
+  <p>Tell us what you're working on. We'll be straightforward about how we can help.</p>
+  <a href="#contact" class="btn-cyan" style="display:inline-flex">Send us a message →</a>
+</div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-wrap">
+    <div class="c-info">
+      <div class="eyebrow">Contact</div>
+      <h2 class="h2" style="font-size:30px;margin-bottom:12px">Let's talk about<br>your project</h2>
+      <p>Whether you have a fully scoped project or just an early-stage idea, we're happy to have a no-obligation conversation about how we can help.</p>
+      <div class="c-item"><div class="c-ico">📧</div><div><div class="c-lbl">Email</div><div class="c-val">hello@yourcompany.ph</div></div></div>
+      <div class="c-item"><div class="c-ico">📞</div><div><div class="c-lbl">Phone</div><div class="c-val">+63 (2) XXXX XXXX</div></div></div>
+      <div class="c-item"><div class="c-ico">📍</div><div><div class="c-lbl">Location</div><div class="c-val">Metro Manila, Philippines</div></div></div>
+      <div class="c-item"><div class="c-ico">🕐</div><div><div class="c-lbl">Response time</div><div class="c-val">Within 1 business day</div></div></div>
+    </div>
+    <div class="form">
+      <div class="frow">
+        <div class="fg"><label>First name</label><input type="text" placeholder="Juan"></div>
+        <div class="fg"><label>Last name</label><input type="text" placeholder="dela Cruz"></div>
+      </div>
+      <div class="fg"><label>Email address</label><input type="email" placeholder="juan@company.com"></div>
+      <div class="fg"><label>Company name</label><input type="text" placeholder="Your company"></div>
+      <div class="fg"><label>Service of interest</label>
+        <select>
+          <option value="">Select a service</option>
+          <option>Mobile Development</option>
+          <option>Web Development</option>
+          <option>Cloud & DevOps</option>
+          <option>Maintenance & Support</option>
+          <option>IT Consulting / Fractional CTO</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="fg"><label>Tell us about your project</label><textarea placeholder="Briefly describe what you're building or the problem you need solved..."></textarea></div>
+      <button class="f-submit">Send message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-top">
+    <div>
+      <div class="f-logo">[Your<em>Company</em>]</div>
+      <p class="f-desc">A focused team of IT specialists delivering mobile, web, and cloud solutions for Philippine businesses.</p>
+    </div>
+    <div class="f-col"><h4>Services</h4><ul>
+      <li><a href="#services">Mobile Development</a></li>
+      <li><a href="#services">Web Development</a></li>
+      <li><a href="#services">Cloud & DevOps</a></li>
+      <li><a href="#services">Maintenance & Support</a></li>
+      <li><a href="#services">IT Consulting</a></li>
+    </ul></div>
+    <div class="f-col"><h4>Company</h4><ul>
+      <li><a href="#team">About us</a></li>
+      <li><a href="#team">Our team</a></li>
+      <li><a href="#process">How we work</a></li>
+      <li><a href="#builds">What we build</a></li>
+    </ul></div>
+    <div class="f-col"><h4>Contact</h4><ul>
+      <li><a href="#contact">Send a message</a></li>
+      <li><a href="#contact">IT Consulting inquiry</a></li>
+      <li><a href="mailto:hello@yourcompany.ph">hello@yourcompany.ph</a></li>
+    </ul></div>
+  </div>
+  <div class="f-bot">
+    <p>© 2025 [YourCompany]. All rights reserved. · Metro Manila, Philippines</p>
+    <p style="font-size:12px;color:rgba(255,255,255,.2)">🇵🇭 Proudly Filipino</p>
+  </div>
+</footer>
+
+</body>
+</html>
