@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing — Tuluyan</title>
+<title>Pricing — tuluyan.</title>
 <meta name="description" content="Tuluyan pricing: ₱250/month subscription, 0.8% transaction fee, and payment processing at cost. No setup fees, no hidden charges.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
-  --navy: #0C1B2A; --navy-mid: #162536;
+  --onyx: #1A1A1A; --coral: #FEA5A4; --linen: #F2F0EB;
+  --teal: #1A1A1A; --teal-dark: #111111; --teal-light: #F2F0EB;
+  --navy: #1A1A1A; --navy-mid: #1A1A1A;
   --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
   --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
-  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F2F0EB; --surface2: #F3F4F6;
   --green: #059669; --green-bg: #ECFDF5;
   --red: #DC2626; --amber: #D97706; --purple: #7C3AED;
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6, .stat-num { font-family: 'League Spartan', sans-serif; }
 a { text-decoration: none; color: inherit; }
 
 /* NAV */
@@ -38,7 +40,7 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 .nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .btn-ghost { padding: 9px 16px; font-size: 14px; font-weight: 500; color: var(--text); border: 1px solid var(--border2); border-radius: 8px; cursor: pointer; transition: background .15s; background: transparent; font-family: inherit; }
 .btn-ghost:hover { background: var(--surface2); }
-.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(11,138,154,.25); display: inline-flex; align-items: center; text-decoration: none; }
+.btn-cta { padding: 9px 20px; font-size: 14px; font-weight: 700; color: var(--white); background: var(--teal); border-radius: 8px; border: none; cursor: pointer; font-family: inherit; transition: background .15s, box-shadow .15s; box-shadow: 0 2px 8px rgba(26,26,26,.25); display: inline-flex; align-items: center; text-decoration: none; }
 .btn-cta:hover { background: var(--teal-dark); }
 
 /* LAYOUT */
@@ -51,17 +53,17 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 /* TOGGLE */
 .toggle-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 36px; }
 .toggle-btn { padding: 9px 22px; border-radius: 9px; font-size: 14px; font-weight: 600; border: 1.5px solid var(--border2); cursor: pointer; font-family: inherit; background: var(--white); color: var(--muted); transition: all .15s; }
-.toggle-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); box-shadow: 0 2px 8px rgba(11,138,154,.25); }
+.toggle-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); box-shadow: 0 2px 8px rgba(26,26,26,.25); }
 .save-badge { font-size: 12px; font-weight: 700; color: var(--green); background: var(--green-bg); padding: 3px 10px; border-radius: 100px; }
 
 /* PRICE CARD */
-.price-card { background: var(--white); border: 1.5px solid var(--teal); border-radius: 20px; padding: 40px; box-shadow: 0 0 0 4px rgba(11,138,154,.07); margin-bottom: 56px; }
+.price-card { background: var(--white); border: 1.5px solid var(--teal); border-radius: 20px; padding: 40px; box-shadow: 0 0 0 4px rgba(26,26,26,.07); margin-bottom: 56px; }
 .price-display { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; color: var(--text); }
 .price-display sup { font-size: 24px; font-weight: 700; vertical-align: top; margin-top: 10px; display: inline-block; }
 .price-display em { font-size: 16px; font-weight: 500; color: var(--muted); font-style: normal; letter-spacing: 0; }
 .price-billing { font-size: 13.5px; color: var(--muted); margin-top: 6px; margin-bottom: 32px; }
-.price-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700; background: var(--teal); color: var(--white); transition: background .15s, box-shadow .15s; margin-bottom: 32px; box-shadow: 0 4px 14px rgba(11,138,154,.28); }
-.price-cta:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.38); }
+.price-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 700; background: var(--teal); color: var(--white); transition: background .15s, box-shadow .15s; margin-bottom: 32px; box-shadow: 0 4px 14px rgba(26,26,26,.28); }
+.price-cta:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(26,26,26,.38); }
 .price-rows { display: flex; flex-direction: column; gap: 12px; }
 .price-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
 .price-row-label { color: var(--muted); }
@@ -85,10 +87,10 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 /* RECEIPTS */
 .receipts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
 .receipt { border: 1px solid var(--border2); border-radius: 14px; overflow: hidden; }
-.receipt.us { border-color: rgba(11,138,154,.3); }
+.receipt.us { border-color: rgba(26,26,26,.3); }
 .receipt-header { background: var(--surface); padding: 12px 20px; border-bottom: 1px dashed var(--border2); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); text-align: center; }
 .receipt.us .receipt-header { background: var(--teal-light); color: var(--teal); }
-.receipt-body { padding: 20px; font-family: 'Plus Jakarta Sans', monospace; font-size: 13.5px; }
+.receipt-body { padding: 20px; font-family: 'Inter', monospace; font-size: 13.5px; }
 .receipt-line { display: flex; justify-content: space-between; margin-bottom: 10px; }
 .receipt-line-label { color: var(--muted); }
 .receipt-line-val { font-weight: 600; }
@@ -111,7 +113,7 @@ nav { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.97)
 .slider-val { font-size: 14px; font-weight: 700; color: var(--teal); }
 .slider-hint { font-size: 12px; color: var(--hint); margin-bottom: 8px; }
 input[type=range] { width: 100%; height: 4px; border-radius: 2px; appearance: none; background: var(--surface2); outline: none; cursor: pointer; }
-input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--teal); cursor: pointer; box-shadow: 0 2px 6px rgba(11,138,154,.3); }
+input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--teal); cursor: pointer; box-shadow: 0 2px 6px rgba(26,26,26,.3); }
 .slider-ends { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--hint); margin-top: 4px; }
 
 /* COMPARISON TABLE */
@@ -123,7 +125,7 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .compare-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: top; }
 .compare-table td:first-child { text-align: left; font-weight: 600; font-size: 13.5px; }
 .compare-table td span.sub { display: block; font-size: 12px; font-weight: 400; color: var(--hint); }
-.compare-table td.hl { background: rgba(11,138,154,.03); }
+.compare-table td.hl { background: rgba(26,26,26,.03); }
 .keep-row td { background: var(--surface); }
 .keep-row td:first-child { font-size: 15px; }
 .keep-good { font-size: 20px; font-weight: 800; color: var(--green); }
@@ -184,8 +186,8 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .final-cta { background: var(--navy); border-radius: 20px; padding: 56px 40px; text-align: center; }
 .final-cta h2 { font-size: 28px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 12px; }
 .final-cta p { font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 32px; }
-.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(11,138,154,.3); }
-.cta-primary:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.4); }
+.cta-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 36px; border-radius: 10px; font-size: 15px; font-weight: 700; transition: background .15s, box-shadow .15s; box-shadow: 0 4px 14px rgba(26,26,26,.3); }
+.cta-primary:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(26,26,26,.4); }
 .cta-footnote { font-size: 12.5px; color: rgba(255,255,255,.3); margin-top: 16px; }
 
 /* FOOTER */
@@ -223,21 +225,21 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="tuluyan-homepage.html" class="nav-logo">
+    <a href="tuluyan-homepage-v3.html" class="nav-logo">
       <div class="nav-logo-mark">
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
       </div>
-      <span class="nav-logo-text">Tulu<span>yan</span></span>
+      <span class="nav-logo-text">tuluyan.</span>
     </a>
     <div class="nav-links">
-      <a href="tuluyan-pricing.html" class="nav-link active">Pricing</a>
-      <a href="tuluyan-trust.html" class="nav-link">Trust &amp; Safety</a>
-      <a href="tuluyan-affiliates.html" class="nav-link">Affiliates</a>
-      <a href="tuluyan-about.html" class="nav-link">About</a>
+      <a href="tuluyan-pricing-v3.html" class="nav-link active">Pricing</a>
+      <a href="tuluyan-trust-v3.html" class="nav-link">Trust &amp; Safety</a>
+      <a href="tuluyan-affiliates-v3.html" class="nav-link">Affiliates</a>
+      <a href="tuluyan-about-v3.html" class="nav-link">About</a>
     </div>
     <div class="nav-right">
       <button class="btn-ghost">Sign in</button>
-      <a href="tuluyan-get-started.html" class="btn-cta">Get started free</a>
+      <a href="tuluyan-get-started-v3.html" class="btn-cta">Get started</a>
     </div>
   </div>
 </nav>
@@ -263,7 +265,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="price-card">
     <div class="price-display" id="price-display">₱250 <em>/ month</em></div>
     <div class="price-billing" id="billing-note">Billed once a year · Covers up to 6 units · <span id="extra-unit">+₱40 per additional unit</span></div>
-    <a href="tuluyan-get-started.html" class="price-cta">Get started — it's free to try</a>
+    <a href="tuluyan-get-started-v3.html" class="price-cta">Get started — it's free to try</a>
     <div class="price-rows">
       <div class="price-row"><span class="price-row-label">Up to 6 units</span><span class="price-row-val">Included</span></div>
       <div class="price-row"><span class="price-row-label">Each additional unit</span><span class="price-row-val" id="unit-price">+₱40 / unit</span></div>
@@ -305,7 +307,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <!-- RECEIPTS -->
   <div class="receipts-grid">
     <div class="receipt us">
-      <div class="receipt-header">On Tuluyan</div>
+      <div class="receipt-header">on tuluyan..</div>
       <div class="receipt-body">
         <div class="receipt-line"><span class="receipt-line-label">Booking total</span><span class="receipt-line-val">₱2,400.00</span></div>
         <div class="receipt-line"><span class="receipt-line-label">Transaction fee (0.8%)</span><span class="receipt-line-val neg">−₱19.20</span></div>
@@ -326,7 +328,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
       </div>
     </div>
   </div>
-  <p style="font-size:14px;color:var(--hint);text-align:center;margin-bottom:64px">On a typical marketplace, the same booking costs the operator 15–20%. On Tuluyan, the operator keeps over 97%.</p>
+  <p style="font-size:14px;color:var(--hint);text-align:center;margin-bottom:64px">On a typical marketplace, the same booking costs the operator 15–20%. on tuluyan.., the operator keeps over 97%.</p>
 
   <!-- SAVINGS CALCULATOR -->
   <div class="calc-section">
@@ -368,7 +370,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <thead>
           <tr>
             <th></th>
-            <th class="hl">Tuluyan</th>
+            <th class="hl">tuluyan.</th>
             <th>Airbnb</th>
             <th>Booking.com</th>
             <th>Agoda</th>
@@ -554,7 +556,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="final-cta">
     <h2>Ready to list your property?</h2>
     <p>Start free. Set up your property in minutes. No credit card required until you're ready to go live.</p>
-    <a href="tuluyan-get-started.html" class="cta-primary">Get started free →</a>
+    <a href="tuluyan-get-started-v3.html" class="cta-primary">Get started →</a>
     <p class="cta-footnote">₱250/month · No setup fees · Cancel anytime</p>
   </div>
 
@@ -565,9 +567,9 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <a href="tuluyan-homepage.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
+        <a href="tuluyan-homepage-v3.html" class="nav-logo" style="display:inline-flex;margin-bottom:0">
           <div class="nav-logo-mark"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
-          <span class="nav-logo-text" style="color:white">Tulu<span>yan</span></span>
+          <span class="nav-logo-text" style="color:white">tuluyan.</span>
         </a>
         <p class="footer-brand-tagline">Property management infrastructure for independent operators across the Philippines.</p>
         <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:10px">hello@tuluyan.ph</p>
@@ -577,7 +579,7 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <ul class="footer-col-links">
           <li><a href="#">For Operators</a></li>
           <li><a href="#">For Affiliates</a></li>
-          <li><a href="tuluyan-pricing.html">Pricing</a></li>
+          <li><a href="tuluyan-pricing-v3.html">Pricing</a></li>
           <li><a href="#">Changelog</a></li>
         </ul>
       </div>
@@ -586,8 +588,8 @@ footer { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,.06
         <ul class="footer-col-links">
           <li><a href="#">Help Center</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="tuluyan-trust.html">Trust &amp; Safety</a></li>
-          <li><a href="tuluyan-about.html">About</a></li>
+          <li><a href="tuluyan-trust-v3.html">Trust &amp; Safety</a></li>
+          <li><a href="tuluyan-about-v3.html">About</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -710,3 +712,6 @@ updateCalc();
 </script>
 </body>
 </html>
+
+
+

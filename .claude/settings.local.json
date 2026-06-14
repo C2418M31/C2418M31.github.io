@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -rn \"<\\\\\\\\/\" tuluyan/v2/landing/*.html)"
+    ]
+  }
+}

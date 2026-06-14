@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Started — Tuluyan</title>
+<title>Get Started — tuluyan.</title>
 <meta name="description" content="Create your free Tuluyan account. Set up your property in minutes. No credit card required.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
-  --navy: #0C1B2A; --navy-mid: #162536; --navy-light: #1E3448;
+  --onyx: #1A1A1A; --coral: #FEA5A4; --linen: #F2F0EB;
+  --teal: #1A1A1A; --teal-dark: #111111; --teal-light: #F2F0EB;
+  --navy: #1A1A1A; --navy-mid: #1A1A1A; --navy-light: #1A1A1A;
   --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
   --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
-  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F2F0EB; --surface2: #F3F4F6;
   --green: #059669; --green-bg: #ECFDF5;
   --red: #DC2626; --red-bg: #FEF2F2;
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; }
+h1, h2, h3, h4, h5, h6, .stat-num { font-family: 'League Spartan', sans-serif; }
 a { text-decoration: none; color: inherit; }
 
 /* ═══ LAYOUT ═══ */
@@ -41,30 +43,30 @@ a { text-decoration: none; color: inherit; }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 90% 60% at 10% 0%, rgba(11,138,154,.2) 0%, transparent 65%);
+  background: radial-gradient(ellipse 90% 60% at 10% 0%, rgba(26,26,26,.2) 0%, transparent 65%);
   pointer-events: none;
 }
 .left-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 56px; position: relative; z-index: 1; }
 .logo-mark { width: 32px; height: 32px; background: var(--teal); border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .logo-text { font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: -0.4px; }
-.logo-text span { color: #5DD8E8; }
+.logo-text span { color: #FEA5A4; }
 
 .left-body { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 1; }
 .early-badge {
   display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(11,138,154,.18); border: 1px solid rgba(11,138,154,.35);
-  color: #5DD8E8; padding: 5px 13px; border-radius: 100px;
+  background: rgba(26,26,26,.18); border: 1px solid rgba(26,26,26,.35);
+  color: #FEA5A4; padding: 5px 13px; border-radius: 100px;
   font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
   margin-bottom: 24px; align-self: flex-start;
 }
-.early-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #5DD8E8; }
+.early-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #FEA5A4; }
 .left-headline { font-size: clamp(26px, 2.4vw, 34px); font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -1px; margin-bottom: 12px; }
-.left-headline em { color: #5DD8E8; font-style: normal; }
+.left-headline em { color: #FEA5A4; font-style: normal; }
 .left-sub { font-size: 15px; color: rgba(255,255,255,.45); line-height: 1.65; margin-bottom: 40px; }
 
 .benefit-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
 .benefit-item { display: flex; align-items: flex-start; gap: 12px; }
-.benefit-check { width: 20px; height: 20px; border-radius: 6px; background: rgba(11,138,154,.25); border: 1px solid rgba(11,138,154,.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.benefit-check { width: 20px; height: 20px; border-radius: 6px; background: rgba(26,26,26,.25); border: 1px solid rgba(26,26,26,.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
 .benefit-text { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.5; }
 .benefit-text strong { color: var(--white); font-weight: 700; }
 
@@ -124,7 +126,7 @@ a { text-decoration: none; color: inherit; }
 }
 .field input:focus, .field select:focus {
   border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(11,138,154,.1);
+  box-shadow: 0 0 0 3px rgba(26,26,26,.1);
 }
 .field input.error { border-color: var(--red); }
 .field input.error:focus { box-shadow: 0 0 0 3px rgba(220,38,38,.1); }
@@ -167,10 +169,10 @@ a { text-decoration: none; color: inherit; }
   border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: background .15s, box-shadow .15s, transform .1s;
-  box-shadow: 0 4px 14px rgba(11,138,154,.3);
+  box-shadow: 0 4px 14px rgba(26,26,26,.3);
   margin-bottom: 20px;
 }
-.submit-btn:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.38); }
+.submit-btn:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(26,26,26,.38); }
 .submit-btn:active { transform: scale(.99); }
 .submit-btn.loading { pointer-events: none; opacity: .8; }
 .spinner {
@@ -241,11 +243,11 @@ a { text-decoration: none; color: inherit; }
 
   <!-- ═══ LEFT PANEL ═══ -->
   <div class="panel-left">
-    <a href="tuluyan-homepage.html" class="left-logo">
+    <a href="tuluyan-homepage-v3.html" class="left-logo">
       <div class="logo-mark">
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
       </div>
-      <span class="logo-text">Tulu<span>yan</span></span>
+      <span class="logo-text">tuluyan.</span>
     </a>
 
     <div class="left-body">
@@ -254,36 +256,36 @@ a { text-decoration: none; color: inherit; }
         Early Access
       </div>
       <h1 class="left-headline">Your property.<br>Your guests.<br>Your <em>97%</em>.</h1>
-      <p class="left-sub">Join founding operators who are running their bookings, leases, and dues on Tuluyan — and locking in today's pricing permanently.</p>
+      <p class="left-sub">Join founding operators who are running their bookings, leases, and dues on tuluyan.. — and locking in today's pricing permanently.</p>
 
       <div class="benefit-list">
         <div class="benefit-item">
           <div class="benefit-check">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#FEA5A4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="benefit-text"><strong>Free to start</strong> — ₱0 until you go live</div>
         </div>
         <div class="benefit-item">
           <div class="benefit-check">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#FEA5A4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="benefit-text"><strong>Every guest verified</strong> before they arrive</div>
         </div>
         <div class="benefit-item">
           <div class="benefit-check">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#FEA5A4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="benefit-text"><strong>No fake GCash screenshots</strong> — real-time payments only</div>
         </div>
         <div class="benefit-item">
           <div class="benefit-check">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#FEA5A4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="benefit-text"><strong>Works for all your properties</strong> — short-term, long-term, or HOA</div>
         </div>
         <div class="benefit-item">
           <div class="benefit-check">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#FEA5A4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="benefit-text"><strong>25+ property types</strong> — from transient houses to subdivisions</div>
         </div>
@@ -387,8 +389,8 @@ a { text-decoration: none; color: inherit; }
             <strong>What happens next:</strong><br>
             Check your email for a confirmation from <strong>hello@tuluyan.ph</strong>. Add us to your contacts so it doesn't go to spam. We'll send you your setup link and onboarding guide as soon as your account is ready.
           </div>
-          <a href="tuluyan-operator-dashboard.html" class="back-link" style="background:var(--teal);color:white;padding:11px 22px;border-radius:10px;font-weight:700;font-size:14px;display:inline-block;margin-bottom:12px;">Go to your dashboard →</a><br>
-          <a href="tuluyan-homepage.html" class="back-link">← Back to homepage</a>
+          <a href="../dashboard/dashboard-v3.html" class="back-link" style="background:var(--teal);color:white;padding:11px 22px;border-radius:10px;font-weight:700;font-size:14px;display:inline-block;margin-bottom:12px;">Go to your dashboard →</a><br>
+          <a href="tuluyan-homepage-v3.html" class="back-link">← Back to homepage</a>
         </div>
 
       </div>
@@ -448,3 +450,5 @@ form.addEventListener('submit', function(e) {
 </script>
 </body>
 </html>
+
+

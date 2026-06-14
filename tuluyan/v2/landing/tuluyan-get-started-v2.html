@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — Tuluyan</title>
+<meta name="description" content="Create your free Tuluyan account. Set up your property in minutes. No credit card required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
+  --navy: #0C1B2A; --navy-mid: #162536; --navy-light: #1E3448;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --white: #FFFFFF; --bg: #FFFFFF; --surface: #F9FAFB; --surface2: #F3F4F6;
+  --green: #059669; --green-bg: #ECFDF5;
+  --red: #DC2626; --red-bg: #FEF2F2;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══ LAYOUT ═══ */
+.page-layout { display: grid; grid-template-columns: 420px 1fr; min-height: 100vh; }
+
+/* ═══ LEFT PANEL ═══ */
+.panel-left {
+  background: var(--navy);
+  padding: 48px 48px 56px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 60% at 10% 0%, rgba(11,138,154,.2) 0%, transparent 65%);
+  pointer-events: none;
+}
+.left-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 56px; position: relative; z-index: 1; }
+.logo-mark { width: 32px; height: 32px; background: var(--teal); border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-text { font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: -0.4px; }
+.logo-text span { color: #5DD8E8; }
+
+.left-body { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 1; }
+.early-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(11,138,154,.18); border: 1px solid rgba(11,138,154,.35);
+  color: #5DD8E8; padding: 5px 13px; border-radius: 100px;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  margin-bottom: 24px; align-self: flex-start;
+}
+.early-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #5DD8E8; }
+.left-headline { font-size: clamp(26px, 2.4vw, 34px); font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -1px; margin-bottom: 12px; }
+.left-headline em { color: #5DD8E8; font-style: normal; }
+.left-sub { font-size: 15px; color: rgba(255,255,255,.45); line-height: 1.65; margin-bottom: 40px; }
+
+.benefit-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
+.benefit-item { display: flex; align-items: flex-start; gap: 12px; }
+.benefit-check { width: 20px; height: 20px; border-radius: 6px; background: rgba(11,138,154,.25); border: 1px solid rgba(11,138,154,.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.benefit-text { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.5; }
+.benefit-text strong { color: var(--white); font-weight: 700; }
+
+.founding-box {
+  margin-top: auto;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 24px;
+}
+.founding-box-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 10px; }
+.founding-box p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.65; }
+.founding-box strong { color: rgba(255,255,255,.85); font-weight: 700; }
+
+/* ═══ RIGHT PANEL ═══ */
+.panel-right {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.panel-right-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.signin-link { font-size: 14px; color: var(--muted); }
+.signin-link a { color: var(--teal); font-weight: 600; }
+.signin-link a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.form-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 64px;
+}
+.form-inner { width: 100%; max-width: 440px; }
+
+.form-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+.form-title { font-size: clamp(22px, 2.5vw, 30px); font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 6px; }
+.form-sub { font-size: 14px; color: var(--muted); margin-bottom: 36px; line-height: 1.6; }
+
+/* FORM FIELDS */
+.field-group { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.field .optional { font-weight: 400; color: var(--hint); font-size: 12px; margin-left: 4px; }
+.field input, .field select {
+  height: 44px; padding: 0 14px;
+  border: 1.5px solid var(--border2); border-radius: 10px;
+  font-size: 14px; font-family: inherit; color: var(--text);
+  background: var(--white); outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  appearance: none;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(11,138,154,.1);
+}
+.field input.error { border-color: var(--red); }
+.field input.error:focus { box-shadow: 0 0 0 3px rgba(220,38,38,.1); }
+.field-error { font-size: 12px; color: var(--red); display: none; }
+.field-error.visible { display: block; }
+.field-hint { font-size: 12px; color: var(--hint); }
+
+/* Phone field with prefix */
+.phone-row { display: flex; gap: 0; }
+.phone-prefix {
+  height: 44px; padding: 0 12px;
+  border: 1.5px solid var(--border2); border-right: none;
+  border-radius: 10px 0 0 10px;
+  font-size: 14px; font-weight: 600; color: var(--muted);
+  background: var(--surface2); display: flex; align-items: center;
+  white-space: nowrap; flex-shrink: 0;
+}
+.phone-row input {
+  border-radius: 0 10px 10px 0 !important;
+  flex: 1;
+}
+.phone-row input:focus { position: relative; z-index: 1; }
+
+/* Select arrow */
+.select-wrap { position: relative; }
+.select-wrap select { width: 100%; padding-right: 36px; cursor: pointer; }
+.select-wrap::after {
+  content: '';
+  position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4.5px solid transparent; border-right: 4.5px solid transparent;
+  border-top: 5px solid var(--muted); pointer-events: none;
+}
+
+/* SUBMIT */
+.submit-btn {
+  width: 100%; height: 48px; border-radius: 11px;
+  background: var(--teal); color: var(--white);
+  font-size: 15px; font-weight: 700; font-family: inherit;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s, box-shadow .15s, transform .1s;
+  box-shadow: 0 4px 14px rgba(11,138,154,.3);
+  margin-bottom: 20px;
+}
+.submit-btn:hover { background: var(--teal-dark); box-shadow: 0 6px 20px rgba(11,138,154,.38); }
+.submit-btn:active { transform: scale(.99); }
+.submit-btn.loading { pointer-events: none; opacity: .8; }
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+  display: none;
+}
+.submit-btn.loading .btn-text { display: none; }
+.submit-btn.loading .spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.form-footer { font-size: 12px; color: var(--hint); text-align: center; line-height: 1.6; }
+.form-footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ═══ SUCCESS STATE ═══ */
+.success-state { display: none; text-align: center; }
+.success-state.visible { display: block; }
+.form-inner.submitted .form-eyebrow,
+.form-inner.submitted .form-title,
+.form-inner.submitted .form-sub,
+.form-inner.submitted .field-group,
+.form-inner.submitted .submit-btn,
+.form-inner.submitted .form-footer { display: none; }
+.form-inner.submitted .success-state { display: block; }
+
+.success-icon {
+  width: 64px; height: 64px; border-radius: 18px;
+  background: var(--green-bg); border: 2px solid rgba(5,150,105,.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+}
+.success-title { font-size: 26px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 12px; }
+.success-sub { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+.success-detail {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; text-align: left;
+  font-size: 13.5px; color: var(--muted); line-height: 1.7;
+  margin-bottom: 32px;
+}
+.success-detail strong { color: var(--text); font-weight: 600; }
+.back-link { font-size: 14px; color: var(--teal); font-weight: 600; }
+.back-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .panel-left {
+    position: static;
+    height: auto;
+    padding: 36px 28px 40px;
+  }
+  .founding-box { display: none; }
+  .form-wrap { padding: 40px 28px 56px; }
+  .panel-right-top { padding: 16px 28px; }
+}
+@media (max-width: 480px) {
+  .form-wrap { padding: 32px 20px 48px; }
+  .panel-right-top { padding: 14px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-layout">
+
+  <!-- ═══ LEFT PANEL ═══ -->
+  <div class="panel-left">
+    <a href="tuluyan-homepage-v2.html" class="left-logo">
+      <div class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg>
+      </div>
+      <span class="logo-text">tuluyan.</span>
+    </a>
+
+    <div class="left-body">
+      <div class="early-badge">
+        <div class="early-badge-dot"></div>
+        Early Access
+      </div>
+      <h1 class="left-headline">Your property.<br>Your guests.<br>Your <em>97%</em>.</h1>
+      <p class="left-sub">Join founding operators who are running their bookings, leases, and dues on Tuluyan — and locking in today's pricing permanently.</p>
+
+      <div class="benefit-list">
+        <div class="benefit-item">
+          <div class="benefit-check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="benefit-text"><strong>Free to start</strong> — ₱0 until you go live</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="benefit-text"><strong>Every guest verified</strong> before they arrive</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="benefit-text"><strong>No fake GCash screenshots</strong> — real-time payments only</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="benefit-text"><strong>Works for all your properties</strong> — short-term, long-term, or HOA</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#5DD8E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="benefit-text"><strong>25+ property types</strong> — from transient houses to subdivisions</div>
+        </div>
+      </div>
+
+      <div class="founding-box">
+        <div class="founding-box-label">Founding Operator Pricing</div>
+        <p>Sign up during early access and your rate is <strong>locked in permanently</strong> — ₱250/month for your first 6 units, 0.8% transaction fee. This price will not increase for founding operators.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT PANEL ═══ -->
+  <div class="panel-right">
+    <div class="panel-right-top">
+      <p class="signin-link">Already have an account? <a href="#">Sign in →</a></p>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-inner" id="form-inner">
+
+        <div class="form-eyebrow">Get started</div>
+        <h2 class="form-title">Create your free account</h2>
+        <p class="form-sub">No credit card required. Set up your first property in minutes.</p>
+
+        <form id="signup-form" novalidate>
+          <div class="field-group">
+
+            <div class="field">
+              <label for="full-name">Full name</label>
+              <input type="text" id="full-name" placeholder="Juan dela Cruz" autocomplete="name">
+              <span class="field-error" id="err-name">Please enter your full name.</span>
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" placeholder="juan@yourproperty.ph" autocomplete="email">
+              <span class="field-error" id="err-email">Please enter a valid email address.</span>
+            </div>
+
+            <div class="field">
+              <label for="mobile">Mobile number <span class="optional">(optional)</span></label>
+              <div class="phone-row">
+                <div class="phone-prefix">🇵🇭 +63</div>
+                <input type="tel" id="mobile" placeholder="9XX XXX XXXX" autocomplete="tel">
+              </div>
+              <span class="field-hint">For booking notifications. We don't share your number.</span>
+            </div>
+
+            <div class="field">
+              <label for="property-type">Property type</label>
+              <div class="select-wrap">
+                <select id="property-type">
+                  <option value="" disabled selected>Select your property type</option>
+                  <option value="short-term">Short-Term Stays (Transient, Hotel, Resort, Villa…)</option>
+                  <option value="long-term">Long-Term Leasing (Apartment, Condo, Boarding house…)</option>
+                  <option value="hoa">HOA &amp; Building Admin (Subdivision, Condo association…)</option>
+                  <option value="events">Events &amp; Venues (Function hall, Garden venue…)</option>
+                  <option value="commercial">Commercial Spaces (Office, Retail, Warehouse…)</option>
+                  <option value="rural">Rural &amp; Agri (Farm stay, Glamping, Campsite…)</option>
+                  <option value="multiple">Multiple types</option>
+                </select>
+              </div>
+              <span class="field-error" id="err-type">Please select a property type.</span>
+            </div>
+
+            <div class="field">
+              <label for="units">Number of units / spaces <span class="optional">(optional)</span></label>
+              <div class="select-wrap">
+                <select id="units">
+                  <option value="" selected>I'm not sure yet</option>
+                  <option value="1-5">1 – 5 units</option>
+                  <option value="6-20">6 – 20 units</option>
+                  <option value="21-100">21 – 100 units</option>
+                  <option value="100+">More than 100 units</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <span class="btn-text">Create free account →</span>
+            <div class="spinner"></div>
+          </button>
+
+          <p class="form-footer">
+            By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.<br>
+            We will never sell your data or send you spam.
+          </p>
+        </form>
+
+        <!-- SUCCESS STATE -->
+        <div class="success-state" id="success-state">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14l6 6 10-10" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2 class="success-title">You're in.</h2>
+          <p class="success-sub">You're registered as one of Tuluyan's founding operators. We'll reach out with next steps as we open early access.</p>
+          <div class="success-detail">
+            <strong>What happens next:</strong><br>
+            Check your email for a confirmation from <strong>hello@tuluyan.ph</strong>. Add us to your contacts so it doesn't go to spam. We'll send you your setup link and onboarding guide as soon as your account is ready.
+          </div>
+          <a href="../dashboard/dashboard-v2.html" class="back-link" style="background:var(--teal);color:white;padding:11px 22px;border-radius:10px;font-weight:700;font-size:14px;display:inline-block;margin-bottom:12px;">Go to your dashboard →</a><br>
+          <a href="tuluyan-homepage-v2.html" class="back-link">← Back to homepage</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const form = document.getElementById('signup-form');
+const formInner = document.getElementById('form-inner');
+const submitBtn = document.getElementById('submit-btn');
+
+function showError(id, show) {
+  const el = document.getElementById(id);
+  el.classList.toggle('visible', show);
+}
+
+function markError(inputId, errId, condition) {
+  const input = document.getElementById(inputId);
+  input.classList.toggle('error', condition);
+  showError(errId, condition);
+  return condition;
+}
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('full-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const type = document.getElementById('property-type').value;
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  let hasError = false;
+  if (markError('full-name', 'err-name', name.length < 2)) hasError = true;
+  if (markError('email', 'err-email', !emailRe.test(email))) hasError = true;
+  if (markError('property-type', 'err-type', !type)) hasError = true;
+
+  if (hasError) return;
+
+  submitBtn.classList.add('loading');
+
+  setTimeout(() => {
+    formInner.classList.add('submitted');
+  }, 1200);
+});
+
+// Clear errors on input
+['full-name', 'email', 'property-type'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    el.classList.remove('error');
+    const errMap = { 'full-name': 'err-name', 'email': 'err-email', 'property-type': 'err-type' };
+    showError(errMap[id], false);
+  });
+});
+</script>
+</body>
+</html>

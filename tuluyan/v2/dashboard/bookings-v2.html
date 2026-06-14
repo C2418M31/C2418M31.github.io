@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tuluyan — Bookings</title>
+<title>tuluyan. — Bookings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --sidebar: #1B2B3A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
-  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7;
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7; --teal-mid: rgba(11,138,154,0.12);
   --bg: #F0F2F5; --white: #FFFFFF;
   --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
   --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
@@ -82,7 +82,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .active-filters { display: none; gap: 6px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
 .active-filters.visible { display: flex; }
 .active-filters-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-right: 2px; }
-.filter-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--teal-light); color: var(--teal); border: 1px solid rgba(11,138,154,.2); border-radius: 100px; padding: 3px 10px 3px 10px; font-size: 12px; font-weight: 600; }
+.filter-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--teal-light); color: var(--teal); border: 1px solid rgba(26,26,26,.2); border-radius: 100px; padding: 3px 10px 3px 10px; font-size: 12px; font-weight: 600; }
 .filter-chip button { background: none; border: none; cursor: pointer; color: inherit; font-size: 14px; line-height: 1; padding: 0 0 0 2px; opacity: .6; }
 .filter-chip button:hover { opacity: 1; }
 
@@ -170,11 +170,11 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
-      <span class="logo-text">Tuluyan</span>
+      <span class="logo-text">tuluyan.<\/span>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Manage</div>
-      <button class="nav-item" onclick="window.location.href='dashboard.html'">
+      <button class="nav-item" onclick="window.location.href='dashboard-v2.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
         Dashboard
       </button>
@@ -182,15 +182,15 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5V15H5.5V10.5H10.5V15H15V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
         My Properties
       </button>
-      <button class="nav-item active" onclick="window.location.href='bookings.html'">
+      <button class="nav-item active" onclick="window.location.href='bookings-v2.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Bookings <span class="nav-badge">3</span>
       </button>
-      <button class="nav-item" onclick="window.location.href='tenants.html'">
+      <button class="nav-item" onclick="window.location.href='tenants-v2.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14C2 11.2 4.7 9 8 9C11.3 9 14 11.2 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Tenants
       </button>
-      <button class="nav-item" onclick="window.location.href='finances.html'">
+      <button class="nav-item" onclick="window.location.href='finances-v2.html'">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 7h13M5 10h2M9 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         Finances
       </button>
@@ -739,3 +739,8 @@ function clearFilters() {
 </script>
 </body>
 </html>
+
+
+
+
+

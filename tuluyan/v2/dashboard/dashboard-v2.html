@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tuluyan. — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --sidebar: #1B2B3A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7; --teal-mid: rgba(11,138,154,0.12);
+  --bg: #F0F2F5; --white: #FFFFFF;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --green: #059669; --green-bg: #ECFDF5;
+  --amber: #D97706; --amber-bg: #FFFBEB;
+  --red: #DC2626; --red-bg: #FEF2F2;
+  --blue: #2563EB; --blue-bg: #EFF6FF;
+  --radius: 12px;
+}
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar { width: 200px; background: var(--sidebar); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+.sidebar-logo { display: flex; align-items: center; gap: 8px; padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.logo-mark { width: 28px; height: 28px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-text { font-size: 16px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+.sidebar-section { padding: 20px 10px 8px; }
+.sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background .15s; color: rgba(255,255,255,0.55); font-size: 13.5px; font-weight: 500; border: none; background: transparent; font-family: inherit; width: 100%; text-align: left; }
+.nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.8); }
+.nav-item.active { background: var(--sidebar-active); color: white; }
+.nav-item svg { flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; background: var(--teal); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
+
+/* ── SHELL ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: 60px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; flex-shrink: 0; }
+.topbar-left h2 { font-size: 15px; font-weight: 700; }
+.topbar-left p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.btn-icon { width: 36px; height: 36px; border: 1px solid var(--border2); border-radius: 8px; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+.btn-primary { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 7px; transition: background .15s; }
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-sm { background: var(--white); color: var(--text); border: 1px solid var(--border2); border-radius: 7px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background .15s; }
+.btn-sm:hover { background: var(--bg); }
+.btn-sm.danger { border-color: rgba(220,38,38,.3); color: var(--red); }
+.btn-sm.teal { border-color: var(--teal); color: var(--teal); }
+.content { flex: 1; overflow-y: auto; padding: 26px 28px; }
+
+/* ── GREETING ── */
+.greeting { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
+.greeting h1 { font-size: 19px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.greeting-sub { font-size: 13px; color: var(--muted); }
+.date-chip { background: var(--white); border: 1px solid var(--border2); border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+
+/* ── KPI ROW ── */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.kpi-card { background: var(--white); border-radius: var(--radius); padding: 18px 20px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.kpi-card::before { content: ''; position: absolute; right: -10px; top: -10px; width: 70px; height: 70px; border-radius: 50%; opacity: .06; }
+.kpi-card.revenue::before { background: var(--teal); }
+.kpi-card.occ::before { background: var(--blue); }
+.kpi-card.active::before { background: var(--green); }
+.kpi-card.alert::before { background: var(--red); }
+.kpi-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.kpi-icon.teal { background: var(--teal-light); color: var(--teal); }
+.kpi-icon.blue { background: var(--blue-bg); color: var(--blue); }
+.kpi-icon.green { background: var(--green-bg); color: var(--green); }
+.kpi-icon.red { background: var(--red-bg); color: var(--red); }
+.kpi-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
+.kpi-num { font-size: 26px; font-weight: 800; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
+.kpi-delta { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+.kpi-delta.up { color: var(--green); }
+.kpi-delta.down { color: var(--red); }
+.kpi-delta.warn { color: var(--amber); }
+.kpi-delta.neutral { color: var(--hint); }
+
+/* ── CHART ROW ── */
+.chart-row { display: grid; grid-template-columns: 1fr 260px; gap: 16px; margin-bottom: 20px; }
+.card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px 22px; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.card-title { font-size: 14px; font-weight: 700; }
+.card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.card-tag { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 100px; background: var(--teal-light); color: var(--teal); }
+
+/* Bar chart */
+.bar-chart-wrap { display: flex; align-items: flex-end; gap: 6px; height: 130px; padding-bottom: 0; border-bottom: 1.5px solid var(--border2); margin-bottom: 8px; }
+.bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0; cursor: pointer; }
+.bar { width: 100%; border-radius: 4px 4px 0 0; transition: filter .15s; position: relative; }
+.bar.past { background: rgba(0,0,0,0.12); }
+.bar.current { background: var(--teal); }
+.bar-group:hover .bar { filter: brightness(1.15); }
+.bar-val { font-size: 10.5px; font-weight: 700; color: var(--muted); margin-bottom: 4px; line-height: 1; }
+.bar-month { font-size: 10.5px; color: var(--hint); margin-top: 7px; text-align: center; }
+.bar-month.current { color: var(--teal); font-weight: 700; }
+.chart-yaxis { display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding-bottom: 0; margin-right: 8px; }
+.chart-yaxis span { font-size: 10px; color: var(--hint); white-space: nowrap; line-height: 1; }
+.chart-area { display: flex; align-items: stretch; }
+
+/* Breakdown */
+.breakdown-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.breakdown-item:last-child { border-bottom: none; }
+.breakdown-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.breakdown-dot.teal { background: var(--teal); }
+.breakdown-dot.blue { background: var(--blue); }
+.breakdown-label { flex: 1; font-size: 13px; font-weight: 500; }
+.breakdown-sub { font-size: 11.5px; color: var(--muted); display: block; }
+.breakdown-amount { font-size: 14px; font-weight: 700; }
+.breakdown-pct { font-size: 11.5px; color: var(--hint); margin-left: 4px; }
+.total-divider { margin: 12px 0; border-top: 1.5px solid var(--border2); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.total-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+.total-amount { font-size: 16px; font-weight: 800; }
+
+/* ── EVENTS + ACTIONS ROW ── */
+.ea-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+/* Events */
+.event-group-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--hint); margin: 14px 0 8px; }
+.event-group-label:first-child { margin-top: 0; }
+.event-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 9px; transition: background .15s; cursor: pointer; }
+.event-item:hover { background: var(--bg); }
+.event-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+.event-icon.checkin { background: var(--green-bg); }
+.event-icon.checkout { background: var(--blue-bg); }
+.event-icon.renewal { background: var(--amber-bg); }
+.event-icon.dues { background: var(--red-bg); }
+.event-body { flex: 1; }
+.event-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+.event-meta { font-size: 12px; color: var(--muted); }
+.event-time { font-size: 11.5px; color: var(--hint); white-space: nowrap; margin-top: 2px; flex-shrink: 0; }
+.empty-state { color: var(--hint); font-size: 13px; padding: 16px 12px; font-style: italic; }
+
+/* Actions */
+.action-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 9px; margin-bottom: 6px; border: 1px solid transparent; transition: background .15s; }
+.action-item.critical { background: var(--red-bg); border-color: rgba(220,38,38,.15); }
+.action-item.high { background: var(--amber-bg); border-color: rgba(217,119,6,.15); }
+.action-item.normal { background: var(--bg); border-color: var(--border); }
+.action-priority { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.action-priority.crit { background: var(--red); color: white; }
+.action-priority.hi { background: var(--amber); color: white; }
+.action-priority.norm { background: var(--hint); color: white; }
+.action-body { flex: 1; }
+.action-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+.action-meta { font-size: 12px; color: var(--muted); }
+
+/* ── PROPERTY PERFORMANCE ── */
+.perf-table-wrap { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.perf-table { width: 100%; border-collapse: collapse; }
+.perf-table th { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--hint); padding: 12px 20px; text-align: left; border-bottom: 1px solid var(--border2); background: var(--bg); }
+.perf-table td { padding: 13px 20px; font-size: 13.5px; border-bottom: 1px solid var(--border); }
+.perf-table tr:last-child td { border-bottom: none; }
+.perf-table tr { cursor: pointer; transition: background .15s; }
+.perf-table tr:hover td { background: #FAFAFA; }
+.perf-table th:last-child, .perf-table td:last-child { text-align: right; }
+.prop-name-cell { display: flex; align-items: center; gap: 10px; }
+.prop-emoji { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.prop-emoji.short { background: linear-gradient(135deg,#C8EEF5,#A0DDE8); }
+.prop-emoji.long { background: linear-gradient(135deg,#D5E8FF,#B8D4F8); }
+.prop-emoji.hoa { background: linear-gradient(135deg,#FFF0C8,#FFE08A); }
+.type-pill { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+.type-pill.short { background: var(--teal-light); color: var(--teal); }
+.type-pill.long { background: var(--blue-bg); color: var(--blue); }
+.type-pill.hoa { background: var(--amber-bg); color: var(--amber); }
+.occ-cell { display: flex; align-items: center; gap: 8px; }
+.occ-bar { width: 60px; height: 5px; background: var(--border2); border-radius: 100px; overflow: hidden; }
+.occ-fill { height: 100%; border-radius: 100px; }
+.occ-fill.good { background: var(--green); }
+.occ-fill.warn { background: var(--amber); }
+.trend { font-size: 12px; font-weight: 600; }
+.trend.up { color: var(--green); }
+.trend.flat { color: var(--hint); }
+.status-live { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: var(--green); }
+.status-live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
+      <span class="logo-text">tuluyan.<\/span>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Manage</div>
+      <button class="nav-item active" onclick="window.location.href='dashboard-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="window.location.href='tuluyan-operator-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5V15H5.5V10.5H10.5V15H15V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        My Properties
+      </button>
+      <button class="nav-item" onclick="window.location.href='bookings-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Bookings <span class="nav-badge">3</span>
+      </button>
+      <button class="nav-item" onclick="window.location.href='tenants-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14C2 11.2 4.7 9 8 9C11.3 9 14 11.2 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Tenants
+      </button>
+      <button class="nav-item" onclick="window.location.href='finances-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 7h13M5 10h2M9 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Finances
+      </button>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M14 10C14 10.5304 13.7893 11.0391 13.4142 11.4142C13.0391 11.7893 12.5304 12 12 12H4L1.5 14.5V4C1.5 3.46957 1.71071 2.96086 2.08579 2.58579C2.46086 2.21071 2.96957 2 3.5 2H12C12.5304 2 13.0391 2.21071 13.4142 2.58579C13.7893 2.96086 14 3.46957 14 4V10Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Messages <span class="nav-badge">2</span>
+      </button>
+    </div>
+    <div class="sidebar-section" style="margin-top:auto">
+      <div class="sidebar-label">Account</div>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M3.05 12.95l1.42-1.42M11.53 4.47l1.42-1.42" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Settings
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h2>Dashboard</h2>
+        <p>Your portfolio at a glance</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-icon" title="Notifications">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6V9.5L2 11H14L12.5 9.5V6C12.5 3.5 10.5 1.5 8 1.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6.5 11C6.5 11.8 7.2 12.5 8 12.5C8.8 12.5 9.5 11.8 9.5 11" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <button class="btn-primary" onclick="openAddProperty()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Add property
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Greeting -->
+      <div class="greeting">
+        <div>
+          <h1>Good afternoon, Jay Dee 👋</h1>
+          <div class="greeting-sub">You have <strong style="color:var(--text)">5 items</strong> that need your attention today.</div>
+        </div>
+        <div class="date-chip">Saturday, May 24, 2026</div>
+      </div>
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <div class="kpi-card revenue">
+          <div class="kpi-icon teal">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4V9C2 12.3 4.7 14.5 8 15C11.3 14.5 14 12.3 14 9V4L8 1Z" stroke="currentColor" stroke-width="1.4"/></svg>
+          </div>
+          <div class="kpi-label">Revenue this month</div>
+          <div class="kpi-num">₱114,800</div>
+          <div class="kpi-delta up">▲ +18% vs April</div>
+        </div>
+        <div class="kpi-card occ">
+          <div class="kpi-icon blue">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 5V15H5.5V10.5H10.5V15H14V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="kpi-label">Portfolio occupancy</div>
+          <div class="kpi-num">84%</div>
+          <div class="kpi-delta up">▲ +3% vs last month</div>
+        </div>
+        <div class="kpi-card active">
+          <div class="kpi-icon green">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14.5C2 11.5 4.7 9 8 9C11.3 9 14 11.5 14 14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="kpi-label">Active guests &amp; tenants</div>
+          <div class="kpi-num">9</div>
+          <div class="kpi-delta neutral">3 short-term · 6 long-term</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-icon red">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3M8 10.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="kpi-label">Actions required</div>
+          <div class="kpi-num">5</div>
+          <div class="kpi-delta down">2 urgent · 3 high</div>
+        </div>
+      </div>
+
+      <!-- Chart Row -->
+      <div class="chart-row">
+        <!-- Revenue Trend Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Revenue trend</div>
+              <div class="card-sub">Dec 2025 – May 2026 · all properties combined</div>
+            </div>
+            <span class="card-tag">▲ 69% since Dec</span>
+          </div>
+          <div class="chart-area">
+            <div class="chart-yaxis">
+              <span>₱120k</span>
+              <span>₱90k</span>
+              <span>₱60k</span>
+              <span>₱30k</span>
+              <span>₱0</span>
+            </div>
+            <div style="flex:1">
+              <div class="bar-chart-wrap">
+                <div class="bar-group">
+                  <div class="bar-val">₱68k</div>
+                  <div class="bar past" style="height:57%"></div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-val">₱75k</div>
+                  <div class="bar past" style="height:63%"></div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-val">₱82k</div>
+                  <div class="bar past" style="height:69%"></div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-val">₱91k</div>
+                  <div class="bar past" style="height:79%"></div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-val">₱97k</div>
+                  <div class="bar past" style="height:82%"></div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-val" style="color:var(--teal)">₱115k</div>
+                  <div class="bar current" style="height:100%"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;margin-top:0">
+                <div class="bar-month" style="flex:1">Dec</div>
+                <div class="bar-month" style="flex:1">Jan</div>
+                <div class="bar-month" style="flex:1">Feb</div>
+                <div class="bar-month" style="flex:1">Mar</div>
+                <div class="bar-month" style="flex:1">Apr</div>
+                <div class="bar-month current" style="flex:1">May</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Revenue breakdown</div>
+              <div class="card-sub">May 2026 · by property</div>
+            </div>
+          </div>
+          <div class="breakdown-item" style="cursor:pointer" onclick="openProperty('edit-short')">
+            <div class="breakdown-dot teal"></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600">Seaside Studio BGC</div>
+              <span class="breakdown-sub">12 bookings · short-term</span>
+            </div>
+            <div style="text-align:right">
+              <div class="breakdown-amount">₱42,800</div>
+              <div class="breakdown-pct">37%</div>
+            </div>
+          </div>
+          <div class="breakdown-item" style="cursor:pointer" onclick="openProperty('edit-long')">
+            <div class="breakdown-dot blue"></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600">Sunrise Apartments</div>
+              <span class="breakdown-sub">5 of 6 paid · long-term</span>
+            </div>
+            <div style="text-align:right">
+              <div class="breakdown-amount">₱60,000</div>
+              <div class="breakdown-pct" style="color:var(--amber)">1 overdue</div>
+            </div>
+          </div>
+          <div class="breakdown-item" style="cursor:pointer" onclick="openProperty('edit-hoa')">
+            <div class="breakdown-dot" style="background:var(--amber)"></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600">Avida Towers HOA</div>
+              <span class="breakdown-sub">46 of 48 paid · HOA dues</span>
+            </div>
+            <div style="text-align:right">
+              <div class="breakdown-amount">₱110,400</div>
+              <div class="breakdown-pct" style="color:var(--amber)">2 overdue</div>
+            </div>
+          </div>
+          <div class="total-divider">
+            <div class="total-label">Total revenue</div>
+            <div class="total-amount">₱213,200</div>
+          </div>
+          <a onclick="window.location.href='finances-v2.html'" style="font-size:12.5px;color:var(--teal);font-weight:600;cursor:pointer;display:block;text-align:center;margin-top:4px">View full financial report →</a>
+        </div>
+      </div>
+
+      <!-- Events + Actions -->
+      <div class="ea-row">
+        <!-- Upcoming Events -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Upcoming this week</div>
+              <div class="card-sub">May 24–30 · all properties</div>
+            </div>
+          </div>
+
+          <div class="event-group-label">Today — May 24</div>
+          <div class="event-item">
+            <div class="event-icon checkin">🏠</div>
+            <div class="event-body">
+              <div class="event-title">Maria Santos checks in</div>
+              <div class="event-meta">Seaside Studio BGC · Unit 1 · 3 nights · 2 guests</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="event-time">Today</div>
+              <button class="btn-sm teal">View</button>
+            </div>
+          </div>
+
+          <div class="event-group-label">May 27</div>
+          <div class="event-item">
+            <div class="event-icon checkout">🔑</div>
+            <div class="event-body">
+              <div class="event-title">Maria Santos checks out</div>
+              <div class="event-meta">Seaside Studio BGC · Unit 1 · Return keys + clean</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="event-time">3 days</div>
+              <button class="btn-sm">View</button>
+            </div>
+          </div>
+
+          <div class="event-group-label">Later this month</div>
+          <div class="event-item">
+            <div class="event-icon checkin">🏠</div>
+            <div class="event-body">
+              <div class="event-title">Carlo Reyes checks in</div>
+              <div class="event-meta">Seaside Studio BGC · Unit 3 · June 1–5 · 3 guests</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="event-time">8 days</div>
+              <button class="btn-sm">View</button>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-icon renewal">📋</div>
+            <div class="event-body">
+              <div class="event-title">Marco Lim lease expiring</div>
+              <div class="event-meta">Sunrise Apartments · Unit 3-B · Ends Jul 2026</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="event-time">~60 days</div>
+              <button class="btn-sm">Renew</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Center -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Action required</div>
+              <div class="card-sub">5 items need your attention</div>
+            </div>
+          </div>
+
+          <div class="action-item critical">
+            <div class="action-priority crit">!</div>
+            <div class="action-body">
+              <div class="action-title">Ben Santos — rent overdue</div>
+              <div class="action-meta">Sunrise Apartments · Unit 1-B · 25 days late · ₱12,000</div>
+            </div>
+            <button class="btn-sm danger" style="margin-top:2px">Remind</button>
+          </div>
+
+          <div class="action-item critical">
+            <div class="action-priority crit">!</div>
+            <div class="action-body">
+              <div class="action-title">Payout method not set</div>
+              <div class="action-meta">Seaside Studio BGC · Revenue can't be transferred</div>
+            </div>
+            <button class="btn-sm danger" style="margin-top:2px">Set up</button>
+          </div>
+
+          <div class="action-item high">
+            <div class="action-priority hi">↑</div>
+            <div class="action-body">
+              <div class="action-title">Pending booking — ID unverified</div>
+              <div class="action-meta">Seaside Studio · Unit 2 · June 8–10 · ₱5,600 at risk</div>
+            </div>
+            <button class="btn-sm" style="margin-top:2px">Review</button>
+          </div>
+
+          <div class="action-item high">
+            <div class="action-priority hi">↑</div>
+            <div class="action-body">
+              <div class="action-title">Unit 103 owner unverified</div>
+              <div class="action-meta">Avida Towers · ID submission pending for 14 days</div>
+            </div>
+            <button class="btn-sm" style="margin-top:2px">Remind</button>
+          </div>
+
+          <div class="action-item normal">
+            <div class="action-priority norm">○</div>
+            <div class="action-body">
+              <div class="action-title">Add cancellation policy</div>
+              <div class="action-meta">Seaside Studio BGC · Required before bookings open</div>
+            </div>
+            <button class="btn-sm" style="margin-top:2px">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Performance Table -->
+      <div class="perf-table-wrap">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:14px;font-weight:700">Property performance</div>
+          <a onclick="window.location.href='tuluyan-operator-v2.html'" style="font-size:12.5px;color:var(--teal);font-weight:600;cursor:pointer">Manage properties →</a>
+        </div>
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Units</th>
+              <th>Occupancy</th>
+              <th>Revenue (May)</th>
+              <th>vs April</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openProperty('edit-short')">
+              <td>
+                <div class="prop-name-cell">
+                  <div class="prop-emoji short">🏨</div>
+                  <div>
+                    <div style="font-size:13.5px;font-weight:600">Seaside Studio BGC</div>
+                    <div style="font-size:11.5px;color:var(--muted)">BGC, Taguig</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-pill short">Short-term</span></td>
+              <td style="font-weight:600">3 units</td>
+              <td>
+                <div class="occ-cell">
+                  <div class="occ-bar"><div class="occ-fill good" style="width:87%"></div></div>
+                  <span style="font-size:13px;font-weight:600">87%</span>
+                </div>
+              </td>
+              <td style="font-weight:700">₱42,800</td>
+              <td><span class="trend up">▲ +12%</span></td>
+              <td><span class="status-live">Live</span></td>
+            </tr>
+            <tr onclick="openProperty('edit-long')">
+              <td>
+                <div class="prop-name-cell">
+                  <div class="prop-emoji long">🏘️</div>
+                  <div>
+                    <div style="font-size:13.5px;font-weight:600">Sunrise Apartments Pasig</div>
+                    <div style="font-size:11.5px;color:var(--muted)">Kapitolyo, Pasig</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-pill long">Long-term</span></td>
+              <td style="font-weight:600">8 units</td>
+              <td>
+                <div class="occ-cell">
+                  <div class="occ-bar"><div class="occ-fill warn" style="width:75%"></div></div>
+                  <span style="font-size:13px;font-weight:600">75%</span>
+                </div>
+              </td>
+              <td style="font-weight:700">₱60,000 <span style="font-size:11px;color:var(--red);font-weight:600">+₱12k due</span></td>
+              <td><span class="trend up">▲ +8%</span></td>
+              <td><span class="status-live">Live</span></td>
+            </tr>
+            <tr onclick="openProperty('edit-hoa')">
+              <td>
+                <div class="prop-name-cell">
+                  <div class="prop-emoji hoa">🏢</div>
+                  <div>
+                    <div style="font-size:13.5px;font-weight:600">Avida Towers Makati</div>
+                    <div style="font-size:11.5px;color:var(--muted)">Makati City</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-pill hoa">HOA</span></td>
+              <td style="font-weight:600">48 units</td>
+              <td>
+                <div class="occ-cell">
+                  <div class="occ-bar"><div class="occ-fill good" style="width:96%"></div></div>
+                  <span style="font-size:13px;font-weight:600">96%</span>
+                </div>
+              </td>
+              <td style="font-weight:700">₱110,400 <span style="font-size:11px;color:var(--amber);font-weight:600">2 late</span></td>
+              <td><span class="trend up">▲ +4%</span></td>
+              <td><span class="status-live">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+function openProperty(view) {
+  localStorage.setItem('tuluyan_openView', view);
+  window.location.href = 'tuluyan-operator-v2.html';
+}
+function openAddProperty() {
+  localStorage.setItem('tuluyan_openView', 'onboarding');
+  window.location.href = 'tuluyan-operator-v2.html';
+}
+</script>
+</body>
+</html>
