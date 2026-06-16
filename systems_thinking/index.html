@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Growth Protocol v2.4 - Strategy Dashboard</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+      "react/jsx-dev-runtime": "https://esm.sh/react@18.2.0/jsx-dev-runtime"
+    }
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -62,6 +70,16 @@
         killCriteria: { metric: "NPS lift among affected users vs. control", target: "+20 NPS points among Typhoon Guard recipients", deadline: "First typhoon season cycle", action: "If NPS lift <5, reduce to simple expiry extension without branding" },
         whyTier: "Requires Signal Scout location data and Digital Karma trust scores to target precisely. Launch Mode uses PAGASA alerts, but intelligent per-user activation needs T1 data maturity.",
         connections: { inputs: ["micro-tribe", "signal-scout", "digital-karma"], outputs: ["cloud-lock", "data-staking"] }
+      },
+      { id: "starlink-lifeline", title: "Starlink Life Line", category: "ANCHOR", icon: Shield, tier: "T3",
+        color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
+        summary: "Satellite failover connectivity. When terrestrial towers go dark in a disaster, eligible users get emergency access via Starlink backhaul.",
+        loop: { trigger: "Signal #2 typhoon alert or total tower outage detected in user's area.", action: "Device or hub fails over to Starlink-backed emergency network.", reward: "Stays connected when every other network is dark.", investment: "Ultimate Trust: The network that never goes dark, even when the cell tower does." },
+        launchMode: "Manual activation at designated community Starlink hubs (barangay halls, evacuation centers) during declared calamities. Shared connectivity via fixed hub terminals — no per-device failover or new hardware rollout needed.",
+        fullMode: "Auto-triggered per-device failover using Typhoon Guard's outage detection and Signal Scout's real-time dead-zone data, with access prioritized by Digital Karma trust score when satellite bandwidth is constrained.",
+        killCriteria: { metric: "% of declared-calamity areas with an active hub; verified user connectivity during outage", target: ">80% of Signal #2+ areas have an active hub within 4 hours; verified reports from >500 users per major event", deadline: "First two typhoon season cycles", action: "If hub activation <40%, scale back to a pilot in the 10 most typhoon-prone provinces only" },
+        whyTier: "T3: Requires physical Starlink hardware procurement, hub placement, and partner/regulatory agreements — none of which can be built from in-app data. Full per-device failover additionally depends on Typhoon Guard and Signal Scout (T2) maturity to target and prioritize limited satellite bandwidth.",
+        connections: { inputs: ["typhoon-guard", "signal-scout"], outputs: ["digital-karma"] }
       },
       { id: "legacy-perks", title: "Legacy Perks", category: "ANCHOR", icon: Trophy, tier: "T2",
         color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
