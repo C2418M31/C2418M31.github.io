@@ -51,7 +51,7 @@
         fullMode: "Multi-signal score aggregating streaks, Micro-Tribe contributions, Signal Scout reports, and Social Drops activity. Weighted scoring with decay.",
         killCriteria: { metric: "% of users with active Karma score above threshold", target: ">30% of MAU engaged in score-building actions within 60 days", deadline: "90 days", action: "If <15% engagement, simplify scoring to binary (Good Standing / New)" },
         whyTier: "T2: Requires behavioral data from T1 features (Streaks, Micro-Tribe) to calculate meaningful scores. Without T1 engagement signals, the Karma score has nothing to aggregate.",
-        connections: { inputs: ["streak-economy", "micro-tribe", "social-drops", "signal-scout", "data-trash"], outputs: ["globe-insider", "legacy-perks", "digital-real-estate", "typhoon-guard"] }
+        connections: { inputs: ["streak-economy", "micro-tribe", "social-drops", "signal-scout", "eco-exchange"], outputs: ["globe-insider", "legacy-perks", "digital-real-estate", "typhoon-guard"] }
       },
       { id: "typhoon-guard", title: "Typhoon Guard", category: "ANCHOR", icon: Umbrella, tier: "T2",
         color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
@@ -75,9 +75,9 @@
       },
 
       // ─── KEEPER - Retention ───
-      { id: "globe-insider", title: "Globe Insider", category: "KEEPER", icon: Ticket, tier: "T2",
-        color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
-        summary: "Scarcity-based access gate using reputation scores to filter for high-value users.",
+      { id: "globe-insider", title: "Globe Insider", category: "ANCHOR", icon: Ticket, tier: "T2",
+        color: "text-slate-200", bgColor: "bg-slate-800/50", borderColor: "border-slate-500",
+        summary: "Trust-gated scarcity access. Uses reputation scores from Digital Karma and Legacy Perks to filter high-demand event access for high-value users.",
         loop: { trigger: "High-demand event announced.", action: "User enters 'Waiting Room' via app.", reward: "Priority queue based on Reliability Score.", investment: "Status Maintenance: User avoids churn to keep score high." },
         launchMode: "Simple FIFO waiting room for event access. Priority based on account tenure only. No scoring required.",
         fullMode: "Priority queue ranked by Digital Karma score + Legacy Perks status. Dynamic waitlist with real-time position updates.",
@@ -113,7 +113,7 @@
         fullMode: "Expanded storage unlocked by Typhoon Guard trust, Mystery Box wins, and Data Exchange credits. Smart auto-categorization.",
         killCriteria: { metric: "Cloud adoption rate; churn rate of cloud users vs. non-cloud users", target: ">15% of users activate cloud; cloud users churn at <40% rate of others", deadline: "90 days", action: "If adoption <5%, reduce to auto-backup of profile data only" },
         whyTier: "Foundational retention barrier. Can launch Day 1 with basic photo backup on storage-full trigger. No external dependencies — creates immediate high-friction switching cost.",
-        connections: { inputs: ["typhoon-guard", "data-trash", "mystery-box"], outputs: ["legacy-perks"] }
+        connections: { inputs: ["typhoon-guard", "eco-exchange", "mystery-box"], outputs: ["legacy-perks"] }
       },
       { id: "nomad-passport", title: "Nomad Passport", category: "KEEPER", icon: Plane, tier: "T3",
         color: "text-blue-400", bgColor: "bg-blue-900/30", borderColor: "border-blue-500",
@@ -155,7 +155,7 @@
         fullMode: "Full flash auction system with real-time bidding, fueled by Data Staking surplus and Data Exchange credits. Partner Co-pilot merchant prizes.",
         killCriteria: { metric: "Auction participation rate; post-auction top-up conversion", target: ">5% of notified users participate; >60% of winners top-up within 48hrs", deadline: "After 5 auction cycles", action: "If participation <2%, pivot to fixed-price data-for-voucher exchange" },
         whyTier: "Needs Data Staking surplus and active engagement to create bidding demand. Flash auctions with <100 participants feel dead. Requires T1 to build the user habit of valuing data as currency.",
-        connections: { inputs: ["data-staking", "data-trash"], outputs: ["streak-economy", "partner-copilot"] }
+        connections: { inputs: ["data-staking", "eco-exchange"], outputs: ["streak-economy", "partner-copilot"] }
       },
       { id: "streak-economy", title: "Streak Economy", category: "CATALYST", icon: Repeat, tier: "T1",
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
@@ -195,7 +195,7 @@
         fullMode: "Full Partner Co-pilot merchant slots, Environment Trigger weather-aware timing, Streak Economy streak-locked premium spins.",
         killCriteria: { metric: "Spin rate at lunchtime; voucher redemption rate at partner", target: ">10% of notified users spin; >25% of spinners redeem", deadline: "60 days", action: "If spin rate <4%, test different time windows or remove push trigger" },
         whyTier: "Requires Partner Co-pilot merchant inventory and Streak Economy engagement patterns to time spins effectively. Launch Mode works with generic vouchers, but full value needs T1+T2 data.",
-        connections: { inputs: ["quest-chain", "partner-copilot", "environment-sales", "streak-economy"], outputs: ["mystery-box", "social-drops"] }
+        connections: { inputs: ["quest-chain", "partner-copilot", "environment-trigger", "streak-economy"], outputs: ["mystery-box", "social-drops"] }
       },
       { id: "mystery-box", title: "Mystery Box", category: "CATALYST", icon: Gift, tier: "T1",
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
@@ -211,11 +211,11 @@
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
         summary: "Context-aware micropayments for Quality of Service. High latency \u2192 one-tap boost.",
         loop: { trigger: "High latency detected.", action: "One-tap 'Boost Speed'.", reward: "1 Hour Priority Traffic.", investment: "Micro-transaction habit." },
-        launchMode: "Triggers on basic network latency threshold. One-tap purchase. No external data needed \u2014 uses native device speed detection.",
+        launchMode: "Triggers on basic network latency threshold. One-tap purchase. No external data needed — uses native device speed detection.",
         fullMode: "Enhanced by Signal Scout location intelligence, Environment Trigger weather context, and Data Market dynamic pricing.",
         killCriteria: { metric: "Boost tap-through rate; repeat purchase rate within 7 days", target: ">12% tap-through on trigger; >30% repeat within 7 days", deadline: "30 days", action: "If tap-through <5%, test different price points or trigger thresholds" },
         whyTier: "Core contextual monetization. Can launch Day 1 using native device latency detection. No external data needed. Generates the micro-transaction habit and context data that powers the CATALYST pillar.",
-        connections: { inputs: ["environment-sales", "signal-scout", "data-market"], outputs: ["quest-chain", "nomad-passport", "streak-economy"] }
+        connections: { inputs: ["environment-trigger", "signal-scout", "data-market"], outputs: ["quest-chain", "nomad-passport", "streak-economy"] }
       },
       { id: "prediction-market", title: "Prediction Market", category: "CATALYST", icon: TrendingUp, tier: "T3",
         color: "text-yellow-400", bgColor: "bg-yellow-900/30", borderColor: "border-yellow-500",
@@ -243,13 +243,13 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Squad of 4. Collective \u20B1500 load target. Everyone gets free YouTube. Social pressure as retention.",
         loop: { trigger: "Create a squad of 4.", action: "Collective \u20B1500 load target.", reward: "Free YouTube for everyone.", investment: "Social Pressure: Cannot let friends down." },
-        launchMode: "Simple group creation via invite link. Fixed collective target. Fixed reward. No external dependencies \u2014 uses BFF module.",
+        launchMode: "Simple group creation via invite link. Fixed collective target. Fixed reward. No external dependencies — uses BFF module.",
         fullMode: "Enhanced by AR Geo-Cache group hunts, Digital Balikbayan family invites, Social Drops shared content, and Digital Real Estate squad status.",
         killCriteria: { metric: "Squad creation rate; squad completion rate; member retention", target: ">5% of MAU create/join squads; >15% completion; squad members retain at 2x", deadline: "60 days", action: "If creation <2%, lower squad size to 2 and reduce target" },
         whyTier: "Foundational social mechanic. Can launch Day 1 with simple squad creation via invite link. Fixed target, fixed reward. Generates the social pressure data that proves BAYANIHAN works.",
         connections: { inputs: ["ar-geocache", "digital-balikbayan", "social-drops", "digital-real-estate"], outputs: ["streak-economy", "typhoon-guard", "digital-karma", "travel-squad"] }
       },
-      { id: "travel-squad", title: "Travel Squad", category: "BAYANIHAN", icon: Globe, tier: "T3",
+      { id: "travel-squad", title: "Travel Squad", category: "BAYANIHAN", icon: Share2, tier: "T3",
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Shared roaming pool for group travelers, creating social lock-in.",
         loop: { trigger: "Users plan a trip together.", action: "Create a shared roaming bucket.", reward: "Cheaper cost per GB.", investment: "Social Lock: The group stays on GOMO for the trip." },
@@ -287,19 +287,19 @@
         fullMode: "Full signal map with Speed Test Bounty verification, Rider Radar gig worker data, heatmaps feeding Environment Triggers and Sachet Upsell targeting.",
         killCriteria: { metric: "Reports submitted per week; data quality/accuracy rate", target: ">5000 reports/week; >70% accuracy when validated against network data", deadline: "60 days", action: "If <1000 reports/week, reduce to passive background reporting" },
         whyTier: "Requires enough users with Sachet Upsell and Streak Economy habits to generate consistent crowdsourced reports. Without T1 engagement driving daily opens, report volume is too low to be useful.",
-        connections: { inputs: ["speed-test-bounty", "riders-radar", "sachet-upsell"], outputs: ["environment-sales", "sachet-upsell", "the-detour", "digital-karma", "typhoon-guard", "streak-economy"] }
+        connections: { inputs: ["speed-test-bounty", "riders-radar", "sachet-upsell"], outputs: ["environment-trigger", "sachet-upsell", "the-detour", "digital-karma", "typhoon-guard", "streak-economy"] }
       },
       { id: "speed-test-bounty", title: "Speed Test Bounty", category: "BAYANIHAN", icon: Crosshair, tier: "T2",
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Incentivized verification tasks for network QA in specific areas.",
         loop: { trigger: "Network requests data in specific area.", action: "User runs in-app speed test.", reward: "Instant data credit.", investment: "Gig Work: Performing labor for the network." },
-        launchMode: "Simple in-app speed test with instant small data reward. No targeting \u2014 available to all users anytime.",
+        launchMode: "Simple in-app speed test with instant small data reward. No targeting — available to all users anytime.",
         fullMode: "Targeted bounties for specific locations, verified against Signal Scout reports. Digital Balikbayan family-sourced testing in rural areas.",
         killCriteria: { metric: "Test completion rate per request; data accuracy", target: ">50% of targeted users complete test; results within 10% of tower data", deadline: "60 days", action: "If completion <20%, increase reward or reduce frequency" },
         whyTier: "Requires Signal Scout infrastructure to target specific areas for testing. Without the reporting framework, bounties are untargeted and data is low-quality.",
         connections: { inputs: ["digital-balikbayan"], outputs: ["signal-scout"] }
       },
-      { id: "data-heist", title: "Data Heist", category: "BAYANIHAN", icon: UserPlus, tier: "T3",
+      { id: "data-heist", title: "Data Heist", category: "BAYANIHAN", icon: Zap, tier: "T3",
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Synchronous group challenge. Squad burns 50GB together for raffle entry.",
         loop: { trigger: "Long weekend starts.", action: "Squad burns 50GB together.", reward: "Loot Box (PS5 Raffle).", investment: "Burn Rate: Depleting tanks together." },
@@ -313,7 +313,7 @@
         color: "text-orange-400", bgColor: "bg-orange-900/30", borderColor: "border-orange-500",
         summary: "Collective resource pooling. Fans donate data to win real-world idol ads.",
         loop: { trigger: "Vote for Idol billboard.", action: "Donate unused data to House.", reward: "Idol wins real-world ads.", investment: "Tribalism: Recruiting others to the network." },
-        launchMode: "Simple polling/voting for fan favorites. No data donation \u2014 just engagement and social sharing.",
+        launchMode: "Simple polling/voting for fan favorites. No data donation — just engagement and social sharing.",
         fullMode: "Full DAO with data pooling from Prediction Market, Globe Insider event access, and Digital Real Estate status-weighted voting power.",
         killCriteria: { metric: "DAO creation rate; total data donated per campaign", target: ">10 active DAOs; >1TB total donated per campaign cycle", deadline: "After 2 campaign cycles", action: "If <3 DAOs active, simplify to voting-only without data pooling" },
         whyTier: "Needs Prediction Market engagement, Globe Insider event access, and Digital Real Estate status systems to create meaningful collective action. Without ecosystem maturity, DAOs have no currency to pool.",
@@ -331,7 +331,7 @@
         whyTier: "Requires T1 user engagement data (DAU, streaks, top-up frequency) to pitch merchants. Without proof of engaged users, merchant sign-ups will be near zero. Needs Quest Chain and Globe Passport data.",
         connections: { inputs: ["data-market", "globe-passport", "quest-chain"], outputs: ["foodie-roulette", "ar-geocache", "the-detour", "social-drops"] }
       },
-      { id: "environment-sales", title: "Environment Trigger", category: "NEXUS", icon: CloudRain, tier: "T2",
+      { id: "environment-trigger", title: "Environment Trigger", category: "NEXUS", icon: CloudRain, tier: "T2",
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "External trigger system. Rain/traffic \u2192 contextual streaming or delivery promos.",
         loop: { trigger: "Heavy rain or traffic detected.", action: "App pushes 'Boredom Buster' promo.", reward: "Discounted streaming pack.", investment: "Reliance: The app understands your context." },
@@ -341,12 +341,12 @@
         whyTier: "Requires Signal Scout crowdsourced weather/location data to trigger contextually. Launch Mode uses basic weather API, but intelligent targeting needs T1 engagement + T2 Signal Scout maturity.",
         connections: { inputs: ["signal-scout"], outputs: ["sachet-upsell", "foodie-roulette"] }
       },
-      { id: "data-trash", title: "Data Exchange", category: "NEXUS", icon: Trash2, tier: "T3",
+      { id: "eco-exchange", title: "Eco Exchange", category: "NEXUS", icon: Trash2, tier: "T3",
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
-        summary: "Value exchange. Physical waste \u2192 QR scan at kiosk \u2192 instant data credit.",
-        loop: { trigger: "User has plastic waste.", action: "Drops it at a kiosk & scans QR.", reward: "Instant Data Credit.", investment: "Values Alignment: 'This brand shares my values.'" },
-        launchMode: "Digital eco-challenge quests within the app (e.g. 'Eco Week'). No physical kiosk needed. Virtual participation.",
-        fullMode: "Full physical kiosk network with QR scanning, Cloud Lock credit integration, Data Market exchange, and Digital Karma eco-bonus.",
+        summary: "Sustainability-driven data credit engine: recycle physical waste (or complete digital eco-quests) for instant data — a values-based reward path, distinct from Data Market's auction-and-bidding mechanic.",
+        loop: { trigger: "User has recyclable plastic waste.", action: "Drops it at a kiosk & scans QR.", reward: "Instant Data Credit.", investment: "Values Alignment: 'This brand shares my environmental values.'" },
+        launchMode: "Digital eco-challenge quests within the app (e.g. 'Eco Week'). No physical kiosk needed — fully virtual participation and reward.",
+        fullMode: "Full physical kiosk network with QR scanning, feeding Cloud Lock storage credit, Data Market auction currency, and a Digital Karma eco-bonus.",
         killCriteria: { metric: "Kiosk scan volume; user sentiment/brand lift", target: ">500 scans/week across kiosks; measurable NPS lift in eco-conscious segment", deadline: "90 days", action: "If <100 scans/week, reduce to digital-only eco challenges" },
         whyTier: "Needs physical kiosk partnerships and operational logistics. Digital eco-challenges can launch earlier, but the full physical exchange requires partner infrastructure and regulatory compliance.",
         connections: { inputs: ["quest-chain", "nomad-passport"], outputs: ["cloud-lock", "data-market", "digital-karma"] }
@@ -361,24 +361,24 @@
         whyTier: "Needs Partner Co-pilot merchant drops, Nomad Passport travel data, and sufficient user density for AR discovery to feel alive. Without ecosystem maturity, AR sessions find nothing.",
         connections: { inputs: ["riders-radar", "nomad-passport", "partner-copilot"], outputs: ["micro-tribe", "social-drops", "travel-badges"] }
       },
-      { id: "riders-radar", title: "Riders Radar", category: "NEXUS", icon: Smartphone, tier: "T2",
+      { id: "riders-radar", title: "Riders Radar", category: "NEXUS", icon: Smartphone, tier: "T1",
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Utility-based segment lock-in for gig workers. GPS Priority for more bookings.",
         loop: { trigger: "Rider starts shift.", action: "Toggles 'GPS Priority'.", reward: "More bookings via stable net.", investment: "Livelihood dependence." },
         launchMode: "Simple 'Rider Mode' toggle that optimizes data for location services. No external partnerships needed.",
         fullMode: "Full gig worker suite with AR Geo-Cache delivery drops, Signal Scout automatic reporting during rides, and rider-specific data plans.",
         killCriteria: { metric: "Rider segment adoption; rider churn rate vs. general population", target: ">1000 active rider users; rider churn <50% of general churn", deadline: "90 days", action: "If adoption <200, expand to other gig segments (delivery, freelance)" },
-        whyTier: "Requires identifying and targeting gig worker segment. Can launch as simple ‘Rider Mode’ toggle, but full value needs AR Geo-Cache delivery integration and Signal Scout automatic reporting.",
+        whyTier: "T1: Works standalone, no dependencies needed. Can launch Day 1 as a simple 'Rider Mode' toggle that optimizes data for location services — no external partnerships or T1 data required to work. Full value later comes from AR Geo-Cache delivery integration and Signal Scout automatic reporting.",
         connections: { inputs: [], outputs: ["ar-geocache", "signal-scout"] }
       },
-      { id: "digital-balikbayan", title: "Digital Balikbayan", category: "NEXUS", icon: Box, tier: "T2",
+      { id: "digital-balikbayan", title: "Digital Balikbayan", category: "NEXUS", icon: Box, tier: "T1",
         color: "text-emerald-400", bgColor: "bg-emerald-900/30", borderColor: "border-emerald-500",
         summary: "Cross-border value transfer. OFW sends Digital Care Box to family in PH.",
         loop: { trigger: "OFW sends care package.", action: "Family claims Digital Box.", reward: "Shared Data + Vouchers.", investment: "Family network lock-in." },
         launchMode: "Simple data gifting: send a pre-set data bundle to a PH number from abroad. No box branding, just one-tap send.",
         fullMode: "Full Digital Care Box with curated vouchers, Speed Test Bounty family participation, and Micro-Tribe family squad auto-creation.",
         killCriteria: { metric: "Boxes sent per month; family member activation rate", target: ">500 boxes/month; >60% of family recipients become active users", deadline: "90 days", action: "If <100 boxes/month, simplify to data gifting without box branding" },
-        whyTier: "Requires OFW channel access and cross-border payment/delivery infrastructure. Can launch as simple data gifting, but full Care Box needs partner voucher integration.",
+        whyTier: "T1: Works standalone, no dependencies needed. Can launch Day 1 as simple one-tap data gifting from an OFW to a PH number — no T1 behavioral data or ecosystem maturity required. Full Care Box branding and partner voucher integration comes later, gated by OFW channel and cross-border payment partnerships rather than internal data.",
         connections: { inputs: [], outputs: ["speed-test-bounty", "micro-tribe"] }
       },
       { id: "booking-bridge", title: "Booking Bridge", category: "NEXUS", icon: Calendar, tier: "T3",
@@ -466,7 +466,7 @@
                 <div className="w-8 h-8 bg-gomo-gradient rounded-lg flex items-center justify-center text-white font-black text-sm">G</div>
                 <div>
                   <h1 className="font-bold text-base tracking-tight">Growth Protocol <span className="text-slate-600 font-light mono text-xs">v2.3</span></h1>
-                  <p className="text-[9px] text-slate-500 uppercase tracking-widest font-semibold">Strategy Dashboard \u2014 Launch Mode / Full Mode</p>
+                  <p className="text-[9px] text-slate-500 uppercase tracking-widest font-semibold">Strategy Dashboard — Launch Mode / Full Mode</p>
                 </div>
               </div>
               <div className="flex items-center gap-1 bg-[#0a0e17] border border-white/5 rounded-lg p-1">
@@ -488,7 +488,7 @@
                   if (!items.length) return null;
                   return (
                     <div key={cat}>
-                      <p className="text-[8px] font-black uppercase text-slate-600 tracking-[0.2em] mb-1.5 px-2">{cat} \u00B7 {CAT_LABELS[cat]}</p>
+                      <p className="text-[8px] font-black uppercase text-slate-600 tracking-[0.2em] mb-1.5 px-2">{cat} · {CAT_LABELS[cat]}</p>
                       <div className="space-y-0.5">
                         {items.map(s => (
                           <button key={s.id} onClick={() => setSelectedId(s.id)} className={`w-full group px-2.5 py-2 rounded-lg text-left transition-all flex items-center gap-2 ${selectedId === s.id ? `${s.bgColor} border-l-2 ${s.borderColor}` : "hover:bg-white/3"}`}>
@@ -517,7 +517,7 @@
                       <div className="flex items-center gap-2 flex-wrap">
                         <h2 className="text-xl font-bold tracking-tight">{selected.title}</h2>
                         <TierBadge tier={selected.tier} />
-                        <span className="text-[9px] uppercase tracking-widest text-slate-500 font-bold">{selected.category} \u00B7 {CAT_LABELS[selected.category]}</span>
+                        <span className="text-[9px] uppercase tracking-widest text-slate-500 font-bold">{selected.category} · {CAT_LABELS[selected.category]}</span>
                       </div>
                       <p className="text-[13px] text-slate-400 mt-0.5">{selected.summary}</p>
                     </div>
@@ -528,7 +528,7 @@
                     <div className="bg-[#0d1220] border border-cyan-500/10 rounded-xl p-5 space-y-3">
                       <div className="flex items-center gap-2">
                         <ModeBadge mode="launch" />
-                        <span className="text-[9px] font-black uppercase text-slate-500 tracking-widest">Ships standalone \u2014 no dependencies</span>
+                        <span className="text-[9px] font-black uppercase text-slate-500 tracking-widest">Ships standalone — no dependencies</span>
                       </div>
                       <p className="text-sm text-slate-200 leading-relaxed">{selected.launchMode}</p>
                     </div>
@@ -549,7 +549,7 @@
                       </div>
                       <div className="flex-1">
                         <p className={`text-[9px] font-black uppercase tracking-widest mb-1 ${selected.tier === "T1" ? "text-emerald-400" : selected.tier === "T2" ? "text-amber-400" : "text-slate-400"}`}>
-                          Why {selected.tier} \u2014 {TIER_CONFIG[selected.tier].desc}
+                          Why {selected.tier} — {TIER_CONFIG[selected.tier].desc}
                         </p>
                         <p className="text-[13px] text-slate-300 leading-relaxed">{selected.whyTier}</p>
                       </div>
