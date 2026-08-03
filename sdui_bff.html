@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Config Editor with Live Preview</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #CF3D73;
+            --bg-color: #f4f7f6;
+            --panel-bg: #ffffff;
+            --text-dark: #333;
+            --border: #e0e0e0;
+            --gomo-reward-yellow: #FFEA2C;
+            --gomo-referral-green: #72F3BC;
+            --gomo-icon-red: #CF3D73;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            height: 100vh;
+            overflow: hidden; 
+        }
+        h2, h3, h4 { margin-top: 0; color: var(--text-dark); }
+        .container { display: flex; width: 100%; height: 100%; }
+        
+        /* ------------------------------------ */
+        /* --- Left Editor Panel ------------ */
+        /* ------------------------------------ */
+        .editor-panel {
+            width: 45%;
+            padding: 24px;
+            overflow-y: auto;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border);
+        }
+        
+        /* ------------------------------------ */
+        /* --- Right Preview Container ------ */
+        /* ------------------------------------ */
+        .preview-container {
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border);
+            height: 100vh; 
+        }
+        .ui-preview-panel {
+            flex: 0 0 40%; 
+            padding: 24px;
+            background: #fdfdfd;
+            border-bottom: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .json-preview-panel {
+            flex: 1; 
+            padding: 24px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; 
+        }
+        
+        /* Form Styling */
+        .section {
+            background: #f9f9f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+        .form-group { flex: 1; margin-bottom: 16px; }
+        .form-row .form-group { margin-bottom: 0; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%; padding: 10px; border: 1px solid var(--border);
+            border-radius: 4px; box-sizing: border-box; font-family: inherit;
+        }
+        textarea { resize: vertical; height: 80px; }
+        .checkbox-group { display: flex; align-items: center; gap: 8px; }
+        .checkbox-group input { width: 18px; height: 18px; margin: 0; }
+        .checkbox-group label { margin: 0; font-weight: normal; }
+        .color-picker { display: flex; align-items: center; gap: 10px; }
+        input[type="color"] { height: 36px; width: 50px; padding: 0; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; }
+        
+        pre {
+            background: #1e1e1e; padding: 16px; border-radius: 8px;
+            overflow-y: auto; flex: 1; margin: 0; font-size: 14px;
+            line-height: 1.5; font-family: 'Courier New', Courier, monospace;
+        }
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        button {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 4px; cursor: pointer;
+            font-weight: 600; transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.9; }
+        
+        /* ------------------------------------ */
+        /* --- GOMO UI Preview Card Styling --- */
+        /* ------------------------------------ */
+        .preview-hint { color: #666; margin-bottom: 16px; font-size: 14px; font-style: italic; }
+        
+        .referral-card-wrapper {
+            width: 100%; max-width: 480px; margin: 0 auto;
+            border-radius: 16px; border-width: 2px; border-style: dashed;
+            background-color: #2D234C; color: white;
+            font-family: 'Rubik', sans-serif; transition: all 0.3s ease; cursor: pointer;
+        }
+        
+        .referral-card-content {
+            padding: 20px 52px 20px 24px; 
+            position: relative;
+        }
+
+        .collapse-icon {
+            position: absolute;
+            top: 20px;
+            right: 16px;
+            color: white;
+            font-size: 28px;
+            transition: transform 0.3s ease;
+        }
+        
+        .referral-spiel { font-size: 16px; font-weight: 500; line-height: 1.4; margin: 0; }
+        .spiel-reward-text { color: var(--gomo-reward-yellow); font-weight: bold; }
+        
+        /* Expanded State Container */
+        .expanded-details {
+            display: none; 
+            flex-direction: column;
+            gap: 16px; 
+        }
+        
+        .code-box-wrapper {
+            border-radius: 12px; background-color: #382A5E; 
+            padding: 16px 20px; display: flex;
+            justify-content: space-between; align-items: center;
+            transition: flex-direction 0.2s ease;
+        }
+        
+        .code-text { color: var(--gomo-referral-green); font-size: 28px; font-weight: bold; margin: 0; letter-spacing: 1px; }
+        .action-buttons { display: flex; gap: 20px; }
+        .action-item { display: flex; flex-direction: column; align-items: center; color: white; font-size: 13px; }
+        .action-item .material-icons { font-size: 24px; color: var(--gomo-icon-red); margin-bottom: 4px; }
+        
+        /* Toggle Logic */
+        .is-expanded .expanded-details { display: flex; } 
+        .is-expanded #uiCollapsedView { display: none; }
+        .referral-card-wrapper:not(.is-expanded) .collapse-icon { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="editor-panel">
+        <h2>Dashboard Configuration</h2>
+
+        <div class="section">
+            <h3>General Settings</h3>
+            <div class="form-row">
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="isEnabled" checked>
+                    <label for="isEnabled">Is Enabled</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="initialStateExpanded" checked>
+                    <label for="initialStateExpanded">Initial State Expanded</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group color-picker">
+                    <input type="color" id="backgroundColor" value="#2D234C">
+                    <label for="backgroundColor">Background Color</label>
+                </div>
+                <div class="form-group color-picker">
+                    <input type="color" id="borderColor" value="#4A3B7A">
+                    <label for="borderColor">Border Color</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Collapsed Element (SPIEL)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Value</label>
+                    <input type="text" id="c_spiel_value" value="🎁 Get a %reward% for you and your friend!">
+                </div>
+                <div class="form-group" style="max-width: 150px;">
+                    <label>Order</label>
+                    <input type="number" id="c_spiel_order" value="1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Reward</label>
+                <input type="text" id="c_spiel_reward" value="FREE 2GB">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Expanded Element 1 (SPIEL)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Value</label>
+                    <textarea id="e_spiel_value">Get %reward% ✨ for you and your friend when they activate a SIM using your referral code!</textarea>
+                </div>
+                <div class="form-group" style="max-width: 150px;">
+                    <label>Order</label>
+                    <input type="number" id="e_spiel_order" value="2">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Reward</label>
+                <input type="text" id="e_spiel_reward" value="FREE 2GB">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Expanded Element 2 (CODE_BOX)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Layout Direction</label>
+                    <select id="e_code_layout">
+                        <option value="TEXT_FIRST" selected>TEXT_FIRST (Code Left, Icons Right)</option>
+                        <option value="ICONS_FIRST">ICONS_FIRST (Icons Left, Code Right)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="max-width: 150px;">
+                    <label>Order</label>
+                    <input type="number" id="e_code_order" value="3">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Referral Code (Preview visual only)</label>
+                <input type="text" id="e_code_referral_preview" value="ARCH3L">
+            </div>
+            
+            <h4>Share Button</h4>
+            <div class="form-group">
+                <label>Text</label>
+                <textarea id="e_share_text">Hey, I got you free data that doesn’t expire 💜! Use my code {{custom_attribute.${Referral Code} | default: '********'}} when you buy a GOMO SIM in the GOMO app to unlock your extra 2GBs. Get it here: </textarea>
+            </div>
+            <div class="form-group">
+                <label>Dynamic Link</label>
+                <input type="text" id="e_share_link" value="https://gomo.dra.agconnect.link/PvA8">
+            </div>
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" id="e_share_img" value="url of the asset here">
+            </div>
+
+            <h4>Copy Button</h4>
+            <div class="form-group">
+                <label>Text</label>
+                <textarea id="e_copy_text">Hey, I’m sharing my GOMO perk with you 💜! Get 2GB FREE no-expiry data when you buy a GOMO SIM in the GOMO app using my code {{custom_attribute.${Referral Code} | default: '********'}}. Get yours here: </textarea>
+            </div>
+            <div class="form-group">
+                <label>Dynamic Link</label>
+                <input type="text" id="e_copy_link" value="https://gomo.dra.agconnect.link/PvA8">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Expanded Element 3 (SPACER)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Height</label>
+                    <input type="number" id="e_spacer_height" value="10">
+                </div>
+                <div class="form-group" style="max-width: 150px;">
+                    <label>Order</label>
+                    <input type="number" id="e_spacer_order" value="4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-container">
+        
+        <div class="ui-preview-panel">
+            <p class="preview-hint">Click the card to toggle between Collapsed and Expanded states. Change 'Order' fields to reorder the content.</p>
+            
+            <div class="referral-card-wrapper" id="referralCard" onclick="toggleCardState()">
+                <div class="referral-card-content">
+                    
+                    <span class="material-icons collapse-icon">keyboard_arrow_up</span>
+                    
+                    <div id="uiCollapsedView">
+                        <p class="referral-spiel" id="uiCollapsedSpielText">
+                            🎁 Get a <span class="spiel-reward-text" id="uiCollapsedRewardText">FREE 2GB</span> for you and your friend!
+                        </p>
+                    </div>
+                    
+                    <div class="expanded-details" id="uiExpandedView">
+                        
+                        <p class="referral-spiel" id="uiExpandedSpielText"></p>
+                        
+                        <div class="code-box-wrapper" id="uiCodeBoxWrapper">
+                            <p class="code-text" id="uiCodeText">ARCH3L</p>
+                            <div class="action-buttons">
+                                <div class="action-item">
+                                    <span class="material-icons">content_copy</span>
+                                    <span>Copy</span>
+                                </div>
+                                <div class="action-item">
+                                    <span class="material-icons">ios_share</span>
+                                    <span>Share</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="uiSpacerPreview" style="width: 100%;"></div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="json-preview-panel">
+            <div class="header-row">
+                <h2 style="color: white; margin: 0;">JSON Output</h2>
+                <button onclick="copyJSON()">Copy JSON</button>
+            </div>
+            <pre id="jsonOutput"></pre>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function toggleCardState() {
+        const card = document.getElementById('referralCard');
+        card.classList.toggle('is-expanded');
+    }
+
+    function applyInitialState() {
+        const isInitiallyExpanded = document.getElementById('initialStateExpanded').checked;
+        const card = document.getElementById('referralCard');
+        if (isInitiallyExpanded) {
+            card.classList.add('is-expanded');
+        } else {
+            card.classList.remove('is-expanded');
+        }
+    }
+    
+    document.getElementById('initialStateExpanded').addEventListener('change', applyInitialState);
+
+    function updatePreviews() {
+        const layoutDir = document.getElementById('e_code_layout').value;
+        
+        const config = {
+            isEnabled: document.getElementById('isEnabled').checked,
+            initialStateExpanded: document.getElementById('initialStateExpanded').checked,
+            backgroundColor: document.getElementById('backgroundColor').value.toUpperCase(),
+            borderColor: document.getElementById('borderColor').value.toUpperCase(),
+            collapsedElements: [
+                {
+                    type: "SPIEL",
+                    value: document.getElementById('c_spiel_value').value,
+                    reward: document.getElementById('c_spiel_reward').value,
+                    order: parseInt(document.getElementById('c_spiel_order').value, 10)
+                }
+            ],
+            expandedElements: [
+                {
+                    type: "SPIEL",
+                    value: document.getElementById('e_spiel_value').value,
+                    reward: document.getElementById('e_spiel_reward').value,
+                    order: parseInt(document.getElementById('e_spiel_order').value, 10)
+                },
+                {
+                    type: "CODE_BOX",
+                    layoutDirection: layoutDir,
+                    shareButton: {
+                        text: document.getElementById('e_share_text').value,
+                        dynamicLink: document.getElementById('e_share_link').value,
+                        imageUrl: document.getElementById('e_share_img').value
+                    },
+                    copyButton: {
+                        text: document.getElementById('e_copy_text').value,
+                        dynamicLink: document.getElementById('e_copy_link').value
+                    },
+                    order: parseInt(document.getElementById('e_code_order').value, 10)
+                },
+                {
+                    type: "SPACER",
+                    height: parseInt(document.getElementById('e_spacer_height').value, 10) || 0,
+                    order: parseInt(document.getElementById('e_spacer_order').value, 10)
+                }
+            ]
+        };
+
+        // Output to JSON block
+        document.getElementById('jsonOutput').textContent = JSON.stringify(config, null, 2);
+        
+        // Update the Visual UI Preview
+        updateUiPreview(config, layoutDir);
+    }
+
+    function updateUiPreview(config, layoutDir) {
+        const cardWrapper = document.getElementById('referralCard');
+        
+        cardWrapper.style.visibility = config.isEnabled ? 'visible' : 'hidden';
+        cardWrapper.style.backgroundColor = config.backgroundColor;
+        cardWrapper.style.borderColor = config.borderColor;
+        
+        // --- Corrected Layout Direction Logic ---
+        const codeBoxWrapper = document.getElementById('uiCodeBoxWrapper');
+        if (layoutDir === 'ICONS_FIRST') {
+            // ICONS_FIRST: Action Buttons/Icons on the left, Code on the right.
+            codeBoxWrapper.style.flexDirection = 'row-reverse';
+        } else {
+            // TEXT_FIRST: Code Text on the left, Action Buttons/Icons on the right.
+            codeBoxWrapper.style.flexDirection = 'row';
+        }
+        
+        // Dynamically Reorder Elements
+        document.getElementById('uiExpandedSpielText').style.order = config.expandedElements[0].order;
+        document.getElementById('uiCodeBoxWrapper').style.order = config.expandedElements[1].order;
+        
+        const spacer = document.getElementById('uiSpacerPreview');
+        spacer.style.order = config.expandedElements[2].order;
+        spacer.style.height = config.expandedElements[2].height + 'px';
+        
+        // Collapsed Spiel Output
+        const colSpielPattern = config.collapsedElements[0].value;
+        const colRewardText = config.collapsedElements[0].reward;
+        const formattedColHtml = colSpielPattern.replace('%reward%', '<span class="spiel-reward-text">' + colRewardText + '</span>');
+        document.getElementById('uiCollapsedSpielText').innerHTML = formattedColHtml;
+        
+        // Expanded Spiel Output
+        const expSpielPattern = config.expandedElements[0].value;
+        const expRewardText = config.expandedElements[0].reward;
+        const formattedExpHtml = expSpielPattern.replace('%reward%', '<span class="spiel-reward-text">' + expRewardText + '</span>');
+        document.getElementById('uiExpandedSpielText').innerHTML = formattedExpHtml;
+        
+        // Referral Code text
+        const referralCode = document.getElementById('e_code_referral_preview').value;
+        document.getElementById('uiCodeText').textContent = referralCode;
+    }
+
+    // Attach listeners
+    document.querySelectorAll('input, select, textarea').forEach(element => {
+        if(element.id !== 'initialStateExpanded') {
+            element.addEventListener('input', updatePreviews);
+            element.addEventListener('change', updatePreviews);
+        }
+    });
+
+    function copyJSON() {
+        const jsonText = document.getElementById('jsonOutput').textContent;
+        navigator.clipboard.writeText(jsonText).then(() => {
+            alert("JSON copied to clipboard!");
+        }).catch(err => {
+            alert("Failed to copy JSON: " + err);
+        });
+    }
+
+    // Init
+    window.onload = () => {
+        applyInitialState();
+        updatePreviews();
+    };
+</script>
+
+</body>
+</html>

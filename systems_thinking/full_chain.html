@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feature Tiers — Why Build Order Matters</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .mono { font-family: 'DM Mono', monospace; }
+    .animate-in { animation: slideUp 0.5s ease-out forwards; opacity: 0; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .delay-7 { animation-delay: 0.7s; }
+  </style>
+</head>
+<body class="bg-[#0a0e17] text-white antialiased">
+  <div id="root"></div>
+  <script type="text/babel" data-type="module">
+    import React, { useState } from "https://esm.sh/react@18.2.0";
+    import { createRoot } from "https://esm.sh/react-dom@18.2.0/client";
+
+    function App() {
+      const [activeTab, setActiveTab] = useState("why");
+
+      return (
+        <div className="min-h-screen">
+          {/* Header */}
+          <header className="border-b border-white/5 bg-[#0d1220] sticky top-0 z-20">
+            <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+              <div>
+                <h1 className="font-bold text-base text-white">Feature Tiers</h1>
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Why Build Order Matters</p>
+              </div>
+              <div className="flex gap-1 bg-white/5 rounded-lg p-1">
+                {[
+                  { id: "why", label: "Why Tiers?" },
+                  { id: "tiers", label: "The 3 Tiers" },
+                  { id: "chain", label: "The Chain" },
+                ].map(t => (
+                  <button key={t.id} onClick={() => setActiveTab(t.id)}
+                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${activeTab === t.id ? "bg-white/10 text-white" : "text-slate-500 hover:text-slate-300"}`}>
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </header>
+
+          <main className="max-w-4xl mx-auto px-6 py-10">
+            {activeTab === "why" && <WhySection />}
+            {activeTab === "tiers" && <TiersSection />}
+            {activeTab === "chain" && <ChainSection />}
+          </main>
+        </div>
+      );
+    }
+
+    /* ═══════════════════════════════════════════
+       WHY TIERS?
+       ═══════════════════════════════════════════ */
+
+    function WhySection() {
+      return (
+        <div className="space-y-8">
+          <div className="text-center max-w-2xl mx-auto animate-in">
+            <h2 className="text-3xl font-black tracking-tight mb-3">We have 30+ feature ideas.<br/>We can't build them all at once.</h2>
+            <p className="text-slate-400 text-lg">Tiers answer one question: <strong className="text-white">in what order should we build?</strong></p>
+          </div>
+
+          <div className="animate-in delay-1 bg-[#0d1220] border border-white/5 rounded-2xl p-8 max-w-2xl mx-auto">
+            <p className="text-slate-400 leading-relaxed text-base">
+              Imagine you're building a house. You <em>could</em> install the kitchen, the roof, and the furniture all at the same time. But if you install the kitchen before the foundation is set, the whole thing sinks.
+            </p>
+            <p className="text-slate-400 leading-relaxed text-base mt-4">
+              Features work the same way. Some features generate <strong className="text-white">data and habits</strong> that other features need to succeed. Build them in the wrong order and good ideas underperform — not because the idea was bad, but because the foundation wasn't ready.
+            </p>
+          </div>
+
+          <div className="animate-in delay-2 max-w-2xl mx-auto bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 text-center">
+            <p className="text-emerald-400 font-bold text-lg">Tiers aren't about what's important or unimportant.</p>
+            <p className="text-slate-400 mt-1">Every feature on the dashboard matters. Tiers tell us <strong className="text-white">what to build first so that everything else works better.</strong></p>
+          </div>
+
+          <div className="animate-in delay-3 grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            {[
+              { label: "T1 features generate", value: "User habits + behavioral data", icon: "🌱" },
+              { label: "T2 features use that to generate", value: "Intelligence + audience proof", icon: "📊" },
+              { label: "T3 features use that to generate", value: "Partnerships + scale", icon: "🚀" },
+            ].map((c, i) => (
+              <div key={i} className="bg-[#0d1220] border border-white/5 rounded-xl p-5 text-center">
+                <p className="text-3xl mb-3">{c.icon}</p>
+                <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">{c.label}</p>
+                <p className="text-white font-semibold text-sm">{c.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    /* ═══════════════════════════════════════════
+       THE 3 TIERS
+       ═══════════════════════════════════════════ */
+
+    function TiersSection() {
+      return (
+        <div className="space-y-6 max-w-3xl mx-auto">
+          {/* T1 */}
+          <div className="animate-in bg-[#0d1220] border border-emerald-500/20 rounded-2xl overflow-hidden">
+            <div className="bg-emerald-500/10 px-6 py-4 flex items-center gap-3">
+              <span className="bg-emerald-500/20 text-emerald-400 text-xs font-black px-2.5 py-1 rounded-md mono">T1</span>
+              <div>
+                <h3 className="font-bold text-white text-lg">Proves the System Works</h3>
+                <p className="text-emerald-400/70 text-xs font-medium">Build these first — they need nothing else to function</p>
+              </div>
+            </div>
+            <div className="px-6 py-5 space-y-4">
+              <p className="text-slate-400 leading-relaxed">
+                T1 features work on Day 1 with zero dependencies. No partners needed, no user history needed, no other features needed. They generate the <strong className="text-white">foundational user habits and behavioral data</strong> that everything else will eventually feed on.
+              </p>
+              <p className="text-slate-400 leading-relaxed">
+                If T1 fails, there's nothing to build on. If T1 succeeds, it proves to leadership that the system works — and earns approval for T2.
+              </p>
+              <div className="bg-white/3 rounded-xl p-4 border border-white/5">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-2">Example: How T1 features feed each other</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  A user's internet slows down. The app detects it and offers a one-tap speed boost for ₱10 <span className="text-emerald-400 font-semibold">(Sachet Upsell)</span>. The user taps it. That purchase counts toward their daily streak <span className="text-emerald-400 font-semibold">(Streak Economy)</span>. The streak motivates tomorrow's login. Tomorrow's login exposes the user to the next speed boost trigger. <strong className="text-white">T1 features create a self-reinforcing loop from Day 1.</strong>
+                </p>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">What T1 generates:</p>
+                <p className="text-xs text-slate-400">Daily active users, micro-transaction habits, usage timing data</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div className="animate-in delay-1 flex flex-col items-center gap-1 py-1">
+            <p className="text-slate-600 text-xs font-bold mono">T1 data flows down</p>
+            <div className="w-0.5 h-6 bg-gradient-to-b from-emerald-500/40 to-amber-500/40" />
+            <p className="text-slate-600 text-lg">↓</p>
+          </div>
+
+          {/* T2 */}
+          <div className="animate-in delay-2 bg-[#0d1220] border border-amber-500/20 rounded-2xl overflow-hidden">
+            <div className="bg-amber-500/10 px-6 py-4 flex items-center gap-3">
+              <span className="bg-amber-500/20 text-amber-400 text-xs font-black px-2.5 py-1 rounded-md mono">T2</span>
+              <div>
+                <h3 className="font-bold text-white text-lg">Powered by T1 Data</h3>
+                <p className="text-amber-400/70 text-xs font-medium">Can launch alone — but performs significantly better with T1 habits in place</p>
+              </div>
+            </div>
+            <div className="px-6 py-5 space-y-4">
+              <p className="text-slate-400 leading-relaxed">
+                T2 features technically work standalone, but they're operating at <strong className="text-white">a fraction of their potential</strong> without the daily engagement and data that T1 generates. They're like a store that opens before anyone knows the neighborhood exists — it's open, but nobody's walking by.
+              </p>
+              <p className="text-slate-400 leading-relaxed">
+                Once T1 has built daily habits and generated real user data, T2 features suddenly have <strong className="text-white">fuel to run on.</strong> They turn T1's raw habits into intelligence.
+              </p>
+              <div className="bg-white/3 rounded-xl p-4 border border-white/5">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-2">Example: How T2 uses T1 data</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  <span className="text-amber-400 font-semibold">Signal Scout</span> lets users report dead zones for data bounties. It can launch alone — but without Streak Economy (T1) driving daily app opens, users aren't in the app often enough to submit reports. Once T1 has built the daily habit, report volume jumps.
+                </p>
+                <p className="text-sm text-slate-300 leading-relaxed mt-2">
+                  That crowdsourced signal data feeds <span className="text-amber-400 font-semibold">Environment Trigger</span> — now the app knows where and when congestion happens. So the next time it rains in a congested area, the app pushes a streaming pack to users in that zone. That push drives more Sachet Upsell purchases — <strong className="text-white">feeding T1 again.</strong> T2 makes T1 smarter.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">What T2 generates:</p>
+                <p className="text-xs text-slate-400">Location intelligence, network quality maps, proof of an engaged audience</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div className="animate-in delay-3 flex flex-col items-center gap-1 py-1">
+            <p className="text-slate-600 text-xs font-bold mono">T1 + T2 data flows down</p>
+            <div className="w-0.5 h-6 bg-gradient-to-b from-amber-500/40 to-slate-500/40" />
+            <p className="text-slate-600 text-lg">↓</p>
+          </div>
+
+          {/* T3 */}
+          <div className="animate-in delay-4 bg-[#0d1220] border border-slate-500/20 rounded-2xl overflow-hidden">
+            <div className="bg-slate-500/10 px-6 py-4 flex items-center gap-3">
+              <span className="bg-slate-500/20 text-slate-400 text-xs font-black px-2.5 py-1 rounded-md mono">T3</span>
+              <div>
+                <h3 className="font-bold text-white text-lg">Requires Ecosystem Maturity</h3>
+                <p className="text-slate-400/70 text-xs font-medium">Needs a large user base, partner relationships, or accumulated data to justify the investment</p>
+              </div>
+            </div>
+            <div className="px-6 py-5 space-y-4">
+              <p className="text-slate-400 leading-relaxed">
+                T3 features can also launch alone — but without the foundation from T1 and T2, they <strong className="text-white">underperform and risk being killed for the wrong reason.</strong> Leadership sees poor results and says "that idea didn't work" — when the real problem was timing, not the idea.
+              </p>
+              <p className="text-slate-400 leading-relaxed">
+                The worst outcome isn't a feature that fails. It's a feature that fails <strong className="text-white">because it launched too early</strong>, killing the idea forever when the real problem was missing foundation.
+              </p>
+              <div className="bg-white/3 rounded-xl p-4 border border-white/5">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-2">Example: How T3 needs T1 + T2 proof</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  <span className="text-slate-300 font-semibold">Partner Co-pilot</span> lets merchants bid for slots to reach GOMO users with food deals, store discounts, and partner offers. But merchants only pay for access to a proven audience.
+                </p>
+                <p className="text-sm text-slate-300 leading-relaxed mt-2">
+                  Without T1 proving daily active users (Streak Economy data) and T2 proving location intelligence (Signal Scout data), the pitch to merchants is <em className="text-slate-500">"trust us, people use our app."</em> With T1 + T2 data, the pitch becomes <em className="text-white">"We have X thousand daily active users. We know which ones are near your store at lunchtime. We know they're on their phones right now."</em> Same feature. Completely different pitch. Completely different outcome.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">What T3 generates:</p>
+                <p className="text-xs text-slate-400">Partner revenue, external distribution, ecosystem expansion</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Note */}
+          <div className="animate-in delay-5 bg-white/5 rounded-xl p-5 text-center">
+            <p className="text-slate-400 text-sm">Every feature on the dashboard can technically launch alone. Tiers don't say "can we build it?" — they say <strong className="text-white">"will it succeed if we build it now?"</strong></p>
+          </div>
+        </div>
+      );
+    }
+
+    /* ═══════════════════════════════════════════
+       THE CHAIN
+       ═══════════════════════════════════════════ */
+
+    function ChainSection() {
+      const steps = [
+        { tier: "T1", color: "emerald", feature: "Sachet Upsell",
+          what: "User's internet slows down. App offers a one-tap speed boost for ₱10.",
+          generates: "Micro-transaction data, proof that users pay for contextual offers." },
+        { tier: "T1", color: "emerald", feature: "Streak Economy",
+          what: "Sachet purchase counts as daily streak credit. Missing a day resets the chain.",
+          generates: "Daily active users, habit data, engagement patterns." },
+        { tier: "T2", color: "amber", feature: "Signal Scout",
+          what: "Daily users (built by T1 streaks) report dead zones for data bounties.",
+          generates: "Crowdsourced network map, location intelligence." },
+        { tier: "T2", color: "amber", feature: "Environment Trigger",
+          what: "Uses Signal Scout data to push contextual promos — rain in congested area → streaming pack offer.",
+          generates: "Smarter targeting, higher conversion rates on promos. Also feeds Sachet Upsell triggers back in T1." },
+        { tier: "T3", color: "slate", feature: "Partner Co-pilot",
+          what: "Merchants bid for slots to reach proven, engaged GOMO users with location-aware offers.",
+          generates: "Partner revenue, offline foot traffic, ecosystem expansion." },
+        { tier: "T3", color: "slate", feature: "Foodie Roulette",
+          what: "Lunchtime spin using Partner Co-pilot merchant inventory + Environment Trigger timing.",
+          generates: "Habitual engagement, partner redemption data, social sharing (users tell friends about deals they won)." },
+      ];
+
+      const colorMap = {
+        emerald: { badge: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", line: "from-emerald-500/30", dot: "bg-emerald-500" },
+        amber: { badge: "bg-amber-500/20 text-amber-400 border-amber-500/30", line: "from-amber-500/30", dot: "bg-amber-500" },
+        slate: { badge: "bg-slate-500/20 text-slate-400 border-slate-500/30", line: "from-slate-500/30", dot: "bg-slate-500" },
+      };
+
+      return (
+        <div className="space-y-8 max-w-3xl mx-auto">
+          <div className="text-center animate-in">
+            <h2 className="text-2xl font-black tracking-tight mb-2">The Full Chain</h2>
+            <p className="text-slate-400">How each tier builds on the one before it — one connected story from T1 to T3.</p>
+          </div>
+
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-emerald-500/20 via-amber-500/20 to-slate-500/20" />
+
+            <div className="space-y-4">
+              {steps.map((s, i) => {
+                const cm = colorMap[s.color];
+                return (
+                  <div key={i} className={`animate-in delay-${i + 1} relative pl-12`}>
+                    {/* Dot */}
+                    <div className={`absolute left-[15px] top-5 w-2.5 h-2.5 rounded-full ${cm.dot} ring-4 ring-[#0a0e17]`} />
+
+                    <div className="bg-[#0d1220] border border-white/5 rounded-xl p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`${cm.badge} border text-[10px] font-black px-2 py-0.5 rounded mono`}>{s.tier}</span>
+                        <span className="text-white font-bold text-sm">{s.feature}</span>
+                      </div>
+                      <p className="text-slate-400 text-sm leading-relaxed">{s.what}</p>
+                      <div className="mt-3 pt-3 border-t border-white/5 flex items-start gap-2">
+                        <span className="text-[10px] text-slate-600 uppercase tracking-widest font-bold shrink-0 mt-0.5">Generates:</span>
+                        <span className="text-xs text-slate-500">{s.generates}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Loop back */}
+          <div className="animate-in delay-7 bg-[#0d1220] border border-white/5 rounded-2xl p-6 text-center">
+            <p className="text-lg mb-2">🔄</p>
+            <p className="text-white font-bold mb-1">And the loop feeds back</p>
+            <p className="text-slate-400 text-sm leading-relaxed max-w-lg mx-auto">
+              Foodie Roulette deals get shared on social media → new users discover GOMO → they experience slow internet → Sachet Upsell triggers → they start a streak → the T1 loop restarts with a new user. <strong className="text-white">Each tier makes the tier above it stronger, and the bottom tier keeps growing.</strong>
+            </p>
+          </div>
+
+          {/* Summary */}
+          <div className="animate-in delay-7 grid grid-cols-3 gap-3">
+            {[
+              { tier: "T1", label: "Creates the habits", color: "border-emerald-500/20", badge: "text-emerald-400" },
+              { tier: "T2", label: "Turns habits into intelligence", color: "border-amber-500/20", badge: "text-amber-400" },
+              { tier: "T3", label: "Turns intelligence into partnerships", color: "border-slate-500/20", badge: "text-slate-400" },
+            ].map((t, i) => (
+              <div key={i} className={`bg-[#0d1220] border ${t.color} rounded-xl p-4 text-center`}>
+                <p className={`font-black mono text-lg ${t.badge}`}>{t.tier}</p>
+                <p className="text-slate-400 text-xs mt-1">{t.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white/5 rounded-xl p-5 text-center">
+            <p className="text-slate-400 text-sm">Skip a tier and the one above it underperforms. Build in order and <strong className="text-white">each tier's success funds the next tier's approval.</strong></p>
+          </div>
+        </div>
+      );
+    }
+
+    createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

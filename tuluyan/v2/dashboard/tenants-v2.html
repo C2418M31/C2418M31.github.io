@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tuluyan. — Tenants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --sidebar: #1B2B3A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7; --teal-mid: rgba(11,138,154,0.12);
+  --bg: #F0F2F5; --white: #FFFFFF;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --green: #059669; --green-bg: #ECFDF5;
+  --amber: #D97706; --amber-bg: #FFFBEB;
+  --red: #DC2626; --red-bg: #FEF2F2;
+  --blue: #2563EB; --blue-bg: #EFF6FF;
+  --radius: 12px;
+}
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+.sidebar { width: 200px; background: var(--sidebar); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+.sidebar-logo { display: flex; align-items: center; gap: 8px; padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.logo-mark { width: 28px; height: 28px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-text { font-size: 16px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+.sidebar-section { padding: 20px 10px 8px; }
+.sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background .15s; color: rgba(255,255,255,0.55); font-size: 13.5px; font-weight: 500; border: none; background: transparent; font-family: inherit; width: 100%; text-align: left; }
+.nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.8); }
+.nav-item.active { background: var(--sidebar-active); color: white; }
+.nav-item svg { flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; background: var(--teal); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: 60px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; flex-shrink: 0; }
+.topbar-left h2 { font-size: 15px; font-weight: 700; }
+.topbar-left p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.btn-primary { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 7px; transition: background .15s; }
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--border2); border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background .15s; }
+.btn-secondary:hover { background: var(--bg); }
+.btn-secondary.active-filter { background: var(--text); color: white; border-color: var(--text); }
+.content { flex: 1; overflow-y: auto; padding: 28px; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+.stat-card { background: var(--white); border-radius: var(--radius); padding: 20px 22px; border: 1px solid var(--border); }
+.stat-card-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+.stat-card-num { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+.stat-card-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.stat-card-sub.red { color: var(--red); }
+.stat-card-sub.green { color: var(--green); }
+
+.filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+.tenants-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+.tenants-card-header { padding: 16px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.tenants-card-header h3 { font-size: 14px; font-weight: 700; }
+.tenants-card-header .sub { font-size: 12px; color: var(--muted); }
+
+.tenant-row { display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-bottom: 1px solid var(--border); transition: background .15s; }
+.tenant-row:last-child { border-bottom: none; }
+.tenant-row:hover { background: #FAFAFA; }
+.tenant-avatar { width: 38px; height: 38px; border-radius: 50%; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tenant-avatar.long { background: #EFF6FF; color: #2563EB; }
+.tenant-avatar.hoa { background: var(--amber-bg); color: var(--amber); }
+.tenant-info { flex: 1; min-width: 0; }
+.tenant-name { font-size: 14px; font-weight: 600; }
+.tenant-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.tenant-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; }
+.tenant-badge.paid { background: var(--green-bg); color: var(--green); }
+.tenant-badge.overdue { background: var(--red-bg); color: var(--red); }
+.tenant-badge.owner { background: #EFF6FF; color: #2563EB; }
+.tenant-badge.rented { background: var(--teal-light); color: var(--teal); }
+.tenant-badge.unverified { background: var(--amber-bg); color: var(--amber); }
+.tenant-actions { display: flex; gap: 6px; margin-left: 10px; }
+
+.prop-section-label { padding: 10px 22px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--hint); display: flex; align-items: center; gap: 10px; }
+.prop-section-label a { font-size: 11px; font-weight: 600; color: var(--teal); text-transform: none; letter-spacing: 0; cursor: pointer; margin-left: auto; }
+
+.lease-bar { height: 4px; background: var(--border2); border-radius: 100px; overflow: hidden; width: 80px; display: inline-block; vertical-align: middle; }
+.lease-fill { height: 100%; background: #2563EB; border-radius: 100px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
+      <span class="logo-text">tuluyan.<\/span>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Manage</div>
+      <button class="nav-item" onclick="window.location.href='dashboard-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="window.location.href='tuluyan-operator-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5V15H5.5V10.5H10.5V15H15V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        My Properties
+      </button>
+      <button class="nav-item" onclick="window.location.href='bookings-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Bookings <span class="nav-badge">3</span>
+      </button>
+      <button class="nav-item active" onclick="window.location.href='tenants-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14C2 11.2 4.7 9 8 9C11.3 9 14 11.2 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Tenants
+      </button>
+      <button class="nav-item" onclick="window.location.href='finances-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 7h13M5 10h2M9 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Finances
+      </button>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M14 10C14 10.5304 13.7893 11.0391 13.4142 11.4142C13.0391 11.7893 12.5304 12 12 12H4L1.5 14.5V4C1.5 3.46957 1.71071 2.96086 2.08579 2.58579C2.46086 2.21071 2.96957 2 3.5 2H12C12.5304 2 13.0391 2.21071 13.4142 2.58579C13.7893 2.96086 14 3.46957 14 4V10Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Messages <span class="nav-badge">2</span>
+      </button>
+    </div>
+    <div class="sidebar-section" style="margin-top:auto">
+      <div class="sidebar-label">Account</div>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M3.05 12.95l1.42-1.42M11.53 4.47l1.42-1.42" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Settings
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h2>Tenants</h2>
+        <p>All properties · 9 active tenants / owners</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-secondary">Export</button>
+        <button class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Add tenant
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">Active tenants</div>
+          <div class="stat-card-num">6</div>
+          <div class="stat-card-sub">Long-term leases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">HOA unit owners</div>
+          <div class="stat-card-num">48</div>
+          <div class="stat-card-sub">Avida Towers Makati</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Overdue payments</div>
+          <div class="stat-card-num">3</div>
+          <div class="stat-card-sub red">1 long-term, 2 HOA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Leases ending soon</div>
+          <div class="stat-card-num">2</div>
+          <div class="stat-card-sub">Within 90 days</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-bar">
+        <span class="filter-label">Property:</span>
+        <button class="btn-secondary active-filter">All properties</button>
+        <button class="btn-secondary">Sunrise Apartments</button>
+        <button class="btn-secondary">Avida Towers HOA</button>
+      </div>
+
+      <!-- Long-term Tenants -->
+      <div class="tenants-card">
+        <div class="prop-section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="#2563EB" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="#2563EB"/></svg>
+          Sunrise Apartments Pasig — Long-Term Rentals
+          <a onclick="openProperty('edit-long')">Manage property →</a>
+        </div>
+        <div class="tenants-card-header">
+          <h3>Tenants (6 active)</h3>
+          <span class="sub">6 of 8 units occupied</span>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">AC</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Ana Cruz</div>
+            <div class="tenant-meta">
+              Unit 1-A · 1BR 28sqm Furnished
+              · Since Jan 2026 · Lease ends Dec 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:40%"></span></span></span>
+              <span style="font-size:11px;color:var(--hint)">40% through lease</span>
+            </div>
+          </div>
+          <span class="tenant-badge paid">Paid</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">Message</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">BS</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Ben Santos</div>
+            <div class="tenant-meta">
+              Unit 1-B · 1BR 28sqm Semi-furnished
+              · Since Mar 2026 · Lease ends Sep 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:28%"></span></span></span>
+              <span style="font-size:11px;color:var(--hint)">28% through lease</span>
+            </div>
+          </div>
+          <span class="tenant-badge overdue">25 days overdue</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px;color:var(--red);border-color:rgba(220,38,38,.3)">Remind</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">JR</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Jay Reyes</div>
+            <div class="tenant-meta">
+              Unit 3-A · Studio 20sqm Furnished
+              · Since Feb 2026 · Lease ends Aug 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:50%"></span></span></span>
+              <span style="font-size:11px;color:var(--hint)">50% through lease</span>
+            </div>
+          </div>
+          <span class="tenant-badge paid">Paid</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">Message</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">RD</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Rosa Dela Cruz</div>
+            <div class="tenant-meta">
+              Unit 2-A · Studio 20sqm Unfurnished
+              · Since Apr 2026 · Lease ends Oct 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:16%"></span></span></span>
+              <span style="font-size:11px;color:var(--hint)">16% through lease</span>
+            </div>
+          </div>
+          <span class="tenant-badge paid">Paid</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">Message</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">ML</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Marco Lim</div>
+            <div class="tenant-meta">
+              Unit 3-B · Studio 20sqm Furnished
+              · Since Jan 2026 · Lease ends Jul 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:70%"></span></span></span>
+              <span style="font-size:11.5px;color:var(--amber);font-weight:600">Lease ends in 60 days</span>
+            </div>
+          </div>
+          <span class="tenant-badge paid">Paid</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px;color:var(--amber);border-color:rgba(217,119,6,.3)">Renew</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar long">GP</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Grace Pascual</div>
+            <div class="tenant-meta">
+              Unit 4-A · 1BR 28sqm Semi-furnished
+              · Since May 2026 · Lease ends Nov 2026
+              <span style="margin-left:6px"><span class="lease-bar"><span class="lease-fill" style="width:4%"></span></span></span>
+              <span style="font-size:11px;color:var(--hint)">New tenant · 4% through lease</span>
+            </div>
+          </div>
+          <span class="tenant-badge paid">Paid</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">Message</button>
+          </div>
+        </div>
+
+        <div style="padding:12px 22px;background:var(--bg);font-size:12.5px;color:var(--hint);display:flex;align-items:center;gap:10px">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5V7M7 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Units 2-B and 4-B are currently vacant.
+          <a style="color:var(--teal);font-weight:600;cursor:pointer" onclick="openProperty('edit-long')">View units →</a>
+        </div>
+      </div>
+
+      <!-- HOA Owners -->
+      <div class="tenants-card">
+        <div class="prop-section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7 6 11 6 11C6 11 9.5 7 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="var(--amber)" stroke-width="1.1"/><circle cx="6" cy="4.5" r="1" fill="var(--amber)"/></svg>
+          Avida Towers Makati — HOA Unit Owners
+          <a onclick="openProperty('edit-hoa')">Manage HOA →</a>
+        </div>
+        <div class="tenants-card-header">
+          <h3>Unit owners (48 total)</h3>
+          <span class="sub">Showing 4 · <a style="color:var(--teal);font-weight:600;cursor:pointer" onclick="openProperty('edit-hoa')">View all in HOA dashboard</a></span>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar hoa">JD</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Juan Dela Cruz</div>
+            <div class="tenant-meta">Unit 101 · Verified ✓ · Owner since Jan 2023 · Owner-occupied</div>
+          </div>
+          <span class="tenant-badge owner">Owner-occupied</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar hoa">MS</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Maria Santos</div>
+            <div class="tenant-meta">Unit 102 · Verified ✓ · <span style="color:var(--red);font-weight:600">2 months overdue (₱4,800)</span> · Tenant: Carlo Reyes</div>
+          </div>
+          <span class="tenant-badge overdue">Dues overdue</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px;color:var(--red);border-color:rgba(220,38,38,.3)">Remind</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar" style="background:var(--amber-bg);color:var(--amber)">?</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Unit 103 owner</div>
+            <div class="tenant-meta" style="color:var(--amber)">⚠ Owner not yet verified · Pending ID submission</div>
+          </div>
+          <span class="tenant-badge unverified">Unverified</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">Send reminder</button>
+          </div>
+        </div>
+
+        <div class="tenant-row">
+          <div class="tenant-avatar hoa">RL</div>
+          <div class="tenant-info">
+            <div class="tenant-name">Rosa Lim</div>
+            <div class="tenant-meta">Unit 201 · Verified ✓ · Owner since Mar 2022 · Owner-occupied</div>
+          </div>
+          <span class="tenant-badge owner">Owner-occupied</span>
+          <div class="tenant-actions">
+            <button class="btn-secondary" style="font-size:12px;padding:5px 10px">View</button>
+          </div>
+        </div>
+
+        <div style="padding:14px 22px;background:var(--bg);font-size:12.5px;color:var(--hint);display:flex;align-items:center;gap:8px">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5V7M7 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Showing 4 of 48 owners.
+          <a style="color:var(--teal);font-weight:600;cursor:pointer" onclick="openProperty('edit-hoa')">View all 48 units in HOA dashboard →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openProperty(view) {
+  localStorage.setItem('tuluyan_openView', view);
+  window.location.href = 'tuluyan-operator-v2.html';
+}
+</script>
+</body>
+</html>

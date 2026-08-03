@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tuluyan. — Bookings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --sidebar: #1B2B3A; --sidebar-hover: rgba(255,255,255,0.07); --sidebar-active: rgba(255,255,255,0.12);
+  --teal: #0B8A9A; --teal-dark: #076878; --teal-light: #E0F4F7; --teal-mid: rgba(11,138,154,0.12);
+  --bg: #F0F2F5; --white: #FFFFFF;
+  --text: #111827; --muted: #6B7280; --hint: #9CA3AF;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.13);
+  --green: #059669; --green-bg: #ECFDF5;
+  --amber: #D97706; --amber-bg: #FFFBEB;
+  --red: #DC2626; --red-bg: #FEF2F2;
+  --blue: #2563EB; --blue-bg: #EFF6FF;
+  --radius: 12px;
+}
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar { width: 200px; background: var(--sidebar); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+.sidebar-logo { display: flex; align-items: center; gap: 8px; padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.logo-mark { width: 28px; height: 28px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-text { font-size: 16px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+.sidebar-section { padding: 20px 10px 8px; }
+.sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 8px; margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background .15s; color: rgba(255,255,255,0.55); font-size: 13.5px; font-weight: 500; border: none; background: transparent; font-family: inherit; width: 100%; text-align: left; }
+.nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.8); }
+.nav-item.active { background: var(--sidebar-active); color: white; }
+.nav-item svg { flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; background: var(--teal); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; min-width: 18px; text-align: center; }
+
+/* SHELL */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: 60px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; flex-shrink: 0; }
+.topbar-left h2 { font-size: 15px; font-weight: 700; }
+.topbar-left p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.btn-primary { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 7px; transition: background .15s; }
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 6px; transition: background .15s; }
+.btn-secondary:hover { background: var(--bg); }
+.content { flex: 1; overflow-y: auto; padding: 26px 28px; }
+
+/* KPI CARDS */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.kpi-card { background: var(--white); border-radius: var(--radius); padding: 18px 20px; border: 1px solid var(--border); }
+.kpi-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 7px; }
+.kpi-num { font-size: 26px; font-weight: 800; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
+.kpi-sub { font-size: 12px; color: var(--muted); }
+.kpi-sub.green { color: var(--green); }
+.kpi-sub.amber { color: var(--amber); }
+.kpi-sub.red { color: var(--red); }
+
+/* FILTER SECTION */
+.filter-section { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 18px; margin-bottom: 16px; }
+.filter-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--hint); pointer-events: none; }
+.search-wrap input { width: 100%; border: 1.5px solid var(--border2); border-radius: 8px; padding: 9px 12px 9px 34px; font-family: inherit; font-size: 13.5px; color: var(--text); outline: none; transition: border-color .15s; background: var(--bg); }
+.search-wrap input:focus { border-color: var(--teal); background: var(--white); }
+.search-wrap input::placeholder { color: var(--hint); }
+.filter-select-wrap { position: relative; }
+.filter-select-wrap svg { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--hint); }
+.filter-select { appearance: none; border: 1.5px solid var(--border2); border-radius: 8px; padding: 9px 32px 9px 13px; font-family: inherit; font-size: 13px; font-weight: 500; color: var(--text); outline: none; cursor: pointer; transition: border-color .15s; background: var(--bg); }
+.filter-select:focus { border-color: var(--teal); }
+.filter-select.has-value { border-color: var(--teal); background: var(--teal-light); color: var(--teal); }
+.filter-divider { width: 1px; height: 28px; background: var(--border2); flex-shrink: 0; }
+.clear-btn { font-size: 12.5px; font-weight: 600; color: var(--hint); cursor: pointer; white-space: nowrap; padding: 8px 4px; border: none; background: transparent; font-family: inherit; display: none; }
+.clear-btn:hover { color: var(--red); }
+.clear-btn.visible { display: block; }
+
+/* Active filter chips (shown when filters applied) */
+.active-filters { display: none; gap: 6px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.active-filters.visible { display: flex; }
+.active-filters-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-right: 2px; }
+.filter-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--teal-light); color: var(--teal); border: 1px solid rgba(26,26,26,.2); border-radius: 100px; padding: 3px 10px 3px 10px; font-size: 12px; font-weight: 600; }
+.filter-chip button { background: none; border: none; cursor: pointer; color: inherit; font-size: 14px; line-height: 1; padding: 0 0 0 2px; opacity: .6; }
+.filter-chip button:hover { opacity: 1; }
+
+/* RESULTS BAR */
+.results-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.results-count { font-size: 13px; color: var(--muted); }
+.results-count strong { color: var(--text); font-weight: 700; }
+.sort-controls { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+
+/* BOOKINGS TABLE */
+.table-wrap { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.bookings-table { width: 100%; border-collapse: collapse; }
+.bookings-table thead tr { background: var(--bg); }
+.bookings-table th { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--hint); padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--border2); white-space: nowrap; cursor: pointer; user-select: none; }
+.bookings-table th:hover { color: var(--text); }
+.bookings-table th svg { display: inline; vertical-align: middle; margin-left: 3px; }
+.bookings-table td { padding: 13px 18px; font-size: 13.5px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.bookings-table tr:last-child td { border-bottom: none; }
+.bookings-table tbody tr { cursor: pointer; transition: background .12s; }
+.bookings-table tbody tr:hover td { background: #FAFAFA; }
+
+/* Guest cell */
+.guest-cell { display: flex; align-items: center; gap: 10px; }
+.guest-avatar { width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.guest-avatar.short { background: var(--teal-light); color: var(--teal); }
+.guest-avatar.long { background: var(--blue-bg); color: var(--blue); }
+.guest-avatar.anon { background: var(--bg); color: var(--hint); border: 1px solid var(--border2); }
+.guest-name { font-size: 13.5px; font-weight: 600; }
+.guest-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+
+/* Property cell */
+.prop-cell { display: flex; align-items: center; gap: 8px; }
+.prop-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.prop-dot.short { background: var(--teal); }
+.prop-dot.long { background: var(--blue); }
+.prop-cell-name { font-size: 13px; font-weight: 500; }
+.prop-cell-unit { font-size: 11.5px; color: var(--muted); }
+
+/* Type tag */
+.type-tag { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 100px; }
+.type-tag.stay { background: var(--teal-light); color: var(--teal); }
+.type-tag.rent { background: var(--blue-bg); color: var(--blue); }
+
+/* Status badge */
+.status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; }
+.status-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.status-badge.confirmed { background: var(--green-bg); color: var(--green); }
+.status-badge.confirmed::before { background: var(--green); }
+.status-badge.paid { background: var(--green-bg); color: var(--green); }
+.status-badge.paid::before { background: var(--green); }
+.status-badge.pending { background: var(--amber-bg); color: var(--amber); }
+.status-badge.pending::before { background: var(--amber); }
+.status-badge.overdue { background: var(--red-bg); color: var(--red); }
+.status-badge.overdue::before { background: var(--red); }
+.status-badge.completed { background: var(--bg); color: var(--muted); }
+.status-badge.completed::before { background: var(--hint); }
+
+/* Amount */
+.amount { font-size: 14px; font-weight: 700; }
+.amount-sub { font-size: 11.5px; color: var(--muted); }
+
+/* Action buttons in table */
+.row-actions { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.btn-row { background: transparent; border: 1px solid var(--border2); border-radius: 7px; padding: 5px 11px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; color: var(--text); transition: all .12s; white-space: nowrap; }
+.btn-row:hover { background: var(--bg); }
+.btn-row.primary { background: var(--teal); color: white; border-color: var(--teal); }
+.btn-row.primary:hover { background: var(--teal-dark); }
+.btn-row.danger { color: var(--red); border-color: rgba(220,38,38,.3); }
+.btn-row.danger:hover { background: var(--red-bg); }
+
+/* Table footer */
+.table-footer { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.pagination { display: flex; gap: 4px; }
+.page-btn { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border2); background: var(--white); font-size: 12.5px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); transition: all .12s; }
+.page-btn:hover { background: var(--bg); }
+.page-btn.active { background: var(--text); color: white; border-color: var(--text); }
+
+/* Empty state */
+.empty-row td { text-align: center; padding: 40px 18px; color: var(--hint); font-style: italic; font-size: 13.5px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L18 8V18H12.5V13H7.5V18H2V8L10 2Z" fill="white"/></svg></div>
+      <span class="logo-text">tuluyan.<\/span>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Manage</div>
+      <button class="nav-item" onclick="window.location.href='dashboard-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="window.location.href='tuluyan-operator-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5V15H5.5V10.5H10.5V15H15V5L8 1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        My Properties
+      </button>
+      <button class="nav-item active" onclick="window.location.href='bookings-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5V4M11 1.5V4M1.5 7h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Bookings <span class="nav-badge">3</span>
+      </button>
+      <button class="nav-item" onclick="window.location.href='tenants-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14C2 11.2 4.7 9 8 9C11.3 9 14 11.2 14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Tenants
+      </button>
+      <button class="nav-item" onclick="window.location.href='finances-v2.html'">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 7h13M5 10h2M9 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Finances
+      </button>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M14 10C14 10.5304 13.7893 11.0391 13.4142 11.4142C13.0391 11.7893 12.5304 12 12 12H4L1.5 14.5V4C1.5 3.46957 1.71071 2.96086 2.08579 2.58579C2.46086 2.21071 2.96957 2 3.5 2H12C12.5304 2 13.0391 2.21071 13.4142 2.58579C13.7893 2.96086 14 3.46957 14 4V10Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Messages <span class="nav-badge">2</span>
+      </button>
+    </div>
+    <div class="sidebar-section" style="margin-top:auto">
+      <div class="sidebar-label">Account</div>
+      <button class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M3.05 12.95l1.42-1.42M11.53 4.47l1.42-1.42" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Settings
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h2>Bookings</h2>
+        <p>All properties · May 2026</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9M3.5 6.5L7 10l3.5-3.5M1.5 12h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export CSV
+        </button>
+        <button class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+          New booking
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total this month</div>
+          <div class="kpi-num">15</div>
+          <div class="kpi-sub green">▲ +4 vs April</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Confirmed stays</div>
+          <div class="kpi-num">2</div>
+          <div class="kpi-sub">Maria Santos, Carlo Reyes</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Rent collected</div>
+          <div class="kpi-num">5 / 6</div>
+          <div class="kpi-sub red">Ben Santos overdue · ₱12,000</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Revenue (bookings + rent)</div>
+          <div class="kpi-num">₱102,800</div>
+          <div class="kpi-sub amber">+₱17,600 pending</div>
+        </div>
+      </div>
+
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <div class="filter-row">
+          <!-- Search -->
+          <div class="search-wrap">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 9.5L12.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input type="search" id="search-input" placeholder="Search guest name, booking #, unit..." oninput="applyFilters()">
+          </div>
+
+          <div class="filter-divider"></div>
+
+          <!-- Property dropdown -->
+          <div class="filter-select-wrap">
+            <select class="filter-select" id="filter-property" onchange="applyFilters()">
+              <option value="">All properties</option>
+              <option value="seaside">Seaside Studio BGC</option>
+              <option value="sunrise">Sunrise Apartments Pasig</option>
+              <option value="avida">Avida Towers (HOA)</option>
+            </select>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+
+          <!-- Status dropdown -->
+          <div class="filter-select-wrap">
+            <select class="filter-select" id="filter-status" onchange="applyFilters()">
+              <option value="">All statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending ID</option>
+              <option value="paid">Paid (rent)</option>
+              <option value="overdue">Overdue</option>
+              <option value="completed">Completed</option>
+            </select>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+
+          <!-- Period dropdown -->
+          <div class="filter-select-wrap">
+            <select class="filter-select" id="filter-period" onchange="applyFilters()">
+              <option value="may">May 2026</option>
+              <option value="april">April 2026</option>
+              <option value="march">March 2026</option>
+              <option value="">All time</option>
+            </select>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+
+          <button class="clear-btn" id="clear-btn" onclick="clearFilters()">✕ Clear filters</button>
+        </div>
+
+        <!-- Active filter chips -->
+        <div class="active-filters" id="active-filters">
+          <span class="active-filters-label">Filtering by:</span>
+          <span id="chips-container"></span>
+        </div>
+      </div>
+
+      <!-- Results bar -->
+      <div class="results-bar">
+        <div class="results-count"><strong id="result-count">8</strong> bookings &amp; rentals found</div>
+        <div class="sort-controls">
+          <span>Sort by:</span>
+          <select style="border:none;background:transparent;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;outline:none">
+            <option>Date (newest)</option>
+            <option>Amount (high-low)</option>
+            <option>Guest name A-Z</option>
+            <option>Status</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>Guest / Tenant
+                <svg width="8" height="10" viewBox="0 0 8 10" fill="none"><path d="M4 1v8M1.5 5.5L4 8l2.5-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </th>
+              <th>Property &amp; Unit</th>
+              <th>Type</th>
+              <th>Period / Dates</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="bookings-tbody">
+
+            <!-- Short-term: Maria Santos -->
+            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="maria santos unit 1 seaside studio bgc booking tul-0042">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar short">MS</div>
+                  <div>
+                    <div class="guest-name">Maria Santos</div>
+                    <div class="guest-sub">⭐ 4.8 · #TUL-0042</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot short"></div>
+                  <div>
+                    <div class="prop-cell-name">Seaside Studio BGC</div>
+                    <div class="prop-cell-unit">Unit 1 — Standard</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag stay">Stay</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 24 – 27</div>
+                <div style="font-size:11.5px;color:var(--muted)">3 nights · 2 guests</div>
+              </td>
+              <td>
+                <div class="amount">₱8,400</div>
+                <div class="amount-sub">₱2,800/night</div>
+              </td>
+              <td><span class="status-badge confirmed">Confirmed</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Message</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Short-term: Carlo Reyes -->
+            <tr data-property="seaside" data-status="confirmed" data-period="may" data-search="carlo reyes unit 3 seaside studio bgc booking tul-0043">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar short">CR</div>
+                  <div>
+                    <div class="guest-name">Carlo Reyes</div>
+                    <div class="guest-sub">⭐ 4.6 · #TUL-0043</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot short"></div>
+                  <div>
+                    <div class="prop-cell-name">Seaside Studio BGC</div>
+                    <div class="prop-cell-unit">Unit 3 — Deluxe</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag stay">Stay</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">Jun 1 – 5</div>
+                <div style="font-size:11.5px;color:var(--muted)">4 nights · 3 guests</div>
+              </td>
+              <td>
+                <div class="amount">₱15,600</div>
+                <div class="amount-sub">₱3,900/night</div>
+              </td>
+              <td><span class="status-badge confirmed">Confirmed</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Message</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Short-term: Anonymous -->
+            <tr data-property="seaside" data-status="pending" data-period="may" data-search="anonymous guest unit 2 seaside studio bgc june">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar anon">?</div>
+                  <div>
+                    <div class="guest-name">Anonymous guest</div>
+                    <div class="guest-sub" style="color:var(--amber)">ID verification pending</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot short"></div>
+                  <div>
+                    <div class="prop-cell-name">Seaside Studio BGC</div>
+                    <div class="prop-cell-unit">Unit 2 — Standard</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag stay">Stay</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">Jun 8 – 10</div>
+                <div style="font-size:11.5px;color:var(--muted)">2 nights</div>
+              </td>
+              <td>
+                <div class="amount">₱5,600</div>
+                <div class="amount-sub">₱2,800/night</div>
+              </td>
+              <td><span class="status-badge pending">Pending ID</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row danger">Decline</button>
+                  <button class="btn-row primary">Review</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Long-term: Ana Cruz -->
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="ana cruz unit 1-a sunrise apartments pasig">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar long">AC</div>
+                  <div>
+                    <div class="guest-name">Ana Cruz</div>
+                    <div class="guest-sub">Since Jan 2026</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot long"></div>
+                  <div>
+                    <div class="prop-cell-name">Sunrise Apartments Pasig</div>
+                    <div class="prop-cell-unit">Unit 1-A · 1BR 28sqm</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag rent">Rent</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 2026</div>
+                <div style="font-size:11.5px;color:var(--muted)">Paid May 4 · Lease ends Dec 2026</div>
+              </td>
+              <td>
+                <div class="amount">₱12,000</div>
+                <div class="amount-sub">Monthly rent</div>
+              </td>
+              <td><span class="status-badge paid">Paid</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Message</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Long-term: Ben Santos (overdue) -->
+            <tr data-property="sunrise" data-status="overdue" data-period="may" data-search="ben santos unit 1-b sunrise apartments pasig overdue">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar long">BS</div>
+                  <div>
+                    <div class="guest-name">Ben Santos</div>
+                    <div class="guest-sub" style="color:var(--red)">25 days overdue</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot long"></div>
+                  <div>
+                    <div class="prop-cell-name">Sunrise Apartments Pasig</div>
+                    <div class="prop-cell-unit">Unit 1-B · 1BR 28sqm</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag rent">Rent</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 2026</div>
+                <div style="font-size:11.5px;color:var(--red)">Due May 1 · 25 days late</div>
+              </td>
+              <td>
+                <div class="amount" style="color:var(--red)">₱12,000</div>
+                <div class="amount-sub">Monthly rent</div>
+              </td>
+              <td><span class="status-badge overdue">Overdue</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row danger">Remind</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Long-term: Jay Reyes -->
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="jay reyes unit 3-a sunrise apartments pasig">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar long">JR</div>
+                  <div>
+                    <div class="guest-name">Jay Reyes</div>
+                    <div class="guest-sub">Since Feb 2026</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot long"></div>
+                  <div>
+                    <div class="prop-cell-name">Sunrise Apartments Pasig</div>
+                    <div class="prop-cell-unit">Unit 3-A · Studio 20sqm</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag rent">Rent</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 2026</div>
+                <div style="font-size:11.5px;color:var(--muted)">Paid May 3 · Lease ends Aug 2026</div>
+              </td>
+              <td>
+                <div class="amount">₱12,000</div>
+                <div class="amount-sub">Monthly rent</div>
+              </td>
+              <td><span class="status-badge paid">Paid</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Message</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Long-term: Rosa Dela Cruz -->
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="rosa dela cruz unit 2-a sunrise apartments pasig">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar long">RD</div>
+                  <div>
+                    <div class="guest-name">Rosa Dela Cruz</div>
+                    <div class="guest-sub">Since Apr 2026</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot long"></div>
+                  <div>
+                    <div class="prop-cell-name">Sunrise Apartments Pasig</div>
+                    <div class="prop-cell-unit">Unit 2-A · Studio 20sqm</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag rent">Rent</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 2026</div>
+                <div style="font-size:11.5px;color:var(--muted)">Paid May 5 · Lease ends Oct 2026</div>
+              </td>
+              <td>
+                <div class="amount">₱12,000</div>
+                <div class="amount-sub">Monthly rent</div>
+              </td>
+              <td><span class="status-badge paid">Paid</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Message</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Long-term: Marco Lim -->
+            <tr data-property="sunrise" data-status="paid" data-period="may" data-search="marco lim unit 3-b sunrise apartments pasig">
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-avatar long">ML</div>
+                  <div>
+                    <div class="guest-name">Marco Lim</div>
+                    <div class="guest-sub" style="color:var(--amber)">Lease ending in 60 days</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="prop-cell">
+                  <div class="prop-dot long"></div>
+                  <div>
+                    <div class="prop-cell-name">Sunrise Apartments Pasig</div>
+                    <div class="prop-cell-unit">Unit 3-B · Studio 20sqm</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag rent">Rent</span></td>
+              <td>
+                <div style="font-size:13.5px;font-weight:500">May 2026</div>
+                <div style="font-size:11.5px;color:var(--muted)">Paid May 3 · Lease ends Jul 2026</div>
+              </td>
+              <td>
+                <div class="amount">₱12,000</div>
+                <div class="amount-sub">Monthly rent</div>
+              </td>
+              <td><span class="status-badge paid">Paid</span></td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn-row">Renew</button>
+                  <button class="btn-row primary">View</button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <div class="table-footer">
+          <span id="footer-count">Showing 8 of 8 records</span>
+          <div class="pagination">
+            <button class="page-btn">‹</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const labelMap = {
+  property: { seaside: 'Seaside Studio BGC', sunrise: 'Sunrise Apartments', avida: 'Avida Towers' },
+  status: { confirmed: 'Confirmed', pending: 'Pending ID', paid: 'Paid', overdue: 'Overdue', completed: 'Completed' },
+  period: { may: 'May 2026', april: 'April 2026', march: 'March 2026' }
+};
+
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const property = document.getElementById('filter-property').value;
+  const status = document.getElementById('filter-status').value;
+  const period = document.getElementById('filter-period').value;
+
+  const rows = document.querySelectorAll('#bookings-tbody tr');
+  let visible = 0;
+
+  rows.forEach(row => {
+    const matchSearch = !search || (row.dataset.search || '').includes(search);
+    const matchProp = !property || row.dataset.property === property;
+    const matchStatus = !status || row.dataset.status === status;
+    const matchPeriod = !period || row.dataset.period === period;
+
+    if (matchSearch && matchProp && matchStatus && matchPeriod) {
+      row.style.display = '';
+      visible++;
+    } else {
+      row.style.display = 'none';
+    }
+  });
+
+  document.getElementById('result-count').textContent = visible;
+  document.getElementById('footer-count').textContent = `Showing ${visible} of ${rows.length} records`;
+
+  // Update visual state of selects
+  document.getElementById('filter-property').className = 'filter-select' + (property ? ' has-value' : '');
+  document.getElementById('filter-status').className = 'filter-select' + (status ? ' has-value' : '');
+
+  // Show/hide clear button
+  const hasFilters = search || property || status || (period && period !== 'may');
+  document.getElementById('clear-btn').className = 'clear-btn' + (hasFilters ? ' visible' : '');
+
+  // Update active filter chips
+  const chips = [];
+  if (search) chips.push({ key: 'search', label: `"${search}"` });
+  if (property) chips.push({ key: 'property', label: labelMap.property[property] });
+  if (status) chips.push({ key: 'status', label: labelMap.status[status] });
+  if (period && period !== 'may') chips.push({ key: 'period', label: labelMap.period[period] || 'All time' });
+
+  const af = document.getElementById('active-filters');
+  const cc = document.getElementById('chips-container');
+  if (chips.length) {
+    cc.innerHTML = chips.map(c =>
+      `<span class="filter-chip">${c.label} <button onclick="clearChip('${c.key}')">×</button></span>`
+    ).join('');
+    af.className = 'active-filters visible';
+  } else {
+    af.className = 'active-filters';
+  }
+}
+
+function clearChip(key) {
+  if (key === 'search') { document.getElementById('search-input').value = ''; }
+  else if (key === 'property') { document.getElementById('filter-property').value = ''; }
+  else if (key === 'status') { document.getElementById('filter-status').value = ''; }
+  else if (key === 'period') { document.getElementById('filter-period').value = 'may'; }
+  applyFilters();
+}
+
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('filter-property').value = '';
+  document.getElementById('filter-status').value = '';
+  document.getElementById('filter-period').value = 'may';
+  applyFilters();
+}
+</script>
+</body>
+</html>
+
+
+
+
+

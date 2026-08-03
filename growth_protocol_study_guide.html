@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growth Protocol - Your Study Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Nunito', sans-serif; }
+    .animate-in { animation: fadeIn 0.5s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #fafafa; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 20px; }
+  </style>
+</head>
+<body class="bg-[#FAFBFC] text-gray-800 antialiased">
+  <div id="root"></div>
+  <script type="text/babel" data-type="module">
+    import React, { useState } from "https://esm.sh/react@18.2.0";
+    import { createRoot } from "https://esm.sh/react-dom@18.2.0/client";
+
+    /* ═══════════════════════════════════════════
+       SECTION 1: THE PROBLEM (WHY WE NEED THIS)
+       ═══════════════════════════════════════════ */
+
+    const ProblemSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🍳</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">Imagine You Own a Restaurant</h2>
+          <p className="text-lg text-gray-500">Let's understand the problem with a story everyone can relate to.</p>
+        </div>
+
+        {/* Story Cards */}
+        <div className="max-w-3xl mx-auto space-y-4">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="flex gap-4 items-start">
+              <span className="text-3xl">📋</span>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Month 1: You open with a focused menu</h3>
+                <p className="text-gray-600 mt-1">10 dishes. Each one is great. Customers love it. They know exactly what to order. Business is good.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="flex gap-4 items-start">
+              <span className="text-3xl">🤔</span>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Month 3: People start suggesting new dishes</h3>
+                <p className="text-gray-600 mt-1">Your chef wants to add pasta. Your partner says "add pizza, it's popular." A regular customer asks for sushi. Each suggestion makes sense on its own.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="flex gap-4 items-start">
+              <span className="text-3xl">😰</span>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Month 6: You now have 47 dishes</h3>
+                <p className="text-gray-600 mt-1">Pizza next to sushi next to adobo next to pasta. The kitchen is overwhelmed. Customers stare at the menu for 10 minutes. The food takes longer. Quality drops. Nobody knows what your restaurant is "about" anymore.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-red-50 rounded-2xl p-6 border border-red-100">
+            <div className="flex gap-4 items-start">
+              <span className="text-3xl">💀</span>
+              <div>
+                <h3 className="font-bold text-lg text-red-700">Month 9: Customers leave</h3>
+                <p className="text-red-600 mt-1">Not because the food is bad. But because the experience is confusing. They go to the place across the street that does 15 things really well.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
+          <p className="text-2xl font-bold text-white mb-2">This is what happens to apps.</p>
+          <p className="text-gray-400 text-lg">Every feature is someone's good idea. But without a system for deciding what belongs and what doesn't, the app becomes a confusing menu that nobody wants to use.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-emerald-50 rounded-2xl p-8 text-center border border-emerald-100">
+          <p className="text-2xl font-bold text-emerald-800 mb-2">The Growth Protocol is the solution.</p>
+          <p className="text-emerald-600 text-lg">It's a simple checklist that helps us decide: does this dish belong on our menu? And if it's not selling — when do we take it off?</p>
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 2: THE FOUR TYPES
+       ═══════════════════════════════════════════ */
+
+    const lensData = [
+      {
+        emoji: "🌏",
+        name: "NEXUS",
+        nickname: "The Bridge",
+        color: "bg-sky-50 border-sky-200",
+        textColor: "text-sky-700",
+        tagColor: "bg-sky-100 text-sky-700",
+        question: "Will people outside our app hear about this?",
+        restaurant: "A dish so Instagram-worthy that customers photograph it and post it. New people see the photo and come to your restaurant. The dish markets itself.",
+        app: "A feature that makes users share something on social media, invite friends, or use GOMO inside another app. It spreads GOMO beyond the app itself.",
+        pass: "A \"GOMO Wrapped\" yearly summary that users screenshot and post on Facebook",
+        fail: "A leaderboard that only exists inside the app — nobody outside can see it",
+      },
+      {
+        emoji: "🔒",
+        name: "KEEPER",
+        nickname: "The Vault",
+        color: "bg-violet-50 border-violet-200",
+        textColor: "text-violet-700",
+        tagColor: "bg-violet-100 text-violet-700",
+        question: "The longer someone stays, do they get more value?",
+        restaurant: "A stamp card. Buy 10 coffees, get 1 free. After 8 stamps, you'd never switch to a new coffee shop — you'd lose your progress. The more you invest, the harder it is to leave.",
+        app: "A feature that builds up value over time — streaks, loyalty tiers, saved data, accumulated rewards. If you leave GOMO, you lose all of that progress.",
+        pass: "A loyalty tier where being a GOMO user for 1 year unlocks permanent VIP perks",
+        fail: "A one-time welcome bonus for new users — gives value upfront but nothing builds over time",
+      },
+      {
+        emoji: "⚡",
+        name: "CATALYST",
+        nickname: "The Moment",
+        color: "bg-orange-50 border-orange-200",
+        textColor: "text-orange-700",
+        tagColor: "bg-orange-100 text-orange-700",
+        question: "Does this show up at exactly the right time?",
+        restaurant: "On a rainy day, the restaurant puts a sign outside: \"Hot soup, 20% off today.\" It works because the context matches the offer. On a sunny day, that same sign feels random.",
+        app: "A feature that knows WHEN the user needs it. Slow internet? Offer a speed boost. Lunchtime? Show food deals. The app feels like it understands you.",
+        pass: "\"Sachet Upsell\" — your internet is slow, the app offers a one-tap speed boost for ₱10",
+        fail: "A promo banner that shows the same ad to everyone at all times — no awareness of context",
+      },
+      {
+        emoji: "🤝",
+        name: "BAYANIHAN",
+        nickname: "The Community",
+        color: "bg-teal-50 border-teal-200",
+        textColor: "text-teal-700",
+        tagColor: "bg-teal-100 text-teal-700",
+        question: "Is this better when used with friends?",
+        restaurant: "A \"group discount\" — bring 4 friends and everyone gets 20% off. Now your customers are doing your marketing for you. They recruit their friends because everyone benefits.",
+        app: "A feature that works better when more people join. Group challenges, shared data pools, squad goals. One person's engagement pulls in their entire barkada.",
+        pass: "\"Micro-Tribe\" — squad of 4 friends, hit ₱500 total load, everyone gets free YouTube",
+        fail: "A personal achievement badge that nobody else can see — solo, not social",
+      },
+    ];
+
+    const LensCard = ({ lens }) => {
+      const [expanded, setExpanded] = useState(false);
+      return (
+        <div className={`rounded-2xl border-2 ${lens.color} overflow-hidden transition-all`}>
+          <button onClick={() => setExpanded(!expanded)} className="w-full p-6 text-left">
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">{lens.emoji}</span>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className={`text-xl font-black ${lens.textColor}`}>{lens.name}</h3>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${lens.tagColor}`}>{lens.nickname}</span>
+                </div>
+                <p className="text-gray-700 font-semibold mt-1 text-lg">"{lens.question}"</p>
+              </div>
+              <span className="text-2xl text-gray-400">{expanded ? "−" : "+"}</span>
+            </div>
+          </button>
+          {expanded && (
+            <div className="px-6 pb-6 space-y-4 animate-in">
+              <div className="bg-white rounded-xl p-5">
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">🍳 Restaurant Version</p>
+                <p className="text-gray-700 leading-relaxed">{lens.restaurant}</p>
+              </div>
+              <div className="bg-white rounded-xl p-5">
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">📱 App Version</p>
+                <p className="text-gray-700 leading-relaxed">{lens.app}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                  <p className="text-xs font-black text-emerald-600 uppercase tracking-widest mb-1">✅ This passes</p>
+                  <p className="text-sm text-emerald-700">{lens.pass}</p>
+                </div>
+                <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+                  <p className="text-xs font-black text-red-500 uppercase tracking-widest mb-1">❌ This fails</p>
+                  <p className="text-sm text-red-600">{lens.fail}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const LensSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🔍</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">The Four Types</h2>
+          <p className="text-lg text-gray-500">Once an idea passes the 3 Questions, it needs to fit at least one of these four types. If it doesn't fit any — it doesn't belong. Click each one to see examples.</p>
+        </div>
+        <div className="max-w-3xl mx-auto space-y-3">
+          {lensData.map(l => <LensCard key={l.name} lens={l} />)}
+        </div>
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
+          <p className="text-xl font-bold text-white mb-2">That's it. Four types.</p>
+          <p className="text-gray-400">If a feature idea doesn't fit at least one type, it's not a bad idea — it just doesn't have a home in the app yet. We redesign it until it fits, or we don't build it.</p>
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 3: THE FEATURE GATE (CHECKLIST)
+       ═══════════════════════════════════════════ */
+
+    const GateSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🚦</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">The 5-Question Checklist</h2>
+          <p className="text-lg text-gray-500">Before any feature enters the building list, it goes through this. It takes 15 minutes. Think of it as a "quality check" before we spend weeks building something.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-3">
+          {[
+            { n: "1", q: "Which of the 4 types does it fit?", why: "If it doesn't fit any — we don't build it (or we redesign it until it does)", emoji: "🔍" },
+            { n: "2", q: "Does it connect to something else in the app?", why: "Features that stand alone are like menu items nobody orders — they take up space without adding value", emoji: "🔗" },
+            { n: "3", q: "After someone uses it, what happens next?", why: "Every feature should lead the user to do something else. If it's a dead end, we redesign it", emoji: "➡️" },
+            { n: "4", q: "How do we know if it's working?", why: "If we can't measure it, we can't improve it. We pick one number to watch", emoji: "📊" },
+            { n: "5", q: "When do we remove it if it's not working?", why: "Every feature gets a deadline. If it doesn't hit its number by then, we take it off the menu", emoji: "⏰" },
+          ].map(step => (
+            <div key={step.n} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex gap-4 items-start">
+              <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center shrink-0">
+                <span className="text-white font-black text-lg">{step.n}</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 text-lg">{step.emoji} {step.q}</h3>
+                <p className="text-gray-500 mt-1">{step.why}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 4: SCENARIO QUIZ
+       ═══════════════════════════════════════════ */
+
+    const scenarios = [
+      {
+        title: "Daily Horoscope Widget",
+        desc: "Someone suggests adding a daily horoscope to the app home screen to boost daily opens.",
+        options: [
+          { text: "Build it — daily opens are good!", correct: false },
+          { text: "Reject — it doesn't fit any of the 4 types", correct: true },
+        ],
+        explanation: "The horoscope doesn't spread GOMO (not NEXUS), doesn't build value over time (not KEEPER), isn't triggered by context (not CATALYST), and isn't social (not BAYANIHAN). It might get daily opens, but it has nothing to do with what GOMO does. It's sushi in an adobo restaurant.",
+        redesign: "Turn it into a \"Daily Check-in Streak\" — open the app 7 days in a row, earn bonus data. Now it answers KEEPER (value builds over time) and has a metric (streak completion rate).",
+      },
+      {
+        title: "Speed Boost When Internet is Slow",
+        desc: "The app detects that your internet is slow. A button appears: \"Boost Speed for ₱10 — 1 hour of fast internet.\"",
+        options: [
+          { text: "Build it — this fits the CATALYST type", correct: true },
+          { text: "Reject — it's just trying to take money from users", correct: false },
+        ],
+        explanation: "This is CATALYST in its purest form — the right offer at the right moment. The user's internet is actually slow, so the offer feels helpful, not annoying. It's like offering hot soup on a rainy day. The timing makes it feel like a service, not a sales pitch.",
+        redesign: null,
+      },
+      {
+        title: "Squad of 4 Friends — Group Goal",
+        desc: "Create a group of 4 friends. If together you load ₱500 total this month, everyone gets free YouTube for a week.",
+        options: [
+          { text: "Reject — too complicated", correct: false },
+          { text: "Build it — it answers BAYANIHAN and KEEPER", correct: true },
+        ],
+        explanation: "This is \"Micro-Tribe.\" It answers BAYANIHAN (better with friends — social pressure keeps everyone loading) AND KEEPER (the group progress builds over the month — you don't want to let your barkada down). One feature, two types covered. These are the strongest features.",
+        redesign: null,
+      },
+      {
+        title: "Static Banner Ad on Home Screen",
+        desc: "Marketing wants to put a promotional banner on the home screen showing the same offer to all users at all times.",
+        options: [
+          { text: "Build it — promos drive revenue", correct: false },
+          { text: "Question it — which of the 4 types does this fit?", correct: true },
+        ],
+        explanation: "A static banner that shows the same thing to everyone doesn't answer CATALYST (no context awareness — everyone sees it regardless of their situation). It doesn't fit any other type either. It's the restaurant equivalent of handing the same flyer to every person who walks by. The system would push us to make it contextual — show different offers to different users based on their behavior, time of day, or location.",
+        redesign: "Instead of a static banner, use the BFF to show different promos to different users. Low balance? Show a top-up offer. Heavy streamer? Show a data pack. Lunchtime? Show food deals. Same banner slot, but now it answers CATALYST.",
+      },
+      {
+        title: "Personal Achievement Badges",
+        desc: "Users earn badges for milestones (first top-up, 100GB used, etc.) visible only on their own profile.",
+        options: [
+          { text: "Build it — gamification is always good", correct: false },
+          { text: "Redesign — it's close but needs a social element", correct: true },
+        ],
+        explanation: "Badges that nobody else can see don't answer BAYANIHAN (not social) and don't really answer KEEPER (a badge you can't show off doesn't create real switching cost). But the idea isn't bad — it just needs a redesign.",
+        redesign: "Make badges visible to your Micro-Tribe squad. Add a \"Badge Wall\" where your barkada can see each other's achievements. Now it answers BAYANIHAN (social comparison) and KEEPER (you don't want to lose your badge collection). Same concept, strategic home.",
+      },
+    ];
+
+    const ScenarioCard = ({ scenario, index }) => {
+      const [selected, setSelected] = useState(null);
+      const [showResult, setShowResult] = useState(false);
+
+      const handleSelect = (optIdx) => {
+        setSelected(optIdx);
+        setShowResult(true);
+      };
+
+      const isCorrect = selected !== null && scenario.options[selected].correct;
+
+      return (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-gray-900 text-white text-xs font-black px-2.5 py-1 rounded-lg">Scenario {index + 1}</span>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{scenario.title}</h3>
+            <p className="text-gray-600">{scenario.desc}</p>
+          </div>
+
+          <div className="px-6 pb-4 space-y-2">
+            {scenario.options.map((opt, i) => (
+              <button key={i} onClick={() => handleSelect(i)} disabled={showResult}
+                className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                  showResult
+                    ? opt.correct
+                      ? "border-emerald-300 bg-emerald-50"
+                      : selected === i
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-100 bg-gray-50 opacity-50"
+                    : "border-gray-200 hover:border-gray-400 bg-white cursor-pointer"
+                }`}>
+                <div className="flex items-center gap-3">
+                  <span className="text-lg">{showResult ? (opt.correct ? "✅" : selected === i ? "❌" : "⚪") : "⚪"}</span>
+                  <span className={`font-semibold ${showResult && opt.correct ? "text-emerald-700" : showResult && selected === i && !opt.correct ? "text-red-600" : "text-gray-700"}`}>{opt.text}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {showResult && (
+            <div className="px-6 pb-6 space-y-3 animate-in">
+              <div className={`p-5 rounded-xl ${isCorrect ? "bg-emerald-50 border border-emerald-100" : "bg-amber-50 border border-amber-100"}`}>
+                <p className="text-xs font-black uppercase tracking-widest mb-2" style={{color: isCorrect ? "#059669" : "#D97706"}}>{isCorrect ? "✅ That's right!" : "🤔 Not quite — here's why:"}</p>
+                <p className="text-gray-700 leading-relaxed">{scenario.explanation}</p>
+              </div>
+              {scenario.redesign && (
+                <div className="p-5 rounded-xl bg-sky-50 border border-sky-100">
+                  <p className="text-xs font-black text-sky-600 uppercase tracking-widest mb-2">💡 How to fix it</p>
+                  <p className="text-gray-700 leading-relaxed">{scenario.redesign}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const QuizSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🧪</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">Test Yourself</h2>
+          <p className="text-lg text-gray-500">Here are 5 real scenarios. For each one, decide: should we build it or not? Click your answer to see the explanation.</p>
+        </div>
+        <div className="max-w-3xl mx-auto space-y-5">
+          {scenarios.map((s, i) => <ScenarioCard key={i} scenario={s} index={i} />)}
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 5: THE LOOP
+       ═══════════════════════════════════════════ */
+
+    const LoopSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🔄</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">Why Connected Features Win</h2>
+          <p className="text-lg text-gray-500">The four types aren't separate buckets. They form a loop where each one feeds the next.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <div className="space-y-0">
+              {[
+                { emoji: "⚡", name: "CATALYST", arrow: "→", next: "🔒 KEEPER", desc: "A well-timed offer (speed boost) makes the user do something (buy). That action adds to their progress." },
+                { emoji: "🔒", name: "KEEPER", arrow: "→", next: "🤝 BAYANIHAN", desc: "As users build up value (streaks, tiers), they want to share and compete with friends." },
+                { emoji: "🤝", name: "BAYANIHAN", arrow: "→", next: "🌏 NEXUS", desc: "Friends invite friends. Squad goals create invites. Group achievements get shared on social media." },
+                { emoji: "🌏", name: "NEXUS", arrow: "→", next: "⚡ CATALYST", desc: "New users arrive from social shares and invites. They get their first well-timed offer. The loop restarts." },
+              ].map((step, i) => (
+                <div key={i} className="flex gap-4 items-start py-5 border-b border-gray-100 last:border-0">
+                  <div className="text-3xl shrink-0 w-10 text-center">{step.emoji}</div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-black text-gray-900">{step.name}</span>
+                      <span className="text-gray-400">{step.arrow}</span>
+                      <span className="text-sm text-gray-500">{step.next}</span>
+                    </div>
+                    <p className="text-gray-600">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
+          <p className="text-xl font-bold text-white mb-3">The strongest features sit on this loop.</p>
+          <p className="text-gray-400">A feature that only fits one type is fine. But a feature that fits two types AND connects to the loop? That's the one that compounds. That's why Micro-Tribe (BAYANIHAN + KEEPER) is stronger than a simple referral code.</p>
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 6: THE REMOVAL RULE
+       ═══════════════════════════════════════════ */
+
+    const RemovalSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🗑️</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">The Removal Rule</h2>
+          <p className="text-lg text-gray-500">The Growth Protocol isn't just about what to add. It's equally about what to take away.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <h3 className="font-bold text-xl text-gray-900 mb-6 text-center">Every feature gets three check-ups:</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { day: "30", title: "Quick Check", q: "Is anyone using this?", color: "text-emerald-600", bg: "bg-emerald-50" },
+                { day: "60", title: "Real Check", q: "Is it hitting its target number?", color: "text-amber-600", bg: "bg-amber-50" },
+                { day: "90", title: "Final Call", q: "Does it earn its permanent place?", color: "text-red-600", bg: "bg-red-50" },
+              ].map(r => (
+                <div key={r.day} className={`${r.bg} rounded-xl p-5 text-center`}>
+                  <p className={`text-4xl font-black ${r.color}`}>{r.day}</p>
+                  <p className="text-xs text-gray-500 font-bold uppercase mb-3">days</p>
+                  <p className="font-bold text-gray-900 mb-1">{r.title}</p>
+                  <p className="text-sm text-gray-600">{r.q}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
+          <p className="text-xl font-bold text-white mb-3">No feature is permanent just because someone important asked for it.</p>
+          <p className="text-gray-400">A feature that gets removed but taught us something is more valuable than a feature that stays forever and does nothing. The menu should only have dishes that customers actually order.</p>
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       SECTION 7: CHEAT SHEET
+       ═══════════════════════════════════════════ */
+
+    const CheatSheet = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">📝</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">Your Cheat Sheet</h2>
+          <p className="text-lg text-gray-500">Screenshot this. Keep it on your phone. Glance at it before presenting.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border-2 border-gray-200 p-8 space-y-6">
+          <h3 className="text-center font-black text-2xl text-gray-900">The Growth Protocol in 60 Seconds</h3>
+
+          <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+            <p className="font-bold text-red-700 mb-1">❌ The Problem</p>
+            <p className="text-red-600">Too many features that don't connect = cluttered app = users leave</p>
+          </div>
+
+          <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+            <p className="font-bold text-emerald-700 mb-1">✅ The Solution</p>
+            <p className="text-emerald-600">3 questions to check if the idea is real + 4 types to check if it fits the bigger picture</p>
+          </div>
+
+          <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+            <p className="font-bold text-indigo-700 mb-1">🚪 The Bouncer (3 Questions — 5 minutes)</p>
+            <p className="text-indigo-600 text-sm">1. What user problem does this solve? → 2. How does this help the business? → 3. Can we test it cheaper first?</p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-sky-50 rounded-xl p-4 border border-sky-100 text-center">
+              <p className="text-2xl mb-1">🌏</p>
+              <p className="font-black text-sky-700">NEXUS</p>
+              <p className="text-sm text-sky-600">Will people outside the app hear about this?</p>
+            </div>
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100 text-center">
+              <p className="text-2xl mb-1">🔒</p>
+              <p className="font-black text-violet-700">KEEPER</p>
+              <p className="text-sm text-violet-600">Does value build over time?</p>
+            </div>
+            <div className="bg-orange-50 rounded-xl p-4 border border-orange-100 text-center">
+              <p className="text-2xl mb-1">⚡</p>
+              <p className="font-black text-orange-700">CATALYST</p>
+              <p className="text-sm text-orange-600">Right offer, right moment?</p>
+            </div>
+            <div className="bg-teal-50 rounded-xl p-4 border border-teal-100 text-center">
+              <p className="text-2xl mb-1">🤝</p>
+              <p className="font-black text-teal-700">BAYANIHAN</p>
+              <p className="text-sm text-teal-600">Better with friends?</p>
+            </div>
+          </div>
+
+          <div className="bg-gray-100 rounded-xl p-4">
+            <p className="font-bold text-gray-700 mb-1">🚦 The Checklist (15 minutes per feature)</p>
+            <p className="text-gray-600 text-sm">1. Which type does it fit? → 2. Does it connect? → 3. What happens next? → 4. How do we measure? → 5. When do we remove?</p>
+          </div>
+
+          <div className="bg-gray-900 rounded-xl p-4 text-center">
+            <p className="text-white font-bold">Not more features. Better features.</p>
+            <p className="text-gray-400 text-sm">Not more menu items. The right menu items.</p>
+          </div>
+        </div>
+      </div>
+    );
+
+    /* ═══════════════════════════════════════════
+       MAIN APP
+       ═══════════════════════════════════════════ */
+
+    /* ═══════════════════════════════════════════
+       SECTION 1B: THE 3 QUESTIONS (REALITY CHECK)
+       ═══════════════════════════════════════════ */
+
+    const RealityCheckSection = () => (
+      <div className="space-y-8 animate-in">
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-5xl mb-4">🚪</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">The Bouncer at the Door</h2>
+          <p className="text-lg text-gray-500">Before we even check if a feature fits our app's bigger picture, it has to pass three simple questions. This takes 5 minutes. Most bad ideas die right here.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-indigo-100">
+            <div className="flex gap-4 items-start">
+              <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
+                <span className="text-2xl">😫</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Question 1: What problem does this solve for users?</h3>
+                <p className="text-gray-600 mt-2">Not "what does the feature do?" but "what frustration does it fix?" If you can't name a real problem that real users actually have, the idea isn't ready.</p>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
+                    <p className="text-xs font-bold text-emerald-600">✅ Good answer:</p>
+                    <p className="text-sm text-emerald-700 mt-1">"Users with slow internet need a quick boost without buying a full data pack."</p>
+                  </div>
+                  <div className="bg-red-50 rounded-lg p-3 border border-red-100">
+                    <p className="text-xs font-bold text-red-500">❌ Bad answer:</p>
+                    <p className="text-sm text-red-600 mt-1">"It would be cool to have." — That's an opinion, not a user problem.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-indigo-100">
+            <div className="flex gap-4 items-start">
+              <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
+                <span className="text-2xl">💰</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Question 2: How does this help the business?</h3>
+                <p className="text-gray-600 mt-2">Every feature costs engineering time. There are only three ways a feature pays for itself:</p>
+                <div className="mt-2 space-y-1">
+                  <p className="text-sm text-gray-700"><span className="font-bold">💵 Makes money</span> — people pay for it, or it leads to more top-ups</p>
+                  <p className="text-sm text-gray-700"><span className="font-bold">🔒 Keeps users</span> — people stay longer because of it</p>
+                  <p className="text-sm text-gray-700"><span className="font-bold">✂️ Saves money</span> — reduces support tickets or replaces something expensive</p>
+                </div>
+                <p className="text-sm text-gray-500 mt-2 italic">If it doesn't clearly do at least one of these, it's a hobby project — not a product feature.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-indigo-100">
+            <div className="flex gap-4 items-start">
+              <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
+                <span className="text-2xl">🧪</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Question 3: Can we test this cheaper before building it?</h3>
+                <p className="text-gray-600 mt-2">Before spending 3 weeks building something, check if users even want it:</p>
+                <div className="mt-3 bg-gray-50 rounded-lg p-4 space-y-2">
+                  <p className="text-sm text-gray-700">🔘 Add a fake "Boost" button and count taps → if nobody taps, nobody wants it</p>
+                  <p className="text-sm text-gray-700">🔘 Run the challenge manually with 10 barkadas → if it fails with human help, it'll fail automated too</p>
+                  <p className="text-sm text-gray-700">🔘 Give 20 users a referral code → if 0 share it, don't build a referral system</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-8 text-center">
+          <p className="text-xl font-bold text-white mb-2">These 3 questions are the bouncer at the door.</p>
+          <p className="text-gray-400">They check: "Is this a real idea with a real reason to exist?" Most bad ideas die here in 5 minutes. The ones that survive go inside to the 4 Types check.</p>
+        </div>
+      </div>
+    );
+
+    const TABS = [
+      { id: "problem", label: "The Problem", emoji: "🍳" },
+      { id: "reality", label: "3 Questions", emoji: "🚪" },
+      { id: "lenses", label: "4 Types", emoji: "🔍" },
+      { id: "gate", label: "Checklist", emoji: "🚦" },
+      { id: "quiz", label: "Test Yourself", emoji: "🧪" },
+      { id: "loop", label: "The Loop", emoji: "🔄" },
+      { id: "removal", label: "Removal Rule", emoji: "🗑️" },
+      { id: "cheat", label: "Cheat Sheet", emoji: "📝" },
+    ];
+
+    function App() {
+      const [tab, setTab] = useState("problem");
+      return (
+        <div className="min-h-screen">
+          {/* Header */}
+          <header className="bg-white border-b border-gray-200 sticky top-0 z-20 px-6 py-4">
+            <div className="max-w-4xl mx-auto flex items-center justify-between">
+              <div>
+                <h1 className="font-black text-xl text-gray-900">Growth Protocol <span className="text-gray-400 font-normal text-sm">Study Guide</span></h1>
+                <p className="text-xs text-gray-400">Your personal review — visual, scenario-based, zero jargon</p>
+              </div>
+            </div>
+          </header>
+
+          {/* Tab Navigation */}
+          <nav className="bg-white border-b border-gray-200 sticky top-[73px] z-10 px-6">
+            <div className="max-w-4xl mx-auto flex gap-1 overflow-x-auto py-2 custom-scrollbar">
+              {TABS.map(t => (
+                <button key={t.id} onClick={() => setTab(t.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${tab === t.id ? "bg-gray-900 text-white" : "text-gray-500 hover:bg-gray-100"}`}>
+                  {t.emoji} {t.label}
+                </button>
+              ))}
+            </div>
+          </nav>
+
+          {/* Content */}
+          <main className="max-w-4xl mx-auto px-6 py-10">
+            {tab === "problem" && <ProblemSection />}
+            {tab === "reality" && <RealityCheckSection />}
+            {tab === "lenses" && <LensSection />}
+            {tab === "gate" && <GateSection />}
+            {tab === "quiz" && <QuizSection />}
+            {tab === "loop" && <LoopSection />}
+            {tab === "removal" && <RemovalSection />}
+            {tab === "cheat" && <CheatSheet />}
+          </main>
+        </div>
+      );
+    }
+
+    createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

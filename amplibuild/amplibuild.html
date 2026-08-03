@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amplibuild Construction Corp. | Professional Construction Services</title>
+<meta name="description" content="Amplibuild Construction Corp. — a Philippine-registered construction contracting company delivering residential, civil, and commercial building solutions across Metro Manila and surrounding provinces.">
+<meta property="og:title" content="Amplibuild Construction Corp. | Professional Construction Services">
+<meta property="og:description" content="High-quality building and infrastructure solutions across the Philippines. Residential, civil works, commercial buildings, and more.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://amplibuild.com/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5821F'/%3E%3Cpath d='M6 26h20M6 22h20M16 6L8 12h16L16 6z' stroke='%23fff' stroke-width='1.5' stroke-linejoin='round' fill='none'/%3E%3Crect x='10' y='12' width='12' height='10' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#F5821F;
+  --orange-light:#FF9940;
+  --orange-dim:rgba(245,130,31,0.15);
+  --dark:#0A0A0A;
+  --dark2:#111111;
+  --dark3:#181818;
+  --card:#141414;
+  --card-hover:#1C1C1C;
+  --white:#FFFFFF;
+  --text-primary:#F0F0F0;
+  --text-secondary:#999999;
+  --text-muted:#555555;
+  --border:rgba(255,255,255,0.07);
+  --border-hover:rgba(245,130,31,0.4);
+  --heading:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--text-primary);font-family:var(--body);font-weight:400;line-height:1.6;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--dark2)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;transition:background 0.3s,border-bottom 0.3s}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:100%;width:100%;display:flex;align-items:center;justify-content:space-between}
+nav.scrolled{background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+.nav-logo-mark{width:36px;height:36px;background:var(--orange);display:flex;align-items:center;justify-content:center;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.nav-logo-mark svg{width:20px;height:20px;fill:#fff}
+.nav-brand{font-family:var(--heading);font-weight:800;font-size:1.3rem;letter-spacing:0.05em;color:var(--white)}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--white);font-size:0.875rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{background:var(--orange);color:#fff;padding:0.5rem 1.25rem;border-radius:3px;font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--orange-light)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(--text-primary);transition:all 0.3s}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0;position:relative;overflow:hidden}
+.hero-inner{max-width:1200px;margin:0 auto;padding:0 2rem 5rem;width:100%;position:relative;z-index:1}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.75) 50%,rgba(10,10,10,0.45) 100%),url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;opacity:0.5}
+.hero-accent{position:absolute;top:20%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,130,31,0.08) 0%,transparent 70%)}
+.hero-content{position:relative;z-index:1;max-width:900px}
+.hero-label{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem}
+.hero-label::before{content:'';display:inline-block;width:28px;height:2px;background:var(--orange)}
+.hero-title{font-family:var(--heading);font-weight:900;font-size:clamp(3.5rem,8vw,7rem);line-height:0.95;letter-spacing:-0.01em;color:var(--white);margin-bottom:1.5rem}
+.hero-title span{color:var(--orange)}
+.hero-subtitle{font-size:1.05rem;font-weight:300;color:var(--text-secondary);max-width:540px;line-height:1.7;margin-bottom:2.5rem}
+.hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--orange);color:#fff;padding:0.85rem 2rem;border-radius:3px;text-decoration:none;font-weight:600;font-size:0.875rem;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;display:inline-block}
+.btn-primary:hover{background:var(--orange-light);transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(255,255,255,0.2);color:var(--text-primary);padding:0.85rem 2rem;border-radius:3px;text-decoration:none;font-weight:500;font-size:0.875rem;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;display:inline-block}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.hero-scroll{position:absolute;bottom:2rem;right:2rem;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--text-muted);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase}
+.hero-scroll::after{content:'';display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--text-muted),transparent)}
+
+/* STATS BAR */
+.stats-bar{background:var(--orange);padding:1.5rem 2rem}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.stat-item{text-align:center}
+.stat-number{font-family:var(--heading);font-weight:900;font-size:2.4rem;line-height:1;color:#fff}
+.stat-label{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:0.25rem}
+
+/* SECTIONS */
+section{padding:6rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+.section-label::before{content:'';display:inline-block;width:20px;height:2px;background:var(--orange)}
+.section-title{font-family:var(--heading);font-weight:800;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.05;color:var(--white);margin-bottom:1rem}
+.section-desc{color:var(--text-secondary);font-size:1rem;max-width:520px;line-height:1.7}
+
+/* ABOUT */
+#about{background:var(--dark2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem}
+.about-text{color:var(--text-secondary);line-height:1.8;font-size:0.975rem;margin-top:1.5rem}
+.about-text p+p{margin-top:1rem}
+.mv-cards{display:grid;gap:1px;margin-top:3rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.mv-card{background:var(--card);padding:2rem}
+.mv-card+.mv-card{border-top:1px solid var(--border)}
+.mv-tag{font-family:var(--heading);font-weight:700;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem}
+.mv-text{color:var(--text-secondary);font-size:0.95rem;line-height:1.7;font-style:italic}
+.about-highlights{display:grid;gap:1.5rem}
+.highlight-item{display:flex;gap:1.25rem;align-items:flex-start}
+.highlight-icon{flex-shrink:0;width:44px;height:44px;background:var(--orange-dim);border:1px solid rgba(245,130,31,0.25);display:flex;align-items:center;justify-content:center;border-radius:3px}
+.highlight-icon svg{width:20px;height:20px;stroke:var(--orange);fill:none;stroke-width:1.8}
+.highlight-title{font-family:var(--heading);font-weight:700;font-size:1rem;letter-spacing:0.03em;color:var(--white);margin-bottom:0.25rem}
+.highlight-desc{font-size:0.875rem;color:var(--text-secondary);line-height:1.6}
+
+/* SERVICES */
+#services{background:var(--dark)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3.5rem;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.service-card{background:var(--card);padding:2.25rem;transition:background 0.25s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--orange);transition:height 0.3s}
+.service-card:hover{background:var(--card-hover)}
+.service-card:hover::before{height:100%}
+.service-num{font-family:var(--heading);font-weight:900;font-size:3rem;line-height:1;color:rgba(255,255,255,0.05);margin-bottom:1.5rem;letter-spacing:-0.02em}
+.service-icon{width:40px;height:40px;margin-bottom:1.25rem}
+.service-icon svg{width:40px;height:40px;stroke:var(--orange);fill:none;stroke-width:1.5}
+.service-title{font-family:var(--heading);font-weight:700;font-size:1.25rem;letter-spacing:0.02em;color:var(--white);margin-bottom:0.75rem}
+.service-desc{font-size:0.875rem;color:var(--text-secondary);line-height:1.7}
+
+/* PROJECTS */
+#projects{background:var(--dark2)}
+.projects-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem}
+.filter-bar{display:flex;gap:0.5rem;flex-wrap:wrap}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--text-secondary);padding:0.45rem 1rem;border-radius:3px;font-size:0.78rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-family:var(--body)}
+.filter-btn:hover,.filter-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.project-card{background:var(--card);padding:2rem;transition:background 0.25s;cursor:default;position:relative}
+.project-card:hover{background:var(--card-hover)}
+.project-card.hidden{display:none}
+.project-cat{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);background:var(--orange-dim);padding:0.25rem 0.6rem;border-radius:2px;margin-bottom:1rem}
+.project-title{font-family:var(--heading);font-weight:700;font-size:1.3rem;letter-spacing:0.02em;color:var(--white);margin-bottom:0.35rem;line-height:1.1}
+.project-loc{display:flex;align-items:center;gap:0.35rem;font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem}
+.project-loc svg{width:12px;height:12px;stroke:var(--text-muted);fill:none;stroke-width:2;flex-shrink:0}
+.project-desc{font-size:0.875rem;color:var(--text-secondary);line-height:1.65}
+.project-tag{display:inline-block;margin-top:1rem;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);border-top:1px solid var(--border);padding-top:0.75rem;width:100%}
+
+/* TEAM */
+#team{background:var(--dark)}
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3.5rem;margin-bottom:3.5rem}
+.founder-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem;transition:border-color 0.2s}
+.founder-card:hover{border-color:rgba(245,130,31,0.3)}
+.founder-role{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem}
+.founder-name{font-family:var(--heading);font-weight:800;font-size:1.8rem;letter-spacing:0.02em;color:var(--white);margin-bottom:0.25rem}
+.founder-title{font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.founder-bio{font-size:0.9rem;color:var(--text-secondary);line-height:1.75}
+.team-label{font-family:var(--heading);font-weight:700;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.team-member{background:var(--card);padding:1.25rem 1.5rem;transition:background 0.2s}
+.team-member:hover{background:var(--card-hover)}
+.member-name{font-family:var(--heading);font-weight:700;font-size:1rem;color:var(--white);margin-bottom:0.2rem}
+.member-role{font-size:0.78rem;color:var(--text-muted)}
+
+/* CONTACT */
+#contact{background:var(--dark2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem;align-items:start}
+.contact-desc{color:var(--text-secondary);font-size:0.975rem;line-height:1.8;margin-top:1.5rem;margin-bottom:2.5rem}
+.contact-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.contact-icon{width:40px;height:40px;background:var(--orange-dim);border:1px solid rgba(245,130,31,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:18px;height:18px;stroke:var(--orange);fill:none;stroke-width:1.8}
+.contact-detail-label{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.2rem}
+.contact-detail-value{font-size:0.95rem;color:var(--text-primary)}
+.contact-cta{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.5rem}
+.contact-cta-title{font-family:var(--heading);font-weight:700;font-size:1.5rem;color:var(--white);margin-bottom:0.75rem}
+.contact-cta-desc{font-size:0.9rem;color:var(--text-secondary);margin-bottom:2rem;line-height:1.7}
+.contact-services-list{list-style:none;margin-bottom:2rem}
+.contact-services-list li{display:flex;align-items:center;gap:0.6rem;font-size:0.875rem;color:var(--text-secondary);padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.contact-services-list li::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;flex-shrink:0}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:2.5rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-brand{font-family:var(--heading);font-weight:800;font-size:1.1rem;letter-spacing:0.06em;color:var(--text-muted)}
+.footer-brand span{color:var(--orange)}
+.footer-copy{font-size:0.8rem;color:var(--text-muted)}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+/* DIVIDER */
+.orange-divider{width:48px;height:3px;background:var(--orange);margin:1.5rem 0}
+
+/* PROJECT CARD PHOTO PLACEHOLDER */
+.project-card::before{content:'';display:block;height:160px;margin:-2rem -2rem 1.5rem;background-image:linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px);background-size:22px 22px}
+.project-card[data-cat="residential"]::before{background-color:#161009}
+.project-card[data-cat="civil"]::before{background-color:#090f1a}
+.project-card[data-cat="commercial"]::before{background-color:#09140f}
+.project-card[data-cat="site"]::before{background-color:#141008}
+.project-card[data-cat="electrical"]::before{background-color:#160f00}
+.project-card[data-cat="water"]::before{background-color:#060e1a}
+
+/* FOUNDER PHOTO AVATAR */
+.founder-photo{width:52px;height:52px;background:var(--orange-dim);border:2px solid rgba(245,130,31,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--heading);font-weight:800;font-size:1rem;color:var(--orange);margin-bottom:1.25rem;letter-spacing:0.04em}
+
+/* TEAM MEMBER AVATAR */
+.team-member{background:var(--card);padding:1rem 1.25rem;transition:background 0.2s;display:flex;align-items:center;gap:0.75rem}
+.member-avatar{flex-shrink:0;width:34px;height:34px;background:var(--orange-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--heading);font-weight:700;font-size:0.65rem;color:var(--orange);letter-spacing:0.04em}
+
+/* WHATSAPP */
+.whatsapp-link{display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.6rem 1.1rem;border-radius:3px;text-decoration:none;font-size:0.825rem;font-weight:600;margin-top:0.75rem;transition:opacity 0.2s}
+.whatsapp-link:hover{opacity:0.85}
+.whatsapp-link svg{width:16px;height:16px;fill:#fff;flex-shrink:0}
+
+/* SOCIAL LINKS */
+.footer-social{display:flex;gap:0.75rem}
+.social-link{width:34px;height:34px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.2s}
+.social-link:hover{background:var(--orange);border-color:var(--orange)}
+.social-link svg{width:16px;height:16px;fill:var(--text-secondary);transition:fill 0.2s}
+.social-link:hover svg{fill:#fff}
+
+/* FOOTER LAYOUT */
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-nav a{font-size:0.78rem;color:var(--text-muted);text-decoration:none;transition:color 0.2s;letter-spacing:0.05em;text-transform:uppercase;font-weight:500}
+.footer-nav a:hover{color:var(--orange)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;padding-top:1.5rem;border-top:1px solid var(--border);margin-top:1.5rem}
+
+/* MOBILE MENU CLOSE BUTTON */
+.mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;cursor:pointer;color:var(--text-secondary);padding:0.5rem;line-height:0;transition:color 0.2s}
+.mobile-menu-close:hover{color:var(--white)}
+.mobile-menu-close svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .projects-grid{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:repeat(3,1fr)}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .nav-inner{padding:0 1.25rem}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .hero-inner{padding:0 1.25rem 4rem}
+  section{padding:4rem 1.25rem}
+  .founders-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .projects-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .projects-header{flex-direction:column;align-items:flex-start}
+  .footer-top{flex-direction:column;align-items:center;text-align:center}
+  .footer-bottom{flex-direction:column;align-items:center;text-align:center}
+}
+@media(max-width:480px){
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 21h18M3 18h18M12 3L4 9h16L12 3z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" fill="none"/><rect x="7" y="9" width="10" height="9" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+      </div>
+      <span class="nav-brand">AMPLIBUILD</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:1001;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem">
+  <button class="mobile-menu-close" aria-label="Close menu" onclick="toggleMobileMenu()">
+    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <a href="#about" style="font-family:var(--heading);font-size:2.5rem;font-weight:800;color:var(--white);text-decoration:none" onclick="toggleMobileMenu()">About</a>
+  <a href="#services" style="font-family:var(--heading);font-size:2.5rem;font-weight:800;color:var(--white);text-decoration:none" onclick="toggleMobileMenu()">Services</a>
+  <a href="#projects" style="font-family:var(--heading);font-size:2.5rem;font-weight:800;color:var(--white);text-decoration:none" onclick="toggleMobileMenu()">Projects</a>
+  <a href="#team" style="font-family:var(--heading);font-size:2.5rem;font-weight:800;color:var(--white);text-decoration:none" onclick="toggleMobileMenu()">Team</a>
+  <a href="#contact" style="font-family:var(--heading);font-size:2.5rem;font-weight:800;color:var(--orange);text-decoration:none" onclick="toggleMobileMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">Amplibuild Construction Corp.</div>
+      <h1 class="hero-title">
+        Building<br>
+        <span>Infrastructure</span><br>
+        That Lasts.
+      </h1>
+      <p class="hero-subtitle">A construction contracting company delivering high-quality building and infrastructure solutions across the Philippines with professionalism, innovation, and reliability.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Our Projects</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-number">18+</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Service Categories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Cities Served</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">13</div>
+      <div class="stat-label">Team Members</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">Built on Expertise, Driven by Excellence</h2>
+        <div class="orange-divider"></div>
+        <div class="about-text">
+          <p>Amplibuild Construction Corp. is a Philippine-registered construction contracting company specializing in residential, civil, and commercial construction projects. We take on projects of varying scale and complexity, from residential renovations to large-scale civil infrastructure.</p>
+          <p>Founded by engineers and entrepreneurs with deep experience across technology, project management, and construction, we bring a disciplined, systems-oriented approach to every job site. Our track record spans flood control systems in Bataan, road construction in Cavite, government buildings in Valenzuela, and residential projects across Metro Manila.</p>
+        </div>
+        <div class="mv-cards reveal reveal-delay-1">
+          <div class="mv-card">
+            <div class="mv-tag">Our Mission</div>
+            <p class="mv-text">To provide exceptional value to our clients through the superior execution of construction projects, while continuously enhancing our technical expertise, professional standards, and commitment to excellence.</p>
+          </div>
+          <div class="mv-card">
+            <div class="mv-tag">Our Vision</div>
+            <p class="mv-text">To be a leading construction company recognized for delivering innovative, sustainable, and high-quality building and infrastructure solutions that exceed client expectations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-highlights reveal reveal-delay-2">
+        <div class="highlight-item">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="highlight-title">Licensed and Professional</div>
+            <div class="highlight-desc">Our team includes licensed engineers and certified professionals operating under Philippine construction standards and regulations.</div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="highlight-title">End-to-End Project Execution</div>
+            <div class="highlight-desc">From site clearing and demolition through to finishing and handover, we manage the full construction lifecycle so clients deal with one point of accountability.</div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="highlight-title">Nationwide Reach</div>
+            <div class="highlight-desc">Projects across Metro Manila, Rizal, Bulacan, Cavite, Laguna, Bataan, and Pampanga. We deploy skilled manpower wherever the job demands.</div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="highlight-title">Skilled Manpower on Demand</div>
+            <div class="highlight-desc">We maintain a core team of engineers, foremen, heavy equipment specialists, and skilled workers ready to scale up for large government and commercial contracts.</div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="highlight-title">Technology-Driven Leadership</div>
+            <div class="highlight-desc">Our founders bring backgrounds in engineering and enterprise technology, enabling data-driven project management and operational efficiency uncommon in traditional construction firms.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-desc">We deliver across six core construction and infrastructure disciplines, handling both small-scale residential and large-scale civil government projects.</p>
+    </div>
+    <div class="services-grid" style="margin-top:3.5rem">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M3 18h18M12 3L4 9h16L12 3z" stroke-linejoin="round"/><rect x="7" y="9" width="10" height="9"/><path d="M10 12h4M10 15h4"/></svg>
+        </div>
+        <div class="service-title">Residential Construction and Renovation</div>
+        <p class="service-desc">Full residential builds, interior and exterior renovations, structural reinforcement, room additions, and finishing works. We handle projects from 80 sqm units to multi-story homes.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 20h16M4 4h16M6 20V4M18 20V4M10 8h4M10 12h4M10 16h4"/></svg>
+        </div>
+        <div class="service-title">Civil and Infrastructure Works</div>
+        <p class="service-desc">Roads, bridges, flood control systems, and drainage infrastructure. We execute government-contracted civil works with the technical manpower and equipment to deliver at scale.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M9 11h6M9 15h6"/></svg>
+        </div>
+        <div class="service-title">Commercial and Institutional Buildings</div>
+        <p class="service-desc">Commercial kiosks, covered courts, warehouses, and large government buildings. We supply skilled manpower and technical support for institutional construction contracts.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 19l3-3m0 0l9-9m-9 9l-3 3m12-12l3-3m-3 3l-3-3m3 3L9 16M3 5l7 7"/></svg>
+        </div>
+        <div class="service-title">Site Development and Demolition</div>
+        <p class="service-desc">Land clearing, site grading, road layout, excavation, and complete structural demolition with proper debris disposal. We prepare sites for vertical construction efficiently and safely.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">05</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div class="service-title">Electrical and Lighting Systems</div>
+        <p class="service-desc">Street light installation, retrofitting, pole installation, wiring, fixture mounting, and systems testing. We improve public and commercial lighting infrastructure safely and reliably.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">06</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M4.5 12.5C3.119 11.119 3.119 8.881 4.5 7.5m15 5c1.381-1.381 1.381-3.619 0-5M7.5 15.5C5.015 13.015 5.015 10.985 7.5 8.5m9 7c2.485-2.485 2.485-4.515 0-7M12 19v.01M12 12v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="service-title">Water Management and Drainage</div>
+        <p class="service-desc">Flood control structures, box culverts, manhole installation, and drainage systems. We deliver reinforced concrete water management infrastructure built for long-term performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="projects-header">
+      <div class="reveal">
+        <div class="section-label">Our Work</div>
+        <h2 class="section-title">Project Portfolio</h2>
+      </div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+        <button class="filter-btn" onclick="filterProjects('residential',this)">Residential</button>
+        <button class="filter-btn" onclick="filterProjects('civil',this)">Civil</button>
+        <button class="filter-btn" onclick="filterProjects('commercial',this)">Commercial</button>
+        <button class="filter-btn" onclick="filterProjects('site',this)">Site Dev</button>
+        <button class="filter-btn" onclick="filterProjects('electrical',this)">Electrical</button>
+        <button class="filter-btn" onclick="filterProjects('water',this)">Water</button>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- RESIDENTIAL -->
+      <div class="project-card" data-cat="residential">
+        <span class="project-cat">Residential</span>
+        <div class="project-title">House Renovation</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Montalban, Rizal</div>
+        <p class="project-desc">Full 80 sqm residential renovation covering structural reinforcement, interior remodeling, electrical and plumbing upgrades, and high-quality finishing works. Transformed an older home into a modern minimalist residence.</p>
+        <span class="project-tag">80 sqm full renovation</span>
+      </div>
+
+      <div class="project-card" data-cat="residential">
+        <span class="project-cat">Residential</span>
+        <div class="project-title">House Renovation</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Montalban, Rizal</div>
+        <p class="project-desc">Interior and exterior house renovation involving structural improvements, interior upgrades, and finishing works. Project focused on enhancing functionality and modernizing the overall look while maintaining structural integrity.</p>
+        <span class="project-tag">Interior and exterior renovation</span>
+      </div>
+
+      <div class="project-card" data-cat="residential">
+        <span class="project-cat">Residential</span>
+        <div class="project-title">Balcony and Kitchen Extension</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Cavite</div>
+        <p class="project-desc">Residential extension including structural reinforcement, balcony construction, and kitchen expansion with finishing works. Enhanced living spaces with functional and aesthetically sound design.</p>
+        <span class="project-tag">Residential expansion</span>
+      </div>
+
+      <!-- CIVIL -->
+      <div class="project-card" data-cat="civil">
+        <span class="project-cat">Civil Infrastructure</span>
+        <div class="project-title">Bridge Extension</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Bulacan</div>
+        <p class="project-desc">Construction of a 16-meter bridge extension including foundation works, structural framing, decking, and finishing. Demonstrates expertise in civil infrastructure and capacity to deliver durable, safe bridge solutions.</p>
+        <span class="project-tag">16-meter structural bridge</span>
+      </div>
+
+      <div class="project-card" data-cat="civil">
+        <span class="project-cat">Civil Infrastructure</span>
+        <div class="project-title">Farm-to-Market Road Construction</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Cavite</div>
+        <p class="project-desc">Construction of a 440-meter farm-to-market road including site clearing, grading, base preparation, and concrete paving works. Supports improved accessibility and transportation for local communities.</p>
+        <span class="project-tag">440 meters of concrete road</span>
+      </div>
+
+      <div class="project-card" data-cat="water">
+        <span class="project-cat">Water Management</span>
+        <div class="project-title">Flood Control Structure</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Bataan</div>
+        <p class="project-desc">Construction of a 276-meter flood control system including excavation, structural concrete works, and drainage installation. Infrastructure focused on water management and community flood protection.</p>
+        <span class="project-tag">276-meter flood mitigation</span>
+      </div>
+
+      <div class="project-card" data-cat="water">
+        <span class="project-cat">Water Management</span>
+        <div class="project-title">Flood Control Structure (Continuation)</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Bataan</div>
+        <p class="project-desc">180-meter continuation of the flood control system including excavation, reinforced concrete works, and drainage system installation. Demonstrates continued capability in flood mitigation delivery.</p>
+        <span class="project-tag">180-meter continuation</span>
+      </div>
+
+      <div class="project-card" data-cat="water">
+        <span class="project-cat">Water Management</span>
+        <div class="project-title">Box Culvert</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Caloocan</div>
+        <p class="project-desc">Construction of a reinforced concrete box culvert including excavation, formworks, concrete pouring, and finishing. Essential drainage and water flow management infrastructure delivered efficiently.</p>
+        <span class="project-tag">Drainage infrastructure</span>
+      </div>
+
+      <div class="project-card" data-cat="water">
+        <span class="project-cat">Water Management</span>
+        <div class="project-title">Manhole Installation</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Quezon City and Makati</div>
+        <p class="project-desc">Construction and installation of manholes including excavation, reinforced concrete works, and proper alignment with existing drainage systems. Demonstrates precision in delivering essential municipal infrastructure.</p>
+        <span class="project-tag">Drainage and sewer systems</span>
+      </div>
+
+      <!-- COMMERCIAL -->
+      <div class="project-card" data-cat="commercial">
+        <span class="project-cat">Commercial</span>
+        <div class="project-title">Commercial Kiosk</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Taguig</div>
+        <p class="project-desc">Design and construction of a commercial kiosk including structural assembly, finishing, and installation. Delivered a functional and visually polished small-scale commercial structure for a retail tenant.</p>
+        <span class="project-tag">Design and build</span>
+      </div>
+
+      <div class="project-card" data-cat="commercial">
+        <span class="project-cat">Commercial</span>
+        <div class="project-title">Legislative Building</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Valenzuela</div>
+        <p class="project-desc">Provided skilled manpower and technical support for the construction of a large-scale legislative building. Scope included structural works and site execution support for a major government infrastructure project.</p>
+        <span class="project-tag">Government building</span>
+      </div>
+
+      <div class="project-card" data-cat="commercial">
+        <span class="project-cat">Commercial</span>
+        <div class="project-title">Multi-Purpose Covered Court</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Valenzuela, Apolonia</div>
+        <p class="project-desc">Construction of a covered court facility including structural steel framing, roofing installation, concrete flooring, and finishing works. Delivering community infrastructure with durable and functional design.</p>
+        <span class="project-tag">Community facility</span>
+      </div>
+
+      <div class="project-card" data-cat="commercial">
+        <span class="project-cat">Commercial</span>
+        <div class="project-title">Multi-Purpose Covered Court</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Valenzuela, Pedro</div>
+        <p class="project-desc">Construction of a second covered court including structural framing, roofing, concrete flooring, and finishing works. Further demonstrates expertise in building functional and long-lasting community facilities.</p>
+        <span class="project-tag">Manpower and site support</span>
+      </div>
+
+      <div class="project-card" data-cat="commercial">
+        <span class="project-cat">Commercial</span>
+        <div class="project-title">Storage Warehouse</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Pampanga</div>
+        <p class="project-desc">Construction of a warehouse facility including structural framing, roofing, flooring, and interior finishing. Delivered a functional and durable commercial storage structure tailored to the client's operational requirements.</p>
+        <span class="project-tag">Commercial storage facility</span>
+      </div>
+
+      <!-- SITE DEV -->
+      <div class="project-card" data-cat="site">
+        <span class="project-cat">Site Development</span>
+        <div class="project-title">Residential Demolition</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Angono, Rizal</div>
+        <p class="project-desc">Full residential demolition of an old structure executed for safety and efficiency. Scope included structural dismantling, debris removal, site clearing, and proper disposal of materials following industry safety standards.</p>
+        <span class="project-tag">Complete demolition and site clearing</span>
+      </div>
+
+      <div class="project-card" data-cat="site">
+        <span class="project-cat">Site Development</span>
+        <div class="project-title">Land Development</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Calamba, Laguna</div>
+        <p class="project-desc">Technical expertise and skilled manpower for site preparation including grading, road layout, and foundational works to prepare land for vertical construction. Supports large-scale property development with precision.</p>
+        <span class="project-tag">Site grading and road layout</span>
+      </div>
+
+      <!-- ELECTRICAL -->
+      <div class="project-card" data-cat="electrical">
+        <span class="project-cat">Electrical</span>
+        <div class="project-title">Road Surface Retrofitting</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Las Pinas</div>
+        <p class="project-desc">Road surface retrofitting works including waterproofing membrane installation and pavement rehabilitation. Infrastructure improvement project focused on safety, efficiency, and long-term durability of public road surfaces.</p>
+        <span class="project-tag">Road surface rehabilitation</span>
+      </div>
+
+      <div class="project-card" data-cat="electrical">
+        <span class="project-cat">Electrical</span>
+        <div class="project-title">Street Light Installation</div>
+        <div class="project-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Valenzuela</div>
+        <p class="project-desc">Installation of street lighting systems including pole installation, wiring, fixture mounting, and systems testing. Improved public lighting infrastructure with a focus on safety, efficiency, and reliability.</p>
+        <span class="project-tag">Public lighting infrastructure</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">The People Behind the Work</div>
+      <h2 class="section-title">Our Team</h2>
+      <p class="section-desc">Led by licensed engineers and experienced entrepreneurs, Amplibuild operates with a lean core team and a scalable skilled workforce.</p>
+    </div>
+
+    <div class="founders-grid">
+      <div class="founder-card reveal">
+        <div class="founder-photo" aria-hidden="true">VD</div>
+        <div class="founder-role">Co-Founder</div>
+        <div class="founder-name">Engr. Vincent John Deyro</div>
+        <div class="founder-title">Chief Executive Officer (CEO) | ECE</div>
+        <p class="founder-bio">A results-driven leader with a strong background in engineering and technology. A distinguished graduate of Mapua Institute of Technology, he ranked 7th in the April 2015 ECE Board Examinations. He previously served as a Director in an IT solutions company and currently serves as Lead Site Reliability Engineer for Veltra, a Japan-based travel platform. His expertise in technology, systems engineering, and leadership drives Amplibuild's growth and operational standards.</p>
+      </div>
+      <div class="founder-card reveal reveal-delay-1">
+        <div class="founder-photo" aria-hidden="true">CC</div>
+        <div class="founder-role">Co-Founder</div>
+        <div class="founder-name">Cheycho M. Catama</div>
+        <div class="founder-title">Chief Operating Officer (COO)</div>
+        <p class="founder-bio">A driven entrepreneur overseeing Amplibuild's day-to-day operations and project execution. Known for resourcefulness, leadership, and sharp problem-solving, he ensures projects are delivered on time and aligned with strategic goals. His people-oriented approach maintains a strong organizational culture and keeps the workforce focused on quality output and client satisfaction.</p>
+      </div>
+    </div>
+
+    <div class="team-label">Core Operations Team</div>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">SL</div>
+        <div><div class="member-name">Sandra Lutovac</div><div class="member-role">Admin, Corporate Affairs</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">SL</div>
+        <div><div class="member-name">Stefanie Lutovac</div><div class="member-role">Finance</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">MD</div>
+        <div><div class="member-name">Engr. Mark Doctor</div><div class="member-role">Head Engineer</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">JD</div>
+        <div><div class="member-name">Job De Vergara</div><div class="member-role">Admin, Human Resources</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">JC</div>
+        <div><div class="member-name">Engr. John Carlo Corong</div><div class="member-role">Site Engineer</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">RG</div>
+        <div><div class="member-name">Rolando Gomez</div><div class="member-role">Head Foreman</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">RV</div>
+        <div><div class="member-name">Regie Verzosa</div><div class="member-role">Heavy Equipment Specialist</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">JM</div>
+        <div><div class="member-name">John Mervin Masangkay</div><div class="member-role">Utility Driver</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">UM</div>
+        <div><div class="member-name">Ulysses Maztigue</div><div class="member-role">Utility Assistant</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">AC</div>
+        <div><div class="member-name">Axl Cluff</div><div class="member-role">Attendance Monitoring</div></div>
+      </div>
+      <div class="team-member">
+        <div class="member-avatar" aria-hidden="true">JS</div>
+        <div><div class="member-name">Jordan Sugalit</div><div class="member-role">Warehouse Personnel</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="section-label">Work With Us</div>
+        <h2 class="section-title">Let's Build Something Together</h2>
+        <p class="contact-desc">Whether you're planning a residential renovation, a civil infrastructure project, or need a reliable subcontractor for a large government contract, Amplibuild has the team and the experience to deliver.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Phone</div>
+            <div class="contact-detail-value">0956 768 1966</div>
+            <a href="https://wa.me/639567681966" class="whatsapp-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.77.462 3.432 1.268 4.876L2 22l5.272-1.232A9.954 9.954 0 0012.004 22C17.531 22 22 17.523 22 11.996 22 6.477 17.531 2 12.004 2z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-value">sandra.lutovac@amplibuild.com</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Service Area</div>
+            <div class="contact-detail-value">Metro Manila and surrounding provinces, Philippines</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-cta reveal reveal-delay-1">
+        <div class="contact-cta-title">Ready to Start Your Project?</div>
+        <p class="contact-cta-desc">We accept projects across all our service categories. Get in touch and one of our team will respond within one business day.</p>
+        <ul class="contact-services-list">
+          <li>Residential Construction and Renovation</li>
+          <li>Civil and Infrastructure Works</li>
+          <li>Commercial and Institutional Buildings</li>
+          <li>Site Development and Demolition</li>
+          <li>Electrical and Lighting Systems</li>
+          <li>Water Management and Drainage</li>
+        </ul>
+        <a href="mailto:sandra.lutovac@amplibuild.com" class="btn-primary" style="width:100%;text-align:center">Send Us a Message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">AMPLI<span>BUILD</span> CONSTRUCTION CORP.</div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-social">
+        <a href="#" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Amplibuild Construction Corp. All rights reserved.</div>
+      <div class="footer-copy">Building high-quality infrastructure across the Philippines</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>40);
+});
+
+// MOBILE MENU
+function toggleMobileMenu(){
+  const m=document.getElementById('mobileMenu');
+  const btn=document.getElementById('hamburger');
+  const isOpen=m.style.display==='flex';
+  m.style.display=isOpen?'none':'flex';
+  btn.setAttribute('aria-expanded',String(!isOpen));
+  document.body.style.overflow=isOpen?'':'hidden';
+}
+
+// CLOSE ON ESCAPE
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'&&document.getElementById('mobileMenu').style.display==='flex'){
+    toggleMobileMenu();
+  }
+});
+
+// SCROLL REVEAL
+const revealEls=document.querySelectorAll('.reveal');
+let revealed=0;
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.classList.contains('visible')){
+      e.target.classList.add('visible');
+      revealed++;
+      if(revealed>=revealEls.length)observer.disconnect();
+    }
+  });
+},{threshold:0.1});
+revealEls.forEach(el=>observer.observe(el));
+
+// PROJECT FILTER
+function filterProjects(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.classList.toggle('hidden',cat!=='all'&&card.dataset.cat!==cat);
+  });
+}
+</script>
+</body>
+</html>
