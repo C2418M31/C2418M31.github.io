@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D GIS Data Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+      .map-overlay {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(31, 41, 55, 0.9);
+        border: 1px solid #4b5563;
+        color: #d1d5db;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1;
+      }
+      .legend-key {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
+        vertical-align: middle;
+        border-radius: 50%;
+      }
+      .view-toggle-btn.active {
+        background-color: #2563eb;
+        color: white;
+      }
+      .view-toggle-btn {
+        background-color: #374151;
+        color: #d1d5db;
+      }
+      #chat-messages {
+        height: 200px;
+        overflow-y: auto;
+      }
+      .chat-bubble {
+        max-width: 85%;
+        padding: 8px 12px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+      }
+      .user-bubble {
+        background-color: #2563eb;
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+      }
+      .ai-bubble {
+        background-color: #4b5563;
+        color: #e5e7eb;
+        align-self: flex-start;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white flex">
+    <!-- Map -->
+    <main class="w-2/3 flex-grow relative">
+      <div id="map"></div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside
+      class="w-1/3 h-screen bg-gray-800 p-6 flex flex-col shadow-2xl border-l border-gray-700"
+    >
+      <div class="flex items-center mb-6 flex-shrink-0">
+        <svg
+          class="w-8 h-8 mr-3 text-blue-400"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+        <h1 class="text-2xl font-bold text-white">Network Intelligence Hub</h1>
+      </div>
+
+      <div class="overflow-y-auto flex-grow">
+        <!-- Controls -->
+        <div class="bg-gray-700 p-4 rounded-lg mb-6">
+          <h2 class="text-lg font-semibold mb-3 border-b border-gray-600 pb-2">
+            Dashboard Controls
+          </h2>
+          <button
+            id="reset-view-btn"
+            class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
+          >
+            Reset Map View
+          </button>
+          <div class="mt-3 flex rounded-md overflow-hidden border border-gray-600">
+            <button
+              id="view-points-btn"
+              class="view-toggle-btn active flex-1 py-2 px-2 text-sm font-semibold"
+            >
+              Points
+            </button>
+            <button
+              id="view-heatmap-btn"
+              class="view-toggle-btn flex-1 py-2 px-2 text-sm font-semibold"
+            >
+              Heatmap
+            </button>
+            <button
+              id="view-choropleth-btn"
+              class="view-toggle-btn flex-1 py-2 px-2 text-sm font-semibold"
+            >
+              Choropleth
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Analysis -->
+        <div
+          id="ai-analysis-panel"
+          class="bg-gray-700 p-4 rounded-lg transition-all duration-300 mb-6"
+        >
+          <h2 class="text-lg font-semibold mb-3 border-b border-gray-600 pb-2">
+            Network Analysis
+          </h2>
+          <div id="ai-placeholder" class="text-center text-gray-400 py-8">
+            <p>Click a user dot or an area on the map to begin analysis.</p>
+            <svg
+              class="w-16 h-16 mx-auto mt-4 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M17.657 16.657l-5.657 5.657a1 1 0 01-1.414 0l-5.657-5.657a8 8 0 1112.728 0zM12 13a3 3 0 100-6 3 3 0 000 6z"
+              />
+            </svg>
+          </div>
+          <div id="ai-loading" class="hidden text-center text-gray-400 py-8">
+            <div
+              class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto"
+            ></div>
+            <p class="mt-4">Analyzing data...</p>
+          </div>
+          <div id="ai-results" class="hidden space-y-4">
+            <div>
+              <h3 class="font-semibold text-gray-200">
+                Location:
+                <span
+                  id="location-name"
+                  class="font-normal text-blue-300"
+                ></span>
+              </h3>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-200">
+                Coordinates:
+                <span
+                  id="coordinates"
+                  class="font-normal text-blue-300"
+                ></span>
+              </h3>
+            </div>
+
+            <div id="user-analysis-group" class="hidden space-y-4">
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  User ID:
+                  <span
+                    id="user-mobile"
+                    class="font-normal text-blue-300"
+                  ></span>
+                </h3>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  Connection Type:
+                  <span
+                    id="connection-type"
+                    class="font-normal text-blue-300"
+                  ></span>
+                </h3>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  Signal Strength:
+                  <span
+                    id="signal-strength"
+                    class="font-normal text-blue-300"
+                  ></span>
+                </h3>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  Predicted Network Quality:
+                </h3>
+                <div
+                  id="user-network-quality"
+                  class="mt-1 text-lg font-bold p-2 rounded-md text-center"
+                ></div>
+              </div>
+            </div>
+
+            <div id="area-analysis-group" class="hidden space-y-4">
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  Users in 10km Radius:
+                  <span
+                    id="user-count"
+                    class="font-normal text-blue-300"
+                  ></span>
+                </h3>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-200">
+                  Average Network Quality:
+                </h3>
+                <div
+                  id="avg-network-quality"
+                  class="mt-1 text-lg font-bold p-2 rounded-md text-center"
+                ></div>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-200">Key Factors:</h3>
+                <ul
+                  id="key-factors"
+                  class="list-disc list-inside text-gray-300 space-y-1 mt-1"
+                ></ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-semibold text-gray-200">Recommended Action:</h3>
+              <p
+                id="recommendation"
+                class="mt-1 text-gray-300 bg-gray-800 p-3 rounded-md"
+              ></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat -->
+        <div
+          id="ai-chat-panel"
+          class="bg-gray-700 p-4 rounded-lg flex flex-col flex-shrink-0 mt-auto"
+        >
+          <h2 class="text-lg font-semibold mb-3 border-b border-gray-600 pb-2">
+            Chat with Map AI
+          </h2>
+          <div id="chat-messages" class="flex flex-col space-y-2 mb-4 pr-2">
+            <div class="chat-bubble ai-bubble">
+              <p>Hello! Ask me to "reset view" or "go to Manila".</p>
+            </div>
+          </div>
+          <form id="chat-form" class="mt-auto">
+            <div class="flex items-center">
+              <input
+                type="text"
+                id="chat-input"
+                placeholder="Ask the AI..."
+                class="flex-grow bg-gray-800 border-gray-600 rounded-l-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white p-2"
+                autocomplete="off"
+              />
+              <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-md"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- JS -->
+    <script>
+      let networkGeoJSON = null;
+
+      // This file is plain static HTML with no build step, so the Mapbox
+      // token can't come from an env var here — paste your own public
+      // token (Mapbox dashboard > Access tokens) before using this page.
+      mapboxgl.accessToken = "YOUR_MAPBOX_PUBLIC_TOKEN";
+      const initialViewState = {
+        center: [122, 13],
+        zoom: 5.5,
+        pitch: 0,
+        bearing: 0,
+      };
+
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/light-v11",
+        ...initialViewState,
+      });
+      map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+
+      const chatForm = document.getElementById("chat-form");
+      const chatInput = document.getElementById("chat-input");
+      const chatMessages = document.getElementById("chat-messages");
+
+      async function initializeDashboard() {
+        try {
+          const response = await fetch("network_data.geojson");
+          if (!response.ok) throw new Error("Network response was not ok.");
+
+          networkGeoJSON = await response.json(); // Assign to the global variable
+
+          networkGeoJSON.features.forEach((f) => {
+            const s = f.properties.signal_strength;
+            const type = (f.properties.connection_type || "").toUpperCase();
+            let score;
+            if (type === "NONE" || s <= -106) {
+              score = 0;
+            } else {
+              score = (s - -110) / (-70 - -110);
+              score = Math.max(0, Math.min(1, score));
+            }
+            f.properties.network_score = score;
+          });
+
+          addLayersAndInteractions();
+        } catch (error) {
+          console.error("Initialization failed:", error);
+          alert(
+            "Could not load or process network_data.geojson. Please check the file and console for errors.",
+          );
+        }
+      }
+
+      function buildChoroplethGrid() {
+        const bbox = turf.bbox(networkGeoJSON);
+        const grid = turf.hexGrid(bbox, 25, { units: "kilometers" });
+        grid.features.forEach((cell) => {
+          const pts = turf.pointsWithinPolygon(networkGeoJSON, cell);
+          const count = pts.features.length;
+          let avg = null;
+          if (count > 0) {
+            const total = pts.features.reduce(
+              (sum, f) => sum + f.properties.network_score,
+              0,
+            );
+            avg = total / count;
+          }
+          cell.properties.point_count = count;
+          cell.properties.avg_score = avg;
+        });
+        grid.features = grid.features.filter((c) => c.properties.point_count > 0);
+        return grid;
+      }
+
+      function addLayersAndInteractions() {
+        map.addSource("data-points", { type: "geojson", data: networkGeoJSON });
+        map.addSource("choropleth-data", {
+          type: "geojson",
+          data: buildChoroplethGrid(),
+        });
+        const layers = map.getStyle().layers;
+        let firstSymbolId;
+        for (const layer of layers)
+          if (layer.type === "symbol") {
+            firstSymbolId = layer.id;
+            break;
+          }
+
+        map.addLayer(
+          {
+            id: "choropleth-fill",
+            type: "fill",
+            source: "choropleth-data",
+            layout: { visibility: "none" },
+            paint: {
+              "fill-color": [
+                "step",
+                ["get", "avg_score"],
+                "#F44336",
+                0.3,
+                "#FF9800",
+                0.6,
+                "#4CAF50",
+              ],
+              "fill-opacity": 0.55,
+            },
+          },
+          firstSymbolId,
+        );
+
+        map.addLayer(
+          {
+            id: "choropleth-outline",
+            type: "line",
+            source: "choropleth-data",
+            layout: { visibility: "none" },
+            paint: {
+              "line-color": "#1f2937",
+              "line-width": 1,
+            },
+          },
+          firstSymbolId,
+        );
+
+        map.addLayer(
+          {
+            id: "data-heat",
+            type: "heatmap",
+            source: "data-points",
+            maxzoom: 15,
+            layout: { visibility: "none" },
+            paint: {
+              "heatmap-weight": [
+                "interpolate",
+                ["linear"],
+                ["get", "network_score"],
+                0,
+                1,
+                0.3,
+                0.6,
+                1,
+                0.1,
+              ],
+              "heatmap-intensity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                5,
+                1,
+                15,
+                3,
+              ],
+              "heatmap-color": [
+                "interpolate",
+                ["linear"],
+                ["heatmap-density"],
+                0,
+                "rgba(0,0,0,0)",
+                0.3,
+                "#4CAF50",
+                0.6,
+                "#FF9800",
+                1,
+                "#F44336",
+              ],
+              "heatmap-radius": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                5,
+                15,
+                15,
+                35,
+              ],
+              "heatmap-opacity": 0.8,
+            },
+          },
+          firstSymbolId,
+        );
+
+        map.addLayer(
+          {
+            id: "data-circles",
+            type: "circle",
+            source: "data-points",
+            paint: {
+              "circle-color": [
+                "step",
+                ["get", "network_score"],
+                "#F44336",
+                0.3,
+                "#FF9800",
+                0.6,
+                "#4CAF50",
+              ],
+              "circle-radius": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                5,
+                2,
+                16,
+                10,
+              ],
+              "circle-stroke-width": 1,
+              "circle-stroke-color": "#1f2937",
+              "circle-opacity": 0.85,
+            },
+          },
+          firstSymbolId,
+        );
+
+        map.addLayer(
+          {
+            id: "3d-buildings",
+            source: "composite",
+            "source-layer": "building",
+            filter: ["==", "extrude", "true"],
+            type: "fill-extrusion",
+            minzoom: 15,
+            paint: {
+              "fill-extrusion-color": "#ccc",
+              "fill-extrusion-height": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                15,
+                0,
+                15.05,
+                ["get", "height"],
+              ],
+              "fill-extrusion-base": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                15,
+                0,
+                15.05,
+                ["get", "min_height"],
+              ],
+              "fill-extrusion-opacity": 0.6,
+            },
+          },
+          firstSymbolId,
+        );
+
+        addLegend();
+        setupInteractions();
+      }
+
+      map.on("load", initializeDashboard);
+
+      function setupInteractions() {
+        map.on("click", (e) => {
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: ["data-circles"],
+          });
+          const coords = e.lngLat;
+          map.flyTo({ center: coords, zoom: 16, pitch: 60, bearing: -45 });
+          if (features.length > 0)
+            getAIAnalysisForUser(features[0].properties, coords);
+          else getAIAnalysisForArea(coords);
+        });
+
+        document
+          .getElementById("reset-view-btn")
+          .addEventListener("click", () => map.flyTo(initialViewState));
+
+        const pointsBtn = document.getElementById("view-points-btn");
+        const heatmapBtn = document.getElementById("view-heatmap-btn");
+        const choroplethBtn = document.getElementById("view-choropleth-btn");
+        const viewBtns = [pointsBtn, heatmapBtn, choroplethBtn];
+
+        const layerVisibility = {
+          "data-circles": "none",
+          "data-heat": "none",
+          "choropleth-fill": "none",
+          "choropleth-outline": "none",
+        };
+
+        function setView(activeBtn, visibleLayers) {
+          viewBtns.forEach((b) => b.classList.remove("active"));
+          activeBtn.classList.add("active");
+          Object.keys(layerVisibility).forEach((id) => {
+            map.setLayoutProperty(
+              id,
+              "visibility",
+              visibleLayers.includes(id) ? "visible" : "none",
+            );
+          });
+        }
+
+        pointsBtn.addEventListener("click", () =>
+          setView(pointsBtn, ["data-circles"]),
+        );
+
+        heatmapBtn.addEventListener("click", () =>
+          setView(heatmapBtn, ["data-heat"]),
+        );
+
+        choroplethBtn.addEventListener("click", () =>
+          setView(choroplethBtn, ["choropleth-fill", "choropleth-outline"]),
+        );
+
+        chatForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const input = chatInput.value.trim();
+          if (input) {
+            appendMessage(input, "user");
+            chatInput.value = "";
+            getAIResponse(input);
+          }
+        });
+      }
+
+      function addLegend() {
+        const legend = document.createElement("div");
+        legend.className = "map-overlay";
+        legend.innerHTML = "<strong>Network Score</strong><br>";
+        const grades = ["Good Connection", "Slow Connection", "No Connection"];
+        const colors = ["#4CAF50", "#FF9800", "#F44336"];
+        grades.forEach(
+          (g, i) =>
+            (legend.innerHTML += `<div><span class="legend-key" style="background-color:${colors[i]}"></span>${g}</div>`),
+        );
+        document.getElementById("map").appendChild(legend);
+      }
+
+      function showLoading() {
+        document.getElementById("ai-placeholder").classList.add("hidden");
+        document.getElementById("ai-results").classList.add("hidden");
+        document.getElementById("ai-loading").classList.remove("hidden");
+      }
+
+      function qualityFromScore(score) {
+        return score >= 0.6 ? "Good" : score >= 0.3 ? "Slow" : "No Connection";
+      }
+
+      function getAIAnalysisForUser(props, coords) {
+        showLoading();
+        const {
+          network_score,
+          signal_strength,
+          mobile_number,
+          location_name,
+          connection_type,
+        } = props;
+        let quality = qualityFromScore(network_score);
+        const resp = {
+          type: "user",
+          location_name,
+          coordinates: coords,
+          mobile_number,
+          connection_type: connection_type || "Unknown",
+          signal_strength: `${signal_strength} dBm`,
+          predicted_network_quality: quality,
+          recommendation:
+            quality === "No Connection"
+              ? `CRITICAL: Flag user ${mobile_number} for proactive outreach.`
+              : quality === "Slow"
+                ? `Monitor user ${mobile_number}; connection is degraded.`
+                : `No action needed for user ${mobile_number}.`,
+        };
+        setTimeout(() => displayAIResults(resp), 500);
+      }
+
+      async function getAIAnalysisForArea(coords) {
+        showLoading();
+        const center = turf.point([coords.lng, coords.lat]);
+        const circle = turf.circle(center, 10, { units: "kilometers" });
+        const pts = turf.pointsWithinPolygon(networkGeoJSON, circle); // Fixed to use correct variable
+        const count = pts.features.length;
+        let total = 0;
+        pts.features.forEach((f) => (total += f.properties.network_score));
+        const avg = count > 0 ? total / count : 0;
+        const geo = await fetch(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${coords.lng},${coords.lat}.json?access_token=${mapboxgl.accessToken}`,
+        );
+        const geoData = await geo.json();
+        const loc = geoData.features[0]
+          ? geoData.features[0].place_name
+          : `Area near ${coords.lat.toFixed(4)}, ${coords.lng.toFixed(4)}`;
+        let quality = qualityFromScore(avg);
+        const typeCounts = {};
+        pts.features.forEach((f) => {
+          const t = f.properties.connection_type || "Unknown";
+          typeCounts[t] = (typeCounts[t] || 0) + 1;
+        });
+        const typeSummary = Object.entries(typeCounts)
+          .map(([t, c]) => `${c} on ${t}`)
+          .join(", ");
+        const resp = {
+          type: "area",
+          location_name: loc,
+          coordinates: coords,
+          user_count: count,
+          predicted_network_quality: quality,
+          key_factors: [
+            `Avg. network score in 10km radius is ${(avg * 100).toFixed(0)}%.`,
+            `Based on ${count} users.`,
+            typeSummary ? `Connection mix: ${typeSummary}.` : `No users found nearby.`,
+          ],
+          recommendation:
+            quality === "No Connection"
+              ? `CRITICAL: This area requires review. Schedule a network optimization survey.`
+              : quality === "Slow"
+                ? `Monitor this area's performance; consider capacity upgrades.`
+                : `No action needed for this area.`,
+        };
+        displayAIResults(resp);
+      }
+
+      function applyQualityColor(el, quality) {
+        el.className = "mt-1 text-lg font-bold p-2 rounded-md text-center";
+        if (quality === "No Connection")
+          el.classList.add("bg-red-500", "text-white");
+        else if (quality === "Slow")
+          el.classList.add("bg-orange-500", "text-black");
+        else el.classList.add("bg-green-500", "text-white");
+      }
+
+      function displayAIResults(d) {
+        document.getElementById("location-name").textContent = d.location_name;
+        document.getElementById("coordinates").textContent = d.coordinates
+          ? `${d.coordinates.lat.toFixed(5)}, ${d.coordinates.lng.toFixed(5)}`
+          : "";
+        const userG = document.getElementById("user-analysis-group");
+        const areaG = document.getElementById("area-analysis-group");
+        const factors = document.getElementById("key-factors");
+        factors.innerHTML = "";
+        if (d.type === "user") {
+          userG.classList.remove("hidden");
+          areaG.classList.add("hidden");
+          document.getElementById("user-mobile").textContent = d.mobile_number;
+          document.getElementById("connection-type").textContent =
+            d.connection_type;
+          document.getElementById("signal-strength").textContent =
+            d.signal_strength;
+          applyQualityColor(
+            document.getElementById("user-network-quality"),
+            d.predicted_network_quality,
+          );
+          document.getElementById("user-network-quality").textContent =
+            d.predicted_network_quality;
+        } else {
+          userG.classList.add("hidden");
+          areaG.classList.remove("hidden");
+          document.getElementById("user-count").textContent = d.user_count;
+          applyQualityColor(
+            document.getElementById("avg-network-quality"),
+            d.predicted_network_quality,
+          );
+          document.getElementById("avg-network-quality").textContent =
+            d.predicted_network_quality;
+          d.key_factors.forEach((f) => {
+            const li = document.createElement("li");
+            li.textContent = f;
+            factors.appendChild(li);
+          });
+        }
+        document.getElementById("recommendation").textContent =
+          d.recommendation;
+        document.getElementById("ai-loading").classList.add("hidden");
+        document.getElementById("ai-results").classList.remove("hidden");
+      }
+
+      function appendMessage(text, sender) {
+        const div = document.createElement("div");
+        div.classList.add(
+          "chat-bubble",
+          sender === "user" ? "user-bubble" : "ai-bubble",
+        );
+        div.textContent = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function getAIResponse(userInput) {
+        const lowerInput = userInput.toLowerCase();
+        let aiResponse = "I can 'reset view' or 'go to Manila'.";
+        const cityLocations = {
+          manila: [121.0, 14.6],
+          cebu: [123.8967, 10.3157],
+          davao: [125.6131, 7.0722],
+        };
+        setTimeout(() => {
+          if (lowerInput.includes("reset")) {
+            map.flyTo(initialViewState);
+            aiResponse = "Okay, I've reset the map view.";
+          } else {
+            for (const city in cityLocations) {
+              if (lowerInput.includes(city)) {
+                map.flyTo({ center: cityLocations[city], zoom: 10, pitch: 0 });
+                aiResponse = `Flying to ${city.charAt(0).toUpperCase() + city.slice(1)}.`;
+                break;
+              }
+            }
+          }
+          appendMessage(aiResponse, "ai");
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>

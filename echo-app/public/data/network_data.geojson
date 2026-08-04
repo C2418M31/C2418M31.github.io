@@ -1,0 +1,1285 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0976,
+          14.26751
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639890779946",
+        "location_name": "Manila Metro",
+        "signal_strength": -78,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.72175,
+          14.76847
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639134126396",
+        "location_name": "Manila Metro",
+        "signal_strength": -87,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.67086,
+          14.40305
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639313500298",
+        "location_name": "Manila Metro",
+        "signal_strength": -105,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.15121,
+          14.74093
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639398704996",
+        "location_name": "Manila Metro",
+        "signal_strength": -71,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.2166,
+          14.25455
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639398362082",
+        "location_name": "Manila Metro",
+        "signal_strength": -112,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.75884,
+          14.92005
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639203848421",
+        "location_name": "Manila Metro",
+        "signal_strength": -83,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.90129,
+          14.49077
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639593303705",
+        "location_name": "Manila Metro",
+        "signal_strength": -84,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.02536,
+          14.93118
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639990566476",
+        "location_name": "Manila Metro",
+        "signal_strength": -68,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.09005,
+          14.86982
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639174684276",
+        "location_name": "Manila Metro",
+        "signal_strength": -79,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.68208,
+          14.40953
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639208449460",
+        "location_name": "Manila Metro",
+        "signal_strength": -83,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.91609,
+          14.56739
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639481469012",
+        "location_name": "Manila Metro",
+        "signal_strength": -120,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.79665,
+          14.43688
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639673528321",
+        "location_name": "Manila Metro",
+        "signal_strength": -123,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.16039,
+          14.36438
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639698020238",
+        "location_name": "Manila Metro",
+        "signal_strength": -65,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.80373,
+          14.477
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639982403818",
+        "location_name": "Manila Metro",
+        "signal_strength": -104,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.67247,
+          14.47082
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639870854579",
+        "location_name": "Manila Metro",
+        "signal_strength": -79,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.87027,
+          14.70881
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639253407200",
+        "location_name": "Manila Metro",
+        "signal_strength": -65,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.77914,
+          10.18901
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639727694430",
+        "location_name": "Cebu City",
+        "signal_strength": -97,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.86092,
+          10.35747
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639629908599",
+        "location_name": "Cebu City",
+        "signal_strength": -81,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.69215,
+          10.08926
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639950488739",
+        "location_name": "Cebu City",
+        "signal_strength": -65,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.98694,
+          10.3639
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639668132202",
+        "location_name": "Cebu City",
+        "signal_strength": -66,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.77241,
+          10.34231
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639925276600",
+        "location_name": "Cebu City",
+        "signal_strength": -122,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.96718,
+          10.12148
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639875340444",
+        "location_name": "Cebu City",
+        "signal_strength": -71,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.08463,
+          10.19739
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639214257751",
+        "location_name": "Cebu City",
+        "signal_strength": -100,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.08196,
+          10.21492
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639264109919",
+        "location_name": "Cebu City",
+        "signal_strength": -86,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.83366,
+          10.14647
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639743111853",
+        "location_name": "Cebu City",
+        "signal_strength": -109,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.80878,
+          10.07544
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639162196678",
+        "location_name": "Cebu City",
+        "signal_strength": -116,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.76714,
+          10.34938
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639976198296",
+        "location_name": "Cebu City",
+        "signal_strength": -62,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.68131,
+          10.446
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639610330567",
+        "location_name": "Cebu City",
+        "signal_strength": -101,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.12012,
+          10.14826
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639327416584",
+        "location_name": "Cebu City",
+        "signal_strength": -86,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.11116,
+          10.44333
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639821218382",
+        "location_name": "Cebu City",
+        "signal_strength": -96,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.97164,
+          10.28475
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639341266931",
+        "location_name": "Cebu City",
+        "signal_strength": -102,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.67871,
+          10.07622
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639107721109",
+        "location_name": "Cebu City",
+        "signal_strength": -87,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.3986,
+          7.13775
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639176082500",
+        "location_name": "Davao City",
+        "signal_strength": -84,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.62018,
+          6.96144
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639876693898",
+        "location_name": "Davao City",
+        "signal_strength": -88,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.83086,
+          7.10772
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639304451095",
+        "location_name": "Davao City",
+        "signal_strength": -90,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.41026,
+          7.15169
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639882839238",
+        "location_name": "Davao City",
+        "signal_strength": -72,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.39019,
+          7.14893
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639881913386",
+        "location_name": "Davao City",
+        "signal_strength": -104,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.53275,
+          7.25304
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639581695135",
+        "location_name": "Davao City",
+        "signal_strength": -79,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.43319,
+          6.91394
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639967607278",
+        "location_name": "Davao City",
+        "signal_strength": -103,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.79377,
+          7.09736
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639200140141",
+        "location_name": "Davao City",
+        "signal_strength": -68,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.82628,
+          7.24655
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639329509408",
+        "location_name": "Davao City",
+        "signal_strength": -70,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.79543,
+          7.27342
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639384759615",
+        "location_name": "Davao City",
+        "signal_strength": -85,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.82636,
+          7.21476
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639941128035",
+        "location_name": "Davao City",
+        "signal_strength": -63,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.64098,
+          7.1814
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639162795957",
+        "location_name": "Davao City",
+        "signal_strength": -76,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.65269,
+          7.0933
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639727255918",
+        "location_name": "Davao City",
+        "signal_strength": -104,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.60149,
+          7.28189
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639186019028",
+        "location_name": "Davao City",
+        "signal_strength": -104,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.78877,
+          6.85646
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639228727266",
+        "location_name": "Davao City",
+        "signal_strength": -78,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.8339,
+          7.10704
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639188029013",
+        "location_name": "Davao City",
+        "signal_strength": -104,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.57177,
+          16.4274
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639819112790",
+        "location_name": "Baguio",
+        "signal_strength": -97,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.66086,
+          16.32391
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639422119408",
+        "location_name": "Baguio",
+        "signal_strength": -64,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.58317,
+          16.53101
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639766964667",
+        "location_name": "Baguio",
+        "signal_strength": -125,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.74554,
+          16.55113
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639384756779",
+        "location_name": "Baguio",
+        "signal_strength": -79,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.48574,
+          16.357
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639406002884",
+        "location_name": "Baguio",
+        "signal_strength": -78,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.49332,
+          16.50242
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639667945747",
+        "location_name": "Baguio",
+        "signal_strength": -86,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.44835,
+          16.49743
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639244193987",
+        "location_name": "Baguio",
+        "signal_strength": -64,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.52534,
+          16.51921
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639402533494",
+        "location_name": "Baguio",
+        "signal_strength": -101,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.62745,
+          16.46758
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639642678844",
+        "location_name": "Baguio",
+        "signal_strength": -65,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.59256,
+          16.5239
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639990505735",
+        "location_name": "Baguio",
+        "signal_strength": -123,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.529,
+          16.25336
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639895890631",
+        "location_name": "Baguio",
+        "signal_strength": -97,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.57855,
+          16.464
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639841976666",
+        "location_name": "Baguio",
+        "signal_strength": -102,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.71718,
+          16.41598
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639561479973",
+        "location_name": "Baguio",
+        "signal_strength": -107,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.48423,
+          16.34478
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639325567963",
+        "location_name": "Baguio",
+        "signal_strength": -124,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.65062,
+          16.45238
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639766430218",
+        "location_name": "Baguio",
+        "signal_strength": -68,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.67084,
+          16.53003
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639542697755",
+        "location_name": "Baguio",
+        "signal_strength": -80,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.37201,
+          10.81483
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639889262019",
+        "location_name": "Iloilo City",
+        "signal_strength": -72,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6864,
+          10.62692
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639141580226",
+        "location_name": "Iloilo City",
+        "signal_strength": -122,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.70554,
+          10.60917
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639427696198",
+        "location_name": "Iloilo City",
+        "signal_strength": -111,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.69031,
+          10.86873
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639527849588",
+        "location_name": "Iloilo City",
+        "signal_strength": -64,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.4934,
+          10.86594
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639788785773",
+        "location_name": "Iloilo City",
+        "signal_strength": -117,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.56586,
+          10.79201
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639223847257",
+        "location_name": "Iloilo City",
+        "signal_strength": -115,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.71292,
+          10.62469
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639216396351",
+        "location_name": "Iloilo City",
+        "signal_strength": -97,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.60073,
+          10.65847
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639513600440",
+        "location_name": "Iloilo City",
+        "signal_strength": -112,
+        "connection_type": "None"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.7219,
+          10.59623
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639658260221",
+        "location_name": "Iloilo City",
+        "signal_strength": -72,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.73233,
+          10.73558
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639563102056",
+        "location_name": "Iloilo City",
+        "signal_strength": -99,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.39009,
+          10.7859
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639233815413",
+        "location_name": "Iloilo City",
+        "signal_strength": -75,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.65,
+          10.64033
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639532074125",
+        "location_name": "Iloilo City",
+        "signal_strength": -72,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.64098,
+          10.74196
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639827264603",
+        "location_name": "Iloilo City",
+        "signal_strength": -64,
+        "connection_type": "5G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.66135,
+          10.58981
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639995205588",
+        "location_name": "Iloilo City",
+        "signal_strength": -93,
+        "connection_type": "3G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.36226,
+          10.63497
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639802984810",
+        "location_name": "Iloilo City",
+        "signal_strength": -67,
+        "connection_type": "4G"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.491,
+          10.69691
+        ]
+      },
+      "properties": {
+        "mobile_number": "+639952266893",
+        "location_name": "Iloilo City",
+        "signal_strength": -89,
+        "connection_type": "4G"
+      }
+    }
+  ]
+}

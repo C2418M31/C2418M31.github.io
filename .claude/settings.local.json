@@ -6,7 +6,23 @@
       "Bash(open \"/Users/jayceeddeyro/Desktop/AfterBurnProjects/C2418M31.github.io/systems_thinking/index.html\")",
       "Read(//private/tmp/babelcheck/**)",
       "Bash(python3 -c ' *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(node --check /tmp/echo_check.js)",
+      "Bash(open http://localhost:8811/echo.html)",
+      "Bash(node --check /tmp/echo_check2.js)",
+      "Bash(open http://localhost:8812/echo.html)",
+      "Bash(npm -v)",
+      "Bash(npm install *)",
+      "Bash(npm audit *)",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(npm view *)",
+      "Bash(python3 -c \"import json,sys; v=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(v[-10:]\\)\\)\")",
+      "Read(//Users/jayceeddeyro/.nvm/versions/node/**)",
+      "Bash(brew list *)",
+      "Bash(command -v n)",
+      "Bash(fnm list *)",
+      "Bash(npm ls *)",
+      "Bash(npx tsc *)"
     ]
   }
 }
