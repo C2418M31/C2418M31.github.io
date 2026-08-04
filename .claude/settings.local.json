@@ -22,7 +22,11 @@
       "Bash(command -v n)",
       "Bash(fnm list *)",
       "Bash(npm ls *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }
