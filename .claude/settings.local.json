@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -rn \"<\\\\\\\\/\" tuluyan/v2/landing/*.html)"
+      "Bash(perl -CSD -pi -e 's/\\\\\\\\u2014/\\\\x{2014}/g' systems_thinking/index.html)",
+      "Bash(perl -CSD -pi -e 's/\\\\\\\\u00B7/\\\\x{00B7}/g' systems_thinking/index.html)",
+      "Bash(open \"/Users/jayceeddeyro/Desktop/AfterBurnProjects/C2418M31.github.io/systems_thinking/index.html\")",
+      "Read(//private/tmp/babelcheck/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)"
     ]
   }
 }

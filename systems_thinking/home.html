@@ -109,7 +109,6 @@
         MessageCircle,
         Briefcase,
         Box,
-        Hammer,
         Target,
         XCircle,
         ExternalLink,
@@ -1586,12 +1585,326 @@
       );
 
       /* ═══════════════════════════════════════════════════════════
+       OVERVIEW VIEW
+       ═══════════════════════════════════════════════════════════ */
+      const PILLAR_COPY = {
+        ANCHOR:
+          "Reputation and fairness systems that reduce the risk of switching away from or staying with GOMO.",
+        KEEPER:
+          "Habits, streaks, and recurring value that make leaving feel like a loss.",
+        CATALYST:
+          "Daily hooks and gamified actions that turn a utility into a habit.",
+        BAYANIHAN:
+          "Systems that turn individual users into a community — named after the Filipino spirit of communal cooperation.",
+        NEXUS:
+          "Partner integrations and infrastructure that make the network more valuable as it grows.",
+      };
+
+      const OverviewView = ({ onNavigate }) => {
+        const pillarMeta = useMemo(
+          () =>
+            CATEGORIES.map((cat) => {
+              const items = growthSystems.filter((s) => s.category === cat);
+              return { cat, count: items.length, rep: items[0] };
+            }),
+          [],
+        );
+
+        return (
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
+            <div className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+              {/* Hero */}
+              <div className="text-center space-y-4">
+                <div className="w-14 h-14 bg-gomo-gradient rounded-2xl flex items-center justify-center text-white font-black text-2xl mx-auto">
+                  G
+                </div>
+                <h1 className="text-3xl font-black tracking-tight">
+                  Growth <span className="text-gomo-gradient">Protocol</span>
+                </h1>
+                <p className="text-slate-400 text-[15px] leading-relaxed max-w-2xl mx-auto">
+                  Growth Protocol isn't a single feature — it's{" "}
+                  {growthSystems.length} interconnected systems designed to
+                  build trust, keep users active, and turn the network itself
+                  into GOMO's biggest advantage. Every node below is a
+                  discrete initiative; none of them work in isolation.
+                </p>
+              </div>
+
+              {/* 5 Pillars */}
+              <div>
+                <p className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] mb-4 text-center">
+                  The 5 Pillars
+                </p>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                  {pillarMeta.map(({ cat, count, rep }) => (
+                    <button
+                      key={cat}
+                      onClick={() => onNavigate("map")}
+                      className={`h-full flex flex-col text-left p-4 rounded-xl border ${rep.borderColor} ${rep.bgColor} hover:brightness-125 transition-all space-y-2`}
+                    >
+                      <div className="flex items-start gap-2">
+                        <rep.icon
+                          className={`w-5 h-5 shrink-0 ${rep.color}`}
+                        />
+                        <p className={`text-sm font-bold leading-5 ${rep.color}`}>
+                          {CAT_LABELS[cat]}
+                        </p>
+                      </div>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-slate-500">
+                        {cat}
+                      </p>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                        {PILLAR_COPY[cat]}
+                      </p>
+                      <p className="text-[9px] text-slate-600 mono">
+                        {count} systems
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tiers & Modes */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-[#0d1220] border border-white/5 rounded-xl p-5 space-y-3">
+                  <p className="text-[9px] font-black uppercase text-slate-500 tracking-[0.2em]">
+                    Maturity Tiers
+                  </p>
+                  {Object.entries(TIER_CONFIG).map(([k, v]) => (
+                    <div key={k} className="flex items-start gap-2.5">
+                      <TierBadge tier={k} />
+                      <div>
+                        <p className="text-[12px] font-bold text-slate-200">
+                          {v.desc}
+                        </p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">
+                          {v.sub}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-[#0d1220] border border-white/5 rounded-xl p-5 space-y-3">
+                  <p className="text-[9px] font-black uppercase text-slate-500 tracking-[0.2em]">
+                    Launch vs. Full Mode
+                  </p>
+                  <div className="flex items-start gap-2.5">
+                    <ModeBadge mode="launch" />
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      What a node does on day one, even if nothing else on
+                      this map exists yet.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <ModeBadge mode="full" />
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      What a node becomes once its input/output partners are
+                      live and feeding it data or demand.
+                    </p>
+                  </div>
+                  <p className="text-[11px] text-slate-500 leading-relaxed pt-2 border-t border-white/5">
+                    T1 nodes prove the model works standalone. T2 nodes get
+                    dramatically better once T1 data exists. T3 nodes only
+                    make sense once the whole ecosystem has scale.
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="flex items-center justify-center gap-3 pb-8">
+                <button
+                  onClick={() => onNavigate("map")}
+                  className="px-5 py-2.5 rounded-lg bg-gomo-gradient text-white text-sm font-bold flex items-center gap-2"
+                >
+                  <Network className="w-4 h-4" /> See the Connections Map
+                </button>
+                <button
+                  onClick={() => onNavigate("explorer")}
+                  className="px-5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-sm font-bold hover:bg-white/10 transition-all flex items-center gap-2"
+                >
+                  <Layout className="w-4 h-4" /> Jump into the Explorer
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      /* ═══════════════════════════════════════════════════════════
+       CONNECTIONS MAP VIEW
+       ═══════════════════════════════════════════════════════════ */
+      const MAP_SIZE = 760;
+      const MAP_CENTER = MAP_SIZE / 2;
+      const TIER_RADIUS = { T1: 130, T2: 230, T3: 330 };
+      const TIER_NODE_SIZE = { T1: 22, T2: 18, T3: 14 };
+
+      const ConnectionsMapView = ({ onSelect }) => {
+        const [hoveredId, setHoveredId] = useState(null);
+
+        const positions = useMemo(() => {
+          const pos = {};
+          const sectorSpan = (Math.PI * 2) / CATEGORIES.length;
+          CATEGORIES.forEach((cat, catIndex) => {
+            const sectorStart =
+              catIndex * sectorSpan - Math.PI / 2 + sectorSpan * 0.15;
+            const usable = sectorSpan * 0.7;
+            ["T1", "T2", "T3"].forEach((tier) => {
+              const nodes = growthSystems.filter(
+                (s) => s.category === cat && s.tier === tier,
+              );
+              const r = TIER_RADIUS[tier];
+              nodes.forEach((s, i) => {
+                const offset =
+                  nodes.length === 1 ? 0.5 : i / (nodes.length - 1);
+                const angle = sectorStart + usable * offset;
+                pos[s.id] = {
+                  x: MAP_CENTER + r * Math.cos(angle),
+                  y: MAP_CENTER + r * Math.sin(angle),
+                };
+              });
+            });
+          });
+          return pos;
+        }, []);
+
+        const categoryLabels = useMemo(() => {
+          const sectorSpan = (Math.PI * 2) / CATEGORIES.length;
+          const r = 358;
+          return CATEGORIES.map((cat, catIndex) => {
+            const angle = catIndex * sectorSpan - Math.PI / 2 + sectorSpan / 2;
+            return {
+              cat,
+              x: MAP_CENTER + r * Math.cos(angle),
+              y: MAP_CENTER + r * Math.sin(angle),
+            };
+          });
+        }, []);
+
+        const edges = useMemo(() => {
+          const seen = new Set();
+          const list = [];
+          growthSystems.forEach((s) => {
+            s.connections.outputs.forEach((toId) => {
+              const key = [s.id, toId].sort().join("::");
+              if (seen.has(key)) return;
+              seen.add(key);
+              if (positions[s.id] && positions[toId]) {
+                list.push({ from: s.id, to: toId });
+              }
+            });
+          });
+          return list;
+        }, [positions]);
+
+        return (
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
+            <div className="max-w-[900px] mx-auto space-y-4">
+              <div className="text-center space-y-1">
+                <h2 className="text-lg font-bold">Full Connections Map</h2>
+                <p className="text-[12px] text-slate-500">
+                  {growthSystems.length} systems across 5 pillars. Ring =
+                  maturity tier (center is T1, outer is T3). Click any node to
+                  open its detail view.
+                </p>
+              </div>
+
+              <div
+                className="relative mx-auto"
+                style={{ width: MAP_SIZE, height: MAP_SIZE }}
+              >
+                <svg
+                  width={MAP_SIZE}
+                  height={MAP_SIZE}
+                  className="absolute inset-0"
+                >
+                  {edges.map((e, i) => {
+                    const a = positions[e.from];
+                    const b = positions[e.to];
+                    const isActive =
+                      hoveredId &&
+                      (e.from === hoveredId || e.to === hoveredId);
+                    return (
+                      <line
+                        key={i}
+                        x1={a.x}
+                        y1={a.y}
+                        x2={b.x}
+                        y2={b.y}
+                        stroke={isActive ? "#ffffff80" : "#ffffff14"}
+                        strokeWidth={isActive ? 1.5 : 1}
+                      />
+                    );
+                  })}
+                </svg>
+
+                {categoryLabels.map(({ cat, x, y }) => (
+                  <div
+                    key={cat}
+                    className="absolute text-center -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none"
+                    style={{ left: x, top: y }}
+                  >
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-600">
+                      {cat}
+                    </p>
+                    <p className="text-[8px] text-slate-700">
+                      {CAT_LABELS[cat]}
+                    </p>
+                  </div>
+                ))}
+
+                {growthSystems.map((s) => {
+                  const p = positions[s.id];
+                  if (!p) return null;
+                  const size = TIER_NODE_SIZE[s.tier];
+                  return (
+                    <button
+                      key={s.id}
+                      onClick={() => onSelect(s.id)}
+                      onMouseEnter={() => setHoveredId(s.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      className={`absolute rounded-full border-2 ${s.bgColor} ${s.borderColor} flex items-center justify-center hover:scale-125 hover:z-10 transition-transform`}
+                      style={{
+                        width: size * 2,
+                        height: size * 2,
+                        left: p.x - size,
+                        top: p.y - size,
+                      }}
+                      title={`${s.title} (${s.tier})`}
+                    >
+                      <s.icon
+                        className={s.color}
+                        style={{ width: size * 0.9, height: size * 0.9 }}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="bg-[#0d1220] border border-white/5 rounded-lg px-5 py-3 flex items-center justify-center gap-6 flex-wrap">
+                <span className="text-[9px] font-black uppercase text-slate-600 tracking-widest">
+                  Ring = Tier
+                </span>
+                {Object.entries(TIER_CONFIG).map(([k, v]) => (
+                  <div key={k} className="flex items-center gap-1.5">
+                    <TierBadge tier={k} />
+                    <span className="text-[10px] text-slate-500">
+                      {v.desc}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      /* ═══════════════════════════════════════════════════════════
        MAIN DASHBOARD
        ═══════════════════════════════════════════════════════════ */
       function Dashboard() {
         const [selectedId, setSelectedId] = useState("streak-economy");
         const [tierFilter, setTierFilter] = useState("ALL");
-        const [maintenanceMode, setMaintenanceMode] = useState(true);
+        const [view, setView] = useState("overview");
 
         const filtered = useMemo(
           () =>
@@ -1613,15 +1926,6 @@
           [],
         );
 
-        if (maintenanceMode)
-          return (
-            <MaintenanceView
-              onBack={() => {
-                window.location.href = "home.html";
-              }}
-            />
-          );
-
         return (
           <div className="min-h-screen flex flex-col pb-20">
             {/* Header */}
@@ -1635,7 +1939,7 @@
                     <h1 className="font-bold text-base tracking-tight">
                       Growth Protocol{" "}
                       <span className="text-slate-600 font-light mono text-xs">
-                        v2.3
+                        v2.4
                       </span>
                     </h1>
                     <p className="text-[9px] text-slate-500 uppercase tracking-widest font-semibold">
@@ -1643,22 +1947,56 @@
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 bg-[#0a0e17] border border-white/5 rounded-lg p-1">
-                  {["ALL", "T1", "T2", "T3"].map((t) => (
-                    <button
-                      key={t}
-                      onClick={() => setTierFilter(t)}
-                      className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all mono ${tierFilter === t ? (t === "ALL" ? "bg-white/10 text-white" : `${TIER_CONFIG[t]?.bg || ""} ${TIER_CONFIG[t]?.color || "text-white"}`) : "text-slate-500 hover:text-slate-300"}`}
-                    >
-                      {t === "ALL" ? "All" : t}{" "}
-                      <span className="text-[10px] opacity-50 ml-1">
-                        {tierCounts[t]}
-                      </span>
-                    </button>
-                  ))}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 bg-[#0a0e17] border border-white/5 rounded-lg p-1">
+                    {[
+                      { key: "overview", label: "Overview", icon: Layers },
+                      { key: "map", label: "Map", icon: Network },
+                      { key: "explorer", label: "Explorer", icon: Layout },
+                    ].map((t) => (
+                      <button
+                        key={t.key}
+                        onClick={() => setView(t.key)}
+                        className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 ${view === t.key ? "bg-white/10 text-white" : "text-slate-500 hover:text-slate-300"}`}
+                      >
+                        <t.icon className="w-3.5 h-3.5" /> {t.label}
+                      </button>
+                    ))}
+                  </div>
+                  {view === "explorer" && (
+                    <div className="flex items-center gap-1 bg-[#0a0e17] border border-white/5 rounded-lg p-1">
+                      {["ALL", "T1", "T2", "T3"].map((t) => (
+                        <button
+                          key={t}
+                          onClick={() => setTierFilter(t)}
+                          className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all mono ${tierFilter === t ? (t === "ALL" ? "bg-white/10 text-white" : `${TIER_CONFIG[t]?.bg || ""} ${TIER_CONFIG[t]?.color || "text-white"}`) : "text-slate-500 hover:text-slate-300"}`}
+                        >
+                          {t === "ALL" ? "All" : t}{" "}
+                          <span className="text-[10px] opacity-50 ml-1">
+                            {tierCounts[t]}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </header>
+
+            {view === "overview" && (
+              <OverviewView onNavigate={setView} />
+            )}
+
+            {view === "map" && (
+              <ConnectionsMapView
+                onSelect={(id) => {
+                  setSelectedId(id);
+                  setView("explorer");
+                }}
+              />
+            )}
+
+            {view === "explorer" && (
 
             <div className="max-w-[1600px] mx-auto w-full flex-1 flex gap-0">
               {/* Sidebar */}
@@ -1982,52 +2320,11 @@
                 )}
               </main>
             </div>
+            )}
             <GlobalDock />
           </div>
         );
       }
-
-      /* ── Maintenance View ── */
-      const MaintenanceView = ({ onBack }) => (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a0e17] relative overflow-hidden text-center px-6">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gomo-gradient opacity-15 blur-[120px] rounded-full"></div>
-          <div className="relative z-10 space-y-8 max-w-lg mx-auto">
-            <div className="w-20 h-20 bg-[#0d1220] border border-white/10 rounded-2xl flex items-center justify-center mx-auto shadow-2xl relative group">
-              <div className="absolute inset-0 bg-gomo-gradient opacity-20 rounded-2xl blur-md group-hover:opacity-40 transition-opacity"></div>
-              <Hammer className="w-8 h-8 text-white relative z-10 animate-bounce" />
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-4xl font-black text-white tracking-tighter">
-                System <span className="text-gomo-gradient">Maintenance</span>
-              </h1>
-              <p className="text-slate-400 text-base font-medium leading-relaxed">
-                The Growth Protocol Engine is undergoing scheduled upgrades to
-                optimize ecosystem performance.
-              </p>
-            </div>
-            <div className="bg-[#0d1220] border border-white/10 rounded-xl p-5 max-w-sm mx-auto">
-              <div className="flex justify-between items-center text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2">
-                <span>Optimization Progress</span>
-                <span className="gomo-pink animate-pulse">Processing...</span>
-              </div>
-              <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-gomo-gradient w-2/3 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
-              </div>
-              <p className="text-[9px] text-slate-600 mt-2 mono">
-                ESTIMATED DURATION:{" "}
-                <button
-                  onClick={onBack}
-                  className="hover:text-pink-400 underline decoration-dotted transition-colors cursor-pointer font-bold"
-                >
-                  2
-                </button>{" "}
-                HOURS
-              </p>
-            </div>
-          </div>
-        </div>
-      );
 
       createRoot(document.getElementById("root")).render(<Dashboard />);
     </script>
