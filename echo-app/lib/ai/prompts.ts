@@ -4,9 +4,9 @@ const CITY_CENTERS = `Manila [121.0, 14.6], Cebu [123.8967, 10.3157], Davao [125
 
 export function buildAnalyzePrompt(input: AnalyzeInput): string {
   const responseContract = `Respond with ONLY a JSON object, no markdown fences, no extra text, matching this TypeScript type:
-{"quality": "Good" | "Slow" | "No Connection", "summary": string, "recommendation": string}
+{"quality": "Good" | "Slow" | "No Connection" | "No Data", "summary": string, "recommendation": string, "priority"?: "Low" | "Medium" | "High"}
 
-Base "quality" strictly on the given score: >=0.6 is "Good", >=0.3 is "Slow", below 0.3 is "No Connection". Write a 1-2 sentence summary and a concrete, actionable recommendation for a network operations team.`;
+Base "quality" strictly on the given score: >=0.6 is "Good", >=0.3 is "Slow", below 0.3 is "No Connection". Use "No Data" ONLY when told explicitly that there are zero reports — never infer it yourself, and never use it for a subscriber or area that has an actual score. Write a 1-2 sentence summary and a concrete, actionable recommendation for a network operations team. Include "priority" (how urgently ops should act on this) when analyzing an area or region; you may omit it for a single subscriber.`;
 
   if (input.kind === "user") {
     const p = input.properties;
@@ -23,7 +23,8 @@ Subscriber data:
 ${responseContract}`;
   }
 
-  return `You are a telecom network operations analyst. Analyze this geographic area's aggregate connection quality.
+  if (input.kind === "area") {
+    return `You are a telecom network operations analyst. Analyze this geographic area's aggregate connection quality.
 
 Area data:
 - Location: ${input.locationName}
@@ -31,6 +32,29 @@ Area data:
 - Users within 10km: ${input.userCount}
 - Average normalized network score (0-1): ${input.avgScore.toFixed(2)}
 - Connection type mix: ${JSON.stringify(input.connectionMix)}
+
+${responseContract}`;
+  }
+
+  // input.kind === "region": a clicked administrative boundary cell
+  // (province/city/barangay), not a fixed-radius circle like "area".
+  const sampleSizeNote =
+    input.pointCount === 0
+      ? `No crowdsource reports exist for this ${input.level} yet. Say plainly that there is no data — do not guess at a quality level or invent a recommendation beyond "collect more reports here."`
+      : input.pointCount < 5
+        ? `Only ${input.pointCount} crowdsource report(s) cover this ${input.level}. Explicitly caveat the summary as low-confidence due to small sample size — do not state conclusions as if they were well-established.`
+        : `${input.pointCount} crowdsource reports cover this ${input.level}, a reasonable sample.`;
+
+  return `You are a telecom network operations analyst. Analyze this administrative boundary cell's aggregate connection quality, from crowdsourced subscriber reports.
+
+Region data:
+- Name: ${input.name} (${input.level})
+- PSGC code: ${input.psgcCode}
+- Crowdsource reports: ${input.pointCount}
+- Average normalized network score (0-1): ${input.avgScore != null ? input.avgScore.toFixed(2) : "N/A (no reports)"}
+- Connection type mix: ${JSON.stringify(input.connectionMix)}
+
+Sample size guidance: ${sampleSizeNote}
 
 ${responseContract}`;
 }
@@ -56,11 +80,14 @@ Respond with ONLY a JSON object, no markdown fences, no extra text, matching thi
   "action":
     | { "type": "flyTo", "center": [lng, lat], "zoom"?: number, "pitch"?: number, "bearing"?: number }
     | { "type": "resetView" }
+    | { "type": "setView", "mode": "points" | "heatmap" | "choropleth-grid" | "choropleth-admin", "adminLevel"?: "province" | "city" | "barangay" }
     | { "type": "none" }
 }
 
 Known Philippine city centers you may use for flyTo: ${CITY_CENTERS}.
 Only include a flyTo/resetView action when the user's message clearly asks for map navigation (e.g. "go to Cebu", "reset the view", "zoom out"). Otherwise use {"type":"none"}.
+
+Use "setView" when the user asks to switch how the map is displayed, e.g. "show me the heatmap", "switch to points", "show the boundary/choropleth view". "choropleth-grid" is a hex-grid aggregation; "choropleth-admin" is real province/city/barangay boundaries — if the user says "boundaries", "barangays", "provinces", or "administrative areas", use "choropleth-admin" with adminLevel set to whichever level they named (default "province" if unspecified). IMPORTANT: you cannot jump straight to a specific named city or barangay — that requires the user to click it on the map after switching to the boundary view. If asked to "show me Quezon City's barangays" directly, say so in your reply and set adminLevel to "province" as the starting point, not "barangay".
 
 Conversation so far:
 ${historyText || "(none yet)"}

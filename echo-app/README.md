@@ -120,6 +120,43 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Uploading crowdsource data
+
+The dashboard starts out showing the bundled sample at `public/data/network_data.geojson`. To
+load your own data, it has to go through the upload page in the running app — **copying an
+`.xlsx` file into the project folder does nothing by itself.**
+
+1. With `npm run dev` running, open `http://localhost:3000/admin/upload` in your browser.
+2. Click the file input and select your `.xlsx`/`.xls` file (any location on your computer —
+   it isn't read from the project folder).
+3. Click **Preview**. This only validates and shows you a row count / row-level errors; it does
+   **not** save anything yet.
+4. Click **Commit to live dataset**. This is the step that actually persists the data, to
+   `.data/network-data.json` (gitignored — local to your machine, not part of the repo).
+5. Reload `http://localhost:3000/` (the dashboard). It only fetches data once on load, so a tab
+   that was already open before you committed won't update on its own.
+
+Expected columns (case/spacing-insensitive): `latitude`, `longitude`, `signal_strength`,
+`connection_type`, `timestamp`. Optional: `location_name`, `mobile_number`, `sim_slot`.
+
+**Known limitation:** `.data/network-data.json` is a local file on disk. This works for local dev
+and any traditional (non-serverless) host, but will **not** persist on serverless platforms with
+ephemeral filesystems (e.g. Vercel's default runtime) — an upload there would appear to commit
+successfully and then vanish on the next cold start. Swap `lib/data/store.ts` for a real database
+before deploying the upload flow anywhere serverless.
+
+### Generating a larger test dataset
+
+`scripts/generate-seed-data.cjs` generates a synthetic `.xlsx` (nationwide spread, weighted
+toward Luzon, ~90 days of timestamps) for exercising boundary drill-down and time-based features
+without needing real crowdsource volume:
+
+```bash
+node scripts/generate-seed-data.cjs seed-network-data.xlsx
+```
+
+Then upload the resulting file through the steps above.
+
 ## Deploying
 
 This app was intentionally left host-agnostic. Any Node-capable host works (Vercel is the

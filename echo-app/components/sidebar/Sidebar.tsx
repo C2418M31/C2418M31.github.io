@@ -2,13 +2,20 @@ import DashboardControls from "./DashboardControls";
 import AnalysisPanel from "./AnalysisPanel";
 import QueryPanel from "./QueryPanel";
 import ChatPanel from "./ChatPanel";
-import type { Selection, ViewMode } from "@/lib/geo/types";
+import type { AdminFocus, AdminLevel, Selection, ViewMode } from "@/lib/geo/types";
 import type { AnalyzeResult, ChatAction, ChatContext, QueryFilter } from "@/lib/ai/types";
 
 interface SidebarProps {
+  /** Flex `order-*` classes, set by the parent since this needs to be a direct flex-row child to work. */
+  orderClassName?: string;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
   onResetView: () => void;
+  adminLevel: AdminLevel;
+  onAdminLevelChange: (level: AdminLevel) => void;
+  adminFocus: AdminFocus;
+  adminLoading: boolean;
+  adminError: string | null;
   selection: Selection | null;
   analysisLoading: boolean;
   analysisResult: AnalyzeResult | null;
@@ -18,10 +25,18 @@ interface SidebarProps {
   onFilter: (filter: QueryFilter | null) => void;
 }
 
+// Earthquake/festival "situational awareness" panels moved to LeftPanel —
+// this sidebar is specifically map controls + AI analysis + chat now.
 export default function Sidebar({
+  orderClassName = "",
   viewMode,
   onViewModeChange,
   onResetView,
+  adminLevel,
+  onAdminLevelChange,
+  adminFocus,
+  adminLoading,
+  adminError,
   selection,
   analysisLoading,
   analysisResult,
@@ -31,15 +46,21 @@ export default function Sidebar({
   onFilter,
 }: SidebarProps) {
   return (
-    <aside className="flex h-screen w-1/3 flex-col border-l border-gray-700 bg-gray-800 p-6 shadow-2xl">
-      <div className="mb-6 flex flex-shrink-0 items-center">
-        <h1 className="text-2xl font-bold text-white">Network Intelligence Hub</h1>
-      </div>
-      <div className="flex-grow overflow-y-auto">
+    <aside
+      className={`flex min-h-0 w-full flex-1 flex-col border-t border-zinc-800 bg-zinc-950 p-4 lg:w-1/3 lg:border-l lg:border-t-0 ${orderClassName}`}
+    >
+      {/* Page title now lives in Header.tsx, above the map+sidebar row —
+          having it here too was a leftover duplicate from before the redesign. */}
+      <div className="flex-grow space-y-4 overflow-y-auto">
         <DashboardControls
           viewMode={viewMode}
           onViewModeChange={onViewModeChange}
           onResetView={onResetView}
+          adminLevel={adminLevel}
+          onAdminLevelChange={onAdminLevelChange}
+          adminFocus={adminFocus}
+          adminLoading={adminLoading}
+          adminError={adminError}
         />
         <QueryPanel onFilter={onFilter} />
         <AnalysisPanel

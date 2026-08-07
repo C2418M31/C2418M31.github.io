@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { scoreFeatures } from "@/lib/geo/scoring";
 import type { NetworkFeatureCollection } from "@/lib/geo/types";
 
-export function useNetworkData(url = "/data/network_data.geojson") {
+export function useNetworkData(url = "/api/data/network") {
   const [data, setData] = useState<NetworkFeatureCollection | null>(null);
   const [error, setError] = useState<string | null>(null);
 

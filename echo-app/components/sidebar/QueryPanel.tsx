@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Sparkles, X } from "lucide-react";
+import Card from "@/components/ui/Card";
 import type { QueryFilter } from "@/lib/ai/types";
 
 interface QueryPanelProps {
@@ -46,37 +48,37 @@ export default function QueryPanel({ onFilter }: QueryPanelProps) {
   }
 
   return (
-    <div className="mb-6 rounded-lg bg-gray-700 p-4">
-      <h2 className="mb-3 border-b border-gray-600 pb-2 text-lg font-semibold">Ask the Data</h2>
-      <form onSubmit={handleSubmit} className="flex items-center">
+    <Card title="Ask the Data" icon={Sparkles}>
+      <form onSubmit={handleSubmit} className="flex items-center gap-2">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           type="text"
           placeholder='e.g. "show 4G users with poor signal"'
-          className="flex-grow rounded-l-md border-gray-600 bg-gray-800 p-2 text-sm text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="flex-grow rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
         <button
           type="submit"
           disabled={loading}
-          className="rounded-r-md bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "..." : "Filter"}
         </button>
       </form>
       {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
       {activeFilter && (
-        <div className="mt-3 flex items-start justify-between gap-2 rounded-md bg-gray-800 p-2 text-xs text-gray-300">
+        <div className="mt-3 flex items-start justify-between gap-2 rounded-lg bg-zinc-800/60 p-2.5 text-xs text-zinc-300">
           <span>{activeFilter.explanation}</span>
           <button
             type="button"
             onClick={clearFilter}
-            className="whitespace-nowrap text-blue-400 hover:underline"
+            className="flex flex-shrink-0 items-center gap-1 text-zinc-500 hover:text-zinc-200"
           >
+            <X className="h-3.5 w-3.5" aria-hidden="true" />
             Clear
           </button>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
