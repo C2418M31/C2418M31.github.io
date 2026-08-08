@@ -26,7 +26,9 @@
       "Bash(git rm *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(git rebase *)",
+      "Bash(git push *)"
     ]
   }
 }
