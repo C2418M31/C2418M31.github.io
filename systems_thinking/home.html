@@ -1631,6 +1631,32 @@
                 </p>
               </div>
 
+              {/* Disclaimer */}
+              <div className="bg-[#0d1220] border border-amber-500/20 rounded-xl px-4 py-3.5 flex items-start gap-3">
+                <Info className="w-4 h-4 text-amber-500/70 shrink-0 mt-0.5" />
+                <div className="text-[13px] text-slate-400 leading-relaxed space-y-1.5">
+                  <p>
+                    <span className="font-bold text-slate-300">
+                      Disclaimer:
+                    </span>{" "}
+                    Every node here — Launch Mode, Full Mode, Kill Criteria,
+                    tiering (T1/T2/T3), targets, and deadlines — is an
+                    illustrative starting point, not a locked spec. It's
+                    meant to show a plausible sequencing logic, not dictate
+                    exact numbers or scope.
+                  </p>
+                  <p>
+                    Treat each field as a hypothesis to pressure-test:
+                    thresholds and metrics should be recalibrated against
+                    real usage data, tiers can be reordered as dependencies
+                    prove out (or don't), and any node can be simplified,
+                    merged, or dropped if it doesn't fit actual business
+                    priorities, technical constraints, or user needs once
+                    validated.
+                  </p>
+                </div>
+              </div>
+
               {/* 5 Pillars */}
               <div>
                 <p className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] mb-4 text-center">
@@ -2044,31 +2070,6 @@
                 className="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-5"
                 style={{ maxHeight: "calc(100vh - 57px)" }}
               >
-                <div className="sticky top-0 z-10 bg-amber-950/90 backdrop-blur border border-amber-500/40 rounded-xl px-4 py-3.5 flex items-start gap-3 shadow-lg shadow-black/30">
-                  <Info className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <div className="text-[13px] text-amber-100/90 leading-relaxed space-y-1.5">
-                    <p>
-                      <span className="font-black uppercase tracking-wide text-amber-300">
-                        Disclaimer:
-                      </span>{" "}
-                      Every node here — Launch Mode, Full Mode, Kill
-                      Criteria, tiering (T1/T2/T3), targets, and deadlines —
-                      is an illustrative starting point, not a locked spec.
-                      It's meant to show a plausible sequencing logic, not
-                      dictate exact numbers or scope.
-                    </p>
-                    <p>
-                      Treat each field as a hypothesis to pressure-test:
-                      thresholds and metrics should be recalibrated against
-                      real usage data, tiers can be reordered as
-                      dependencies prove out (or don't), and any node can be
-                      simplified, merged, or dropped if it doesn't fit
-                      actual business priorities, technical constraints, or
-                      user needs once validated.
-                    </p>
-                  </div>
-                </div>
-
                 {selected && (
                   <div className="animate-in space-y-5">
                     {/* Title */}
