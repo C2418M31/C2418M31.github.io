@@ -75,6 +75,10 @@
         Heart,
         Smartphone,
         Globe,
+        Store,
+        Handshake,
+        Cake,
+        UserCheck,
         Lock,
         Cloud,
         TrendingUp,
@@ -1566,6 +1570,213 @@
           connections: {
             inputs: ["digital-karma", "micro-tribe", "gomo-wrapped"],
             outputs: ["digital-karma", "streak-economy"],
+          },
+        },
+        // ─── MAGNET (acquisition, round 2) ───
+        {
+          id: "padala-line",
+          title: "Padala Line",
+          category: "MAGNET",
+          icon: Globe,
+          tier: "T1",
+          loopType: "VIRAL",
+          color: "text-teal-400",
+          bgColor: "bg-teal-900/30",
+          borderColor: "border-teal-500",
+          summary:
+            "An OFW sends a one-tap starter line, not just load, to a family member back home who isn't on GOMO yet — a working eSIM activation bundled into the same remittance moment, reaching households app-only acquisition never touches.",
+          loop: {
+            trigger:
+              "Payday abroad, or a family occasion back home — the moment an OFW is already sending money.",
+            action:
+              "Adds a 'Starter Line' to the Digital Balikbayan care box; the family member gets an eSIM activation link alongside the usual gift.",
+            reward:
+              "Family back home gets a working line and data with no store visit, no ID hassle, and no separate decision to make — it rides along with money they were already receiving.",
+            investment:
+              "The OFW's name is attached to the gift; a line that goes unused or gets abused reflects on them, so they only send it to family they'd vouch for.",
+          },
+          launchMode:
+            "A simple add-on toggle on the existing Digital Balikbayan flow: 'Also activate a GOMO line for them.' Fixed trial terms, no remittance-partner integration required yet — works for any OFW already using Digital Balikbayan.",
+          fullMode:
+            "Deep integration with remittance partners (GCash, padala centers, money-transfer operators) so the line activation can be offered at the point of any remittance, not only inside the GOMO app; Digital Karma-based abuse throttling once volume justifies it.",
+          killCriteria: {
+            metric:
+              "% of gifted starter lines (via Digital Balikbayan) that activate and stay active past 30 days",
+            target: ">25% of gifted lines active at 30 days",
+            deadline: "90 days",
+            action:
+              "If <10% stay active, narrow eligibility to OFWs with established Digital Balikbayan sending history only",
+          },
+          whyTier:
+            "T1: Ships as an add-on toggle on Digital Balikbayan, which is already live — no remittance-partner deal required to start. The external partner integration that reaches non-GOMO-app channels comes later, once the in-app version proves people actually want it.",
+          connections: {
+            inputs: ["digital-balikbayan", "digital-karma"],
+            outputs: ["micro-tribe", "streak-economy", "digital-karma"],
+          },
+        },
+        {
+          id: "suki-starter-pack",
+          title: "Suki Starter Pack",
+          category: "MAGNET",
+          icon: Store,
+          tier: "T1",
+          loopType: "VIRAL",
+          color: "text-rose-400",
+          bgColor: "bg-rose-900/30",
+          borderColor: "border-rose-500",
+          summary:
+            "Partner sari-sari stores hand out a GOMO starter voucher with every load purchase above a threshold, turning the country's existing load-buying habit — and its 800,000+ physical storefronts — into a GOMO sign-up channel.",
+          loop: {
+            trigger:
+              "A customer buys load or a sachet product at a partner sari-sari store.",
+            action:
+              "The store includes a GOMO starter voucher card with the purchase, or the storekeeper mentions it directly — suki (regular customer) relationships make the recommendation carry weight.",
+            reward:
+              "Customer gets a discounted starter SIM/eSIM activation, redeemable by scanning the voucher — no app search, no ad, just a card handed over by someone they already trust.",
+            investment:
+              "The storekeeper earns a small commission per activation, so keeping the vouchers stocked and recommending them becomes part of their own income, not a favor to GOMO.",
+          },
+          launchMode:
+            "Manual voucher cards printed and distributed to a pilot set of partner stores, redeemed via a simple code at activation. No POS integration needed to start.",
+          fullMode:
+            "Vouchers generated and tracked through Partner Co-pilot's existing merchant dashboard, with real-time commission payout and reorder alerts when a store is running low.",
+          killCriteria: {
+            metric:
+              "Voucher redemption rate; cost per activation vs. other acquisition channels",
+            target:
+              ">8% redemption rate; cost per activation below Libreng Linya's",
+            deadline: "90 days",
+            action:
+              "If <3% redemption, cut the store commission model and test a flat bulk-purchase incentive instead",
+          },
+          whyTier:
+            "T1: Can launch day one with printed vouchers and a handful of pilot stores — no POS or merchant-dashboard integration required. Partner Co-pilot's existing merchant relationships make finding willing stores easier, but the voucher mechanic itself doesn't depend on it.",
+          connections: {
+            inputs: ["partner-copilot"],
+            outputs: ["digital-karma", "streak-economy"],
+          },
+        },
+        {
+          id: "rider-referral-commission",
+          title: "Rider Referral Commission",
+          category: "MAGNET",
+          icon: Handshake,
+          tier: "T1",
+          loopType: "VIRAL",
+          color: "text-green-400",
+          bgColor: "bg-green-900/30",
+          borderColor: "border-green-500",
+          summary:
+            "Delivery and ride-hailing riders already using Riders Radar get a referral code that pays out when a customer they hand it to activates — turning dozens of daily doorstep interactions into a distributed sales force.",
+          loop: {
+            trigger:
+              "A rider completes a delivery or ride and hands the customer their receipt or a quick goodbye.",
+            action:
+              "Rider mentions or hands over their personal referral QR code; the customer scans it to activate a discounted starter plan.",
+            reward:
+              "Customer gets a discount on activation; the rider earns a per-activation commission added directly to their in-app rider earnings.",
+            investment:
+              "The rider's own code and track record is attached to every referral, so a rider with strong conversion numbers gets prioritized for Riders Radar's better-paying assignments — making it worth protecting, not just a one-off bonus.",
+          },
+          launchMode:
+            "A static referral code per rider, tracked manually against activations, paid out weekly alongside existing rider earnings. No new infrastructure beyond Riders Radar's existing rider accounts.",
+          fullMode:
+            "Referral codes become dynamic QR codes generated per-delivery, auto-tracked through the Riders Radar app, with real-time leaderboard and bonus tiers for top-converting riders.",
+          killCriteria: {
+            metric: "Activations per active referring rider per month",
+            target:
+              ">2 activations per referring rider per month among participating riders",
+            deadline: "60 days",
+            action:
+              "If <0.5 activations/rider, raise the commission or narrow it to riders with the highest customer-interaction volume (food delivery over point-to-point rides)",
+          },
+          whyTier:
+            "T1: Works day one as a static code tracked manually, riding entirely on Riders Radar's existing rider base — no new rider acquisition or tooling required. The dynamic QR/leaderboard version is a refinement, not a dependency.",
+          connections: {
+            inputs: ["riders-radar"],
+            outputs: ["digital-karma", "streak-economy"],
+          },
+        },
+        {
+          id: "libre-kada-kaarawan",
+          title: "Libre Kada Kaarawan",
+          category: "MAGNET",
+          icon: Cake,
+          tier: "T1",
+          loopType: "VIRAL",
+          color: "text-fuchsia-400",
+          bgColor: "bg-fuchsia-900/30",
+          borderColor: "border-fuchsia-500",
+          summary:
+            "Anyone, GOMO user or not, can claim a free 1-day unlimited data pass on their actual birthday with just a name and number — a zero-commitment, once-a-year hook that doubles as a legitimate reason to reach out again next year.",
+          loop: {
+            trigger: "It's the person's birthday.",
+            action:
+              "They enter their name, number, and birthdate on a public claim page — no app download, no existing GOMO account needed.",
+            reward:
+              "Instant 1-day unlimited data pass activated on a trial eSIM, with zero cost and zero commitment attached.",
+            investment:
+              "Having claimed it once, their number is now in GOMO's system with a legitimate, welcomed reason to be re-contacted on the same date next year — a self-renewing, non-spammy touchpoint.",
+          },
+          launchMode:
+            "A standalone public claim page with manual fraud throttling (one claim per number per year, ID-free). No personalization beyond the birthday trigger.",
+          fullMode:
+            "Claim page offers a shareable 'it's my birthday' card for social media (secondary virality), auto-reminders next year, and a smoother path from trial pass to full activation timed to the moment of goodwill.",
+          killCriteria: {
+            metric:
+              "Claim-to-activation conversion rate within 30 days of the birthday pass",
+            target: ">10% of claimants activate a paid plan within 30 days",
+            deadline: "90 days",
+            action:
+              "If <3% convert, cut the standalone page and fold the birthday pass into Libreng Linya as a gift option instead",
+          },
+          whyTier:
+            "T1: Ships day one as a public claim page with a basic once-a-year cap — no other system required. It's the only acquisition feature here that needs zero referrer and zero existing relationship, making it the simplest possible top-of-funnel hook, even if its per-claim conversion is likely the lowest of the five.",
+          connections: {
+            inputs: [],
+            outputs: ["digital-karma", "gomo-wrapped"],
+          },
+        },
+        {
+          id: "barkada-batch-activation",
+          title: "Barkada Batch Activation",
+          category: "MAGNET",
+          icon: UserCheck,
+          tier: "T1",
+          loopType: "VIRAL",
+          color: "text-purple-400",
+          bgColor: "bg-purple-900/30",
+          borderColor: "border-purple-500",
+          summary:
+            "A trusted group leader — a classroom rep, a parish youth leader, an office HR contact — bulk-activates a discounted batch of lines for their whole group at once, because Filipinos move as blocks, not individuals.",
+          loop: {
+            trigger:
+              "A group leader is already coordinating something for the group — a class trip, a parish event, a new-hire batch.",
+            action:
+              "Leader submits the group's numbers through a simple batch-activation form and everyone gets a discounted starter plan at once.",
+            reward:
+              "Every member gets a better rate than they'd get activating alone, and the leader earns a small per-head credit or recognition for organizing it.",
+            investment:
+              "The leader's name is attached to the batch, and the group's shared activation becomes something they did together — similar social stickiness to Micro-Tribe, but aimed at people who weren't GOMO users yet.",
+          },
+          launchMode:
+            "A manual batch-submission form (names/numbers plus a group code), reviewed and activated in a single pass. No automated group-detection — relies on an identified leader bringing the group.",
+          fullMode:
+            "Self-serve batch activation flow with tiered group discounts, auto-conversion of an activated batch into a Micro-Tribe squad, and leader dashboards showing their group's status.",
+          killCriteria: {
+            metric:
+              "Average group size per batch activation; completion rate (members who actually activate after leader submits)",
+            target:
+              ">5 members per batch; >70% of submitted members complete activation",
+            deadline: "90 days",
+            action:
+              "If average group size <3, drop the batch model and push those leads through Libreng Linya's individual gifting flow instead",
+          },
+          whyTier:
+            "T1: Launches as a manually reviewed form — no automated infrastructure needed, just a willing group leader. The self-serve, Micro-Tribe-linked version is a refinement once the basic batch mechanic proves groups actually convert together.",
+          connections: {
+            inputs: ["micro-tribe"],
+            outputs: ["micro-tribe", "digital-karma", "streak-economy"],
           },
         },
       ];

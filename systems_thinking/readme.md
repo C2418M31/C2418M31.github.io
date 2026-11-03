@@ -38,4 +38,4 @@ version once the surrounding ecosystem is feeding it.
   working dashboard, with no maintenance gate.
 - `index.html` — a dedicated, static maintenance page (no React/dashboard code).
   The "2" in "ESTIMATED DURATION" navigates to `home.html`.
-- `home.html` and `index2.html` share an identical 35-node dataset; edit them together.
+- `home.html` and `index2.html` share an identical 42-node dataset; edit them together.
