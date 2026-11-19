@@ -100,6 +100,8 @@
         Dices,
         Utensils,
         Wifi,
+        WifiOff,
+        Link2Off,
         Crosshair,
         MapPin,
         Ticket,
@@ -1889,6 +1891,91 @@
           connections: {
             inputs: ["micro-tribe"],
             outputs: ["micro-tribe", "digital-karma", "streak-economy"],
+          },
+        },
+        // ─── MAGNET (acquisition, round 3 — BFF-native) ───
+        {
+          id: "blackout-switch",
+          title: "Blackout Switch",
+          category: "MAGNET",
+          icon: WifiOff,
+          tier: "T2",
+          loopType: "TRUST",
+          color: "text-sky-400",
+          bgColor: "bg-sky-900/30",
+          borderColor: "border-sky-500",
+          summary:
+            "Cross-references live PAGASA weather alerts with Signal Scout's real-time dead-zone reports to find exactly which areas are losing signal right now, then pushes a geo-targeted 'your network is down, ours isn't' offer with a free 24-hour emergency eSIM to numbers confirmed in that zone.",
+          loop: {
+            trigger:
+              "A storm warning hits, and Signal Scout's dead-zone reports spike in a specific area.",
+            action:
+              "GOMO cross-references both signals and sends a geo-targeted offer to numbers confirmed in that zone — the recipient does nothing to trigger it.",
+            reward:
+              "A free 24-hour emergency eSIM activation, offered at the exact moment reconnection actually matters.",
+            investment:
+              "Earns trust only if the claim is verifiably true — a false 'their network is down' message burns the credibility the whole feature depends on, so it only fires where the data genuinely backs it up.",
+          },
+          launchMode:
+            "Broad regional targeting using PAGASA public storm warnings alone, the same geographic approach as Typhoon Guard's own launch mode. No per-zone precision yet — the offer reaches an entire province or region, not a confirmed dead zone.",
+          fullMode:
+            "Precise, cell-level targeting once Signal Scout's crowdsourced reports confirm an actual outage in a specific area, cross-referenced through the BFF in real time, with Typhoon Guard's disaster-support messaging reused for brand consistency.",
+          killCriteria: {
+            metric:
+              "Activation rate among targeted numbers during a confirmed outage window",
+            target:
+              ">5% of targeted non-users activate the emergency eSIM within the outage window",
+            deadline: "First typhoon season cycle",
+            action:
+              "If <1%, narrow targeting to only the most severe, confirmed dead zones rather than broad regional alerts",
+          },
+          whyTier:
+            "T2: Mirrors Typhoon Guard exactly — launches day one on public PAGASA alerts with broad regional targeting, same as Typhoon Guard's own launch mode. The precise, confirmed-outage version needs Signal Scout's live reports feeding the same BFF decision Typhoon Guard already relies on.",
+          connections: {
+            inputs: ["typhoon-guard", "signal-scout"],
+            outputs: ["digital-karma", "streak-economy"],
+          },
+        },
+        {
+          id: "weakest-link",
+          title: "Weakest Link",
+          category: "MAGNET",
+          icon: Link2Off,
+          tier: "T3",
+          loopType: "TRUST",
+          color: "text-zinc-400",
+          bgColor: "bg-zinc-800/50",
+          borderColor: "border-zinc-500",
+          summary:
+            "Geo-fences the chronically weak zones Signal Scout already maps and serves a switch offer to anyone who spends real time there — a commuter's daily dead spot, not a one-off disaster, found by watching where people already linger with a bad signal.",
+          loop: {
+            trigger:
+              "Someone spends meaningful time inside a zone Signal Scout has flagged as persistently weak.",
+            action:
+              "The BFF detects the dwell pattern and serves a switch offer through a geo-targeted ad or SMS — no disaster or special event needed, just an ordinary bad-signal spot on an ordinary day.",
+            reward:
+              "A discounted starter plan offer that specifically names their everyday dead zone, not a generic ad — proof GOMO already knows where it's weak and claims to be better there.",
+            investment:
+              "Only works where the map is actually right — a zone flagged as weak that turns out fine burns the same credibility Blackout Switch depends on, so it only fires where Signal Scout's data is dense enough to trust.",
+          },
+          launchMode:
+            "Targets only the small number of zones where Signal Scout already has a dense, high-confidence set of reports — a short, conservative list to start, since a wrong call here costs more than it's worth.",
+          fullMode:
+            "Expands to the full Signal Scout weak-zone map as coverage density grows, with dynamic targeting that updates as zones improve or worsen, and Data Market-style dynamic pricing on the switch offer depending on how weak the zone currently is.",
+          killCriteria: {
+            metric:
+              "Switch-offer click-through and activation rate in targeted zones vs. generic acquisition ads",
+            target:
+              ">2x the activation rate of generic, non-geo-targeted acquisition ads in the same zones",
+            deadline: "90 days",
+            action:
+              "If it underperforms generic ads, fold the mechanic into Bill Showdown's location data instead of running it standalone",
+          },
+          whyTier:
+            "T3: Needs Signal Scout's weak-zone map to already be dense and mature enough to trust — not just existing, but accurate enough that a wrong call doesn't backfire. That's a mature T2 feature as a prerequisite, which by its own rule puts this a tier higher.",
+          connections: {
+            inputs: ["signal-scout", "blackout-switch"],
+            outputs: ["digital-karma", "streak-economy"],
           },
         },
       ];
